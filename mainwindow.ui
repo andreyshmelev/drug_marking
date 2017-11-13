@@ -31,7 +31,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>141</width>
+      <width>81</width>
       <height>41</height>
      </rect>
     </property>
@@ -41,20 +41,29 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
-     <string>Корвас</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../logo.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QListWidget" name="journal">
+   <widget class="QListWidget" name="journalList">
     <property name="geometry">
      <rect>
       <x>650</x>
-      <y>60</y>
+      <y>69</y>
       <width>150</width>
-      <height>481</height>
+      <height>471</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -154,10 +163,10 @@ border-radius: 10px;</string>
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>70</y>
-      <width>391</width>
-      <height>391</height>
+      <x>0</x>
+      <y>40</y>
+      <width>400</width>
+      <height>421</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -172,8 +181,8 @@ border-radius: 10px;</string>
      <rect>
       <x>650</x>
       <y>0</y>
-      <width>101</width>
-      <height>61</height>
+      <width>91</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="font">
@@ -250,6 +259,58 @@ border-radius: 10px;</string>
     </property>
     <property name="text">
      <string>инф</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="devicesTestText">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>309</y>
+      <width>251</width>
+      <height>151</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="journalButtonDown">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>35</y>
+      <width>31</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>↓</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="journalButtonUp">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>0</y>
+      <width>31</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>↑</string>
     </property>
    </widget>
   </widget>
