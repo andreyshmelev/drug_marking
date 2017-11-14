@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->packagePicture->show();
 
     setStackedPage(0);
+
 }
 
 MainWindow::~MainWindow()
