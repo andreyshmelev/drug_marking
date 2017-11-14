@@ -1,24 +1,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "QDebug"
+#include "QDateTime"
+#include "QSpinBox"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QLabel label;
+    QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
+    ui->organizationLabel->setPixmap(pixmap);
+    ui->organizationLabel->show();
+
+
     journalTimer = new QTimer();
     journalTimer->setInterval(550);
 
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(addMessageToJournal()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMPicture()));
+    connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMcode()));
+
+    datetimeTimer = new QTimer();
+    datetimeTimer->setInterval(1000);
+    connect(datetimeTimer, SIGNAL(timeout()), this, SLOT(updateTimeDate()));
 
     signalMapper = new QSignalMapper (this) ;
-//    signalMapper -> setMapping (action1, 1) ;
-//    signalMapper -> setMapping (action5, 5) ;
-//    signalMapper -> setMapping (action10, 10) ;
-//    signalMapper -> setMapping (action25, 25) ;
-//    signalMapper -> setMapping (action50, 50) ;
 
     connect(ui->printControlButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->programOptionsButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
@@ -36,6 +45,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(setStackedPage(int)));
 
     journalTimer->start();
+    datetimeTimer->start();
+
+
     scene = new QGraphicsScene();
     view = new QGraphicsView(scene);
     messages = new QStringList();
@@ -43,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     messages->append("Ок");
 
     imageObject = new QImage();
-    imageObject->load("C:/Work/Application/DM1.JPG");
+    imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
 
     scene = new QGraphicsScene(this);
@@ -66,6 +78,43 @@ int MainWindow::GenerateNumber(int High, int Low)
     int val = (qrand() % ((High + 1) - Low) + Low);
     return val;
 }
+
+QString MainWindow::getGuiGTIN()
+{
+    return ui->GTINText->toPlainText();
+}
+
+QString MainWindow::getSN()
+{
+    return SN;
+}
+
+QString MainWindow::generateSN()
+{
+    QString newSN = "12345qzRF" + QString::number(GenerateNumber(999,100));
+    return newSN;
+}
+
+QString MainWindow::getGuiBatch()
+{
+    return ui->batchvalue->text();
+}
+
+QString MainWindow::getGuiExpery()
+{
+    return ui->expirationdate->text();
+}
+
+QString MainWindow::getGuiTNVED()
+{
+    return ui->TNVEDabel->text();
+}
+
+void MainWindow::SetSN(QString newSN)
+{
+    SN = newSN;
+}
+
 
 void MainWindow::addMessageToJournal()
 {
@@ -91,16 +140,31 @@ void MainWindow::addMessageToJournal()
     ui->journalList->scrollToBottom();
 }
 
+void MainWindow::updateTimeDate()
+{
+    ui->DateTimeLabelValue->setText(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"));
+}
+
 void MainWindow::updateDMPicture()
 {
     int val = GenerateNumber(3, 1);
-
-    imageObject->load("C:/Work/Application/DM" + QString::number(val) + ".JPG");
+    imageObject->load(QDir::currentPath() + "/DM" + QString::number(val) + ".JPG");
     image = QPixmap::fromImage(*imageObject);
     ui->packagePicture->setScene(scene);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->packagePicture->show();
+}
+
+void MainWindow::updateDMcode()
+{
+ ui->DMcodeValue->setText(generateSN());
+}
+
+QString MainWindow::GenerateDMcode()
+{
+    QString DMCode = "01" + getGuiGTIN() + "(21)" +getSN();
+    return "DM Code here";
 }
 
 void MainWindow::setStackedPage(int newindex)

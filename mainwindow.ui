@@ -170,42 +170,146 @@ border-radius: 10px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 1px solid gray;
+     <string notr="true">/*border: 1px solid gray;*/
 border-radius: 10px;</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="mainPage">
      <widget class="QGraphicsView" name="packagePicture">
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>140</y>
+        <y>40</y>
         <width>320</width>
         <height>120</height>
        </rect>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="productOptionsPage">
-     <widget class="QLabel" name="LPLabel_3">
+     <widget class="QLabel" name="serialnumberlabel">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>10</y>
-        <width>151</width>
-        <height>31</height>
+        <x>10</x>
+        <y>370</y>
+        <width>131</width>
+        <height>25</height>
        </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
       </property>
       <property name="font">
        <font>
         <family>Times New Roman</family>
-        <pointsize>8</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px solid gray;
+border-radius: 0px;</string>
+      </property>
       <property name="text">
-       <string>Наименование препарата</string>
+       <string>Порядковый номер</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="serialnumbervalue">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>370</y>
+        <width>61</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px solid gray;
+border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="statuslabel">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>370</y>
+        <width>81</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px solid gray;
+border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>Статус:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="statuslabel_2">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>370</y>
+        <width>61</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px solid gray;
+border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>В работе</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -214,8 +318,8 @@ border-radius: 10px;</string>
      <widget class="QLabel" name="image_label">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>320</y>
+        <x>230</x>
+        <y>190</y>
         <width>152</width>
         <height>82</height>
        </rect>
@@ -233,38 +337,122 @@ border-radius: 10px;</string>
        <set>Qt::NoTextInteraction</set>
       </property>
      </widget>
+     <widget class="QLabel" name="DMcodeLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px solid gray;
+border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>DM код</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="DMcodeValue">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>330</y>
+        <width>301</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px solid gray;
+border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="productOptionsPage">
+     <widget class="QLabel" name="LPLabel_3">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>200</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Наименование препарата</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <widget class="QWidget" name="layoutWidget_3">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>60</y>
         <width>91</width>
-        <height>201</height>
+        <height>211</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="ProductNameLabel">
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Наименование</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="ManufacturerLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Times New Roman</family>
-           <pointsize>8</pointsize>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
@@ -276,11 +464,39 @@ border-radius: 10px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="ManufactureFormLabel">
+        <widget class="QLabel" name="ProductNameLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Times New Roman</family>
-           <pointsize>8</pointsize>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Наименование</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="ManufactureFormLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
@@ -293,10 +509,16 @@ border-radius: 10px;</string>
        </item>
        <item>
         <widget class="QLabel" name="GTINLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Times New Roman</family>
-           <pointsize>8</pointsize>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
@@ -309,10 +531,16 @@ border-radius: 10px;</string>
        </item>
        <item>
         <widget class="QLabel" name="batchnumberLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Times New Roman</family>
-           <pointsize>8</pointsize>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
@@ -324,11 +552,61 @@ border-radius: 10px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="batchamountLabel">
+        <widget class="QLabel" name="productlifeimeLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Times New Roman</family>
-           <pointsize>8</pointsize>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Срок годности</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="TNVEDabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>ТН ВЭД</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="batchvalueLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
@@ -336,6 +614,204 @@ border-radius: 10px;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>60</y>
+        <width>234</width>
+        <height>212</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QComboBox" name="manufacturerCombobox">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>ЗАО &quot;Березовский фармацевтический завод&quot;</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="LPCombobox">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>Нимесулид</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ацеклофенак</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Парацетамол</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="ManufactureFormValueLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>20 Таблето по 100 мг</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="GTINText">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="plainText">
+          <string>14607062867973</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="batchnumberText">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="plainText">
+          <string>A1C2RYK</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDateTimeEdit" name="expirationdate">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="date">
+          <date>
+           <year>2019</year>
+           <month>11</month>
+           <day>15</day>
+          </date>
+         </property>
+         <property name="maximumDate">
+          <date>
+           <year>2099</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
+         </property>
+         <property name="minimumDate">
+          <date>
+           <year>2010</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
+         </property>
+         <property name="displayFormat">
+          <string>yyMMdd</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="batchnumberText_2">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="plainText">
+          <string>1234</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="batchvalue">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="maximum">
+          <number>9999999</number>
+         </property>
+         <property name="value">
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -588,9 +1064,9 @@ border-radius: 10px;</string>
     <property name="geometry">
      <rect>
       <x>399</x>
-      <y>30</y>
+      <y>50</y>
       <width>251</width>
-      <height>371</height>
+      <height>351</height>
      </rect>
     </property>
     <property name="title">
@@ -795,7 +1271,7 @@ border-radius: 10px;</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
-      <widget class="QLabel" name="DateTimeLabel_2">
+      <widget class="QLabel" name="DateTimeLabelValue">
        <property name="font">
         <font>
          <family>Times New Roman</family>
