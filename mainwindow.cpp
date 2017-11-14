@@ -107,7 +107,7 @@ QString MainWindow::getGuiExpery()
 
 QString MainWindow::getGuiTNVED()
 {
-    return ui->TNVEDabel->text();
+    return ui->TNVEDValue->toPlainText();
 }
 
 void MainWindow::SetSN(QString newSN)
@@ -158,7 +158,7 @@ void MainWindow::updateDMPicture()
 
 void MainWindow::updateDMcode()
 {
- ui->DMcodeValue->setText(GenerateDMcode());
+    ui->DMcodeValue->setText(GenerateDMcode());
 }
 
 QString MainWindow::GenerateDMcode()
@@ -169,6 +169,8 @@ QString MainWindow::GenerateDMcode()
     QString Experyid = "17";
     QString TNVEDid = "240";
     QString DMCode = GTINid + getGuiGTIN() + SNid  +generateSN() + Batchid + getGuiBatchNumber() +  Experyid + getGuiExpery() + TNVEDid  + getGuiTNVED();
+
+    qDebug() << DMCode ;
     return DMCode;
 }
 
