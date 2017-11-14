@@ -9,63 +9,63 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    
     QLabel label;
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
-
-
+    
+    
     journalTimer = new QTimer();
     journalTimer->setInterval(550);
-
+    
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(addMessageToJournal()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMPicture()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMcode()));
-
+    
     datetimeTimer = new QTimer();
     datetimeTimer->setInterval(1000);
     connect(datetimeTimer, SIGNAL(timeout()), this, SLOT(updateTimeDate()));
-
+    
     signalMapper = new QSignalMapper (this) ;
-
+    
     connect(ui->printControlButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->programOptionsButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->agregationButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->XMLButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
-
+    
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
     signalMapper -> setMapping (ui->programOptionsButton, 1) ;
     signalMapper -> setMapping (ui->agregationButton, 2) ;
     signalMapper -> setMapping (ui->statisticksButton, 3) ;
     signalMapper -> setMapping (ui->XMLButton, 4) ;
-
+    
     connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(setStackedPage(int)));
-
+    
     journalTimer->start();
     datetimeTimer->start();
-
-
+    
+    
     scene = new QGraphicsScene();
     view = new QGraphicsView(scene);
     messages = new QStringList();
     messages->append("Брак");
     messages->append("Ок");
-
+    
     imageObject = new QImage();
     imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
-
+    
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->packagePicture->setScene(scene);
     ui->packagePicture->show();
-
+    
     setStackedPage(0);
-
+    
 }
 
 MainWindow::~MainWindow()
@@ -118,13 +118,13 @@ void MainWindow::SetSN(QString newSN)
 
 void MainWindow::addMessageToJournal()
 {
-
+    
     QListWidgetItem * item = new QListWidgetItem ();
-
+    
     int High = 100, Low = 0;
-
+    
     int val = GenerateNumber(High, Low);
-
+    
     if( val > 30)
     {
         item->setTextColor(Qt::green);
@@ -135,7 +135,7 @@ void MainWindow::addMessageToJournal()
         item->setTextColor(Qt::red);
         item->setText(messages->at(0));
     }
-
+    
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
 }
@@ -158,7 +158,7 @@ void MainWindow::updateDMPicture()
 
 void MainWindow::updateDMcode()
 {
- ui->DMcodeValue->setText(GenerateDMcode());
+    ui->DMcodeValue->setText(GenerateDMcode());
 }
 
 QString MainWindow::GenerateDMcode()

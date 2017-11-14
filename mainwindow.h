@@ -33,7 +33,7 @@ private:
     QString getGuiGTIN();
     QString getSN();
     QString generateSN();
-    QString getGuiBatch();
+    QString getGuiBatchNumber();
     QString getGuiExpery();
     QString getGuiTNVED();
     void SetSN( QString  newSN);
