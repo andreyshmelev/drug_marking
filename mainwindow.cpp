@@ -3,6 +3,11 @@
 #include "QDebug"
 #include "QDateTime"
 #include "QSpinBox"
+#include "QTextCodec"
+#include "QByteArray"
+
+QByteArray text;
+int t;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
 
+    this->installEventFilter(this);
 
     journalTimer = new QTimer();
     journalTimer->setInterval(550);
@@ -34,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->agregationButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->XMLButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
+
+    connect(ui->agregationStartButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -64,8 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->packagePicture->setScene(scene);
     ui->packagePicture->show();
 
-    setStackedPage(0);
-
+    setAgregation(false);
+    setStackedPage(2);
 }
 
 MainWindow::~MainWindow()
@@ -115,6 +123,11 @@ void MainWindow::SetSN(QString newSN)
     SN = newSN;
 }
 
+bool MainWindow::getAgregation()
+{
+    return agregation;
+}
+
 
 void MainWindow::addMessageToJournal()
 {
@@ -161,6 +174,23 @@ void MainWindow::updateDMcode()
     ui->DMcodeValue->setText(GenerateDMcode());
 }
 
+void MainWindow::setAgregation(bool set)
+{
+    agregation = set;
+}
+
+void MainWindow::toggleAgregation()
+{
+    if(getAgregation() == false)
+    {
+        setAgregation(true);
+    }
+    else
+    {
+        setAgregation(false);
+    }
+}
+
 QString MainWindow::GenerateDMcode()
 {
     QString GTINid = "01";
@@ -170,11 +200,102 @@ QString MainWindow::GenerateDMcode()
     QString TNVEDid = "240";
     QString DMCode = GTINid + getGuiGTIN() + SNid  +generateSN() + Batchid + getGuiBatchNumber() +  Experyid + getGuiExpery() + TNVEDid  + getGuiTNVED();
 
-    qDebug() << DMCode ;
+    //    qDebug() << DMCode ;
+    updateQRImage();
+
     return DMCode;
 }
 
 void MainWindow::setStackedPage(int newindex)
 {
     ui->stackedWidget->setCurrentIndex(newindex);
+}
+
+
+void MainWindow::updateQRImage()
+{
+    int levelIndex = 1;
+    int versionIndex = 0;
+    bool bExtent = true;
+    int maskIndex = -1;
+    QString encodeString = ui->DMcodeValue->text();
+
+    successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
+    if ( !successfulEncoding )
+    {
+        ui->image_label->clear();
+        ui->image_label->setText( tr("QR Code...") );
+        //        ui->labelSize->clear();
+        //        ui->pButtonSave->setEnabled( successfulEncoding );
+        return;
+    }
+
+    int qrImageSize = qrEncode.m_nSymbleSize;
+
+    // Создаем двумерный образ кода
+    encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+
+    ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
+
+    setScale(3);
+    //    ui->pButtonSave->setEnabled( successfulEncoding );
+}
+
+void MainWindow::updateScannerReadcode(QString str)
+{
+    QString wastext = ui->ScannedCode->toPlainText();
+    wastext.append(str);
+    ui->ScannedCode->setText(wastext);
+}
+
+void MainWindow::setScale(int scale)
+{
+    if ( successfulEncoding )
+    {
+        int scale_size = encodeImageSize * scale;
+
+        const QPixmap & scale_image = ui->image_label->pixmap()->scaled( scale_size, scale_size );
+        ui->image_label->setPixmap( scale_image );
+    }
+}
+
+bool MainWindow::eventFilter(QObject* obj, QEvent* event)
+{
+
+    if (event->type()==QEvent::KeyRelease) {
+
+        QKeyEvent* key = static_cast<QKeyEvent*>(event);
+
+        int inputkey ;
+
+        inputkey = key->key();
+
+        int key1 = key->key();
+
+        // handle ASCII char like keys
+
+        //qDebug() << inputkey;
+        //qDebug() << keyString;
+        //keyString = QString( QChar(key1) );
+
+        if ( (key->key()==Qt::Key_Enter) || (key->key()==Qt::Key_Return)|| (key->key()==Qt::Key_Shift) ) {
+            //Enter or return was pressed
+        } else {
+            keyString = QString( QChar(key1) );
+            updateScannerReadcode(keyString);
+            return QObject::eventFilter(obj, event);
+        }
+        return true;
+    } else {
+        return QObject::eventFilter(obj, event);
+    }
+    return false;
 }

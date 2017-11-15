@@ -13,6 +13,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QSignalMapper>
+#include "QRCodeGenerator.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,7 +37,17 @@ private:
     QString getGuiBatchNumber();
     QString getGuiExpery();
     QString getGuiTNVED();
+
+    void updateQRImage();
+    void updateScannerReadcode(QString str);
+    void setScale(int);
+
     void SetSN( QString  newSN);
+    CQR_Encode qrEncode;
+    bool successfulEncoding;
+    int encodeImageSize;
+    QPoint lastPos;
+    bool getAgregation(void);
 
 private:
 
@@ -52,12 +63,21 @@ private:
     QGraphicsView * view;
     QSignalMapper * signalMapper;
 
+    QString keyString;
+
+    bool agregation;
+
+protected:
+    bool eventFilter(QObject* obj, QEvent* event);
+
 
 private slots:
     void addMessageToJournal();
     void updateTimeDate();
     void updateDMPicture();
     void updateDMcode();
+    void setAgregation(bool set);
+
     QString GenerateDMcode();
     void setStackedPage(int newindex);
 

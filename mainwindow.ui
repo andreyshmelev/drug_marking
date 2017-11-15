@@ -171,10 +171,10 @@ border-radius: 10px;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">/*border: 1px solid gray;*/
-border-radius: 10px;</string>
+/*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="mainPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -320,8 +320,8 @@ border-radius: 0px;</string>
        <rect>
         <x>230</x>
         <y>190</y>
-        <width>152</width>
-        <height>82</height>
+        <width>161</width>
+        <height>121</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -619,13 +619,13 @@ border-radius: 0px;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>130</x>
         <y>60</y>
-        <width>234</width>
-        <height>212</height>
+        <width>283</width>
+        <height>227</height>
        </rect>
       </property>
       <property name="font">
@@ -822,16 +822,16 @@ border-radius: 0px;</string>
      <widget class="QLabel" name="DateTimeLabel_3">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>160</x>
         <y>10</y>
-        <width>79</width>
-        <height>14</height>
+        <width>120</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Times New Roman</family>
-        <pointsize>8</pointsize>
+        <pointsize>14</pointsize>
        </font>
       </property>
       <property name="text">
@@ -839,6 +839,73 @@ border-radius: 0px;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="ScanerStatusLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>380</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Статус сканера</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="CodeLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>330</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Сканированный код:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="ScannedCode">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>350</y>
+        <width>371</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="agregationStartButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>121</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Начать агрегацию</string>
       </property>
      </widget>
     </widget>
@@ -1155,7 +1222,7 @@ border-radius: 0px;</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>9</x>
@@ -1266,7 +1333,7 @@ border-radius: 0px;</string>
       <x>170</x>
       <y>0</y>
       <width>161</width>
-      <height>41</height>
+      <height>56</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1320,13 +1387,13 @@ border-radius: 0px;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>90</x>
       <y>0</y>
       <width>81</width>
-      <height>41</height>
+      <height>56</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
