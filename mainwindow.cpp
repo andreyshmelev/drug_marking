@@ -33,6 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
     datetimeTimer->setInterval(1000);
     connect(datetimeTimer, SIGNAL(timeout()), this, SLOT(updateTimeDate()));
 
+
+    DMCodeUpdateTimeoutTimer = new QTimer();
+    DMCodeUpdateTimeoutTimer->setInterval(100);
+    connect(DMCodeUpdateTimeoutTimer, SIGNAL(timeout()), this, SLOT(DMCodeUpdate()));
+
+    DMCodeUpdateTimeoutTimer->start();
+
+
     signalMapper = new QSignalMapper (this) ;
 
     connect(ui->printControlButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
@@ -159,6 +167,13 @@ void MainWindow::updateTimeDate()
     ui->DateTimeLabelValue->setText(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"));
 }
 
+void MainWindow::DMCodeUpdate()
+{
+    //qDebug() << "stop timeout timer";
+    DMCodeUpdateTimeoutTimer->stop();
+    inputDataStringFromScaner.clear();
+}
+
 void MainWindow::updateDMPicture()
 {
     int val = GenerateNumber(3, 1);
@@ -192,7 +207,6 @@ void MainWindow::toggleAgregation()
     }
 
     emit agregationstatusToggled();
-//    qDebug() << getAgregation();
 }
 
 void MainWindow::updateagregationGUI()
@@ -215,10 +229,7 @@ QString MainWindow::GenerateDMcode()
     QString Experyid = "17";
     QString TNVEDid = "240";
     QString DMCode = GTINid + getGuiGTIN() + SNid  +generateSN() + Batchid + getGuiBatchNumber() +  Experyid + getGuiExpery() + TNVEDid  + getGuiTNVED();
-
-    //    qDebug() << DMCode ;
     updateQRImage();
-
     return DMCode;
 }
 
@@ -265,11 +276,20 @@ void MainWindow::updateQRImage()
     //    ui->pButtonSave->setEnabled( successfulEncoding );
 }
 
-void MainWindow::updateScannerReadcode(QString str)
+void MainWindow::addSymbolToInputString(QString str)
 {
-    QString wastext = ui->ScannedCode->toPlainText();
+
+    DMCodeUpdateTimeoutTimer->start();
+
+    //  qDebug() << "start timeout timer";
+    QString wastext = inputDataStringFromScaner;
     wastext.append(str);
-    ui->ScannedCode->setText(wastext);
+    inputDataStringFromScaner = wastext;
+
+    if (inputDataStringFromScaner.isEmpty())
+        ui->ScannedCode->clear();
+    ui->ScannedCode->setText(inputDataStringFromScaner);
+
 }
 
 void MainWindow::setScale(int scale)
@@ -306,7 +326,7 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
             //Enter or return was pressed
         } else {
             keyString = QString( QChar(key1) );
-            updateScannerReadcode(keyString);
+            addSymbolToInputString(keyString);
             return QObject::eventFilter(obj, event);
         }
         return true;

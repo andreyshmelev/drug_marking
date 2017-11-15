@@ -39,7 +39,7 @@ private:
     QString getGuiTNVED();
 
     void updateQRImage();
-    void updateScannerReadcode(QString str);
+    void addSymbolToInputString(QString str);
     void setScale(int);
 
     void SetSN( QString  newSN);
@@ -54,6 +54,7 @@ private:
 
     QTimer * journalTimer;
     QTimer * datetimeTimer;
+    QTimer * DMCodeUpdateTimeoutTimer;
     Ui::MainWindow *ui;
     QStringList * messages;
 
@@ -65,6 +66,7 @@ private:
     QSignalMapper * signalMapper;
 
     QString keyString;
+    QString inputDataStringFromScaner;
 
     bool agregation;
 
@@ -75,14 +77,13 @@ protected:
 private slots:
     void addMessageToJournal();
     void updateTimeDate();
+    void DMCodeUpdate();
     void updateDMPicture();
     void updateDMcode();
     void toggleAgregation( void );
-
-        void updateagregationGUI();
-
-    QString GenerateDMcode();
+    void updateagregationGUI();
     void setStackedPage(int newindex);
+    QString GenerateDMcode();
 
 signals:
     agregationstatusToggled();
