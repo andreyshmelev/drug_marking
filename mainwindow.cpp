@@ -41,7 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->statisticksButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->XMLButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
 
-    connect(ui->agregationStartButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
+    connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
+    connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateagregationGUI())) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -188,6 +189,21 @@ void MainWindow::toggleAgregation()
     else
     {
         setAgregation(false);
+    }
+
+    emit agregationstatusToggled();
+//    qDebug() << getAgregation();
+}
+
+void MainWindow::updateagregationGUI()
+{
+    if (getAgregation() == true)
+    {
+        ui->agregationStartButton->setText("Закончить агрегацию");
+    }
+    else
+    {
+        ui->agregationStartButton->setText("Начать агрегацию");
     }
 }
 

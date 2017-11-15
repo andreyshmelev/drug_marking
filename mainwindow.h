@@ -48,6 +48,7 @@ private:
     int encodeImageSize;
     QPoint lastPos;
     bool getAgregation(void);
+    void setAgregation(bool set);
 
 private:
 
@@ -76,14 +77,15 @@ private slots:
     void updateTimeDate();
     void updateDMPicture();
     void updateDMcode();
-    void setAgregation(bool set);
+    void toggleAgregation( void );
+
+        void updateagregationGUI();
 
     QString GenerateDMcode();
     void setStackedPage(int newindex);
 
-    // QObject interface
-public:
-
+signals:
+    agregationstatusToggled();
 };
 
 #endif // MAINWINDOW_H
