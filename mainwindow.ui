@@ -1080,7 +1080,7 @@ border-radius: 0px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="TNVEDValue_2">
+        <widget class="QPlainTextEdit" name="TNVEDValueAgregation">
          <property name="maximumSize">
           <size>
            <width>16777215</width>

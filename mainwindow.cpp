@@ -36,11 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     DMCodeUpdateTimeoutTimer = new QTimer();
     DMCodeUpdateTimeoutTimer->setInterval(100);
-    connect(DMCodeUpdateTimeoutTimer, SIGNAL(timeout()), this, SLOT(DMCodeUpdate()));
+    connect(DMCodeUpdateTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateReadedDMCode()));
 
     DMCodeUpdateTimeoutTimer->start();
-
-
     signalMapper = new QSignalMapper (this) ;
 
     connect(ui->printControlButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
@@ -50,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->XMLButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
 
     connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
-    connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateagregationGUI())) ;
+    connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -82,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->packagePicture->show();
 
     setAgregation(false);
+    updateAgregationGUI();
     setStackedPage(2);
 }
 
@@ -167,7 +166,7 @@ void MainWindow::updateTimeDate()
     ui->DateTimeLabelValue->setText(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"));
 }
 
-void MainWindow::DMCodeUpdate()
+void MainWindow::updateReadedDMCode()
 {
     //qDebug() << "stop timeout timer";
     DMCodeUpdateTimeoutTimer->stop();
@@ -209,15 +208,26 @@ void MainWindow::toggleAgregation()
     emit agregationstatusToggled();
 }
 
-void MainWindow::updateagregationGUI()
+void MainWindow::updateAgregationGUI()
 {
     if (getAgregation() == true)
     {
         ui->agregationStartButton->setText("Закончить агрегацию");
+        ui->GTINTextAgregation->setEnabled(true);
+        ui->batchnumberTextAgregation->setEnabled(true);
+        ui->expirationdateAgregation->setEnabled(true);
+        ui->TNVEDValueAgregation->setEnabled(true);
+        ui->ScannedCode->setEnabled(true);
+
     }
     else
     {
         ui->agregationStartButton->setText("Начать агрегацию");
+        ui->GTINTextAgregation->setEnabled(false);
+        ui->batchnumberTextAgregation->setEnabled(false);
+        ui->expirationdateAgregation->setEnabled(false);
+        ui->TNVEDValueAgregation->setEnabled(false);
+        ui->ScannedCode->setEnabled(false);
     }
 }
 
@@ -279,16 +289,19 @@ void MainWindow::updateQRImage()
 void MainWindow::addSymbolToInputString(QString str)
 {
 
-    DMCodeUpdateTimeoutTimer->start();
+    if (getAgregation())
+    {
+        DMCodeUpdateTimeoutTimer->start();
 
-    //  qDebug() << "start timeout timer";
-    QString wastext = inputDataStringFromScaner;
-    wastext.append(str);
-    inputDataStringFromScaner = wastext;
+        //  qDebug() << "start timeout timer";
+        QString wastext = inputDataStringFromScaner;
+        wastext.append(str);
+        inputDataStringFromScaner = wastext;
 
-    if (inputDataStringFromScaner.isEmpty())
-        ui->ScannedCode->clear();
-    ui->ScannedCode->setText(inputDataStringFromScaner);
+        if (inputDataStringFromScaner.isEmpty())
+            ui->ScannedCode->clear();
+        ui->ScannedCode->setText(inputDataStringFromScaner);
+    }
 
 }
 

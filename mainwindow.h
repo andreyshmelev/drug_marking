@@ -77,11 +77,11 @@ protected:
 private slots:
     void addMessageToJournal();
     void updateTimeDate();
-    void DMCodeUpdate();
+    void updateReadedDMCode();
     void updateDMPicture();
     void updateDMcode();
     void toggleAgregation( void );
-    void updateagregationGUI();
+    void updateAgregationGUI();
     void setStackedPage(int newindex);
     QString GenerateDMcode();
 
