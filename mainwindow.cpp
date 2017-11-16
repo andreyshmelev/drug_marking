@@ -314,7 +314,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // начинаем разбирать серийник
     //     QString SNRegularexpression = "21\\w{13,14}"; // работает только если в конце строки
-    QString SNRegularexpression = "21\\w{13,14}002#"; // работает для протамина - ферейн (он не в конце строки
+    QString SNRegularexpression = "21\\w{13}002#"; // работает для протамина - ферейн (он не в конце строки
 
     SNstring = GetRegularString(stringforparse, SNRegularexpression);
     SNstring.remove(0,2);
@@ -327,7 +327,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
         QString tail = stringforparse;
         //получаем хвост и уже пытаемся произвести это дело с хвостом
 
-        SNRegularexpression = "21\\w{13,14}";
+        SNRegularexpression = "21\\w{13}";
 
         tail = tail.remove(0,tail.length()-16);
         SNstring = GetRegularString(tail, SNRegularexpression);
