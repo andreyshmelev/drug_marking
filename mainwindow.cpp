@@ -6,7 +6,7 @@
 #include "QTextCodec"
 #include "QByteArray"
 
-QByteArray text;
+QByteArray text,text2;
 int t;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -270,25 +270,49 @@ void MainWindow::ParseDMCode(QString stringforparse)
     }
 
     // если в прочитаной строке отсутствует хоть один айди из списка то нахрен!
-        if (   (gtinstartindex == -1) ||
-               (snstartindex == -1) ||
-               (batchstartindex == -1) ||
-               (experiestartindex == -1)
-               )
-        {
-            return;
-        }
+    if (   (gtinstartindex == -1) ||
+           (snstartindex == -1) ||
+           (batchstartindex == -1) ||
+           (experiestartindex == -1)
+           )
+    {
+        return;
+    }
 
-    qDebug() << gtinstartindex << "gtinstartindex ";
-    qDebug() << snstartindex << "snstartindex ";
-    qDebug() << batchstartindex << "batchstartindex ";
-    qDebug() << experiestartindex <<"experiestartindex" ;
-    qDebug() << tnvedstartindex << "tnvedstartindex ";
+    //    qDebug() << gtinstartindex << "gtinstartindex ";
+    //    qDebug() << snstartindex << "snstartindex ";
+    //    qDebug() << batchstartindex << "batchstartindex ";
+    //    qDebug() << experiestartindex <<"experiestartindex" ;
+    //    qDebug() << tnvedstartindex << "tnvedstartindex ";
 
     // сюда мы перешли если наш код может быть распарсен
 
+    // gtinstartindex = stringforparse.indexOf(GTINid);
+    // int snstartindex = stringforparse.indexOf(SNid);
+    // int batchstartindex = stringforparse.indexOf(Batchid);
+    // int experiestartindex = stringforparse.indexOf(Experyid);
+    // int tnvedstartindex = stringforparse.indexOf(TNVEDid);
+
+    gtinstartindex = stringforparse.indexOf(GTINid);
+
     gtinstring = stringforparse.mid(gtinstartindex+GTINid.length(),Gtinlenght);
+
+    //    qDebug() << stringforparse << " stringforparse was ";
+    stringforparse = stringforparse.mid(gtinstring.length() + GTINid.length(), stringforparse.length() - gtinstring.length() );
+    //    qDebug() << stringforparse << "stringforparse now ";
+
+    snstartindex = stringforparse.indexOf(SNid);
     snstring = stringforparse.mid(snstartindex+SNid.length(),SNlenght);
+
+    //    qDebug() << stringforparse << "stringforparse was ";
+    stringforparse = stringforparse.mid(snstring.length() + SNid.length(), stringforparse.length() - snstring.length() );
+    //    qDebug() << stringforparse << " stringforparse now ";
+
+
+    qDebug() << stringforparse.indexOf(razdelitel) << "indexOf(29)";
+
+
+
     batchstring = stringforparse.mid(batchstartindex+Batchid.length(),Batchlenght);
     expstring = stringforparse.mid(experiestartindex+Experyid.length(),ExpLenght);
     tnvedstring = stringforparse.mid(tnvedstartindex+TNVEDid.length(),TNVEDLenght);
@@ -301,11 +325,11 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
-    qDebug() << gtinstring << "gtinstring ";
-    qDebug() << snstring << "snstring"  ;
-    qDebug() << batchstring << "batchstring"  ;
-    qDebug() << expstring << "expstring"  ;
-    qDebug() << tnvedstring << "tnvedstring"  ;
+    //    qDebug() << gtinstring << "gtinstring ";
+    //    qDebug() << snstring << "snstring"  ;
+    //    qDebug() << batchstring << "batchstring"  ;
+    //    qDebug() << expstring << "expstring"  ;
+    //    qDebug() << tnvedstring << "tnvedstring"  ;
 }
 
 void MainWindow::updateDMPicture()
@@ -461,17 +485,34 @@ void MainWindow::setScale(int scale)
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
+//    QKeyEvent* key8 = static_cast<QKeyEvent*>(event);
+
+//     qDebug() << key8 << " key1";
+
+        if (event->type()==QEvent::KeyPress) {
+            QKeyEvent* key3 = static_cast<QKeyEvent*>(event);
+
+            text2.append(key3->key());
+    qDebug() << text2;
+        }
 
     if (event->type()==QEvent::KeyRelease) {
 
         QKeyEvent* key = static_cast<QKeyEvent*>(event);
 
         int key1 = key->key();
-
+        text.append(key->key());
+//qDebug() << text;
         if ( (key->key()==Qt::Key_Enter) || (key->key()==Qt::Key_Return)|| (key->key()==Qt::Key_Shift) ) {
             //Enter or return was pressed
         } else {
             keyString = QString( QChar(key1) );
+
+//            if (key1 == 29 )
+//                qDebug() << "yes" ;
+//            else
+//                qDebug() << "keyString "<< keyString << " key1 "<< key1;
+
             addSymbolToInputString(keyString);
             return QObject::eventFilter(obj, event);
         }

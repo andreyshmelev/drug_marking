@@ -80,6 +80,8 @@ private:
     const QString Experyid = "17";
     const QString TNVEDid = "240";
 
+    const QString razdelitel = "#";
+
     const uint8_t Gtinlenght = 14;
     const uint8_t SNlenght = 13 ;
     const uint8_t ExpLenght = 6;
