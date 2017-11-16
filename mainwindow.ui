@@ -877,18 +877,27 @@ border-radius: 0px;</string>
         <pointsize>6</pointsize>
        </font>
       </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QPushButton" name="agregationStartButton">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>50</y>
-        <width>381</width>
-        <height>41</height>
+        <width>181</width>
+        <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Начать агрегацию</string>
+       <string>Начать
+агрегацию</string>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget_4">
@@ -896,7 +905,7 @@ border-radius: 0px;</string>
        <rect>
         <x>10</x>
         <y>110</y>
-        <width>91</width>
+        <width>99</width>
         <height>211</height>
        </rect>
       </property>
@@ -974,6 +983,28 @@ border-radius: 0px;</string>
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="serialNumberAgregationLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Серийный номер</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="TNVEDabelAgregation">
          <property name="maximumSize">
           <size>
@@ -1003,7 +1034,7 @@ border-radius: 0px;</string>
         <x>120</x>
         <y>110</y>
         <width>241</width>
-        <height>211</height>
+        <height>216</height>
        </rect>
       </property>
       <property name="font">
@@ -1014,7 +1045,13 @@ border-radius: 0px;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QPlainTextEdit" name="GTINTextAgregation">
+        <widget class="QTextEdit" name="GTINTextAgregation">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1023,20 +1060,16 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <family>Times New Roman</family>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="readOnly">
           <bool>true</bool>
-         </property>
-         <property name="plainText">
-          <string/>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="batchnumberTextAgregation">
+        <widget class="QTextEdit" name="batchnumberTextAgregation">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1045,20 +1078,16 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="readOnly">
           <bool>true</bool>
-         </property>
-         <property name="plainText">
-          <string/>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="expirationdateAgregation">
+        <widget class="QTextEdit" name="expirationdateAgregation">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1067,20 +1096,22 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="readOnly">
           <bool>true</bool>
-         </property>
-         <property name="plainText">
-          <string/>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="TNVEDValueAgregation">
+        <widget class="QTextEdit" name="serialNumberAgregationValue">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1089,19 +1120,61 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="readOnly">
           <bool>true</bool>
          </property>
-         <property name="plainText">
-          <string/>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="TNVEDValueAgregation">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>6</pointsize>
+          </font>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="qrstartstop">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>40</y>
+        <width>60</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>qrstartstop</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="statisticsPage">

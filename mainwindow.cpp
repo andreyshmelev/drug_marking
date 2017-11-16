@@ -15,10 +15,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QLabel label;
+
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
+
+//    QPixmap pixmapqr(QDir::currentPath() + "/startapp.jpg");
+
+    pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
+    ui->qrstartstop->setPixmap(*pixmapqr);
+    ui->qrstartstop->show();
+    ui->qrstartstop->setScaledContents(1);
+
 
     this->installEventFilter(this);
 
@@ -168,9 +176,95 @@ void MainWindow::updateTimeDate()
 
 void MainWindow::updateReadedDMCode()
 {
+    ParseDMCode(inputDataStringFromScaner);
     //qDebug() << "stop timeout timer";
     DMCodeUpdateTimeoutTimer->stop();
     inputDataStringFromScaner.clear();
+}
+
+void MainWindow::ParseDMCode(QString stringforparse)
+{
+
+    QString gtinstring;
+    QString GTINid = "01";
+    QString SNid = "21";
+    QString Batchid = "10";
+    QString Experyid = "17";
+    QString TNVEDid = "240";
+
+    uint8_t gtinlenght = 14;
+    uint8_t SNlenght = 13 ; // уточнить - может варьироваться
+    uint8_t Batchlenght = 14;
+
+    if (stringforparse == "5021")
+    {
+        setAgregation(1);
+        return;
+    }
+
+    if (stringforparse == "8619")
+    {
+        setAgregation(0);
+        return;
+    }
+
+
+
+    int gtinstartindex = stringforparse.indexOf(GTINid);
+    int snstartindex = stringforparse.indexOf(SNid);
+    int batchstartindex = stringforparse.indexOf(Batchid);
+    int experiestartindex = stringforparse.indexOf(Experyid);
+    int tnvedstartindex = stringforparse.indexOf(TNVEDid);
+
+
+    // если в прочитаной строке отсутствует хоть один айди из списка то нахрен!
+    if (   (gtinstartindex == -1) ||
+           (snstartindex == -1) ||
+           (batchstartindex == -1) ||
+           (experiestartindex == -1)
+           )
+    {
+        if  (gtinstartindex == -1)
+        {
+            ui->GTINTextAgregation->setText("Отсутствует");
+        }
+
+        if  (snstartindex == -1)
+        {
+            ui->serialNumberAgregationValue->setText("Отсутствует");
+        }
+
+        if  (batchstartindex == -1)
+        {
+            ui->batchnumberTextAgregation->setText("Отсутствует");
+        }
+
+        if  (experiestartindex == -1)
+        {
+            ui->expirationdateAgregation->setText("Отсутствует");
+        }
+
+
+        qDebug() << gtinstartindex << "gtinstartindex ";
+        qDebug() << snstartindex << "snstartindex ";
+        qDebug() << batchstartindex << "batchstartindex ";
+        qDebug() << experiestartindex <<"experiestartindex" ;
+        qDebug() << tnvedstartindex << "tnvedstartindex ";
+
+        return;
+    }
+
+    if  (tnvedstartindex == -1)
+    {
+        ui->TNVEDValueAgregation->setText("Отсутствует");
+    }
+
+    int SNstartindex = stringforparse.indexOf(SNid);
+    gtinstring = stringforparse.mid(gtinstartindex+GTINid.length(),gtinlenght);
+    ui->GTINTextAgregation->setText(gtinstring);
+
+    qDebug() << gtinstartindex ;
+    qDebug() << SNstartindex  ;
 }
 
 void MainWindow::updateDMPicture()
@@ -192,6 +286,7 @@ void MainWindow::updateDMcode()
 void MainWindow::setAgregation(bool set)
 {
     agregation = set;
+    emit agregationstatusToggled();
 }
 
 void MainWindow::toggleAgregation()
@@ -204,8 +299,6 @@ void MainWindow::toggleAgregation()
     {
         setAgregation(false);
     }
-
-    emit agregationstatusToggled();
 }
 
 void MainWindow::updateAgregationGUI()
@@ -218,6 +311,12 @@ void MainWindow::updateAgregationGUI()
         ui->expirationdateAgregation->setEnabled(true);
         ui->TNVEDValueAgregation->setEnabled(true);
         ui->ScannedCode->setEnabled(true);
+        ui->serialNumberAgregationValue->setEnabled(true);
+
+        pixmapqr = new QPixmap(QDir::currentPath() + "/stopapp.jpg");
+        ui->qrstartstop->setPixmap(*pixmapqr);
+        ui->qrstartstop->show();
+        ui->qrstartstop->setScaledContents(1);
 
     }
     else
@@ -228,6 +327,12 @@ void MainWindow::updateAgregationGUI()
         ui->expirationdateAgregation->setEnabled(false);
         ui->TNVEDValueAgregation->setEnabled(false);
         ui->ScannedCode->setEnabled(false);
+        ui->serialNumberAgregationValue->setEnabled(false);
+
+        pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
+        ui->qrstartstop->setPixmap(*pixmapqr);
+        ui->qrstartstop->show();
+        ui->qrstartstop->setScaledContents(1);
     }
 }
 
@@ -262,8 +367,6 @@ void MainWindow::updateQRImage()
     {
         ui->image_label->clear();
         ui->image_label->setText( tr("QR Code...") );
-        //        ui->labelSize->clear();
-        //        ui->pButtonSave->setEnabled( successfulEncoding );
         return;
     }
 
@@ -288,8 +391,7 @@ void MainWindow::updateQRImage()
 
 void MainWindow::addSymbolToInputString(QString str)
 {
-
-    if (getAgregation())
+//    if (getAgregation())
     {
         DMCodeUpdateTimeoutTimer->start();
 
@@ -328,12 +430,6 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
         inputkey = key->key();
 
         int key1 = key->key();
-
-        // handle ASCII char like keys
-
-        //qDebug() << inputkey;
-        //qDebug() << keyString;
-        //keyString = QString( QChar(key1) );
 
         if ( (key->key()==Qt::Key_Enter) || (key->key()==Qt::Key_Return)|| (key->key()==Qt::Key_Shift) ) {
             //Enter or return was pressed

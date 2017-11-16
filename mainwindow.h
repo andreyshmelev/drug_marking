@@ -13,6 +13,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QSignalMapper>
+#include <QPixmap>
 #include "QRCodeGenerator.h"
 
 namespace Ui {
@@ -68,6 +69,7 @@ private:
     QString keyString;
     QString inputDataStringFromScaner;
 
+    QPixmap * pixmapqr;
     bool agregation;
 
 protected:
@@ -78,6 +80,7 @@ private slots:
     void addMessageToJournal();
     void updateTimeDate();
     void updateReadedDMCode();
+    void ParseDMCode( QString stringtoparse);
     void updateDMPicture();
     void updateDMcode();
     void toggleAgregation( void );
