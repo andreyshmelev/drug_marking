@@ -221,6 +221,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
         return;
     }
 
+    ui->ScannedCode->setText(inputDataStringFromScaner);
 
 
     int gtinstartindex = stringforparse.indexOf(GTINid);
@@ -293,44 +294,87 @@ void MainWindow::ParseDMCode(QString stringforparse)
     }
 
 
-    QString SNRegularexpression = "21\\w{13,14}002#"; // работает для протамина - ферейн
+    // начинаем разбирать GTIN
+    // он всегда должен быть в начала. остальные группы данных могут быть в любом месте, и заканчиваться символом 29, за исключением если они находятся в конце строки.
 
-//     QString SNRegularexpression = "21\\w{14}"; // работает для колдакта
+    if (stringforparse.indexOf(GTINid) == 0)    // если начинается как нужно - с 01 то продолжаем, иначе - ошибка
+    {
+        gtinstring = stringforparse;
+        gtinstring = gtinstring.remove(0,2);
+        gtinstring = gtinstring.mid(0,Gtinlenght);
+    }
+
+    // кончаем разбирать GTIN
+
+
+    //удаляем джитин из общей строки
+    //    qDebug() << stringforparse << "stringforparse was ";
+    stringforparse.remove(0,16);
+    //    qDebug() << stringforparse << " stringforparse now ";
+
+    // начинаем разбирать серийник
+    //     QString SNRegularexpression = "21\\w{13,14}"; // работает только если в конце строки
+    QString SNRegularexpression = "21\\w{13,14}002#"; // работает для протамина - ферейн (он не в конце строки
 
     SNstring = GetRegularString(stringforparse, SNRegularexpression);
-
     SNstring.remove(0,2);
-
     SNstring.replace("002#","");
 
-    gtinstartindex = stringforparse.indexOf(GTINid);
-    gtinstring = stringforparse.mid(gtinstartindex+GTINid.length(),Gtinlenght);
+    // если разбор произошел неудачно, пробуем разобрать серийник в конце строки. для этого оставим только 14+2 = 16 символов
 
-    //    qDebug() << stringforparse << " stringforparse was ";
+    if (SNstring == "")
+    {
+        QString tail = stringforparse;
 
-    stringforparse.remove(0,Gtinlenght + GTINid.length());
+        tail = tail.remove(0,tail.length()-16);
 
-    //    qDebug() << stringforparse << "stringforparse now sssssssss";
+        qDebug() << tail << "tail " ;
+
+    }
+
+    // заканчиваем разбирать серийник
+
+    // начинаем разбирать ТНВЭД
+
+    QString TNVEDRegularexpression = "240\\w{4}"; // работает только если в конце строки. если не в конце строки, должен быть TNVEDRegularexpression = "240\\w{4}002#"
+
+    tnvedstring = GetRegularString(stringforparse, TNVEDRegularexpression);
+    tnvedstring.remove(0,3);
+
+    // кончаем разбирать ТНВЭД
+
+
+    // начинаем разбирать Срок Годности
+
+    QString ExpRegularexpression = "17\\w{6}"; // работает только если в конце строки. если не в конце строки, должен быть TNVEDRegularexpression = "240\\w{4}002#"
+
+    expstring = GetRegularString(stringforparse, ExpRegularexpression);
+    expstring.remove(0,2);
+
+    // кончаем разбирать Срок Годности
+
+
+
 
     snstartindex = stringforparse.indexOf(SNid);
 
     //    qDebug() << snstartindex<<"snstartindex";
 
-//    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
+    //    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
 
     //    qDebug() << stringforparse << "stringforparse was ";
-    stringforparse.remove(0,SNlenght + GTINid.length());
+    //    stringforparse.remove(0,SNlenght + GTINid.length());
     //    qDebug() << stringforparse << " stringforparse now ";
-
-
     //    qDebug() << stringforparse.indexOf(razdelitel) << "$";
     //    qDebug() << stringforparse << "stringforparse";
+    //    batchstring = stringforparse.mid(batchstartindex+Batchid.length(),Batchlenght);
+    //    expstring = stringforparse.mid(experiestartindex+Experyid.length(),ExpLenght);
+    //    tnvedstring = stringforparse.mid(tnvedstartindex+TNVEDid.length(),TNVEDLenght);
 
 
 
-    batchstring = stringforparse.mid(batchstartindex+Batchid.length(),Batchlenght);
-    expstring = stringforparse.mid(experiestartindex+Experyid.length(),ExpLenght);
-    tnvedstring = stringforparse.mid(tnvedstartindex+TNVEDid.length(),TNVEDLenght);
+
+
 
     ui->GTINTextAgregation->setText(gtinstring);
     ui->serialNumberAgregationValue->setText(SNstring);
@@ -338,7 +382,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
     ui->expirationdateAgregation->setText(expstring);
     ui->TNVEDValueAgregation->setText(tnvedstring);
 
-    ui->ScannedCode->setText(inputDataStringFromScaner);
+
 
     //    qDebug() << gtinstring << "gtinstring ";
     //    qDebug() << snstring << "snstring"  ;
@@ -521,7 +565,7 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
             keyString = QString( QChar(key1) );
             addSymbolToInputString(keyString);
 
-//            qDebug() << keyString << key1;
+            //            qDebug() << keyString << key1;
 
 
             //            if(key1 == NULL)

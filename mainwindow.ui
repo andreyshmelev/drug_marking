@@ -874,7 +874,7 @@ border-radius: 0px;</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>6</pointsize>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="readOnly">
@@ -1060,7 +1060,7 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="readOnly">
@@ -1078,7 +1078,7 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <pointsize>6</pointsize>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="readOnly">
@@ -1096,7 +1096,7 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <pointsize>6</pointsize>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="readOnly">
@@ -1120,7 +1120,7 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <pointsize>6</pointsize>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="readOnly">
@@ -1144,7 +1144,7 @@ border-radius: 0px;</string>
          </property>
          <property name="font">
           <font>
-           <pointsize>6</pointsize>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="readOnly">
