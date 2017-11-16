@@ -325,13 +325,15 @@ void MainWindow::ParseDMCode(QString stringforparse)
     if (SNstring == "")
     {
         QString tail = stringforparse;
+        //получаем хвост и уже пытаемся произвести это дело с хвостом
+
+        SNRegularexpression = "21\\w{13,14}";
 
         tail = tail.remove(0,tail.length()-16);
-
-        qDebug() << tail << "tail " ;
-
+        SNstring = GetRegularString(tail, SNRegularexpression);
+        SNstring.remove(0,2);
+        qDebug() << tail << "tail "  << SNstring  << "SNstring";
     }
-
     // заканчиваем разбирать серийник
 
     // начинаем разбирать ТНВЭД
