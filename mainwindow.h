@@ -71,6 +71,20 @@ private:
 
     QPixmap * pixmapqr;
     bool agregation;
+    const QString startcodestring = "5021";
+    const QString stopcodestring = "8619";
+
+    const QString GTINid = "01";
+    const QString SNid = "21";
+    const QString Batchid = "10";
+    const QString Experyid = "17";
+    const QString TNVEDid = "240";
+
+    const uint8_t Gtinlenght = 14;
+    const uint8_t SNlenght = 13 ;
+    const uint8_t ExpLenght = 6;
+    const uint8_t TNVEDLenght = 4;
+
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
