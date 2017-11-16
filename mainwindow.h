@@ -31,6 +31,10 @@ public:
     int GenerateNumber(int High, int Low);
 
 
+    void getregularString(QString stringforparse, QString SNRegularexpression);
+
+    void getRegularFunction(QString SNRegularexpression, QString stringforparse);
+
 private:
     QString getGuiGTIN();
     QString getSN();
@@ -83,7 +87,7 @@ private:
     const QString TNVEDid = "240";
     const QString GSSymbol= "#0029";
 
-    const QString razdelitel = "#";
+    const QString razdelitel = "002#";
 
     const uint8_t Gtinlenght = 14;
     const uint8_t SNlenght = 13 ;

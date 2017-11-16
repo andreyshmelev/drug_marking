@@ -183,11 +183,21 @@ void MainWindow::updateReadedDMCode()
     inputDataStringFromScaner.clear();
 }
 
+void MainWindow::getRegularFunction(QString SNRegularexpression, QString stringforparse)
+{
+    QRegularExpression re(SNRegularexpression );
+    QRegularExpressionMatch match = re.match(stringforparse);
+    if (match.hasMatch()) {
+        QString matched = match.captured(0); // matched == "23 def"
+        qDebug() << matched << "matched";
+    }
+}
+
 void MainWindow::ParseDMCode(QString stringforparse)
 {
 
     QString gtinstring;
-    QString snstring;
+    QString SNstring;
     QString batchstring;
     QString expstring;
     QString tnvedstring;
@@ -293,23 +303,36 @@ void MainWindow::ParseDMCode(QString stringforparse)
     // int experiestartindex = stringforparse.indexOf(Experyid);
     // int tnvedstartindex = stringforparse.indexOf(TNVEDid);
 
-    gtinstartindex = stringforparse.indexOf(GTINid);
+    //    QRegExp rx = QRegExp("*");
 
+    QString SNRegularexpression = "17\\w{14,15}+002#";
+
+    getRegularFunction(SNRegularexpression, stringforparse);
+
+    qDebug() << matched << "matched";
+
+    gtinstartindex = stringforparse.indexOf(GTINid);
     gtinstring = stringforparse.mid(gtinstartindex+GTINid.length(),Gtinlenght);
 
     //    qDebug() << stringforparse << " stringforparse was ";
-    stringforparse = stringforparse.mid(gtinstring.length() + GTINid.length(), stringforparse.length() - gtinstring.length() );
-    //    qDebug() << stringforparse << "stringforparse now ";
+
+    stringforparse.remove(0,Gtinlenght + GTINid.length());
+
+    //    qDebug() << stringforparse << "stringforparse now sssssssss";
 
     snstartindex = stringforparse.indexOf(SNid);
-    snstring = stringforparse.mid(snstartindex+SNid.length(),SNlenght);
+
+    //    qDebug() << snstartindex<<"snstartindex";
+
+    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
 
     //    qDebug() << stringforparse << "stringforparse was ";
-    stringforparse = stringforparse.mid(snstring.length() + SNid.length(), stringforparse.length() - snstring.length() );
+    stringforparse.remove(0,SNlenght + GTINid.length());
     //    qDebug() << stringforparse << " stringforparse now ";
 
 
-    qDebug() << stringforparse.indexOf(razdelitel) << "indexOf(29)";
+    //    qDebug() << stringforparse.indexOf(razdelitel) << "$";
+    //    qDebug() << stringforparse << "stringforparse";
 
 
 
@@ -318,7 +341,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
     tnvedstring = stringforparse.mid(tnvedstartindex+TNVEDid.length(),TNVEDLenght);
 
     ui->GTINTextAgregation->setText(gtinstring);
-    ui->serialNumberAgregationValue->setText(snstring);
+    ui->serialNumberAgregationValue->setText(SNstring);
     ui->batchnumberTextAgregation->setText(batchstring);
     ui->expirationdateAgregation->setText(expstring);
     ui->TNVEDValueAgregation->setText(tnvedstring);
@@ -411,11 +434,6 @@ void MainWindow::updateAgregationGUI()
 
 QString MainWindow::GenerateDMcode()
 {
-    QString GTINid = "01";
-    QString SNid = "21";
-    QString Batchid = "10";
-    QString Experyid = "17";
-    QString TNVEDid = "240";
     QString DMCode = GTINid + getGuiGTIN() + SNid  +generateSN() + Batchid + getGuiBatchNumber() +  Experyid + getGuiExpery() + TNVEDid  + getGuiTNVED();
     updateQRImage();
     return DMCode;
@@ -486,18 +504,18 @@ void MainWindow::setScale(int scale)
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
 
-    if (event->type()==QEvent::KeyPress) {
-        QKeyEvent* key3 = static_cast<QKeyEvent*>(event);
+    //    if (event->type()==QEvent::KeyPress) {
+    //        QKeyEvent* key3 = static_cast<QKeyEvent*>(event);
 
-        KeyspressedString.append(key3->key());
+    //        KeyspressedString.append(key3->key());
 
-        if (KeyspressedString.indexOf(GSSymbol) !=-1)
-        {
-            qDebug() << KeyspressedString;
-            addSymbolToInputString("$");
-            KeyspressedString.clear();
-        }
-    }
+    //        if (KeyspressedString.indexOf(GSSymbol) !=-1)
+    //        {
+    //            qDebug() << KeyspressedString;
+    ////            addSymbolToInputString("$");
+    //            KeyspressedString.clear();
+    //        }
+    //    }
 
     if (event->type()==QEvent::KeyRelease) {
 
@@ -509,8 +527,14 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
             //Enter or return was pressed
         } else {
             keyString = QString( QChar(key1) );
+            addSymbolToInputString(keyString);
 
-           addSymbolToInputString(keyString);
+            qDebug() << keyString << key1;
+
+
+            //            if(key1 == NULL)
+            //                qDebug() << " = 0";
+
             return QObject::eventFilter(obj, event);
         }
         return true;
