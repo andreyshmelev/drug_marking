@@ -35,6 +35,10 @@ public:
 
     void getRegularFunction(QString SNRegularexpression, QString stringforparse);
 
+    void Regtr(QString stringforparse, QString matched, QString SNRegularexpression);
+
+    QString GetRegularString(QString stringforparse, QString SNRegularexpression);
+
 private:
     QString getGuiGTIN();
     QString getSN();

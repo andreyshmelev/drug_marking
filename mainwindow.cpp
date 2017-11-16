@@ -183,14 +183,17 @@ void MainWindow::updateReadedDMCode()
     inputDataStringFromScaner.clear();
 }
 
-void MainWindow::getRegularFunction(QString SNRegularexpression, QString stringforparse)
+QString MainWindow::GetRegularString(QString stringforparse, QString SNRegularexpression)
 {
+    QString matched ;
     QRegularExpression re(SNRegularexpression );
     QRegularExpressionMatch match = re.match(stringforparse);
     if (match.hasMatch()) {
-        QString matched = match.captured(0); // matched == "23 def"
+        matched = match.captured(0);
         qDebug() << matched << "matched";
     }
+
+    return matched;
 }
 
 void MainWindow::ParseDMCode(QString stringforparse)
@@ -289,27 +292,16 @@ void MainWindow::ParseDMCode(QString stringforparse)
         return;
     }
 
-    //    qDebug() << gtinstartindex << "gtinstartindex ";
-    //    qDebug() << snstartindex << "snstartindex ";
-    //    qDebug() << batchstartindex << "batchstartindex ";
-    //    qDebug() << experiestartindex <<"experiestartindex" ;
-    //    qDebug() << tnvedstartindex << "tnvedstartindex ";
 
-    // сюда мы перешли если наш код может быть распарсен
+    QString SNRegularexpression = "21\\w{13,14}002#"; // работает для протамина - ферейн
 
-    // gtinstartindex = stringforparse.indexOf(GTINid);
-    // int snstartindex = stringforparse.indexOf(SNid);
-    // int batchstartindex = stringforparse.indexOf(Batchid);
-    // int experiestartindex = stringforparse.indexOf(Experyid);
-    // int tnvedstartindex = stringforparse.indexOf(TNVEDid);
+//     QString SNRegularexpression = "21\\w{14}"; // работает для колдакта
 
-    //    QRegExp rx = QRegExp("*");
+    SNstring = GetRegularString(stringforparse, SNRegularexpression);
 
-    QString SNRegularexpression = "17\\w{14,15}+002#";
+    SNstring.remove(0,2);
 
-    getRegularFunction(SNRegularexpression, stringforparse);
-
-    qDebug() << matched << "matched";
+    SNstring.replace("002#","");
 
     gtinstartindex = stringforparse.indexOf(GTINid);
     gtinstring = stringforparse.mid(gtinstartindex+GTINid.length(),Gtinlenght);
@@ -324,7 +316,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     //    qDebug() << snstartindex<<"snstartindex";
 
-    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
+//    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
 
     //    qDebug() << stringforparse << "stringforparse was ";
     stringforparse.remove(0,SNlenght + GTINid.length());
@@ -529,7 +521,7 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
             keyString = QString( QChar(key1) );
             addSymbolToInputString(keyString);
 
-            qDebug() << keyString << key1;
+//            qDebug() << keyString << key1;
 
 
             //            if(key1 == NULL)
