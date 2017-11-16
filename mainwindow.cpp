@@ -6,7 +6,7 @@
 #include "QTextCodec"
 #include "QByteArray"
 
-QByteArray text,text2;
+
 int t;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -485,35 +485,32 @@ void MainWindow::setScale(int scale)
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
-//    QKeyEvent* key8 = static_cast<QKeyEvent*>(event);
 
-//     qDebug() << key8 << " key1";
+    if (event->type()==QEvent::KeyPress) {
+        QKeyEvent* key3 = static_cast<QKeyEvent*>(event);
 
-        if (event->type()==QEvent::KeyPress) {
-            QKeyEvent* key3 = static_cast<QKeyEvent*>(event);
+        KeyspressedString.append(key3->key());
 
-            text2.append(key3->key());
-    qDebug() << text2;
+        if (KeyspressedString.indexOf(GSSymbol) !=-1)
+        {
+            qDebug() << KeyspressedString;
+            addSymbolToInputString("$");
+            KeyspressedString.clear();
         }
+    }
 
     if (event->type()==QEvent::KeyRelease) {
 
         QKeyEvent* key = static_cast<QKeyEvent*>(event);
 
         int key1 = key->key();
-        text.append(key->key());
-//qDebug() << text;
+        //qDebug() << text;
         if ( (key->key()==Qt::Key_Enter) || (key->key()==Qt::Key_Return)|| (key->key()==Qt::Key_Shift) ) {
             //Enter or return was pressed
         } else {
             keyString = QString( QChar(key1) );
 
-//            if (key1 == 29 )
-//                qDebug() << "yes" ;
-//            else
-//                qDebug() << "keyString "<< keyString << " key1 "<< key1;
-
-            addSymbolToInputString(keyString);
+           addSymbolToInputString(keyString);
             return QObject::eventFilter(obj, event);
         }
         return true;

@@ -59,6 +59,8 @@ private:
     Ui::MainWindow *ui;
     QStringList * messages;
 
+    QString KeyspressedString;
+
     QString SN;
     QPixmap image;
     QImage  *imageObject;
@@ -79,6 +81,7 @@ private:
     const QString Batchid = "10";
     const QString Experyid = "17";
     const QString TNVEDid = "240";
+    const QString GSSymbol= "#0029";
 
     const QString razdelitel = "#";
 
