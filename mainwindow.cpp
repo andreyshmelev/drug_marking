@@ -320,7 +320,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
     SNstring.remove(0,2);
     SNstring.replace("002#","");
 
-    // если разбор произошел неудачно, пробуем разобрать серийник в конце строки. для этого оставим только 14+2 = 16 символов
+    // если разбор произошел неудачно, пробуем разобрать серийник в конце строки. для этого оставим только 13+2 = 15 символов
 
     if (SNstring == "")
     {
@@ -329,7 +329,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
         SNRegularexpression = "21\\w{13}";
 
-        tail = tail.remove(0,tail.length()-16);
+        tail = tail.remove(0,tail.length()-15);
         SNstring = GetRegularString(tail, SNRegularexpression);
         SNstring.remove(0,2);
         qDebug() << tail << "tail "  << SNstring  << "SNstring";
