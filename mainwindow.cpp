@@ -221,8 +221,25 @@ void MainWindow::CreateXML313Doc()
     registerproductemissionelement.appendChild(operationdateelement);
 
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
-    operationdatetext.setNodeValue("2017-03-31T15:00:05+05:00");
+//    operationdatetext.setNodeValue("2017-03-31T15:00:05+05:00");
+    operationdatetext.setNodeValue(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-ddThh:mm:ss"));
     operationdateelement.appendChild(operationdatetext);
+
+    QDateTime local(QDateTime::currentDateTime());
+    QDateTime UTC(local.toUTC());
+    QDateTime dt(UTC.date(), UTC.time(), Qt::LocalTime);
+    QTimeZone tz(local.utcOffset());
+
+
+
+    qDebug() << "local::utcOffset() " << local.utcOffset();
+    qDebug() << "Qt::OffsetFromUTC " << Qt::OffsetFromUTC;
+    qDebug() << "Local time is:" << local;
+    qDebug() << "tz" << tz;
+    qDebug() << "UTC time is:" << UTC;
+    qDebug() << "No difference between times:" << local.secsTo(UTC);
+    qDebug() << "Here is the difference between times:" << local.secsTo(dt);
+    qDebug() << "Here is the difference between times:" << dt.secsTo(local);
 
     // добавили operation_date
 
@@ -268,26 +285,22 @@ void MainWindow::CreateXML313Doc()
     QDomElement signs_element  = document.createElement("signs");
     registerproductemissionelement.appendChild(signs_element);
 
+
+    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
 
     QDomElement sgtin_element ;
     QDomText sgtin_text ;
-
-
-
-
-
-
     // добавили doc_num
 
 
-    for (int var = 0; var < GTINstringlist.length(); ++var) {
+    for (int var = 0; var < SN_stringlist.length(); ++var) {
 
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
 
         sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
-        sgtin_text.setNodeValue(GTINstringlist.at(var));
+        sgtin_text.setNodeValue(SN_stringlist.at(var));
         sgtin_element.appendChild(sgtin_text);
 
     }
@@ -365,7 +378,6 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // начинаем разбирать серийник
 
-
     SNstring = GetRegularString(stringforparse, SNRegularexpression);
     SNstring.remove(0,2);
     SNstring.replace(GSSymbol,Emptystring);
@@ -382,6 +394,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
     tnvedstring = GetRegularString(stringforparse, TNVEDRegularexpression);
     tnvedstring.remove(0,3);
     tnvedstring.replace(GSSymbol,Emptystring);
+
     if(tnvedstring == NULL)
     {
         tnvedstring = NotFoundString;
@@ -414,13 +427,13 @@ void MainWindow::ParseDMCode(QString stringforparse)
         batchstring = NotFoundString;
     }
 
+    sGTINString = gtinstring + SNstring;
     // кончаем разбирать Партию
 
-    GTINstringlist.append(gtinstring);
-
-    qDebug() << GTINstringlist;
-
-
+    if(getAgregation())
+    {
+        SN_stringlist.append(sGTINString);
+    }
     emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 }
 
@@ -445,12 +458,12 @@ void MainWindow::setAgregation(bool set)
     if (set == true)
     {
         inputDataStringFromScaner.clear();
-        GTINstringlist.clear();
+        SN_stringlist.clear();
     }
     else
     {
         CreateXML313Doc();
-        GTINstringlist.clear();
+        SN_stringlist.clear();
         inputDataStringFromScaner.clear();
     }
     agregation = set;

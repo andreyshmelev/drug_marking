@@ -105,13 +105,14 @@ private:
     const uint8_t TNVEDLenght = 4;
 
 
+    QString sGTINString;
     QString gtinstring;
     QString SNstring;
     QString batchstring;
     QString expstring;
     QString tnvedstring;
 
-    QStringList GTINstringlist;
+    QStringList SN_stringlist;
 
 
     void CreateXML313Doc();
