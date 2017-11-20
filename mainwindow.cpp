@@ -201,22 +201,22 @@ void MainWindow::CreateXML313Doc()
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
+    //создаем элемент register_product_emission action_id="313"
 
+    QDomElement registerproductemissionelement  = document.createElement("register_product_emission");
+    registerproductemissionelement.setAttribute("action_id", 313);
+    root.appendChild(registerproductemissionelement);
 
-    //for (int var = 0; var < 10; ++var)
-    {
-        QDomElement registerproductemissionelement  = document.createElement("register_product_emission");
-        registerproductemissionelement.setAttribute("action_id", 313);
-        root.appendChild(registerproductemissionelement);
-    }
+    // добавляем subject_id
 
-    // add  register_product_emission element
+    QDomElement subjectIDelement  = document.createElement("subject_id");
+    registerproductemissionelement.appendChild(subjectIDelement);
 
-    QDomElement registerproductemissionelement = document.createElement("register_product_emission action_id");
+    QDomText subjectID  = document.createTextNode("subject_id"); // subject_id");
+    subjectID.setNodeValue("19527400011107");
+    subjectIDelement.appendChild(subjectID);
 
-    registerproductemissionelement.setAttribute("ID", 313);
-
-    //    documents.appendChild(registerproductemissionelement);
+    // добавили subject_id
 
     QFile file(QDir::currentPath()   + "/313-register_product_emission.xml");
 
