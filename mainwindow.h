@@ -89,9 +89,15 @@ private:
     const QString Batchid = "10";
     const QString Experyid = "17";
     const QString TNVEDid = "240";
-    const QString GSSymbol= "#0029";
 
-    const QString razdelitel = "002#";
+    const QString GSSymbol = "002#";
+    const QString Emptystring = "";
+
+    const QString SNRegularexpression = "21\\w{13,14}" + GSSymbol;
+    const QString TNVEDRegularexpression = "240\\w{4}" + GSSymbol;
+    const QString ExpRegularexpression = "17\\w{6}" ;
+    const QString BatchRegularexpression = "10\\w{1,20}" + GSSymbol ;
+    const QString NotFoundString = "Не найдено";
 
     const uint8_t Gtinlenght = 14;
     const uint8_t SNlenght = 13 ;

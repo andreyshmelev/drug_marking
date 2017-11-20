@@ -900,23 +900,39 @@ border-radius: 0px;</string>
 агрегацию</string>
       </property>
      </widget>
-     <widget class="QWidget" name="layoutWidget_4">
+     <widget class="QLabel" name="qrstartstop">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>110</y>
-        <width>99</width>
-        <height>211</height>
+        <x>210</x>
+        <y>40</y>
+        <width>60</width>
+        <height>60</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Times New Roman</family>
-        <pointsize>10</pointsize>
+        <pointsize>14</pointsize>
        </font>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <item>
+      <property name="text">
+       <string>qrstartstop</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>116</y>
+        <width>361</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
         <widget class="QLabel" name="GTINLabelAgregation">
          <property name="maximumSize">
           <size>
@@ -938,113 +954,7 @@ border-radius: 0px;</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="batchnumberAgregation">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Номер партии</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="productlifeimeLabelAgregation">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Срок годности</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="serialNumberAgregationLabel">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Серийный номер</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="TNVEDabelAgregation">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>ТН ВЭД</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget_5">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>110</y>
-        <width>241</width>
-        <height>216</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <item>
+       <item row="0" column="1">
         <widget class="QTextEdit" name="GTINTextAgregation">
          <property name="minimumSize">
           <size>
@@ -1068,7 +978,29 @@ border-radius: 0px;</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="batchnumberAgregation">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Номер партии</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
         <widget class="QTextEdit" name="batchnumberTextAgregation">
          <property name="maximumSize">
           <size>
@@ -1086,7 +1018,29 @@ border-radius: 0px;</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="productlifeimeLabelAgregation">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Срок годности</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
         <widget class="QTextEdit" name="expirationdateAgregation">
          <property name="maximumSize">
           <size>
@@ -1104,7 +1058,29 @@ border-radius: 0px;</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="serialNumberAgregationLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Серийный номер</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
         <widget class="QTextEdit" name="serialNumberAgregationValue">
          <property name="minimumSize">
           <size>
@@ -1128,7 +1104,29 @@ border-radius: 0px;</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="TNVEDabelAgregation">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>ТН ВЭД</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
         <widget class="QTextEdit" name="TNVEDValueAgregation">
          <property name="minimumSize">
           <size>
@@ -1153,28 +1151,6 @@ border-radius: 0px;</string>
         </widget>
        </item>
       </layout>
-     </widget>
-     <widget class="QLabel" name="qrstartstop">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>40</y>
-        <width>60</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>qrstartstop</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="statisticsPage">

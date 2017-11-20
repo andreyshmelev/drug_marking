@@ -27,11 +27,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->qrstartstop->show();
     ui->qrstartstop->setScaledContents(1);
 
-
     this->installEventFilter(this);
 
     journalTimer = new QTimer();
-    journalTimer->setInterval(550);
+    journalTimer->setInterval(250);
 
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(addMessageToJournal()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMPicture()));
@@ -43,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     DMCodeUpdateTimeoutTimer = new QTimer();
-    DMCodeUpdateTimeoutTimer->setInterval(100);
+    DMCodeUpdateTimeoutTimer->setInterval(50); // таймер который обновлятся при каждом нажатии клавиши, при его переполнении мы идем парсить строку (все символы со сканера приняты)
     connect(DMCodeUpdateTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateReadedDMCode()));
 
     DMCodeUpdateTimeoutTimer->start();
@@ -223,76 +222,13 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
+    // сюда перешли если нас устроил код
 
-    int gtinstartindex = stringforparse.indexOf(GTINid);
-    int snstartindex = stringforparse.indexOf(SNid);
-    int batchstartindex = stringforparse.indexOf(Batchid);
-    int experiestartindex = stringforparse.indexOf(Experyid);
-    int tnvedstartindex = stringforparse.indexOf(TNVEDid);
+    // добавляем в конец строки символ завершения <GS>, точнее часть его,
+    // чтобы обрабатывать поля, которые стоят в конце строки и которые не заканчиваются этим символом.
+    // Но если эти поля в центре то они должны заканчиваться этим символом ( кроме даты выпуска )
 
-
-    // если в прочитаной строке отсутствует хоть один айди из списка то нахрен!
-    //    if (   (gtinstartindex == -1) ||
-    //           (snstartindex == -1) ||
-    //           (batchstartindex == -1) ||
-    //           (experiestartindex == -1)
-    //           )
-
-    if  (gtinstartindex == -1)
-    {
-        ui->GTINTextAgregation->setText("Отсутствует");
-    }
-    else
-    {
-        ui->GTINTextAgregation->clear();
-    }
-
-    if  (snstartindex == -1)
-    {
-        ui->serialNumberAgregationValue->setText("Отсутствует");
-    }
-    else
-    {
-        ui->serialNumberAgregationValue->clear();
-    }
-
-    if  (batchstartindex == -1)
-    {
-        ui->batchnumberTextAgregation->setText("Отсутствует");
-    }
-    else
-    {
-        ui->batchnumberTextAgregation->clear();
-    }
-
-    if  (experiestartindex == -1)
-    {
-        ui->expirationdateAgregation->setText("Отсутствует");
-    }
-    else
-    {
-        ui->expirationdateAgregation->clear();
-    }
-
-    if  (tnvedstartindex == -1)
-    {
-        ui->TNVEDValueAgregation->setText("Отсутствует");
-    }
-    else
-    {
-        ui->TNVEDValueAgregation->clear();
-    }
-
-    // если в прочитаной строке отсутствует хоть один айди из списка то нахрен!
-    if (   (gtinstartindex == -1) ||
-           (snstartindex == -1) ||
-           (batchstartindex == -1) ||
-           (experiestartindex == -1)
-           )
-    {
-        return;
-    }
-
+    stringforparse.append(GSSymbol);
 
     // начинаем разбирать GTIN
     // он всегда должен быть в начала. остальные группы данных могут быть в любом месте, и заканчиваться символом 29, за исключением если они находятся в конце строки.
@@ -302,68 +238,74 @@ void MainWindow::ParseDMCode(QString stringforparse)
         gtinstring = stringforparse;
         gtinstring = gtinstring.remove(0,2);
         gtinstring = gtinstring.mid(0,Gtinlenght);
+        //удаляем джитин из общей строки
+        stringforparse.remove(0,Gtinlenght + GTINid.length());
+    }
+
+    else
+    {
+        gtinstring = NotFoundString;
     }
 
     // кончаем разбирать GTIN
 
 
-    //удаляем джитин из общей строки
-    //    qDebug() << stringforparse << "stringforparse was ";
-    stringforparse.remove(0,16);
-    //    qDebug() << stringforparse << " stringforparse now ";
+
 
     // начинаем разбирать серийник
-    //     QString SNRegularexpression = "21\\w{13,14}"; // работает только если в конце строки
-    QString SNRegularexpression = "21\\w{13}002#"; // работает для протамина - ферейн (он не в конце строки
+
 
     SNstring = GetRegularString(stringforparse, SNRegularexpression);
     SNstring.remove(0,2);
-    SNstring.replace("002#","");
+    SNstring.replace(GSSymbol,Emptystring);
 
-    // если разбор произошел неудачно, пробуем разобрать серийник в конце строки. для этого оставим только 13+2 = 15 символов
-
-    if (SNstring == "")
+    if(SNstring == NULL)
     {
-        QString tail = stringforparse;
-        //получаем хвост и уже пытаемся произвести это дело с хвостом
-
-        SNRegularexpression = "21\\w{13}";
-
-        tail = tail.remove(0,tail.length()-15);
-        SNstring = GetRegularString(tail, SNRegularexpression);
-        SNstring.remove(0,2);
-        qDebug() << tail << "tail "  << SNstring  << "SNstring";
+        SNstring = NotFoundString;
     }
+
     // заканчиваем разбирать серийник
 
     // начинаем разбирать ТНВЭД
 
-    QString TNVEDRegularexpression = "240\\w{4}"; // работает только если в конце строки. если не в конце строки, должен быть TNVEDRegularexpression = "240\\w{4}002#"
-
     tnvedstring = GetRegularString(stringforparse, TNVEDRegularexpression);
     tnvedstring.remove(0,3);
+    tnvedstring.replace(GSSymbol,Emptystring);
+    if(tnvedstring == NULL)
+    {
+        tnvedstring = NotFoundString;
+    }
 
     // кончаем разбирать ТНВЭД
 
 
     // начинаем разбирать Срок Годности
 
-    QString ExpRegularexpression = "17\\w{6}"; // работает только если в конце строки. если не в конце строки, должен быть TNVEDRegularexpression = "240\\w{4}002#"
-
     expstring = GetRegularString(stringforparse, ExpRegularexpression);
     expstring.remove(0,2);
+    expstring.replace(GSSymbol,Emptystring);
+    if(expstring == NULL)
+    {
+        expstring = NotFoundString;
+    }
 
     // кончаем разбирать Срок Годности
 
 
+    // начинаем разбирать Партию
 
+    batchstring = GetRegularString(stringforparse, BatchRegularexpression);
+    batchstring.remove(0,2);
+    batchstring.replace(GSSymbol,Emptystring);
 
-    snstartindex = stringforparse.indexOf(SNid);
+    if(batchstring == NULL)
+    {
+        batchstring = NotFoundString;
+    }
 
+    // кончаем разбирать Партию
     //    qDebug() << snstartindex<<"snstartindex";
-
     //    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
-
     //    qDebug() << stringforparse << "stringforparse was ";
     //    stringforparse.remove(0,SNlenght + GTINid.length());
     //    qDebug() << stringforparse << " stringforparse now ";
@@ -373,18 +315,11 @@ void MainWindow::ParseDMCode(QString stringforparse)
     //    expstring = stringforparse.mid(experiestartindex+Experyid.length(),ExpLenght);
     //    tnvedstring = stringforparse.mid(tnvedstartindex+TNVEDid.length(),TNVEDLenght);
 
-
-
-
-
-
     ui->GTINTextAgregation->setText(gtinstring);
     ui->serialNumberAgregationValue->setText(SNstring);
     ui->batchnumberTextAgregation->setText(batchstring);
     ui->expirationdateAgregation->setText(expstring);
     ui->TNVEDValueAgregation->setText(tnvedstring);
-
-
 
     //    qDebug() << gtinstring << "gtinstring ";
     //    qDebug() << snstring << "snstring"  ;
@@ -524,6 +459,53 @@ void MainWindow::addSymbolToInputString(QString str)
 
     //  qDebug() << "start timeout timer";
     QString wastext = inputDataStringFromScaner;
+
+    if (getAgregation() == true)
+    {
+        // Просто меняем раскладку если у нас агрегация.
+        // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
+
+        qDebug() << str << "strwas";
+
+        if (str == "Й") { str = "Q" ; } else
+        if (str == "Ц") { str = "W" ; } else
+        if (str == "У") { str = "E" ; } else
+        if (str == "К") { str = "R" ; } else
+        if (str == "Е") { str = "T" ; } else
+        if (str == "Н") { str = "Y" ; } else
+        if (str == "Г") { str = "U" ; } else
+        if (str == "Ш") { str = "I" ; } else
+        if (str == "Щ") { str = "O" ; } else
+        if (str == "З") { str = "P" ; } else
+        if (str == "Х") { str = "[" ; } else
+        if (str == "Ъ") { str = "]" ; } else
+
+        if (str == "Ф") { str = "A" ; } else
+        if (str == "Ы") { str = "S" ; } else
+        if (str == "В") { str = "D" ; } else
+        if (str == "А") { str = "F" ; } else
+        if (str == "П") { str = "G" ; } else
+        if (str == "Р") { str = "H" ; } else
+        if (str == "О") { str = "J" ; } else
+        if (str == "Л") { str = "K" ; } else
+        if (str == "Д") { str = "L" ; } else
+        if (str == "Ж") { str = ";" ; } else
+        if (str == "Э") { str = "'" ; } else
+
+        if (str == "Я") { str = "Z" ; } else
+        if (str == "Ч") { str = "X" ; } else
+        if (str == "С") { str = "C" ; } else
+        if (str == "М") { str = "V" ; } else
+        if (str == "И") { str = "B" ; } else
+        if (str == "Т") { str = "N" ; } else
+        if (str == "Ь") { str = "M" ; } else
+        if (str == "Б") { str = "," ; } else
+        if (str == "Ю") { str = "." ; } else
+        if (str == ".") { str = "/" ; }
+
+qDebug() << str << "strnow";
+    }
+
     wastext.append(str);
     inputDataStringFromScaner = wastext;
 }
