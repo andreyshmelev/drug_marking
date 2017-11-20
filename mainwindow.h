@@ -111,11 +111,11 @@ private:
     QString batchstring;
     QString expstring;
     QString tnvedstring;
-
     QStringList SN_stringlist;
 
-
     void CreateXML313Doc();
+    static QString GetISODate();
+    static QString GetDOCDate();
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);

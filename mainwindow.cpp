@@ -192,6 +192,22 @@ QString MainWindow::GetRegularString(QString stringforparse, QString SNRegularex
     return matched;
 }
 
+QString MainWindow::GetISODate()
+{
+    QString ISOdate;
+    // формат <operation_date>2017-10-07T15:00:00+05:00</operation_date>
+    ISOdate = QDateTime::currentDateTime().toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate);
+    return ISOdate;
+}
+
+QString MainWindow::GetDOCDate()
+{
+    QString DOCdate;
+    // формат <doc_date>07.10.2017</doc_date>
+    DOCdate = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy");
+    return DOCdate;
+}
+
 void MainWindow::CreateXML313Doc()
 {
     QDomDocument document;
@@ -221,25 +237,11 @@ void MainWindow::CreateXML313Doc()
     registerproductemissionelement.appendChild(operationdateelement);
 
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
-//    operationdatetext.setNodeValue("2017-03-31T15:00:05+05:00");
-    operationdatetext.setNodeValue(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-ddThh:mm:ss"));
+
+    QString ISOdate = GetISODate();
+
+    operationdatetext.setNodeValue(ISOdate);
     operationdateelement.appendChild(operationdatetext);
-
-    QDateTime local(QDateTime::currentDateTime());
-    QDateTime UTC(local.toUTC());
-    QDateTime dt(UTC.date(), UTC.time(), Qt::LocalTime);
-    QTimeZone tz(local.utcOffset());
-
-
-
-    qDebug() << "local::utcOffset() " << local.utcOffset();
-    qDebug() << "Qt::OffsetFromUTC " << Qt::OffsetFromUTC;
-    qDebug() << "Local time is:" << local;
-    qDebug() << "tz" << tz;
-    qDebug() << "UTC time is:" << UTC;
-    qDebug() << "No difference between times:" << local.secsTo(UTC);
-    qDebug() << "Here is the difference between times:" << local.secsTo(dt);
-    qDebug() << "Here is the difference between times:" << dt.secsTo(local);
 
     // добавили operation_date
 
@@ -249,7 +251,7 @@ void MainWindow::CreateXML313Doc()
     QDomElement confirm_doc_lement  = document.createElement("confirm_doc");
     registerproductemissionelement.appendChild(confirm_doc_lement);
 
-    QDomText confirm_doc_text  = document.createTextNode("confirm_doc"); // operation_date");
+    QDomText confirm_doc_text  = document.createTextNode("confirm_doc");
     confirm_doc_text.setNodeValue("1");
     confirm_doc_lement.appendChild(confirm_doc_text);
 
@@ -261,7 +263,7 @@ void MainWindow::CreateXML313Doc()
     QDomElement doc_num_element  = document.createElement("doc_num");
     registerproductemissionelement.appendChild(doc_num_element);
 
-    QDomText doc_num_text  = document.createTextNode("doc_num"); // operation_date");
+    QDomText doc_num_text  = document.createTextNode("doc_num");
     doc_num_text.setNodeValue("ds1");
     doc_num_element.appendChild(doc_num_text);
 
@@ -273,8 +275,8 @@ void MainWindow::CreateXML313Doc()
     QDomElement doc_date_element  = document.createElement("doc_date");
     registerproductemissionelement.appendChild(doc_date_element);
 
-    QDomText doc_date_text  = document.createTextNode("doc_date"); // operation_date");
-    doc_date_text.setNodeValue("31.03.2017");
+    QDomText doc_date_text  = document.createTextNode("doc_date");
+    doc_date_text.setNodeValue(GetDOCDate());
     doc_date_element.appendChild(doc_date_text);
 
     // добавили doc_num
