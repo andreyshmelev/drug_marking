@@ -72,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     messages->append("Брак");
     messages->append("Ок");
 
+
+
     imageObject = new QImage();
     imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
@@ -164,6 +166,11 @@ void MainWindow::addMessageToJournal()
 
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
+
+        if (ui->journalList->count()>100)
+                {
+            ui->journalList->clear();
+        }
 }
 
 void MainWindow::updateTimeDate()
