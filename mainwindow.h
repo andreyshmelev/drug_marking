@@ -111,6 +111,8 @@ private:
     QString expstring;
     QString tnvedstring;
 
+    QStringList GTINstringlist;
+
 
     void CreateXML313Doc();
 

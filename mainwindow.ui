@@ -624,7 +624,7 @@ border-radius: 0px;</string>
        <rect>
         <x>130</x>
         <y>60</y>
-        <width>241</width>
+        <width>283</width>
         <height>227</height>
        </rect>
       </property>
@@ -922,7 +922,7 @@ border-radius: 0px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>11</x>
@@ -1549,27 +1549,6 @@ border-radius: 0px;</string>
       </item>
      </layout>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="XMLButton">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>460</y>
-      <width>90</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>XML</string>
-    </property>
    </widget>
    <widget class="QWidget" name="layoutWidget_2">
     <property name="geometry">

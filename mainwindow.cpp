@@ -49,7 +49,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->programOptionsButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->agregationButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
-    connect(ui->XMLButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
 
     connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
@@ -60,7 +59,6 @@ MainWindow::MainWindow(QWidget *parent) :
     signalMapper -> setMapping (ui->programOptionsButton, 1) ;
     signalMapper -> setMapping (ui->agregationButton, 2) ;
     signalMapper -> setMapping (ui->statisticksButton, 3) ;
-    signalMapper -> setMapping (ui->XMLButton, 4) ;
 
     connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(setStackedPage(int)));
 
@@ -189,7 +187,6 @@ QString MainWindow::GetRegularString(QString stringforparse, QString SNRegularex
     QRegularExpressionMatch match = re.match(stringforparse);
     if (match.hasMatch()) {
         matched = match.captured(0);
-        qDebug() << matched << "matched";
     }
 
     return matched;
@@ -212,11 +209,95 @@ void MainWindow::CreateXML313Doc()
     QDomElement subjectIDelement  = document.createElement("subject_id");
     registerproductemissionelement.appendChild(subjectIDelement);
 
-    QDomText subjectID  = document.createTextNode("subject_id"); // subject_id");
-    subjectID.setNodeValue("19527400011107");
-    subjectIDelement.appendChild(subjectID);
+    QDomText subjectIDtext  = document.createTextNode("subject_id"); // subject_id");
+    subjectIDtext.setNodeValue("19527400011107");
+    subjectIDelement.appendChild(subjectIDtext);
 
     // добавили subject_id
+
+    // добавляем operation_date
+
+    QDomElement operationdateelement  = document.createElement("operation_date");
+    registerproductemissionelement.appendChild(operationdateelement);
+
+    QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
+    operationdatetext.setNodeValue("2017-03-31T15:00:05+05:00");
+    operationdateelement.appendChild(operationdatetext);
+
+    // добавили operation_date
+
+
+    // добавляем confirm_doc
+
+    QDomElement confirm_doc_lement  = document.createElement("confirm_doc");
+    registerproductemissionelement.appendChild(confirm_doc_lement);
+
+    QDomText confirm_doc_text  = document.createTextNode("confirm_doc"); // operation_date");
+    confirm_doc_text.setNodeValue("1");
+    confirm_doc_lement.appendChild(confirm_doc_text);
+
+    // добавили confirm_doc
+
+
+    // добавляем doc_num
+
+    QDomElement doc_num_element  = document.createElement("doc_num");
+    registerproductemissionelement.appendChild(doc_num_element);
+
+    QDomText doc_num_text  = document.createTextNode("doc_num"); // operation_date");
+    doc_num_text.setNodeValue("ds1");
+    doc_num_element.appendChild(doc_num_text);
+
+    // добавили doc_num
+
+
+    // добавляем doc_num
+
+    QDomElement doc_date_element  = document.createElement("doc_date");
+    registerproductemissionelement.appendChild(doc_date_element);
+
+    QDomText doc_date_text  = document.createTextNode("doc_date"); // operation_date");
+    doc_date_text.setNodeValue("31.03.2017");
+    doc_date_element.appendChild(doc_date_text);
+
+    // добавили doc_num
+
+
+    // добавляем signs (для первичной агрегации это GTINs
+
+    QDomElement signs_element  = document.createElement("signs");
+    registerproductemissionelement.appendChild(signs_element);
+
+    // добавляем sgtin
+
+    QDomElement sgtin_element ;
+    QDomText sgtin_text ;
+
+
+
+
+
+
+    // добавили doc_num
+
+
+    for (int var = 0; var < GTINstringlist.length(); ++var) {
+
+        sgtin_element = document.createElement("sgtin");
+        signs_element.appendChild(sgtin_element);
+
+        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
+        sgtin_text.setNodeValue(GTINstringlist.at(var));
+        sgtin_element.appendChild(sgtin_text);
+
+    }
+
+    //    QDomText doc_date_text  = document.createTextNode("signs"); // operation_date");
+    //    doc_date_text.setNodeValue("31.03.2017");
+    //    signs_element.appendChild(doc_date_text);
+
+    // добавили signs
+
 
     QFile file(QDir::currentPath()   + "/313-register_product_emission.xml");
 
@@ -242,15 +323,14 @@ void MainWindow::ParseDMCode(QString stringforparse)
     if (stringforparse == startcodestring)
     {
         setAgregation(1);
-        inputDataStringFromScaner.clear();
+
         return;
     }
 
     if (stringforparse == stopcodestring)
     {
-        CreateXML313Doc();
         setAgregation(0);
-        inputDataStringFromScaner.clear();
+
         return;
     }
 
@@ -336,6 +416,10 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // кончаем разбирать Партию
 
+    GTINstringlist.append(gtinstring);
+
+    qDebug() << GTINstringlist;
+
 
     emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 }
@@ -358,6 +442,17 @@ void MainWindow::updateDMcode()
 
 void MainWindow::setAgregation(bool set)
 {
+    if (set == true)
+    {
+        inputDataStringFromScaner.clear();
+        GTINstringlist.clear();
+    }
+    else
+    {
+        CreateXML313Doc();
+        GTINstringlist.clear();
+        inputDataStringFromScaner.clear();
+    }
     agregation = set;
     emit agregationstatusToggled();
 }
