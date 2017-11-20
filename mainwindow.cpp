@@ -5,7 +5,8 @@
 #include "QSpinBox"
 #include "QTextCodec"
 #include "QByteArray"
-
+#include "QtXml"
+#include "QFile"
 
 int t;
 
@@ -15,12 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
-
-    //    QPixmap pixmapqr(QDir::currentPath() + "/startapp.jpg");
 
     pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
     ui->qrstartstop->setPixmap(*pixmapqr);
@@ -40,9 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     datetimeTimer->setInterval(1000);
     connect(datetimeTimer, SIGNAL(timeout()), this, SLOT(updateTimeDate()));
 
-
     DMCodeUpdateTimeoutTimer = new QTimer();
-    DMCodeUpdateTimeoutTimer->setInterval(50); // таймер который обновлятся при каждом нажатии клавиши, при его переполнении мы идем парсить строку (все символы со сканера приняты)
+    DMCodeUpdateTimeoutTimer->setInterval(100); // таймер который обновлятся при каждом нажатии клавиши, при его переполнении мы идем парсить строку (все символы со сканера приняты)
     connect(DMCodeUpdateTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateReadedDMCode()));
 
     DMCodeUpdateTimeoutTimer->start();
@@ -56,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
+    connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateAgregationGUI())) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -89,6 +87,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setAgregation(false);
     updateAgregationGUI();
     setStackedPage(2);
+
+    CreateXML313Doc();
 }
 
 MainWindow::~MainWindow()
@@ -195,16 +195,49 @@ QString MainWindow::GetRegularString(QString stringforparse, QString SNRegularex
     return matched;
 }
 
+void MainWindow::CreateXML313Doc()
+{
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+
+
+    //for (int var = 0; var < 10; ++var)
+    {
+        QDomElement registerproductemissionelement  = document.createElement("register_product_emission");
+        registerproductemissionelement.setAttribute("action_id", 313);
+        root.appendChild(registerproductemissionelement);
+    }
+
+    // add  register_product_emission element
+
+    QDomElement registerproductemissionelement = document.createElement("register_product_emission action_id");
+
+    registerproductemissionelement.setAttribute("ID", 313);
+
+    //    documents.appendChild(registerproductemissionelement);
+
+    QFile file(QDir::currentPath()   + "/313-register_product_emission.xml");
+
+    if ( !file.open(QIODevice::WriteOnly| QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+        //return -1;
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream<< document.toString();
+        file.close();
+        qDebug() << "Finished";
+        qDebug() << QDir::currentPath()   + "/313-register_product_emission.xml";
+
+    }
+}
+
 void MainWindow::ParseDMCode(QString stringforparse)
 {
-
-    QString gtinstring;
-    QString SNstring;
-    QString batchstring;
-    QString expstring;
-    QString tnvedstring;
-
-    uint8_t Batchlenght = 7; // длина серии может меняться в зависимости...
 
     if (stringforparse == startcodestring)
     {
@@ -215,6 +248,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     if (stringforparse == stopcodestring)
     {
+        CreateXML313Doc();
         setAgregation(0);
         inputDataStringFromScaner.clear();
         return;
@@ -248,9 +282,6 @@ void MainWindow::ParseDMCode(QString stringforparse)
     }
 
     // кончаем разбирать GTIN
-
-
-
 
     // начинаем разбирать серийник
 
@@ -304,28 +335,9 @@ void MainWindow::ParseDMCode(QString stringforparse)
     }
 
     // кончаем разбирать Партию
-    //    qDebug() << snstartindex<<"snstartindex";
-    //    SNstring = stringforparse.mid(snstartindex+SNid.length(), SNlenght);
-    //    qDebug() << stringforparse << "stringforparse was ";
-    //    stringforparse.remove(0,SNlenght + GTINid.length());
-    //    qDebug() << stringforparse << " stringforparse now ";
-    //    qDebug() << stringforparse.indexOf(razdelitel) << "$";
-    //    qDebug() << stringforparse << "stringforparse";
-    //    batchstring = stringforparse.mid(batchstartindex+Batchid.length(),Batchlenght);
-    //    expstring = stringforparse.mid(experiestartindex+Experyid.length(),ExpLenght);
-    //    tnvedstring = stringforparse.mid(tnvedstartindex+TNVEDid.length(),TNVEDLenght);
 
-    ui->GTINTextAgregation->setText(gtinstring);
-    ui->serialNumberAgregationValue->setText(SNstring);
-    ui->batchnumberTextAgregation->setText(batchstring);
-    ui->expirationdateAgregation->setText(expstring);
-    ui->TNVEDValueAgregation->setText(tnvedstring);
 
-    //    qDebug() << gtinstring << "gtinstring ";
-    //    qDebug() << snstring << "snstring"  ;
-    //    qDebug() << batchstring << "batchstring"  ;
-    //    qDebug() << expstring << "expstring"  ;
-    //    qDebug() << tnvedstring << "tnvedstring"  ;
+    emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 }
 
 void MainWindow::updateDMPicture()
@@ -403,6 +415,14 @@ void MainWindow::updateAgregationGUI()
     {
         ui->ScannedCode->setText(inputDataStringFromScaner);
     }
+
+
+    ui->GTINTextAgregation->setText(gtinstring);
+    ui->serialNumberAgregationValue->setText(SNstring);
+    ui->batchnumberTextAgregation->setText(batchstring);
+    ui->expirationdateAgregation->setText(expstring);
+    ui->TNVEDValueAgregation->setText(tnvedstring);
+
 }
 
 QString MainWindow::GenerateDMcode()
@@ -465,45 +485,42 @@ void MainWindow::addSymbolToInputString(QString str)
         // Просто меняем раскладку если у нас агрегация.
         // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
 
-        qDebug() << str << "strwas";
-
         if (str == "Й") { str = "Q" ; } else
-        if (str == "Ц") { str = "W" ; } else
-        if (str == "У") { str = "E" ; } else
-        if (str == "К") { str = "R" ; } else
-        if (str == "Е") { str = "T" ; } else
-        if (str == "Н") { str = "Y" ; } else
-        if (str == "Г") { str = "U" ; } else
-        if (str == "Ш") { str = "I" ; } else
-        if (str == "Щ") { str = "O" ; } else
-        if (str == "З") { str = "P" ; } else
-        if (str == "Х") { str = "[" ; } else
-        if (str == "Ъ") { str = "]" ; } else
+            if (str == "Ц") { str = "W" ; } else
+                if (str == "У") { str = "E" ; } else
+                    if (str == "К") { str = "R" ; } else
+                        if (str == "Е") { str = "T" ; } else
+                            if (str == "Н") { str = "Y" ; } else
+                                if (str == "Г") { str = "U" ; } else
+                                    if (str == "Ш") { str = "I" ; } else
+                                        if (str == "Щ") { str = "O" ; } else
+                                            if (str == "З") { str = "P" ; } else
+                                                if (str == "Х") { str = "[" ; } else
+                                                    if (str == "Ъ") { str = "]" ; } else
 
-        if (str == "Ф") { str = "A" ; } else
-        if (str == "Ы") { str = "S" ; } else
-        if (str == "В") { str = "D" ; } else
-        if (str == "А") { str = "F" ; } else
-        if (str == "П") { str = "G" ; } else
-        if (str == "Р") { str = "H" ; } else
-        if (str == "О") { str = "J" ; } else
-        if (str == "Л") { str = "K" ; } else
-        if (str == "Д") { str = "L" ; } else
-        if (str == "Ж") { str = ";" ; } else
-        if (str == "Э") { str = "'" ; } else
+                                                        if (str == "Ф") { str = "A" ; } else
+                                                            if (str == "Ы") { str = "S" ; } else
+                                                                if (str == "В") { str = "D" ; } else
+                                                                    if (str == "А") { str = "F" ; } else
+                                                                        if (str == "П") { str = "G" ; } else
+                                                                            if (str == "Р") { str = "H" ; } else
+                                                                                if (str == "О") { str = "J" ; } else
+                                                                                    if (str == "Л") { str = "K" ; } else
+                                                                                        if (str == "Д") { str = "L" ; } else
+                                                                                            if (str == "Ж") { str = ";" ; } else
+                                                                                                if (str == "Э") { str = "'" ; } else
 
-        if (str == "Я") { str = "Z" ; } else
-        if (str == "Ч") { str = "X" ; } else
-        if (str == "С") { str = "C" ; } else
-        if (str == "М") { str = "V" ; } else
-        if (str == "И") { str = "B" ; } else
-        if (str == "Т") { str = "N" ; } else
-        if (str == "Ь") { str = "M" ; } else
-        if (str == "Б") { str = "," ; } else
-        if (str == "Ю") { str = "." ; } else
-        if (str == ".") { str = "/" ; }
+                                                                                                    if (str == "Я") { str = "Z" ; } else
+                                                                                                        if (str == "Ч") { str = "X" ; } else
+                                                                                                            if (str == "С") { str = "C" ; } else
+                                                                                                                if (str == "М") { str = "V" ; } else
+                                                                                                                    if (str == "И") { str = "B" ; } else
+                                                                                                                        if (str == "Т") { str = "N" ; } else
+                                                                                                                            if (str == "Ь") { str = "M" ; } else
+                                                                                                                                if (str == "Б") { str = "," ; } else
+                                                                                                                                    if (str == "Ю") { str = "." ; } else
+                                                                                                                                        if (str == ".") { str = "/" ; }
 
-qDebug() << str << "strnow";
     }
 
     wastext.append(str);
@@ -523,20 +540,6 @@ void MainWindow::setScale(int scale)
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
-
-    //    if (event->type()==QEvent::KeyPress) {
-    //        QKeyEvent* key3 = static_cast<QKeyEvent*>(event);
-
-    //        KeyspressedString.append(key3->key());
-
-    //        if (KeyspressedString.indexOf(GSSymbol) !=-1)
-    //        {
-    //            qDebug() << KeyspressedString;
-    ////            addSymbolToInputString("$");
-    //            KeyspressedString.clear();
-    //        }
-    //    }
-
     if (event->type()==QEvent::KeyRelease) {
 
         QKeyEvent* key = static_cast<QKeyEvent*>(event);

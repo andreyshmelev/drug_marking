@@ -105,6 +105,15 @@ private:
     const uint8_t TNVEDLenght = 4;
 
 
+    QString gtinstring;
+    QString SNstring;
+    QString batchstring;
+    QString expstring;
+    QString tnvedstring;
+
+
+    void CreateXML313Doc();
+
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
 
@@ -123,6 +132,7 @@ private slots:
 
 signals:
     agregationstatusToggled();
+    ParcingEnded();
 };
 
 #endif // MAINWINDOW_H
