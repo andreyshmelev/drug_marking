@@ -171,6 +171,7 @@ void MainWindow::addMessageToJournal()
                 {
             ui->journalList->clear();
         }
+
 }
 
 void MainWindow::updateTimeDate()
@@ -314,29 +315,27 @@ void MainWindow::CreateXML313Doc()
 
     }
 
-    //    QDomText doc_date_text  = document.createTextNode("signs"); // operation_date");
-    //    doc_date_text.setNodeValue("31.03.2017");
-    //    signs_element.appendChild(doc_date_text);
-
     // добавили signs
 
 
     QFile file(QDir::currentPath()   + "/313-register_product_emission.xml");
 
-    if ( !file.open(QIODevice::WriteOnly| QIODevice::Text))
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         qDebug() << "Failed to open";
-        //return -1;
+        return;
     }
     else
     {
         QTextStream stream(&file);
         stream<< document.toString();
         file.close();
-        qDebug() << "Finished";
-        qDebug() << QDir::currentPath()   + "/313-register_product_emission.xml";
-
     }
+}
+
+void MainWindow::CreateXML312Doc()
+{
+
 }
 
 void MainWindow::ParseDMCode(QString stringforparse)

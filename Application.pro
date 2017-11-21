@@ -27,11 +27,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    QRCodeGenerator.cpp
+    QRCodeGenerator.cpp \
+    manufacturer.cpp
 
 HEADERS += \
         mainwindow.h \
-    QRCodeGenerator.h
+    QRCodeGenerator.h \
+    manufacturer.h
 
 FORMS += \
         mainwindow.ui

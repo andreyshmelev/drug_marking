@@ -114,6 +114,7 @@ private:
     QStringList SN_stringlist;
 
     void CreateXML313Doc();
+    void CreateXML312Doc();
     static QString GetISODate();
     static QString GetDOCDate();
 
