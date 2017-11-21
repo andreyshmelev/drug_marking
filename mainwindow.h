@@ -32,11 +32,8 @@ public:
 
     int GenerateNumber(int High, int Low);
     void getregularString(QString stringforparse, QString SNRegularexpression);
-
     void getRegularFunction(QString SNRegularexpression, QString stringforparse);
-
     void Regtr(QString stringforparse, QString matched, QString SNRegularexpression);
-
     QString GetRegularString(QString stringforparse, QString SNRegularexpression);
 
 private:
@@ -59,9 +56,9 @@ private:
     bool getAgregation(void);
     void setAgregation(bool set);
 
-     manufacturer * BFZ;
-     medicament * ScannedMedicament;
-     QList<medicament *> MedicamentsList;
+    manufacturer * BFZ;
+    medicament * ScannedMedicament;
+    QList<medicament *> MedicamentsList;
 
 private:
 
@@ -111,7 +108,6 @@ private:
     QString batchstring;
     QString expstring;
     QString tnvedstring;
-    QStringList SN_stringlist;
 
     void CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList);
     void CreateXML312Doc();
@@ -131,6 +127,7 @@ private slots:
     void updateDMcode();
     void toggleAgregation( void );
     void updateAgregationGUI();
+    void updateTable();
     void setStackedPage(int newindex);
     QString GenerateDMcode();
 

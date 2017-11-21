@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
     connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateAgregationGUI())) ;
+    connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateTable())) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -290,7 +291,6 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
 
     // добавили doc_num
 
-
     // добавляем doc_num
 
     QDomElement doc_date_element  = document.createElement("doc_date");
@@ -301,7 +301,6 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
     doc_date_element.appendChild(doc_date_text);
 
     // добавили doc_num
-
 
     // добавляем signs (для первичной агрегации это GTINs
 
@@ -316,16 +315,17 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
     QDomText sgtin_text ;
     // добавили doc_num
 
+    qDebug() << "MedList.length()" << MedList.length();
 
-    for (int var = 0; var < SN_stringlist.length(); ++var) {
+
+    for (int var = 0; var < MedList.length(); ++var) {
 
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
 
         sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
-        sgtin_text.setNodeValue(SN_stringlist.at(var));
+        sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
-
     }
 
     // добавили signs
@@ -456,16 +456,14 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     if(getAgregation())
     {
-        SN_stringlist.append(sGTINString);
         ScannedMedicament = new medicament("Nimesulid",gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
-
         MedicamentsList.append(ScannedMedicament);
+        emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 
-//        qDebug() << "MedicamentsList";
+        //        qDebug() << "MedicamentsList";
 //        qDebug() << MedicamentsList;
 
     }
-    emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 }
 
 void MainWindow::updateDMPicture()
@@ -486,18 +484,19 @@ void MainWindow::updateDMcode()
 
 void MainWindow::setAgregation(bool set)
 {
-    MedicamentsList.clear();
-    SN_stringlist.clear();
 
-    if (set == true)
+
+    if (set == true) // если запускаем агрегацию
     {
         inputDataStringFromScaner.clear();
     }
-    else
+    else    // если останавливаем агрегацию
     {
         CreateXML313Doc(BFZ,MedicamentsList);
         inputDataStringFromScaner.clear();
     }
+
+    MedicamentsList.clear();
 
     agregation = set;
 
@@ -564,6 +563,16 @@ void MainWindow::updateAgregationGUI()
     ui->batchnumberTextAgregation->setText(batchstring);
     ui->expirationdateAgregation->setText(expstring);
     ui->TNVEDValueAgregation->setText(tnvedstring);
+
+}
+
+void MainWindow::updateTable()
+{
+    ui->MedicamentsTable->insertRow(0);
+//    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(QString::number(MedicamentsList.length())));
+    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->GTIN));
+    ui->MedicamentsTable->scrollToTop();
+
 
 }
 
