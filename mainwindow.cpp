@@ -239,8 +239,6 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-    //создаем элемент register_product_emission action_id="313"
-
     QDomElement registerproductemissionelement  = document.createElement("register_product_emission");
     registerproductemissionelement.setAttribute("action_id", 313);
     root.appendChild(registerproductemissionelement);
@@ -459,6 +457,8 @@ void MainWindow::ParseDMCode(QString stringforparse)
     if(getAgregation())
     {
         SN_stringlist.append(sGTINString);
+        ScannedMedicament = new medicament();
+
     }
     emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 }
