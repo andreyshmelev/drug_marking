@@ -457,7 +457,12 @@ void MainWindow::ParseDMCode(QString stringforparse)
     if(getAgregation())
     {
         SN_stringlist.append(sGTINString);
-        ScannedMedicament = new medicament();
+        ScannedMedicament = new medicament("Nimesulid",gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
+
+        MedicamentsList.append(ScannedMedicament);
+
+//        qDebug() << "MedicamentsList";
+//        qDebug() << MedicamentsList;
 
     }
     emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
@@ -481,18 +486,21 @@ void MainWindow::updateDMcode()
 
 void MainWindow::setAgregation(bool set)
 {
+    MedicamentsList.clear();
+    SN_stringlist.clear();
+
     if (set == true)
     {
         inputDataStringFromScaner.clear();
-        SN_stringlist.clear();
     }
     else
     {
         CreateXML313Doc(BFZ,MedicamentsList);
-        SN_stringlist.clear();
         inputDataStringFromScaner.clear();
     }
+
     agregation = set;
+
     emit agregationstatusToggled();
 }
 

@@ -70,9 +70,7 @@ private:
     QTimer * DMCodeUpdateTimeoutTimer;
     Ui::MainWindow *ui;
     QStringList * messages;
-
     QString KeyspressedString;
-
     QString SN;
     QPixmap image;
     QImage  *imageObject;
