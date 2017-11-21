@@ -7,6 +7,8 @@
 #include "QByteArray"
 #include "QtXml"
 #include "QFile"
+#include "QDesktopServices"
+#include "manufacturer.h"
 
 int t;
 
@@ -84,11 +86,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->packagePicture->setScene(scene);
     ui->packagePicture->show();
 
-    setAgregation(false);
     updateAgregationGUI();
     setStackedPage(2);
 
-    CreateXML313Doc();
+    agregation = false;
+
+    // создаём производителя БФЗ
+    BFZ = new manufacturer ( QString (" 343 374 35 66" ),QString ("ЗАО \"Берёзовский фармацевтический завод\""),QString ("info@uralbfz.ru"), QString ("6604012225"), QString ("6604012225"), QString ("6604012225"), QString ("667801001") );
 }
 
 MainWindow::~MainWindow()
@@ -114,8 +118,21 @@ QString MainWindow::getSN()
 
 QString MainWindow::generateSN()
 {
-    QString newSN = "12345qzRF" + QString::number(GenerateNumber(999,100));
+    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    const int randomStringLength = SNlenght; // assuming you want random strings of 12 characters
+
+    QString randomString;
+    for(int i=0; i<randomStringLength; ++i)
+    {
+        int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+
+    QString newSN = randomString;
     return newSN;
+
+
 }
 
 QString MainWindow::getGuiBatchNumber()
@@ -167,10 +184,10 @@ void MainWindow::addMessageToJournal()
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
 
-        if (ui->journalList->count()>100)
-                {
-            ui->journalList->clear();
-        }
+    if (ui->journalList->count()>100)
+    {
+        ui->journalList->clear();
+    }
 
 }
 
@@ -216,7 +233,7 @@ QString MainWindow::GetDOCDate()
     return DOCdate;
 }
 
-void MainWindow::CreateXML313Doc()
+void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
 {
     QDomDocument document;
     QDomElement root = document.createElement("documents");
@@ -233,8 +250,8 @@ void MainWindow::CreateXML313Doc()
     QDomElement subjectIDelement  = document.createElement("subject_id");
     registerproductemissionelement.appendChild(subjectIDelement);
 
-    QDomText subjectIDtext  = document.createTextNode("subject_id"); // subject_id");
-    subjectIDtext.setNodeValue("19527400011107");
+    QDomText subjectIDtext  = document.createTextNode("subject_id");
+    subjectIDtext.setNodeValue(mf->get_subject_id());
     subjectIDelement.appendChild(subjectIDtext);
 
     // добавили subject_id
@@ -246,9 +263,7 @@ void MainWindow::CreateXML313Doc()
 
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
 
-    QString ISOdate = GetISODate();
-
-    operationdatetext.setNodeValue(ISOdate);
+    operationdatetext.setNodeValue( GetISODate());
     operationdateelement.appendChild(operationdatetext);
 
     // добавили operation_date
@@ -317,8 +332,9 @@ void MainWindow::CreateXML313Doc()
 
     // добавили signs
 
+    QString filepath = QDir::currentPath()   + "/313-register_product_emission.xml";
 
-    QFile file(QDir::currentPath()   + "/313-register_product_emission.xml");
+    QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -331,6 +347,8 @@ void MainWindow::CreateXML313Doc()
         stream<< document.toString();
         file.close();
     }
+
+    // QDesktopServices::openUrl(filepath);  // раскомментить если мы хотим чтобы по окончании агрегации открывался XML файл
 }
 
 void MainWindow::CreateXML312Doc()
@@ -470,7 +488,7 @@ void MainWindow::setAgregation(bool set)
     }
     else
     {
-        CreateXML313Doc();
+        CreateXML313Doc(BFZ,MedicamentsList);
         SN_stringlist.clear();
         inputDataStringFromScaner.clear();
     }

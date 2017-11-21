@@ -11,6 +11,15 @@ public:
 
 signals:
 
+public:
+    QString medicament_name;
+    QString GTIN;
+    QString SerialNumber;
+    QString BatchNumber;
+    QString ExperienceDate;
+    QString sGTIN;
+    QString TNVED;
+
 public slots:
 };
 

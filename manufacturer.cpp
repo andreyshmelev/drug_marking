@@ -2,7 +2,19 @@
 
 manufacturer::manufacturer()
 {
+    //    set_subject_id( "(343)374–35–66" );
+    //    set_organisation_name("ЗАО \"Берёзовский фармацевтический завод\"");
+}
 
+manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc)
+{
+    set_subject_id( subject_idc );
+    set_organisation_name(organisation_namec);
+    set_email(emailc);
+    set_ul(ulc);
+    set_fl(flc);
+    set_inn(innc);
+    set_kpp(kppc);
 }
 
 QString manufacturer::get_subject_id()

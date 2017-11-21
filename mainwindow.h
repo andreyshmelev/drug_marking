@@ -15,6 +15,8 @@
 #include <QSignalMapper>
 #include <QPixmap>
 #include "QRCodeGenerator.h"
+#include "manufacturer.h"
+#include "medicament.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,8 +31,6 @@ public:
     ~MainWindow();
 
     int GenerateNumber(int High, int Low);
-
-
     void getregularString(QString stringforparse, QString SNRegularexpression);
 
     void getRegularFunction(QString SNRegularexpression, QString stringforparse);
@@ -59,6 +59,10 @@ private:
     bool getAgregation(void);
     void setAgregation(bool set);
 
+     manufacturer * BFZ;
+     medicament * ScannedMedicament;
+     QList<medicament *> MedicamentsList;
+
 private:
 
     QTimer * journalTimer;
@@ -75,7 +79,6 @@ private:
     QGraphicsScene *scene;
     QGraphicsView * view;
     QSignalMapper * signalMapper;
-
     QString keyString;
     QString inputDataStringFromScaner;
 
@@ -93,17 +96,16 @@ private:
     const QString GSSymbol = "002#";
     const QString Emptystring = "";
 
-    const QString SNRegularexpression = "21\\w{13,14}" + GSSymbol;
+    const QString SNRegularexpression = "21\\w{13,14}" + GSSymbol; // строка начинается  с 21, имеет длину 14 и заказчивается символом 0029
     const QString TNVEDRegularexpression = "240\\w{4}" + GSSymbol;
     const QString ExpRegularexpression = "17\\w{6}" ;
     const QString BatchRegularexpression = "10\\w{1,20}" + GSSymbol ;
-    const QString NotFoundString = "Не найдено";
+    const QString NotFoundString = "Not found";
 
     const uint8_t Gtinlenght = 14;
     const uint8_t SNlenght = 13 ;
     const uint8_t ExpLenght = 6;
     const uint8_t TNVEDLenght = 4;
-
 
     QString sGTINString;
     QString gtinstring;
@@ -113,7 +115,7 @@ private:
     QString tnvedstring;
     QStringList SN_stringlist;
 
-    void CreateXML313Doc();
+    void CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList);
     void CreateXML312Doc();
     static QString GetISODate();
     static QString GetDOCDate();

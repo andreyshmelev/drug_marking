@@ -7,7 +7,8 @@ class manufacturer
 {
 public:
 
-    manufacturer();
+    manufacturer();     // конструктор в котором подгружаем все данные производителя
+    manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc);     // конструктор в котором подгружаем все данные производителя
     QString get_subject_id();           // Идентификатор субъекта обращения в ИС "Маркировка товаров"
     QString get_organisation_name();    // Наименование организации
     QString get_email();// email
