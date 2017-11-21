@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     QRCodeGenerator.cpp \
-    manufacturer.cpp
+    manufacturer.cpp \
+    medicament.cpp
 
 HEADERS += \
         mainwindow.h \
     QRCodeGenerator.h \
-    manufacturer.h
+    manufacturer.h \
+    medicament.h
 
 FORMS += \
         mainwindow.ui
