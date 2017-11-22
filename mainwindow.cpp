@@ -9,6 +9,7 @@
 #include "QFile"
 #include "QDesktopServices"
 #include "manufacturer.h"
+#include "basetypes.h"
 
 int t;
 
@@ -234,14 +235,14 @@ QString MainWindow::GetDOCDate()
     return DOCdate;
 }
 
-void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
+void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList)
 {
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
     QDomElement registerproductemissionelement  = document.createElement("register_product_emission");
-    registerproductemissionelement.setAttribute("action_id", 313);
+    registerproductemissionelement.setAttribute("action_id", ActionIDTypeEnum::RegisterProductEmission);
     root.appendChild(registerproductemissionelement);
 
     // добавляем subject_id
@@ -250,7 +251,7 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
     registerproductemissionelement.appendChild(subjectIDelement);
 
     QDomText subjectIDtext  = document.createTextNode("subject_id");
-    subjectIDtext.setNodeValue(mf->get_subject_id());
+    subjectIDtext.setNodeValue(organization->get_subject_id());
     subjectIDelement.appendChild(subjectIDtext);
 
     // добавили subject_id
@@ -315,9 +316,6 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
     QDomText sgtin_text ;
     // добавили doc_num
 
-    qDebug() << "MedList.length()" << MedList.length();
-
-
     for (int var = 0; var < MedList.length(); ++var) {
 
         sgtin_element = document.createElement("sgtin");
@@ -349,28 +347,116 @@ void MainWindow::CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList)
     // QDesktopServices::openUrl(filepath);  // раскомментить если мы хотим чтобы по окончании агрегации открывался XML файл
 }
 
-void MainWindow::CreateXML312Doc()
+void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *> MedList)
+{
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    QDomElement registerproductemissionelement  = document.createElement("register_control_samples");
+    registerproductemissionelement.setAttribute("action_id", ActionIDTypeEnum::RegisterControlSamples);
+    root.appendChild(registerproductemissionelement);
+
+    // добавляем subject_id
+
+    QDomElement subjectIDelement  = document.createElement("subject_id");
+    registerproductemissionelement.appendChild(subjectIDelement);
+
+    QDomText subjectIDtext  = document.createTextNode("subject_id");
+    subjectIDtext.setNodeValue(organization->get_subject_id());
+    subjectIDelement.appendChild(subjectIDtext);
+
+    // добавили subject_id
+
+    // добавляем operation_date
+
+    QDomElement operationdateelement  = document.createElement("operation_date");
+    registerproductemissionelement.appendChild(operationdateelement);
+
+    QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
+
+    operationdatetext.setNodeValue( GetISODate());
+    operationdateelement.appendChild(operationdatetext);
+
+    // добавили operation_date
+
+    // добавляем control_samples_type
+
+    QDomElement control_samples_type_element  = document.createElement("control_samples_type");
+    registerproductemissionelement.appendChild(control_samples_type_element);
+
+    QDomText control_samples_type_text  = document.createTextNode("control_samples_type");
+
+    control_samples_type_text.setNodeValue( QString::number( ControlSamplesTypeEnum::ToQualityControl ) );
+    control_samples_type_element.appendChild(control_samples_type_text);
+
+    // добавили control_samples_type
+
+
+    // добавляем signs (для первичной агрегации это GTINs
+
+    QDomElement signs_element  = document.createElement("signs");
+    registerproductemissionelement.appendChild(signs_element);
+
+
+    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+    // добавляем sgtin
+
+    QDomElement sgtin_element ;
+    QDomText sgtin_text ;
+
+    // добавили doc_num
+
+    qDebug() << "MedList.length()" << MedList.length();
+
+
+    for (int var = 0; var < MedList.length(); ++var) {
+
+        sgtin_element = document.createElement("sgtin");
+        signs_element.appendChild(sgtin_element);
+
+        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
+        sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
+        sgtin_element.appendChild(sgtin_text);
+    }
+
+    // добавили signs
+
+    QString filepath = QDir::currentPath()   + "/312-register_control_samples.xml";
+
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+        return;
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream<< document.toString();
+        file.close();
+    }
+
+}
+
+void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *> MedList)
 {
 
 }
 
 void MainWindow::ParseDMCode(QString stringforparse)
 {
-
-    if (stringforparse == startcodestring)
+    if (stringforparse == startcodestring) // если считали QR код начала агрегации то запускаем режим агрегации
     {
         setAgregation(1);
-
         return;
     }
-
-    if (stringforparse == stopcodestring)
+    if (stringforparse == stopcodestring) // если считали QR код окончания агрегации то останавливаем режим агрегации
     {
         setAgregation(0);
-
         return;
     }
-
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
     // сюда перешли если нас устроил код
@@ -389,7 +475,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
         gtinstring = stringforparse;
         gtinstring = gtinstring.remove(0,2);
         gtinstring = gtinstring.mid(0,Gtinlenght);
-        //удаляем джитин из общей строки
+        //удаляем GTIN из общей строки
         stringforparse.remove(0,Gtinlenght + GTINid.length());
     }
 
@@ -446,23 +532,20 @@ void MainWindow::ParseDMCode(QString stringforparse)
     batchstring.remove(0,2);
     batchstring.replace(GSSymbol,Emptystring);
 
-    if(batchstring == NULL)
+    if (batchstring == NULL)
     {
         batchstring = NotFoundString;
     }
 
     sGTINString = gtinstring + SNstring;
+
     // кончаем разбирать Партию
 
-    if(getAgregation())
+    if(getAgregation()) // если у нас агрегация
     {
         ScannedMedicament = new medicament("Nimesulid",gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
         MedicamentsList.append(ScannedMedicament);
         emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
-
-        //        qDebug() << "MedicamentsList";
-//        qDebug() << MedicamentsList;
-
     }
 }
 
@@ -484,14 +567,13 @@ void MainWindow::updateDMcode()
 
 void MainWindow::setAgregation(bool set)
 {
-
-
     if (set == true) // если запускаем агрегацию
     {
         inputDataStringFromScaner.clear();
     }
     else    // если останавливаем агрегацию
     {
+        CreateXML312Doc(BFZ,MedicamentsList);
         CreateXML313Doc(BFZ,MedicamentsList);
         inputDataStringFromScaner.clear();
     }
@@ -499,7 +581,6 @@ void MainWindow::setAgregation(bool set)
     MedicamentsList.clear();
 
     agregation = set;
-
     emit agregationstatusToggled();
 }
 
@@ -529,9 +610,6 @@ void MainWindow::updateAgregationGUI()
 
         pixmapqr->load(QDir::currentPath() + "/stopapp.jpg");
         ui->qrstartstop->setPixmap(*pixmapqr);
-        ui->qrstartstop->show();
-        ui->qrstartstop->setScaledContents(1);
-
     }
     else
     {
@@ -545,6 +623,11 @@ void MainWindow::updateAgregationGUI()
 
         pixmapqr->load(QDir::currentPath() + "/startapp.jpg");
         ui->qrstartstop->setPixmap(*pixmapqr);
+        ui->qrstartstop->show();
+        ui->qrstartstop->setScaledContents(1);
+
+        ui->MedicamentsTable->clearContents();
+
         ui->qrstartstop->show();
         ui->qrstartstop->setScaledContents(1);
     }
@@ -569,11 +652,13 @@ void MainWindow::updateAgregationGUI()
 void MainWindow::updateTable()
 {
     ui->MedicamentsTable->insertRow(0);
-//    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(QString::number(MedicamentsList.length())));
-    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->GTIN));
+    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->medicament_name));
+    ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(ScannedMedicament->GTIN));
+    ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(ScannedMedicament->BatchNumber));
+    ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(ScannedMedicament->SerialNumber));
+    ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(ScannedMedicament->TNVED));
+    ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(ScannedMedicament->ExperyDate));
     ui->MedicamentsTable->scrollToTop();
-
-
 }
 
 QString MainWindow::GenerateDMcode()

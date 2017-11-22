@@ -109,8 +109,10 @@ private:
     QString expstring;
     QString tnvedstring;
 
-    void CreateXML313Doc(manufacturer * mf, QList<medicament *> MedList);
-    void CreateXML312Doc();
+    void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
+    void CreateXML312Doc(manufacturer * organization, QList<medicament *> MedList);
+    void CreateXML311Doc(manufacturer * organization, QList<medicament *> MedList);
+
     static QString GetISODate();
     static QString GetDOCDate();
 

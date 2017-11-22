@@ -35,7 +35,8 @@ HEADERS += \
         mainwindow.h \
     QRCodeGenerator.h \
     manufacturer.h \
-    medicament.h
+    medicament.h \
+    basetypes.h
 
 FORMS += \
         mainwindow.ui

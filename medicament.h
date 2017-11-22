@@ -8,7 +8,7 @@ class medicament : public QObject
     Q_OBJECT
 public:
     explicit medicament(QObject *parent = nullptr);
-    medicament (QString medicament_name, QString GTIN, QString SerialNumber, QString BatchNumber, QString ExperienceDate, QString sGTIN, QString TNVED);     // конструктор в котором подгружаем все данные медикамента
+    medicament (QString medicament_name, QString GTIN, QString SerialNumber, QString BatchNumber, QString ExperyDate, QString sGTIN, QString TNVED);     // конструктор в котором подгружаем все данные медикамента
 signals:
 
 public:
@@ -16,7 +16,7 @@ public:
     QString GTIN;
     QString SerialNumber;
     QString BatchNumber;
-    QString ExperienceDate;
+    QString ExperyDate;
     QString sGTIN;
     QString TNVED;
 

@@ -11,7 +11,7 @@ this->medicament_name = medicament_name;
     this->GTIN = GTIN;
     this->SerialNumber = SerialNumber;
     this->BatchNumber = BatchNumber;
-    this->ExperienceDate = ExperienceDate;
+    this->ExperyDate = ExperienceDate;
     this->sGTIN = sGTIN;
     this->TNVED = TNVED;
 }
