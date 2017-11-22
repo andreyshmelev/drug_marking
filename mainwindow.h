@@ -90,10 +90,11 @@ private:
 
     QPixmap * pixmapqr;
     bool agregation;
-    const QString startcodestring = "50218";
-    const QString stopcodestring = "86199";
-    const QString register_product_emission_QR_string = "49157";
-    const QString register_control_samples_QR_string = "70109";
+    const QString startcodestring = "5021";
+    const QString stopcodestring = "8619";
+    const QString register_product_emission_QR_string = "497157";
+    const QString register_control_samples_QR_string = "709109";
+    const QString register_end_packing_QR_string = "914088";
 
     const QString GTINid = "01";
     const QString SNid = "21";

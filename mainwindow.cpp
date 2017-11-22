@@ -30,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->qrstartstop->show();
     ui->qrstartstop->setScaledContents(1);
 
+
+
+
     this->installEventFilter(this);
 
     journalTimer = new QTimer();
@@ -849,6 +852,8 @@ void MainWindow::updateQRLabels()
     int versionIndex = 0;
     bool bExtent = true;
     int maskIndex = -1;
+
+
 
     QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
