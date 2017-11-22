@@ -135,7 +135,7 @@ private:
 
 
 
-    QImage QRCodeToQimage(QLabel* dddd,QString code, int qrImageSize, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
+    QImage QRCodeToQLabelConverter(QLabel* dddd,QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
