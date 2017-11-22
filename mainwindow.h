@@ -132,10 +132,6 @@ private:
 
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
 
-    void openRegisterProductEmissionPage();
-
-
-
     QImage QRCodeToQLabelConverter(QLabel* dddd,QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
 
 protected:
@@ -155,11 +151,23 @@ private slots:
     void setStackedPage(int newindex);
     QString GenerateDMcode();
 
+    void RegisterProductEmissionPageOpen();
+    void RegisterControlSamplesPageOpen();
+    void RegisterEndPackingPageOpen();
+
     void on_register_product_emission_Button_clicked();
+    void on_register_control_samples_Button_clicked();
+
+
+    void on_register_end_packing_Button_clicked();
 
 signals:
     agregationstatusToggled();
     ParcingEnded();
+
+    register_product_emission_QR_Scanned();
+    register_control_samples_QR_Scanned();
+    register_end_packing_QR_Scanned();
 };
 
 #endif // MAINWINDOW_H

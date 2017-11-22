@@ -17,8 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
 
+    agregation = false;
+
+    ui->setupUi(this);
     updateQRLabels();
 
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
@@ -29,9 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->qrstartstop->setPixmap(*pixmapqr);
     ui->qrstartstop->show();
     ui->qrstartstop->setScaledContents(1);
-
-
-
 
     this->installEventFilter(this);
 
@@ -62,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
     connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateAgregationGUI())) ;
     connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateTable())) ;
+    connect(this, SIGNAL(register_product_emission_QR_Scanned()), this, SLOT(RegisterProductEmissionPageOpen())) ;
+    connect(this, SIGNAL(register_control_samples_QR_Scanned()), this, SLOT(RegisterControlSamplesPageOpen())) ;
+    connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -82,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent) :
     messages->append("Ок");
 
 
-
     imageObject = new QImage();
     imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
@@ -95,8 +96,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateAgregationGUI();
     setStackedPage(2);
-
-    agregation = false;
 
     // создаём производителя БФЗ
     BFZ = new manufacturer ( QString (" 343 374 35 66" ),QString ("ЗАО \"Берёзовский фармацевтический завод\""),QString ("info@uralbfz.ru"), QString ("6604012225"), QString ("6604012225"), QString ("6604012225"), QString ("667801001"), QString ("contractownerID") );
@@ -553,6 +552,25 @@ void MainWindow::ParseDMCode(QString stringforparse)
         setAgregation(0);
         return;
     }
+
+    if (stringforparse == register_product_emission_QR_string) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    {
+        emit register_product_emission_QR_Scanned();
+        return;
+    }
+
+    if (stringforparse == register_control_samples_QR_string) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    {
+        emit register_control_samples_QR_Scanned();
+        return;
+    }
+
+    if (stringforparse == register_end_packing_QR_string) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    {
+        emit register_end_packing_QR_Scanned();
+        return;
+    }
+
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
     // сюда перешли если нас устроил код
@@ -765,14 +783,25 @@ QString MainWindow::GenerateDMcode()
     return DMCode;
 }
 
+void MainWindow::RegisterProductEmissionPageOpen()
+{
+    setStackedPage(7);
+}
+
+void MainWindow::RegisterControlSamplesPageOpen()
+{
+    setStackedPage(5);
+}
+
+void MainWindow::RegisterEndPackingPageOpen()
+{
+    setStackedPage(6);
+}
+
 void MainWindow::setStackedPage(int newindex)
 {
     ui->stackedWidget->setCurrentIndex(newindex);
 }
-
-
-
-
 
 
 void MainWindow::updateQRImage()
@@ -853,11 +882,9 @@ void MainWindow::updateQRLabels()
     bool bExtent = true;
     int maskIndex = -1;
 
-
-
     QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
-
+    QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
 
 }
 
@@ -948,12 +975,19 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
     return false;
 }
 
-void MainWindow::openRegisterProductEmissionPage()
-{
-    setStackedPage(7);
-}
 
 void MainWindow::on_register_product_emission_Button_clicked()
 {
-    openRegisterProductEmissionPage();
+    RegisterProductEmissionPageOpen();
+}
+
+void MainWindow::on_register_control_samples_Button_clicked()
+{
+    RegisterControlSamplesPageOpen();
+}
+
+
+void MainWindow::on_register_end_packing_Button_clicked()
+{
+    RegisterEndPackingPageOpen();
 }

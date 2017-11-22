@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="mainPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -839,161 +839,137 @@ border-radius: 0px;</string>
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="register_product_emission_Button">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
         <x>1</x>
-        <y>46</y>
-        <width>123</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Регистрация сведений
-о выпуске гото-
-вой продукции</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="register_product_emission_QRLabel">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
         <y>41</y>
-        <width>60</width>
-        <height>60</height>
+        <width>235</width>
+        <height>194</height>
        </rect>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>register_product_emission_Button</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="register_control_samples_Button">
-      <property name="geometry">
-       <rect>
-        <x>1</x>
-        <y>112</y>
-        <width>138</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Регистрация сведений
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="register_product_emission_Button">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Регистрация сведений
+о выпуске гото-
+вой продукции (313)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="register_product_emission_QRLabel">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>register_product_emission_Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="register_control_samples_Button">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Регистрация сведений
 об отборе образцов ле-
-карственных препаратов</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="register_control_samples_Label">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>107</y>
-        <width>60</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>register_product_emission_Button</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="register_control_samples_Label_2">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>173</y>
-        <width>60</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>register_product_emission_Button</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="register_control_samples_Button_2">
-      <property name="geometry">
-       <rect>
-        <x>1</x>
-        <y>178</y>
-        <width>138</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Регистрация сведений
-об отборе образцов ле-
-карственных препаратов</string>
-      </property>
+карственных препаратов (312)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="register_control_samples_Label">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>register_product_emission_Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="register_end_packing_Button">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Регистрация сведений о
+завершении этапа
+окончательной упаковки (311)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="register_end_packing_Label">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>register_product_emission_Button</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="statisticsPage">
@@ -1061,8 +1037,8 @@ border-radius: 0px;</string>
        </font>
       </property>
       <property name="text">
-       <string>Регистрация сведений об 
-операции изъятия элементов упаковки</string>
+       <string>Регистрация сведений об отборе
+ образцов лекарственных препаратов (312)</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1086,15 +1062,15 @@ border-radius: 0px;</string>
        </font>
       </property>
       <property name="text">
-       <string>Регистрация в сведений об операции 
-включения элементов в транспортную упаковку</string>
+       <string>Регистрация сведений о
+завершении этапа окончательной упаковки (311)</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="RegisterProductEmission">
+    <widget class="QWidget" name="RegisterProductEmissionPage">
      <widget class="QLabel" name="AppendPageLabel_2">
       <property name="geometry">
        <rect>
@@ -1132,8 +1108,7 @@ border-radius: 0px;</string>
        </font>
       </property>
       <property name="text">
-       <string>Начать
-агрегацию</string>
+       <string>Начать</string>
       </property>
      </widget>
      <widget class="QTextEdit" name="expirationdateAgregation">
