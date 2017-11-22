@@ -14,9 +14,11 @@
 #include <QGraphicsItem>
 #include <QSignalMapper>
 #include <QPixmap>
+#include <QtXml>
 #include "QRCodeGenerator.h"
 #include "manufacturer.h"
 #include "medicament.h"
+#include "basetypes.h"
 
 namespace Ui {
 class MainWindow;
@@ -111,10 +113,12 @@ private:
 
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
     void CreateXML312Doc(manufacturer * organization, QList<medicament *> MedList);
-    void CreateXML311Doc(manufacturer * organization, QList<medicament *> MedList);
+    void CreateXML311Doc(manufacturer * organization, QList<medicament *> MedList, OrderTypeEnum ordertype);
 
     static QString GetISODate();
     static QString GetDOCDate();
+
+    void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);

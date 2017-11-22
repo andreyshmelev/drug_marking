@@ -9,9 +9,19 @@ enum ControlSamplesTypeEnum
 
 enum ActionIDTypeEnum
   {
-     RegisterControlSamples = 312,  // отбор контрольных образцов в рамках процесса контроля качества
-     RegisterProductEmission = 313 // отбор образцов для подтверждения соответствия в рамах технического регулирования
+     RegisterEndPacking = 311,      // регистрация в ИС «Маркировка» сведений о завершении этапа окончательной упаковки
+     RegisterControlSamples = 312,  // регистрация в ИС «Маркировка» сведений об отборе образцов лекарственных препаратов
+     RegisterProductEmission = 313  // регистрация в ИС «Маркировка» сведений о выпуске готовой продукции
   };
+
+
+enum OrderTypeEnum
+  {
+    OwnProduction = 1 , // Собственное производство
+    ContractProduction = 2   // Контрактное производство
+  };
+
+
 
 #endif // BASETYPES_H
 

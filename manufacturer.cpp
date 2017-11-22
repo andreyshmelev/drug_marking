@@ -6,7 +6,7 @@ manufacturer::manufacturer()
     //    set_organisation_name("ЗАО \"Берёзовский фармацевтический завод\"");
 }
 
-manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc)
+manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc, QString owneridc)
 {
     set_subject_id( subject_idc );
     set_organisation_name(organisation_namec);
@@ -15,11 +15,17 @@ manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QStr
     set_fl(flc);
     set_inn(innc);
     set_kpp(kppc);
+    set_ownerid(owneridc);
 }
 
 QString manufacturer::get_subject_id()
 {
     return subject_id;
+}
+
+QString manufacturer::get_owner_id()
+{
+    return ownerid;
 }
 
 QString manufacturer::get_organisation_name()
@@ -85,4 +91,9 @@ void manufacturer::set_inn(QString new_inn)
 void manufacturer::set_kpp(QString new_kpp)
 {
     kpp = new_kpp;
+}
+
+void manufacturer::set_ownerid(QString new_ownerid)
+{
+    ownerid = new_ownerid;
 }

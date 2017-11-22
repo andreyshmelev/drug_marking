@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) :
     agregation = false;
 
     // создаём производителя БФЗ
-    BFZ = new manufacturer ( QString (" 343 374 35 66" ),QString ("ЗАО \"Берёзовский фармацевтический завод\""),QString ("info@uralbfz.ru"), QString ("6604012225"), QString ("6604012225"), QString ("6604012225"), QString ("667801001") );
+    BFZ = new manufacturer ( QString (" 343 374 35 66" ),QString ("ЗАО \"Берёзовский фармацевтический завод\""),QString ("info@uralbfz.ru"), QString ("6604012225"), QString ("6604012225"), QString ("6604012225"), QString ("667801001"), QString ("contractownerID") );
 }
 
 MainWindow::~MainWindow()
@@ -241,14 +241,14 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-    QDomElement registerproductemissionelement  = document.createElement("register_product_emission");
-    registerproductemissionelement.setAttribute("action_id", ActionIDTypeEnum::RegisterProductEmission);
-    root.appendChild(registerproductemissionelement);
+    QDomElement reg_prod_emis_elem  = document.createElement("register_product_emission");
+    reg_prod_emis_elem.setAttribute("action_id", ActionIDTypeEnum::RegisterProductEmission);
+    root.appendChild(reg_prod_emis_elem);
 
     // добавляем subject_id
 
     QDomElement subjectIDelement  = document.createElement("subject_id");
-    registerproductemissionelement.appendChild(subjectIDelement);
+    reg_prod_emis_elem.appendChild(subjectIDelement);
 
     QDomText subjectIDtext  = document.createTextNode("subject_id");
     subjectIDtext.setNodeValue(organization->get_subject_id());
@@ -259,7 +259,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     // добавляем operation_date
 
     QDomElement operationdateelement  = document.createElement("operation_date");
-    registerproductemissionelement.appendChild(operationdateelement);
+    reg_prod_emis_elem.appendChild(operationdateelement);
 
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
 
@@ -272,7 +272,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     // добавляем confirm_doc
 
     QDomElement confirm_doc_lement  = document.createElement("confirm_doc");
-    registerproductemissionelement.appendChild(confirm_doc_lement);
+    reg_prod_emis_elem.appendChild(confirm_doc_lement);
 
     QDomText confirm_doc_text  = document.createTextNode("confirm_doc");
     confirm_doc_text.setNodeValue("1");
@@ -284,7 +284,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     // добавляем doc_num
 
     QDomElement doc_num_element  = document.createElement("doc_num");
-    registerproductemissionelement.appendChild(doc_num_element);
+    reg_prod_emis_elem.appendChild(doc_num_element);
 
     QDomText doc_num_text  = document.createTextNode("doc_num");
     doc_num_text.setNodeValue("ds1");
@@ -295,7 +295,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     // добавляем doc_num
 
     QDomElement doc_date_element  = document.createElement("doc_date");
-    registerproductemissionelement.appendChild(doc_date_element);
+    reg_prod_emis_elem.appendChild(doc_date_element);
 
     QDomText doc_date_text  = document.createTextNode("doc_date");
     doc_date_text.setNodeValue(GetDOCDate());
@@ -306,7 +306,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     // добавляем signs (для первичной агрегации это GTINs
 
     QDomElement signs_element  = document.createElement("signs");
-    registerproductemissionelement.appendChild(signs_element);
+    reg_prod_emis_elem.appendChild(signs_element);
 
 
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
@@ -353,14 +353,14 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-    QDomElement registerproductemissionelement  = document.createElement("register_control_samples");
-    registerproductemissionelement.setAttribute("action_id", ActionIDTypeEnum::RegisterControlSamples);
-    root.appendChild(registerproductemissionelement);
+    QDomElement reg_ctrl_smples_elem  = document.createElement("register_control_samples");
+    reg_ctrl_smples_elem.setAttribute("action_id", ActionIDTypeEnum::RegisterControlSamples);
+    root.appendChild(reg_ctrl_smples_elem);
 
     // добавляем subject_id
 
     QDomElement subjectIDelement  = document.createElement("subject_id");
-    registerproductemissionelement.appendChild(subjectIDelement);
+    reg_ctrl_smples_elem.appendChild(subjectIDelement);
 
     QDomText subjectIDtext  = document.createTextNode("subject_id");
     subjectIDtext.setNodeValue(organization->get_subject_id());
@@ -371,7 +371,7 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
     // добавляем operation_date
 
     QDomElement operationdateelement  = document.createElement("operation_date");
-    registerproductemissionelement.appendChild(operationdateelement);
+    reg_ctrl_smples_elem.appendChild(operationdateelement);
 
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
 
@@ -383,7 +383,7 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
     // добавляем control_samples_type
 
     QDomElement control_samples_type_element  = document.createElement("control_samples_type");
-    registerproductemissionelement.appendChild(control_samples_type_element);
+    reg_ctrl_smples_elem.appendChild(control_samples_type_element);
 
     QDomText control_samples_type_text  = document.createTextNode("control_samples_type");
 
@@ -396,7 +396,7 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
     // добавляем signs (для первичной агрегации это GTINs
 
     QDomElement signs_element  = document.createElement("signs");
-    registerproductemissionelement.appendChild(signs_element);
+    reg_ctrl_smples_elem.appendChild(signs_element);
 
 
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
@@ -407,15 +407,12 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
 
     // добавили doc_num
 
-    qDebug() << "MedList.length()" << MedList.length();
-
-
     for (int var = 0; var < MedList.length(); ++var) {
 
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
 
-        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
+        sgtin_text  = document.createTextNode("sgtintext");
         sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
     }
@@ -440,8 +437,130 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
 
 }
 
-void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *> MedList)
+void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document)
 {
+    QDomElement gtin_elem  = document.createElement(nodename);
+    reg_end_pack_elem.appendChild(gtin_elem);
+    QDomText gtin_text  = document.createTextNode(nodename);
+    gtin_text.setNodeValue(nodevalue );
+    gtin_elem.appendChild(gtin_text);
+}
+
+void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *> MedList, OrderTypeEnum ordertype)
+{
+
+    if (MedList.length() <=0)
+        return ;
+
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    QDomElement reg_end_pack_elem  = document.createElement("register_end_packing");
+    reg_end_pack_elem.setAttribute("action_id", ActionIDTypeEnum::RegisterEndPacking);
+    root.appendChild(reg_end_pack_elem);
+
+    // добавляем subject_id
+
+    QDomElement subjectIDelement  = document.createElement("subject_id");
+    reg_end_pack_elem.appendChild(subjectIDelement);
+
+    QDomText subjectIDtext  = document.createTextNode("subject_id");
+    subjectIDtext.setNodeValue(organization->get_subject_id());
+    subjectIDelement.appendChild(subjectIDtext);
+
+    // добавили subject_id
+
+    // добавляем operation_date
+
+    QDomElement opDate  = document.createElement("operation_date");
+    reg_end_pack_elem.appendChild(opDate);
+
+    QDomText opDateText  = document.createTextNode("operation_date");
+
+    opDateText.setNodeValue( GetISODate());
+    opDate.appendChild(opDateText);
+
+    // добавили operation_date
+
+    // добавляем order_type
+
+    QDomElement orderType  = document.createElement("order_type");
+    reg_end_pack_elem.appendChild(orderType);
+
+    QDomText orderTypeText  = document.createTextNode("order_type");
+
+    orderTypeText.setNodeValue(  QString::number(ordertype) );
+    orderType.appendChild(orderTypeText);
+
+    // добавили order_type
+
+    // если у нас контрактное производство то мы вводим идентификатор собственника
+    if (ordertype == ContractProduction)
+    {
+        // добавляем owner_id
+        addXMLTextNode(reg_end_pack_elem, organization->get_owner_id(), "owner_id", document);
+        // добавили owner_id
+    }
+
+    // добавляем series_number - номер производственной серии (не серийник потребит.упак. а именно партия)
+    addXMLTextNode(reg_end_pack_elem, MedicamentsList.at(0)->BatchNumber, "series_number", document);
+    // добавили series_number
+
+
+    // добавляем expiration_date - срок годности препарата
+    addXMLTextNode(reg_end_pack_elem, MedicamentsList.at(0)->ExperyDate, "expiration_date", document);
+    // добавили expiration_date
+
+    // добавляем gtin - срок годности препарата
+    addXMLTextNode(reg_end_pack_elem, MedicamentsList.at(0)->GTIN, "gtin", document);
+    // добавили  gtin
+
+    // добавляем tnved_code
+    addXMLTextNode(reg_end_pack_elem, MedicamentsList.at(0)->TNVED, "tnved_code", document);
+    // добавили  tnved_code
+
+    // добавляем signs (для первичной агрегации это GTINs
+
+    QDomElement signs_element  = document.createElement("signs");
+    reg_end_pack_elem.appendChild(signs_element);
+
+
+    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+    // добавляем sgtin
+
+    QDomElement sgtin_element ;
+    QDomText sgtin_text ;
+
+    // добавили doc_num
+
+    for (int var = 0; var < MedList.length(); ++var) {
+
+        sgtin_element = document.createElement("sgtin");
+        signs_element.appendChild(sgtin_element);
+
+        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
+        sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
+        sgtin_element.appendChild(sgtin_text);
+    }
+
+    // добавили signs
+
+    QString filepath = QDir::currentPath()   + "/311-register_end_packing.xml";
+
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+        return;
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream<< document.toString();
+        file.close();
+    }
 
 }
 
@@ -573,6 +692,7 @@ void MainWindow::setAgregation(bool set)
     }
     else    // если останавливаем агрегацию
     {
+        CreateXML311Doc(BFZ,MedicamentsList,OrderTypeEnum::ContractProduction);
         CreateXML312Doc(BFZ,MedicamentsList);
         CreateXML313Doc(BFZ,MedicamentsList);
         inputDataStringFromScaner.clear();
