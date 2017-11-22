@@ -47,6 +47,7 @@ private:
     QString getGuiTNVED();
 
     void updateQRImage();
+    void updateQRLabels();
     void addSymbolToInputString(QString str);
     void setScale(int);
 
@@ -81,8 +82,10 @@ private:
 
     QPixmap * pixmapqr;
     bool agregation;
-    const QString startcodestring = "5021";
-    const QString stopcodestring = "8619";
+    const QString startcodestring = "50218";
+    const QString stopcodestring = "86199";
+    const QString register_product_emission_QR_string = "49157";
+    const QString register_control_samples_QR_string = "70109";
 
     const QString GTINid = "01";
     const QString SNid = "21";
@@ -120,6 +123,8 @@ private:
 
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
 
+    void openRegisterProductEmissionPage();
+
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
 
@@ -136,6 +141,8 @@ private slots:
     void updateTable();
     void setStackedPage(int newindex);
     QString GenerateDMcode();
+
+    void on_register_product_emission_Button_clicked();
 
 signals:
     agregationstatusToggled();

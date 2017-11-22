@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    updateQRLabels();
+
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
@@ -766,6 +768,10 @@ void MainWindow::setStackedPage(int newindex)
 }
 
 
+
+
+
+
 void MainWindow::updateQRImage()
 {
     int levelIndex = 1;
@@ -798,7 +804,78 @@ void MainWindow::updateQRImage()
     ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
 
     setScale(3);
-    //    ui->pButtonSave->setEnabled( successfulEncoding );
+}
+
+void MainWindow::updateQRLabels()
+{
+    int levelIndex = 1;
+    int versionIndex = 0;
+    bool bExtent = true;
+    int maskIndex = -1;
+
+    successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, register_product_emission_QR_string.toUtf8().data() );
+    if ( !successfulEncoding )
+    {
+        ui->register_product_emission_QRLabel->clear();
+        ui->register_product_emission_QRLabel->setText( tr("QR Code...") );
+        return;
+    }
+
+    int qrImageSize = qrEncode.m_nSymbleSize;
+
+    // Создаем двумерный образ кода
+    encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+
+    ui->register_product_emission_QRLabel->setPixmap( QPixmap::fromImage( encodeImage ) );
+
+    ////
+
+    successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, register_control_samples_QR_string.toUtf8().data() );
+    if ( !successfulEncoding )
+    {
+        ui->register_control_samples_Label->clear();
+        ui->register_control_samples_Label->setText( tr("QR Code...") );
+        return;
+    }
+
+    qrImageSize = qrEncode.m_nSymbleSize;
+
+    // Создаем двумерный образ кода
+    encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage2.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+
+    ui->register_control_samples_Label->setPixmap( QPixmap::fromImage( encodeImage2 ) );
+
+    ////
+
+
+
+    // увеличиваем в размерах
+    if ( successfulEncoding )
+    {
+        int scale_size = encodeImageSize * 2;
+
+        QPixmap scale_image = ui->register_product_emission_QRLabel->pixmap()->scaled( scale_size, scale_size );
+        ui->register_product_emission_QRLabel->setPixmap( scale_image );
+        scale_image = ui->register_control_samples_Label->pixmap()->scaled( scale_size, scale_size );
+        ui->register_control_samples_Label->setPixmap( scale_image );
+    }
+
 }
 
 void MainWindow::addSymbolToInputString(QString str)
@@ -879,13 +956,6 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
         } else {
             keyString = QString( QChar(key1) );
             addSymbolToInputString(keyString);
-
-            //            qDebug() << keyString << key1;
-
-
-            //            if(key1 == NULL)
-            //                qDebug() << " = 0";
-
             return QObject::eventFilter(obj, event);
         }
         return true;
@@ -893,4 +963,14 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
         return QObject::eventFilter(obj, event);
     }
     return false;
+}
+
+void MainWindow::openRegisterProductEmissionPage()
+{
+    setStackedPage(7);
+}
+
+void MainWindow::on_register_product_emission_Button_clicked()
+{
+    openRegisterProductEmissionPage();
 }
