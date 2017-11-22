@@ -38,6 +38,14 @@ public:
     void Regtr(QString stringforparse, QString matched, QString SNRegularexpression);
     QString GetRegularString(QString stringforparse, QString SNRegularexpression);
 
+    void werwe();
+
+    void sss(int maskIndex, int levelIndex, int versionIndex, bool bExtent, int qrImageSize);
+
+    void sssss(int versionIndex, int qrImageSize, int levelIndex, int maskIndex, bool bExtent);
+
+    void ssssss(int qrImageSize, QLabel* dddd);
+
 private:
     QString getGuiGTIN();
     QString getSN();
@@ -124,6 +132,10 @@ private:
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
 
     void openRegisterProductEmissionPage();
+
+
+
+    QImage QRCodeToQimage(QLabel* dddd,QString code, int qrImageSize, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);

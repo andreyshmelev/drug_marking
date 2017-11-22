@@ -806,6 +806,34 @@ void MainWindow::updateQRImage()
     setScale(3);
 }
 
+QImage MainWindow::QRCodeToQimage(QLabel* dddd, QString code, int qrImageSize, int versionIndex, int levelIndex, bool bExtent, int maskIndex)
+{
+    successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, code.toUtf8().data() );
+    if ( !successfulEncoding )
+    {
+        ui->register_control_samples_Label->clear();
+        ui->register_control_samples_Label->setText( tr("QR Code...") );
+    }
+
+    qrImageSize = qrEncode.m_nSymbleSize;
+
+    // Создаем двумерный образ кода
+
+    encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage2.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+
+    dddd->setPixmap( QPixmap::fromImage( encodeImage2 ) );
+
+    return encodeImage2;
+}
+
 void MainWindow::updateQRLabels()
 {
     int levelIndex = 1;
@@ -838,29 +866,12 @@ void MainWindow::updateQRLabels()
 
     ////
 
-    successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, register_control_samples_QR_string.toUtf8().data() );
-    if ( !successfulEncoding )
-    {
-        ui->register_control_samples_Label->clear();
-        ui->register_control_samples_Label->setText( tr("QR Code...") );
-        return;
-    }
+     QLabel  * dddd = ui->register_control_samples_Label;
 
-    qrImageSize = qrEncode.m_nSymbleSize;
+    QImage encodeImage2 = QRCodeToQimage(dddd, "register_control_samples_QR_string", qrImageSize, versionIndex, levelIndex, bExtent, maskIndex);
 
-    // Создаем двумерный образ кода
-    encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
-    QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
-    encodeImage2.fill( 1 );
 
-    // Создать двумерный образ кода
-    for ( int i = 0; i < qrImageSize; i++ )
-        for ( int j = 0; j < qrImageSize; j++ )
-            if ( qrEncode.m_byModuleData[i][j] )
-                encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
-
-    ui->register_control_samples_Label->setPixmap( QPixmap::fromImage( encodeImage2 ) );
-
+    encodeImage2= encodeImage2;
     ////
 
 
