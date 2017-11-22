@@ -439,11 +439,11 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
 
 void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document)
 {
-    QDomElement gtin_elem  = document.createElement(nodename);
-    reg_end_pack_elem.appendChild(gtin_elem);
+    QDomElement q_dom_elem  = document.createElement(nodename);
+    reg_end_pack_elem.appendChild(q_dom_elem);
     QDomText gtin_text  = document.createTextNode(nodename);
     gtin_text.setNodeValue(nodevalue );
-    gtin_elem.appendChild(gtin_text);
+    q_dom_elem.appendChild(gtin_text);
 }
 
 void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *> MedList, OrderTypeEnum ordertype)
@@ -461,38 +461,15 @@ void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *>
     root.appendChild(reg_end_pack_elem);
 
     // добавляем subject_id
-
-    QDomElement subjectIDelement  = document.createElement("subject_id");
-    reg_end_pack_elem.appendChild(subjectIDelement);
-
-    QDomText subjectIDtext  = document.createTextNode("subject_id");
-    subjectIDtext.setNodeValue(organization->get_subject_id());
-    subjectIDelement.appendChild(subjectIDtext);
-
+    addXMLTextNode(reg_end_pack_elem,  organization->get_subject_id() , "subject_id", document);
     // добавили subject_id
 
     // добавляем operation_date
-
-    QDomElement opDate  = document.createElement("operation_date");
-    reg_end_pack_elem.appendChild(opDate);
-
-    QDomText opDateText  = document.createTextNode("operation_date");
-
-    opDateText.setNodeValue( GetISODate());
-    opDate.appendChild(opDateText);
-
+    addXMLTextNode(reg_end_pack_elem,  GetISODate() , "operation_date", document);
     // добавили operation_date
 
     // добавляем order_type
-
-    QDomElement orderType  = document.createElement("order_type");
-    reg_end_pack_elem.appendChild(orderType);
-
-    QDomText orderTypeText  = document.createTextNode("order_type");
-
-    orderTypeText.setNodeValue(  QString::number(ordertype) );
-    orderType.appendChild(orderTypeText);
-
+    addXMLTextNode(reg_end_pack_elem,  QString::number(ordertype) , "order_type", document);
     // добавили order_type
 
     // если у нас контрактное производство то мы вводим идентификатор собственника
@@ -520,7 +497,9 @@ void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *>
     addXMLTextNode(reg_end_pack_elem, MedicamentsList.at(0)->TNVED, "tnved_code", document);
     // добавили  tnved_code
 
-    // добавляем signs (для первичной агрегации это GTINs
+
+
+    // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
 
     QDomElement signs_element  = document.createElement("signs");
     reg_end_pack_elem.appendChild(signs_element);
@@ -529,20 +508,13 @@ void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *>
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
 
-    QDomElement sgtin_element ;
-    QDomText sgtin_text ;
-
-    // добавили doc_num
-
     for (int var = 0; var < MedList.length(); ++var) {
 
-        sgtin_element = document.createElement("sgtin");
-        signs_element.appendChild(sgtin_element);
+        addXMLTextNode(signs_element, MedList.at(var)->sGTIN, "sgtin", document);
 
-        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
-        sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
-        sgtin_element.appendChild(sgtin_text);
     }
+
+    //addXMLTextNode(sgtin_element,MedList.at(var)->sGTIN, "sgtin", document);
 
     // добавили signs
 
