@@ -24,6 +24,9 @@ namespace Ui {
 class MainWindow;
 }
 
+
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -33,10 +36,10 @@ public:
     ~MainWindow();
 
     int GenerateNumber(int High, int Low);
-
     static QString GetRegularString(QString stringforparse, QString SNRegularexpression);
-
     static QImage QRCodeToQImageConverter(QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
+
+
 
 private:
     QString getGuiGTIN();
@@ -95,6 +98,9 @@ private:
     const QString programOptionsQRCode = "783146";
     const QString agregationQRCode = "793817";
     const QString statisticsQRCode = "643701";
+
+    const QString startUnitsExtract = "909628";
+    const QString stopUnitsExtract = "272080";
 
     const QString GTINid = "01";
     const QString SNid = "21";

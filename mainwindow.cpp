@@ -11,8 +11,6 @@
 #include "manufacturer.h"
 #include "basetypes.h"
 
-int t;
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -73,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
-    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParcedString(QString,QString,QString,QString,QString,QString))) ;
+    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParsedString(QString,QString,QString,QString,QString,QString))) ;
 
     // сигналы и слоты с другими виджетами
 
@@ -757,7 +755,7 @@ void MainWindow::updateAgregationGUI()
 {
     if (getAgregation() == true)
     {
-        ui->agregationStartButton->setText("Закончить агрегацию");
+        ui->agregationStartButton->setText("Закончить регистрацию");
         ui->GTINTextAgregation->setEnabled(true);
         ui->batchnumberTextAgregation->setEnabled(true);
         ui->expirationdateAgregation->setEnabled(true);
@@ -770,7 +768,7 @@ void MainWindow::updateAgregationGUI()
     }
     else
     {
-        ui->agregationStartButton->setText("Начать агрегацию");
+        ui->agregationStartButton->setText("Начать регистрацию");
         ui->GTINTextAgregation->setEnabled(false);
         ui->batchnumberTextAgregation->setEnabled(false);
         ui->expirationdateAgregation->setEnabled(false);

@@ -411,8 +411,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>Начать регистрацию
-сведений</string>
+    <string>Начать регистрацию</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="expirationdateAgregation">
