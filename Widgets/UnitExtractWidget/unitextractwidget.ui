@@ -353,7 +353,7 @@ p, li { white-space: pre-wrap; }
      <x>1</x>
      <y>195</y>
      <width>481</width>
-     <height>201</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="columnCount">
@@ -396,7 +396,7 @@ p, li { white-space: pre-wrap; }
     </property>
    </column>
   </widget>
-  <widget class="QPushButton" name="agregationStartButton">
+  <widget class="QPushButton" name="RegistrationStartButton">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -411,7 +411,8 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>Начать</string>
+    <string>Начать регистрацию
+сведений</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="expirationdateAgregation">
@@ -480,6 +481,48 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>ТН ВЭД</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>80</y>
+     <width>200</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Контроль качества</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Техническое регулирование</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="AppendPageLabel_2">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>60</y>
+     <width>200</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Вид отбора контр. образца</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

@@ -36,6 +36,8 @@ public:
 
     static QString GetRegularString(QString stringforparse, QString SNRegularexpression);
 
+    static QImage QRCodeToQImageConverter(QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
+
 private:
     QString getGuiGTIN();
     QString getSN();
@@ -131,6 +133,7 @@ private:
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
 
     QImage QRCodeToQLabelConverter(QLabel* dddd,QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
+
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);

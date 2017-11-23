@@ -72,9 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
 
 
+    // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
     connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParcedString(QString,QString,QString,QString,QString,QString))) ;
-
-
 
     // сигналы и слоты с другими виджетами
 
@@ -938,6 +937,41 @@ QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int
     return encodeImage2;
 }
 
+QImage MainWindow::QRCodeToQImageConverter( QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
+{
+    CQR_Encode qrEncode;
+
+    bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, textcode.toUtf8().data() );
+
+
+    int qrImageSize = qrEncode.m_nSymbleSize;
+
+    // Создаем двумерный образ кода
+
+    int encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage2.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+
+//    labelq->setPixmap( QPixmap::fromImage( encodeImage2 ) );
+
+
+    qDebug() << encodeImageSize << "encodeImageSize";
+    if ( successfulEncoding )
+    {
+//        int scale_size = encodeImageSize * scale;
+
+//        QPixmap scale_image = labelq->pixmap()->scaled( scale_size, scale_size );
+//        labelq->setPixmap( scale_image );
+    }
+
+    return encodeImage2;
+}
 void MainWindow::updateQRLabels()
 {
     int levelIndex = 1;
