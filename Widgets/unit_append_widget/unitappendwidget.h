@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::UnitAppendWidget *ui;
+
+private slots:
+    void getparsedStringemit (QString gtinstring, QString  SNstring,QString  tnvedstring, QString expstring, QString batchstring, QString sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
 };
 
 #endif // UNITAPPENDWIDGET_H

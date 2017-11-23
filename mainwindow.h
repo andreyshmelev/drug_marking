@@ -33,18 +33,8 @@ public:
     ~MainWindow();
 
     int GenerateNumber(int High, int Low);
-    void getregularString(QString stringforparse, QString SNRegularexpression);
-    void getRegularFunction(QString SNRegularexpression, QString stringforparse);
-    void Regtr(QString stringforparse, QString matched, QString SNRegularexpression);
-    QString GetRegularString(QString stringforparse, QString SNRegularexpression);
 
-    void werwe();
-
-    void sss(int maskIndex, int levelIndex, int versionIndex, bool bExtent, int qrImageSize);
-
-    void sssss(int versionIndex, int qrImageSize, int levelIndex, int maskIndex, bool bExtent);
-
-    void ssssss(int qrImageSize, QLabel* dddd);
+    static QString GetRegularString(QString stringforparse, QString SNRegularexpression);
 
 private:
     QString getGuiGTIN();
@@ -163,19 +153,28 @@ private slots:
     void RegisterControlSamplesPageOpen();
     void RegisterEndPackingPageOpen();
 
+    void PrintControlPageOpen();
+    void productOptionsPageOpen();    void agregationOptionsPageOpen();
+    void statisticsPageOpen();
+
+
     void on_register_product_emission_Button_clicked();
     void on_register_control_samples_Button_clicked();
-
-
     void on_register_end_packing_Button_clicked();
 
 signals:
     agregationstatusToggled();
     ParcingEnded();
-
+    ParcingEndedWithPar(QString , QString, QString, QString, QString, QString);
     register_product_emission_QR_Scanned();
     register_control_samples_QR_Scanned();
     register_end_packing_QR_Scanned();
+
+    printControlQRCodeScanned();
+    programOptionsQRCodeScanned();
+    agregationQRCodeScanned();
+    statisticsQRCodeScanned();
+
 };
 
 #endif // MAINWINDOW_H

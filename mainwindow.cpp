@@ -53,10 +53,15 @@ MainWindow::MainWindow(QWidget *parent) :
     DMCodeUpdateTimeoutTimer->start();
     signalMapper = new QSignalMapper (this) ;
 
-    connect(ui->printControlButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
-    connect(ui->programOptionsButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
-    connect(ui->agregationButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
-    connect(ui->statisticksButton, SIGNAL(pressed()), signalMapper, SLOT(map())) ;
+    connect(ui->printControlButton, SIGNAL(pressed()), this, SLOT(PrintControlPageOpen())) ;
+    connect(ui->programOptionsButton, SIGNAL(pressed()), this, SLOT(productOptionsPageOpen())) ;
+    connect(ui->agregationButton, SIGNAL(pressed()), this, SLOT(agregationOptionsPageOpen())) ;
+    connect(ui->statisticksButton, SIGNAL(pressed()), this, SLOT(statisticsPageOpen())) ;
+
+    connect(this, SIGNAL(printControlQRCodeScanned()), this, SLOT(PrintControlPageOpen())) ;
+    connect(this, SIGNAL(programOptionsQRCodeScanned()), this, SLOT(productOptionsPageOpen())) ;
+    connect(this, SIGNAL(agregationQRCodeScanned()), this, SLOT(agregationOptionsPageOpen())) ;
+    connect(this, SIGNAL(statisticsQRCodeScanned()), this, SLOT(statisticsPageOpen())) ;
 
     connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
@@ -65,6 +70,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(register_product_emission_QR_Scanned()), this, SLOT(RegisterProductEmissionPageOpen())) ;
     connect(this, SIGNAL(register_control_samples_QR_Scanned()), this, SLOT(RegisterControlSamplesPageOpen())) ;
     connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
+
+
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -76,7 +83,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     journalTimer->start();
     datetimeTimer->start();
-
 
     scene = new QGraphicsScene();
     view = new QGraphicsView(scene);
@@ -543,34 +549,62 @@ void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *>
 
 void MainWindow::ParseDMCode(QString stringforparse)
 {
-    if (stringforparse == startcodestring) // если считали QR код начала агрегации то запускаем режим агрегации
+
+    // сначала проверяем ня соответствие QR кодам
+
+    if (stringforparse == startcodestring)
     {
         setAgregation(1);
         return;
     }
-    if (stringforparse == stopcodestring) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    if (stringforparse == stopcodestring)
     {
         setAgregation(0);
         return;
     }
 
-    if (stringforparse == register_product_emission_QR_string) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    if (stringforparse == register_product_emission_QR_string)
     {
         emit register_product_emission_QR_Scanned();
         return;
     }
 
-    if (stringforparse == register_control_samples_QR_string) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    if (stringforparse == register_control_samples_QR_string)
     {
         emit register_control_samples_QR_Scanned();
         return;
     }
 
-    if (stringforparse == register_end_packing_QR_string) // если считали QR код окончания агрегации то останавливаем режим агрегации
+    if (stringforparse == register_end_packing_QR_string)
     {
         emit register_end_packing_QR_Scanned();
         return;
     }
+
+    if (stringforparse == printControlQRCode)
+    {
+        emit printControlQRCodeScanned();
+        return;
+    }
+
+    if (stringforparse == programOptionsQRCode)
+    {
+        emit programOptionsQRCodeScanned();
+        return;
+    }
+
+    if (stringforparse == agregationQRCode)
+    {
+        emit agregationQRCodeScanned();
+        return;
+    }
+
+    if (stringforparse == statisticsQRCode)
+    {
+        emit statisticsQRCodeScanned();
+        return;
+    }
+
 
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
@@ -661,6 +695,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
         ScannedMedicament = new medicament("Nimesulid",gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
         MedicamentsList.append(ScannedMedicament);
         emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
+        emit ParcingEndedWithPar(gtinstring, SNstring, tnvedstring, expstring, batchstring, sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
     }
 }
 
@@ -797,6 +832,26 @@ void MainWindow::RegisterControlSamplesPageOpen()
 void MainWindow::RegisterEndPackingPageOpen()
 {
     setStackedPage(6);
+}
+
+void MainWindow::PrintControlPageOpen()
+{
+    setStackedPage(0);
+}
+
+void MainWindow::productOptionsPageOpen()
+{
+    setStackedPage(1);
+}
+
+void MainWindow::agregationOptionsPageOpen()
+{
+    setStackedPage(2);
+}
+
+void MainWindow::statisticsPageOpen()
+{
+    setStackedPage(3);
 }
 
 void MainWindow::setStackedPage(int newindex)
@@ -964,9 +1019,7 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
     if (event->type()==QEvent::KeyRelease) {
 
         QKeyEvent* key = static_cast<QKeyEvent*>(event);
-
         int key1 = key->key();
-        //qDebug() << text;
         if ( (key->key()==Qt::Key_Enter) || (key->key()==Qt::Key_Return)|| (key->key()==Qt::Key_Shift) ) {
             //Enter or return was pressed
         } else {

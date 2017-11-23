@@ -165,8 +165,8 @@ border-radius: 10px;</string>
      <rect>
       <x>0</x>
       <y>50</y>
-      <width>400</width>
-      <height>410</height>
+      <width>480</width>
+      <height>400</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -176,7 +176,7 @@ border-radius: 10px;</string>
     <property name="currentIndex">
      <number>6</number>
     </property>
-    <widget class="QWidget" name="mainPage">
+    <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
       <property name="geometry">
        <rect>
@@ -428,9 +428,9 @@ border-radius: 0px;</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>21</x>
+        <x>1</x>
         <y>62</y>
-        <width>452</width>
+        <width>471</width>
         <height>197</height>
        </rect>
       </property>
@@ -817,28 +817,6 @@ border-radius: 0px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="CodeLabel">
-      <property name="geometry">
-       <rect>
-        <x>410</x>
-        <y>280</y>
-        <width>141</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Сканированный код:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-     </widget>
      <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
@@ -1090,9 +1068,9 @@ border-radius: 0px;</string>
      <widget class="QTextEdit" name="expirationdateAgregation">
       <property name="geometry">
        <rect>
-        <x>99</x>
-        <y>199</y>
-        <width>154</width>
+        <x>340</x>
+        <y>130</y>
+        <width>110</width>
         <height>30</height>
        </rect>
       </property>
@@ -1104,7 +1082,7 @@ border-radius: 0px;</string>
       </property>
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>150</width>
         <height>30</height>
        </size>
       </property>
@@ -1127,8 +1105,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="GTINLabelAgregation">
       <property name="geometry">
        <rect>
-        <x>11</x>
-        <y>91</y>
+        <x>12</x>
+        <y>93</y>
         <width>70</width>
         <height>30</height>
        </rect>
@@ -1161,8 +1139,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextEdit" name="GTINTextAgregation">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>91</y>
+        <x>91</x>
+        <y>93</y>
         <width>170</width>
         <height>30</height>
        </rect>
@@ -1175,7 +1153,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>150</width>
         <height>30</height>
        </size>
       </property>
@@ -1198,8 +1176,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextEdit" name="batchnumberTextAgregation">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>127</y>
+        <x>91</x>
+        <y>129</y>
         <width>170</width>
         <height>30</height>
        </rect>
@@ -1212,7 +1190,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="maximumSize">
        <size>
-        <width>300</width>
+        <width>150</width>
         <height>30</height>
        </size>
       </property>
@@ -1235,8 +1213,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="batchnumberAgregation">
       <property name="geometry">
        <rect>
-        <x>11</x>
-        <y>127</y>
+        <x>12</x>
+        <y>129</y>
         <width>70</width>
         <height>30</height>
        </rect>
@@ -1291,9 +1269,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextEdit" name="serialNumberAgregationValue">
       <property name="geometry">
        <rect>
-        <x>99</x>
-        <y>163</y>
-        <width>154</width>
+        <x>91</x>
+        <y>165</y>
+        <width>150</width>
         <height>30</height>
        </rect>
       </property>
@@ -1305,7 +1283,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="maximumSize">
        <size>
-        <width>300</width>
+        <width>150</width>
         <height>30</height>
        </size>
       </property>
@@ -1328,8 +1306,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="productlifeimeLabelAgregation">
       <property name="geometry">
        <rect>
-        <x>11</x>
-        <y>199</y>
+        <x>290</x>
+        <y>129</y>
         <width>70</width>
         <height>30</height>
        </rect>
@@ -1362,8 +1340,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="serialNumberAgregationLabel">
       <property name="geometry">
        <rect>
-        <x>11</x>
-        <y>163</y>
+        <x>12</x>
+        <y>165</y>
         <width>73</width>
         <height>30</height>
        </rect>
@@ -1396,8 +1374,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="TNVEDabelAgregation">
       <property name="geometry">
        <rect>
-        <x>259</x>
-        <y>163</y>
+        <x>290</x>
+        <y>165</y>
         <width>45</width>
         <height>30</height>
        </rect>
@@ -1430,8 +1408,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextEdit" name="TNVEDValueAgregation">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>163</y>
+        <x>340</x>
+        <y>165</y>
         <width>80</width>
         <height>30</height>
        </rect>
@@ -1467,10 +1445,10 @@ p, li { white-space: pre-wrap; }
      <widget class="QTableWidget" name="MedicamentsTable">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>230</y>
-        <width>381</width>
-        <height>171</height>
+        <x>11</x>
+        <y>200</y>
+        <width>469</width>
+        <height>201</height>
        </rect>
       </property>
       <property name="columnCount">
@@ -1645,9 +1623,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="manualButton">
     <property name="geometry">
      <rect>
-      <x>402</x>
+      <x>492</x>
       <y>420</y>
-      <width>125</width>
+      <width>111</width>
       <height>35</height>
      </rect>
     </property>
@@ -1666,9 +1644,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="listingButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>610</x>
       <y>420</y>
-      <width>121</width>
+      <width>41</width>
       <height>35</height>
      </rect>
     </property>
@@ -1687,9 +1665,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>399</x>
+      <x>479</x>
       <y>50</y>
-      <width>251</width>
+      <width>171</width>
       <height>351</height>
      </rect>
     </property>
@@ -1866,9 +1844,9 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>310</y>
-       <width>231</width>
-       <height>31</height>
+       <y>200</y>
+       <width>151</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -1878,6 +1856,28 @@ p, li { white-space: pre-wrap; }
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="CodeLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>180</y>
+       <width>141</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Сканированный код:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
