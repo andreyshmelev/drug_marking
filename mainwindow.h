@@ -25,8 +25,6 @@ class MainWindow;
 }
 
 
-
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -88,8 +86,6 @@ private:
 
     // сгенерированные QR коды
 
-    const QString startcodestring = "5021";
-    const QString stopcodestring = "8619";
     const QString register_product_emission_QR_string = "497157";
     const QString register_control_samples_QR_string = "709109";
     const QString register_end_packing_QR_string = "914088";
@@ -99,8 +95,12 @@ private:
     const QString agregationQRCode = "793817";
     const QString statisticsQRCode = "643701";
 
-    const QString startUnitsExtract = "909628";
-    const QString stopUnitsExtract = "272080";
+    const QString Start311ProcessQRString = "501301";
+    const QString Stop311ProcessQRString  = "641195";
+    const QString Start312ProcessQRString = "909628";
+    const QString Stop312ProcessQRString  = "272080";
+    const QString Start313ProcessQRString = "5021";
+    const QString Stop313ProcessQRString = "8619";
 
     const QString GTINid = "01";
     const QString SNid = "21";
@@ -172,9 +172,13 @@ private slots:
     void on_register_end_packing_Button_clicked();
 
 signals:
+
     agregationstatusToggled();
     ParcingEnded();
     ParcingEndedWithPar(QString , QString, QString, QString, QString, QString);
+
+    SendMedicament(medicament * );
+
     register_product_emission_QR_Scanned();
     register_control_samples_QR_Scanned();
     register_end_packing_QR_Scanned();
@@ -183,6 +187,9 @@ signals:
     programOptionsQRCodeScanned();
     agregationQRCodeScanned();
     statisticsQRCodeScanned();
+
+    Start312Process();
+    Stop312Process();
 
 };
 

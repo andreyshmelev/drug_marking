@@ -15,6 +15,9 @@ public:
     explicit UnitAppendWidget(QWidget *parent = 0);
     ~UnitAppendWidget();
 
+    const QString Start311ProcessQRString = "501301";
+    const QString Stop311ProcessQRString  = "641195";
+
 private:
     Ui::UnitAppendWidget *ui;
 };

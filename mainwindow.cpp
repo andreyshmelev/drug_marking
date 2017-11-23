@@ -71,9 +71,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
-    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParsedString(QString,QString,QString,QString,QString,QString))) ;
-
     // сигналы и слоты с другими виджетами
+//    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParsedString(QString,QString,QString,QString,QString,QString))) ;
+    connect(this, SIGNAL(SendMedicament(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
+
+    connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
+    connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
+
 
 
 
@@ -556,12 +560,12 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // сначала проверяем ня соответствие QR кодам
 
-    if (stringforparse == startcodestring)
+    if (stringforparse == Start313ProcessQRString)
     {
         setAgregation(1);
         return;
     }
-    if (stringforparse == stopcodestring)
+    if (stringforparse == Stop313ProcessQRString)
     {
         setAgregation(0);
         return;
@@ -603,11 +607,19 @@ void MainWindow::ParseDMCode(QString stringforparse)
         return;
     }
 
-    if (stringforparse == statisticsQRCode)
+    if (stringforparse == Start312ProcessQRString)
     {
-        emit statisticsQRCodeScanned();
+        emit Start312Process();
         return;
     }
+
+    if (stringforparse == Stop312ProcessQRString)
+    {
+        emit Stop312Process();
+        return;
+    }
+
+
 
 
     ui->ScannedCode->setText(inputDataStringFromScaner);
@@ -699,7 +711,8 @@ void MainWindow::ParseDMCode(QString stringforparse)
         ScannedMedicament = new medicament("Nimesulid",gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
         MedicamentsList.append(ScannedMedicament);
         emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
-        emit ParcingEndedWithPar(gtinstring, SNstring, tnvedstring, expstring, batchstring, sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
+        SendMedicament(ScannedMedicament);
+//        emit ParcingEndedWithPar(gtinstring, SNstring, tnvedstring, expstring, batchstring, sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
     }
 }
 
@@ -790,7 +803,7 @@ void MainWindow::updateAgregationGUI()
     if (inputDataStringFromScaner.isEmpty())
         ui->ScannedCode->clear();
 
-    if ( (inputDataStringFromScaner!= startcodestring) && (inputDataStringFromScaner!= stopcodestring) )
+    if ( (inputDataStringFromScaner!= Start313ProcessQRString) && (inputDataStringFromScaner!= Stop313ProcessQRString) )
     {
         ui->ScannedCode->setText(inputDataStringFromScaner);
     }
@@ -939,11 +952,8 @@ QImage MainWindow::QRCodeToQImageConverter( QString textcode, int scale ,  int v
 {
     CQR_Encode qrEncode;
 
-    bool successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, textcode.toUtf8().data() );
-
-
+    qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, textcode.toUtf8().data() );
     int qrImageSize = qrEncode.m_nSymbleSize;
-
     // Создаем двумерный образ кода
 
     int encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
@@ -955,21 +965,9 @@ QImage MainWindow::QRCodeToQImageConverter( QString textcode, int scale ,  int v
         for ( int j = 0; j < qrImageSize; j++ )
             if ( qrEncode.m_byModuleData[i][j] )
                 encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
-
-//    labelq->setPixmap( QPixmap::fromImage( encodeImage2 ) );
-
-
-    qDebug() << encodeImageSize << "encodeImageSize";
-    if ( successfulEncoding )
-    {
-//        int scale_size = encodeImageSize * scale;
-
-//        QPixmap scale_image = labelq->pixmap()->scaled( scale_size, scale_size );
-//        labelq->setPixmap( scale_image );
-    }
-
     return encodeImage2;
 }
+
 void MainWindow::updateQRLabels()
 {
     int levelIndex = 1;

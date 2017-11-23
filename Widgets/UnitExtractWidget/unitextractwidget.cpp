@@ -29,26 +29,38 @@ void UnitExtractWidget::updateWidgetGui(QString gtinstring, QString batchstring,
     ui->TNVEDValueAgregation->setText(tnvedstring);
 }
 
-UnitExtractWidget::GetParsedString(QString gtinstring, QString SNstring, QString tnvedstring, QString expstring, QString batchstring, QString sGTINString)
+void UnitExtractWidget::GetParsedString(QString gtinstring, QString SNstring, QString tnvedstring, QString expstring, QString batchstring, QString sGTINString)
 {
-    updateWidgetGui(gtinstring, batchstring, SNstring, tnvedstring, expstring);
+    //    updateWidgetGui(gtinstring, batchstring, SNstring, tnvedstring, expstring);
 
     qDebug() << gtinstring<< SNstring<< tnvedstring<< expstring<< batchstring<< sGTINString;
+}
+
+void UnitExtractWidget::GetMedicament(medicament * m )
+{
+    ScannedMedicament = m;
+    updateWidgetGui(ScannedMedicament->GTIN, ScannedMedicament->SerialNumber, ScannedMedicament->TNVED, ScannedMedicament->ExperyDate, ScannedMedicament->BatchNumber);
+    updateTable();
+}
+
+void UnitExtractWidget::StartRegistrationProcess()
+{
+    registration = true;
+    emit RegistrationToggled();
+}
+
+void UnitExtractWidget::StopRegistrationProcess()
+{
+    registration = false;
+    emit RegistrationToggled();
 }
 
 void UnitExtractWidget::ToggleRegistration()
 {
     if (registration != false)
-    {
-//        emit StartRegisterControlSamples();
-        registration = false;
-    }
+        StopRegistrationProcess();
     else
-    {
-//        emit StopRegisterControlSamples();
-        registration = true;
-    }
-    emit RegistrationToggled();
+        StartRegistrationProcess();
 }
 
 void UnitExtractWidget::on_RegistrationStartButton_clicked()
@@ -67,12 +79,9 @@ void UnitExtractWidget::updateGUI()
     QImage i;
     QPixmap scale_image ;
 
-
-
-
     if (registration != false) // if true
     {
-        i = MainWindow::QRCodeToQImageConverter("finish",2.2,  versionIndex, levelIndex, bExtent, maskIndex);
+        i = MainWindow::QRCodeToQImageConverter(Stop312ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
         ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
 
         ui->RegistrationStartButton->setText("Закончить регистрацию");
@@ -81,12 +90,10 @@ void UnitExtractWidget::updateGUI()
         ui->expirationdateAgregation->setEnabled(true);
         ui->TNVEDValueAgregation->setEnabled(true);
         ui->serialNumberAgregationValue->setEnabled(true);
-
-
     }
     else
     {
-        i = MainWindow::QRCodeToQImageConverter("start",2.2,  versionIndex, levelIndex, bExtent, maskIndex);
+        i = MainWindow::QRCodeToQImageConverter(Start312ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
         ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
 
         ui->RegistrationStartButton->setText("Начать регистрацию");
@@ -95,27 +102,22 @@ void UnitExtractWidget::updateGUI()
         ui->expirationdateAgregation->setEnabled(false);
         ui->TNVEDValueAgregation->setEnabled(false);
         ui->serialNumberAgregationValue->setEnabled(false);
-
         ui->MedicamentsTable->clearContents();
-
     }
 
-        auto scale = 29 * scale_size;
+    auto scale = 29 * scale_size;
     scale_image =  ui->qrstartstop->pixmap()->scaled( scale, scale );
     ui->qrstartstop->setPixmap( scale_image );
+}
 
-//    if (inputDataStringFromScaner.isEmpty())
-//        ui->ScannedCode->clear();
-
-//    if ( (inputDataStringFromScaner!= startcodestring) && (inputDataStringFromScaner!= stopcodestring) )
-//    {
-//        ui->ScannedCode->setText(inputDataStringFromScaner);
-//    }
-
-
-//    ui->GTINTextAgregation->setText(gtinstring);
-//    ui->serialNumberAgregationValue->setText(SNstring);
-//    ui->batchnumberTextAgregation->setText(batchstring);
-//    ui->expirationdateAgregation->setText(expstring);
-//    ui->TNVEDValueAgregation->setText(tnvedstring);
+void UnitExtractWidget::updateTable()
+{
+        ui->MedicamentsTable->insertRow(0);
+        ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->medicament_name));
+        ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(ScannedMedicament->GTIN));
+        ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(ScannedMedicament->BatchNumber));
+        ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(ScannedMedicament->SerialNumber));
+        ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(ScannedMedicament->TNVED));
+        ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(ScannedMedicament->ExperyDate));
+        ui->MedicamentsTable->scrollToTop();
 }
