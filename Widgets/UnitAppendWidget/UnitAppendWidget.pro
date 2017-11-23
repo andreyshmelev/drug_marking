@@ -1,15 +1,14 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-11-13T11:36:52
+# Project created by QtCreator 2017-11-23T11:33:38
 #
 #-------------------------------------------------
 
 QT       += core gui
-QT       += xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Application
+TARGET = UnitAppendWidget
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,23 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    QRCodeGenerator.cpp \
-    manufacturer.cpp \
-    medicament.cpp \
-    Widgets/UnitExtractWidget/unitextractwidget.cpp \
-    Widgets/UnitAppendWidget/unitappendwidget.cpp
+        unitappendwidget.cpp
 
 HEADERS += \
-        mainwindow.h \
-    QRCodeGenerator.h \
-    manufacturer.h \
-    medicament.h \
-    basetypes.h \
-    Widgets/UnitExtractWidget/unitextractwidget.h \
-    Widgets/UnitAppendWidget/unitappendwidget.h
+        unitappendwidget.h
 
 FORMS += \
-        mainwindow.ui \
-    Widgets/UnitExtractWidget/unitextractwidget.ui \
-    Widgets/UnitAppendWidget/unitappendwidget.ui
+        unitappendwidget.ui

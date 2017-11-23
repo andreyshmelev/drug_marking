@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -973,6 +973,26 @@ border-radius: 0px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="UnitExtractWidget" name="widget111112" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>231</width>
+        <height>181</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="UnitExtractWidget" name="widget111112_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>200</y>
+        <width>231</width>
+        <height>181</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="xmlPage">
      <widget class="QLabel" name="LPLabel_6">
@@ -999,31 +1019,29 @@ border-radius: 0px;</string>
      </widget>
     </widget>
     <widget class="QWidget" name="ExtractPage">
-     <widget class="QLabel" name="ExtractPageLabel">
+     <widget class="UnitExtractWidget" name="ExtractWidget" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>401</width>
-        <height>40</height>
+        <width>480</width>
+        <height>400</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Регистрация сведений об отборе
- образцов лекарственных препаратов (312)</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
-    <widget class="UnitAppendWidget" name="AppendPage"/>
+    <widget class="QWidget" name="AppendPage">
+     <widget class="UnitAppendWidget" name="AppendWidget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>480</width>
+        <height>400</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="RegisterProductEmissionPage">
      <widget class="QLabel" name="AppendPageLabel_2">
       <property name="geometry">
@@ -2131,9 +2149,15 @@ p, li { white-space: pre-wrap; }
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>UnitExtractWidget</class>
+   <extends>QWidget</extends>
+   <header>C:\Work\Application\Application\Widgets\UnitExtractWidget\unitextractwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>UnitAppendWidget</class>
    <extends>QWidget</extends>
-   <header>C:\Work\Application\Application\Widgets\unit_append_widget\unitappendwidget.h</header>
+   <header>C:\Work\Application\Application\Widgets\UnitAppendWidget\unitappendwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

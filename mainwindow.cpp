@@ -72,6 +72,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
 
 
+    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParcedString(QString,QString,QString,QString,QString,QString))) ;
+
+
+
+    // сигналы и слоты с другими виджетами
+
+
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
