@@ -77,7 +77,7 @@ border-radius: 10px;</string>
       <x>0</x>
       <y>460</y>
       <width>100</width>
-      <height>80</height>
+      <height>45</height>
      </rect>
     </property>
     <property name="font">
@@ -99,7 +99,7 @@ border-radius: 10px;</string>
       <x>100</x>
       <y>460</y>
       <width>100</width>
-      <height>80</height>
+      <height>45</height>
      </rect>
     </property>
     <property name="font">
@@ -124,7 +124,7 @@ border-radius: 10px;</string>
       <x>300</x>
       <y>460</y>
       <width>100</width>
-      <height>80</height>
+      <height>45</height>
      </rect>
     </property>
     <property name="font">
@@ -145,7 +145,7 @@ border-radius: 10px;</string>
       <x>200</x>
       <y>460</y>
       <width>100</width>
-      <height>80</height>
+      <height>45</height>
      </rect>
     </property>
     <property name="font">
@@ -166,7 +166,7 @@ border-radius: 10px;</string>
       <x>0</x>
       <y>50</y>
       <width>400</width>
-      <height>411</height>
+      <height>410</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1045,31 +1045,7 @@ border-radius: 0px;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="AppendPage">
-     <widget class="QLabel" name="AppendPageLabel">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>401</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Регистрация сведений о
-завершении этапа окончательной упаковки (311)</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </widget>
+    <widget class="UnitAppendWidget" name="AppendPage"/>
     <widget class="QWidget" name="RegisterProductEmissionPage">
      <widget class="QLabel" name="AppendPageLabel_2">
       <property name="geometry">
@@ -1905,6 +1881,142 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="printControlLabel">
+    <property name="geometry">
+     <rect>
+      <x>25</x>
+      <y>510</y>
+      <width>55</width>
+      <height>55</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>55</width>
+      <height>55</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>printControlQR</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="programOptionsLabel">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>510</y>
+      <width>55</width>
+      <height>55</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>55</width>
+      <height>55</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>programOptionsLabel</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="agregationLabel">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>510</y>
+      <width>55</width>
+      <height>55</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>55</width>
+      <height>55</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>programOptionsLabel</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="statisticsLabel">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>510</y>
+      <width>55</width>
+      <height>55</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>55</width>
+      <height>55</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>programOptionsLabel</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
@@ -2014,27 +2126,17 @@ p, li { white-space: pre-wrap; }
     </layout>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>UnitAppendWidget</class>
+   <extends>QWidget</extends>
+   <header>C:\Work\Application\Application\Widgets\unit_append_widget\unitappendwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

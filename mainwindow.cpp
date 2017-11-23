@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     agregation = false;
 
     ui->setupUi(this);
+
     updateQRLabels();
 
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
@@ -885,6 +886,11 @@ void MainWindow::updateQRLabels()
     QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
+
+    QRCodeToQLabelConverter(ui->printControlLabel, printControlQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->programOptionsLabel, programOptionsQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->agregationLabel, agregationQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->statisticsLabel, statisticsQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
 
 }
 

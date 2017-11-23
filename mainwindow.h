@@ -90,11 +90,19 @@ private:
 
     QPixmap * pixmapqr;
     bool agregation;
+
+    // сгенерированные QR коды
+
     const QString startcodestring = "5021";
     const QString stopcodestring = "8619";
     const QString register_product_emission_QR_string = "497157";
     const QString register_control_samples_QR_string = "709109";
     const QString register_end_packing_QR_string = "914088";
+
+    const QString printControlQRCode = "306656";
+    const QString programOptionsQRCode = "783146";
+    const QString agregationQRCode = "793817";
+    const QString statisticsQRCode = "643701";
 
     const QString GTINid = "01";
     const QString SNid = "21";
