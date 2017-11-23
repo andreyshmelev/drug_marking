@@ -18,7 +18,7 @@ enum ActionIDTypeEnum
 enum OrderTypeEnum
   {
     OwnProduction = 1 , // Собственное производство
-    ContractProduction = 2   // Контрактное производство
+    ContractProduction = 2   // Контрактное производствоs
   };
 
 
