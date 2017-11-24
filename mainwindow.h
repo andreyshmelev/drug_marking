@@ -130,7 +130,7 @@ private:
     QString tnvedstring;
 
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
-    void CreateXML312Doc(manufacturer * organization, QList<medicament *> MedList);
+    static void CreateXML312Doc(manufacturer * organization, QList<medicament *> MedList);
     void CreateXML311Doc(manufacturer * organization, QList<medicament *> MedList, OrderTypeEnum ordertype);
 
     static QString GetISODate();

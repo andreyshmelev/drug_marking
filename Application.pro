@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += xml
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +32,8 @@ SOURCES += \
     manufacturer.cpp \
     medicament.cpp \
     Widgets/UnitExtractWidget/unitextractwidget.cpp \
-    Widgets/UnitAppendWidget/unitappendwidget.cpp
+    Widgets/UnitAppendWidget/unitappendwidget.cpp \
+    sql.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +42,8 @@ HEADERS += \
     medicament.h \
     basetypes.h \
     Widgets/UnitExtractWidget/unitextractwidget.h \
-    Widgets/UnitAppendWidget/unitappendwidget.h
+    Widgets/UnitAppendWidget/unitappendwidget.h \
+    sql.h
 
 FORMS += \
         mainwindow.ui \

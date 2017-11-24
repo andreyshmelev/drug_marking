@@ -10,6 +10,7 @@
 #include "QDesktopServices"
 #include "manufacturer.h"
 #include "basetypes.h"
+#include "sql.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -72,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
     // сигналы и слоты с другими виджетами
-//    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParsedString(QString,QString,QString,QString,QString,QString))) ;
+    //    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParsedString(QString,QString,QString,QString,QString,QString))) ;
     connect(this, SIGNAL(SendMedicament(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
 
     connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
@@ -114,6 +115,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // создаём производителя БФЗ
     BFZ = new manufacturer ( QString (" 343 374 35 66" ),QString ("ЗАО \"Берёзовский фармацевтический завод\""),QString ("info@uralbfz.ru"), QString ("6604012225"), QString ("6604012225"), QString ("6604012225"), QString ("667801001"), QString ("contractownerID") );
+
+    SQL  * s = new SQL();
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -712,7 +718,7 @@ void MainWindow::ParseDMCode(QString stringforparse)
         MedicamentsList.append(ScannedMedicament);
         emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
         SendMedicament(ScannedMedicament);
-//        emit ParcingEndedWithPar(gtinstring, SNstring, tnvedstring, expstring, batchstring, sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
+        //        emit ParcingEndedWithPar(gtinstring, SNstring, tnvedstring, expstring, batchstring, sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
     }
 }
 

@@ -521,7 +521,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>Вид отбора контр. образца</string>
+    <string>Вид отбора контр. образца.</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
