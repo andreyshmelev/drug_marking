@@ -15,10 +15,12 @@
 #include <QSignalMapper>
 #include <QPixmap>
 #include <QtXml>
+#include <QtSql>
 #include "QRCodeGenerator.h"
 #include "manufacturer.h"
 #include "medicament.h"
 #include "basetypes.h"
+#include "sql.h"
 
 namespace Ui {
 class MainWindow;
@@ -66,6 +68,7 @@ private:
 
 private:
 
+    SQL  * sqlDB;
     QTimer * journalTimer;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;

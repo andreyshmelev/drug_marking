@@ -9,7 +9,7 @@ manufacturer::manufacturer()
 manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc, QString owneridc)
 {
     set_subject_id( subject_idc );
-    set_organisation_name(organisation_namec);
+    set_company_name(organisation_namec);
     set_email(emailc);
     set_ul(ulc);
     set_fl(flc);
@@ -30,7 +30,7 @@ QString manufacturer::get_owner_id()
 
 QString manufacturer::get_organisation_name()
 {
-    return organisation_name;
+    return company_name;
 }
 
 QString manufacturer::get_email()
@@ -63,9 +63,9 @@ void manufacturer::set_subject_id(QString new_subject_id)
     subject_id = new_subject_id;
 }
 
-void manufacturer::set_organisation_name(QString new_organisation_name)
+void manufacturer::set_company_name(QString new_organisation_name)
 {
-    organisation_name = new_organisation_name;
+    company_name = new_organisation_name;
 }
 
 void manufacturer::set_email(QString new_email)

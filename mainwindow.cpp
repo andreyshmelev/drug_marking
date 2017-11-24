@@ -113,12 +113,33 @@ MainWindow::MainWindow(QWidget *parent) :
     updateAgregationGUI();
     setStackedPage(2);
 
-    // создаём производителя БФЗ
-    BFZ = new manufacturer ( QString (" 343 374 35 66" ),QString ("ЗАО \"Берёзовский фармацевтический завод\""),QString ("info@uralbfz.ru"), QString ("6604012225"), QString ("6604012225"), QString ("6604012225"), QString ("667801001"), QString ("contractownerID") );
-
-    SQL  * s = new SQL();
+    // читаем производителя из БД
 
 
+
+    sqlDB = new SQL("C:/Work/SQL/mydatabase");
+
+    QString company;
+
+    company = "BFZ";
+
+
+    QString wherecompany = "company = '" + company + "' ";
+
+    QString companyname = sqlDB->sel("company_name", "Company", wherecompany,"company_name")[0];
+    QString company_subject_id = sqlDB->sel("subject_id", "Company", wherecompany,"subject_id")[0];
+    QString company_owner_id = sqlDB->sel("owner_id", "Company", wherecompany,"owner_id")[0];
+    QString company_email = sqlDB->sel("email", "Company", wherecompany,"email")[0];
+    QString company_ul = sqlDB->sel("ul", "Company", wherecompany,"ul")[0];
+    QString company_fl = sqlDB->sel("fl", "Company", wherecompany,"fl")[0];
+    QString company_inn = sqlDB->sel("inn", "Company", wherecompany,"inn")[0];
+    QString company_kpp = sqlDB->sel("kpp", "Company", wherecompany,"kpp")[0];
+
+
+
+    BFZ = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
+
+    qDebug() << company_subject_id<<companyname<<company_email<< company_ul<< company_fl<< company_inn<<company_kpp<<company_owner_id ;
 
 }
 

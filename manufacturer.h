@@ -22,7 +22,7 @@ private: // methods
 
     // считываем эти параметры из файла или базы данных предприятия
     void set_subject_id(QString new_subject_id);
-    void set_organisation_name(QString new_organisation_name);
+    void set_company_name(QString new_organisation_name);
     void set_email(QString new_email);
     void set_ul(QString new_ul);
     void set_fl(QString new_fl);
@@ -32,14 +32,14 @@ private: // methods
 
 private: // variables
 
-    QString email;
-    QString organisation_name;
-    QString subject_id;
+    QString company_name;
     QString ul;
     QString fl;
     QString inn;
     QString kpp;
     QString ownerid;
+    QString email;
+    QString subject_id;
 };
 
 #endif // MANUFACTURER_H
