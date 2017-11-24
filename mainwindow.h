@@ -66,6 +66,8 @@ private:
     medicament * ScannedMedicament;
     QList<medicament *> MedicamentsList;
 
+    QStringList drugs;
+
 private:
 
     SQL  * sqlDB;

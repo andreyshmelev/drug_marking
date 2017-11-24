@@ -115,31 +115,34 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // читаем производителя из БД
 
+    manufacturer * KORVAS;
 
+    QString company = "BFZ";
 
-    sqlDB = new SQL("C:/Work/SQL/mydatabase");
-
-    QString company;
-
-    company = "BFZ";
+    //QString company = "KORVAS";
 
 
     QString wherecompany = "company = '" + company + "' ";
+    QString fromcompany = "Company";
 
-    QString companyname = sqlDB->sel("company_name", "Company", wherecompany,"company_name")[0];
-    QString company_subject_id = sqlDB->sel("subject_id", "Company", wherecompany,"subject_id")[0];
-    QString company_owner_id = sqlDB->sel("owner_id", "Company", wherecompany,"owner_id")[0];
-    QString company_email = sqlDB->sel("email", "Company", wherecompany,"email")[0];
-    QString company_ul = sqlDB->sel("ul", "Company", wherecompany,"ul")[0];
-    QString company_fl = sqlDB->sel("fl", "Company", wherecompany,"fl")[0];
-    QString company_inn = sqlDB->sel("inn", "Company", wherecompany,"inn")[0];
-    QString company_kpp = sqlDB->sel("kpp", "Company", wherecompany,"kpp")[0];
+    sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
 
+    // подтягиваем параметры компании
 
+    QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
+    QString company_subject_id = sqlDB->sel("subject_id", fromcompany, wherecompany,"subject_id")[0];
+    QString company_owner_id = sqlDB->sel("owner_id", fromcompany, wherecompany,"owner_id")[0];
+    QString company_email = sqlDB->sel("email", fromcompany, wherecompany,"email")[0];
+    QString company_ul = sqlDB->sel("ul", fromcompany, wherecompany,"ul")[0];
+    QString company_fl = sqlDB->sel("fl", fromcompany, wherecompany,"fl")[0];
+    QString company_inn = sqlDB->sel("inn", fromcompany, wherecompany,"inn")[0];
+    QString company_kpp = sqlDB->sel("kpp", fromcompany, wherecompany,"kpp")[0];
 
     BFZ = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
-
     qDebug() << company_subject_id<<companyname<<company_email<< company_ul<< company_fl<< company_inn<<company_kpp<<company_owner_id ;
+
+    drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
+    qDebug() << drugs;
 
 }
 
