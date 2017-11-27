@@ -67,6 +67,7 @@ private:
     QList<medicament *> MedicamentsList;
 
     QStringList drugs;
+    QStringList companies;
 
 private:
 
@@ -122,10 +123,10 @@ private:
     const QString BatchRegularexpression = "10\\w{1,20}" + GSSymbol ;
     const QString NotFoundString = "Not found";
 
-    const uint8_t Gtinlenght = 14;
-    const uint8_t SNlenght = 13 ;
-    const uint8_t ExpLenght = 6;
-    const uint8_t TNVEDLenght = 4;
+    const uint Gtinlenght = 14;
+    const uint SNlenght = 13 ;
+    const uint ExpLenght = 6;
+    const uint TNVEDLenght = 4;
 
     QString sGTINString;
     QString gtinstring;
@@ -178,24 +179,19 @@ private slots:
 
 signals:
 
-    agregationstatusToggled();
-    ParcingEnded();
-    ParcingEndedWithPar(QString , QString, QString, QString, QString, QString);
-
-    SendMedicament(medicament * );
-
-    register_product_emission_QR_Scanned();
-    register_control_samples_QR_Scanned();
-    register_end_packing_QR_Scanned();
-
-    printControlQRCodeScanned();
-    programOptionsQRCodeScanned();
-    agregationQRCodeScanned();
-    statisticsQRCodeScanned();
-
-    Start312Process();
-    Stop312Process();
-
+    void agregationstatusToggled();
+    void ParcingEnded();
+    void ParcingEndedWithPar(QString , QString, QString, QString, QString, QString);
+    void SendMedicament(medicament * );
+    void register_product_emission_QR_Scanned();
+    void register_control_samples_QR_Scanned();
+    void register_end_packing_QR_Scanned();
+    void printControlQRCodeScanned();
+    void programOptionsQRCodeScanned();
+    void agregationQRCodeScanned();
+    void statisticsQRCodeScanned();
+    void Start312Process();
+    void Stop312Process();
 };
 
 #endif // MAINWINDOW_H

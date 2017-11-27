@@ -43,9 +43,9 @@ private slots:
 
 signals:
 
-    StartRegisterControlSamples();
-    StopRegisterControlSamples();
-    RegistrationToggled();
+    void StartRegisterControlSamples();
+    void StopRegisterControlSamples();
+    void RegistrationToggled();
 };
 
 #endif // UNITEXTRACTWIDGET_H

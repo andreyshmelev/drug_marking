@@ -74,7 +74,7 @@ void UnitExtractWidget::updateGUI()
     int versionIndex = 0;
     bool bExtent = true;
     int maskIndex = -1;
-    auto scale_size = 2.2;
+    double scale_size = 2.2;
 
     QImage i;
     QPixmap scale_image ;
@@ -105,7 +105,7 @@ void UnitExtractWidget::updateGUI()
         ui->MedicamentsTable->clearContents();
     }
 
-    auto scale = 29 * scale_size;
+    double scale = 29 * scale_size;
     scale_image =  ui->qrstartstop->pixmap()->scaled( scale, scale );
     ui->qrstartstop->setPixmap( scale_image );
 }

@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
     journalTimer = new QTimer();
     journalTimer->setInterval(250);
 
-    connect(journalTimer, SIGNAL(timeout()), this, SLOT(addMessageToJournal()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMPicture()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMcode()));
 
@@ -118,7 +117,6 @@ MainWindow::MainWindow(QWidget *parent) :
     manufacturer * KORVAS;
 
     QString company = "BFZ";
-
     //QString company = "KORVAS";
 
 
@@ -142,7 +140,13 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << company_subject_id<<companyname<<company_email<< company_ul<< company_fl<< company_inn<<company_kpp<<company_owner_id ;
 
     drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
-    qDebug() << drugs;
+    companies = sqlDB->sel("company_name", "Company", "","company_name");
+
+    ui->CompaniesCombobox->clear();
+    ui->DrugsComboBox->clear();
+    ui->DrugsComboBox->addItems(drugs);
+    ui->CompaniesCombobox->addItems(companies);
+//    qDebug() << drugs;
 
 }
 

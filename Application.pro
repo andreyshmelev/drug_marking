@@ -33,7 +33,8 @@ SOURCES += \
     medicament.cpp \
     Widgets/UnitExtractWidget/unitextractwidget.cpp \
     Widgets/UnitAppendWidget/unitappendwidget.cpp \
-    sql.cpp
+    sql.cpp \
+    tcpclient.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     basetypes.h \
     Widgets/UnitExtractWidget/unitextractwidget.h \
     Widgets/UnitAppendWidget/unitappendwidget.h \
-    sql.h
+    sql.h \
+    tcpclient.h
 
 FORMS += \
         mainwindow.ui \
