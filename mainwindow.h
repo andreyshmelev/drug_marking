@@ -41,7 +41,7 @@ public:
     static QImage QRCodeToQImageConverter(QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
 
 //        const QString TCPaddress = "127.0.0.1";
-//        const int TCPPort = 1234;
+//       const int TCPPort = 1234;
 
     const QString TCPaddress = "192.168.1.196";
     const int TCPPort = 3002;
@@ -204,6 +204,7 @@ signals:
 private:
     QTcpSocket *Socket ;
     QByteArray QstringToQbytearray(QString str);
+    QElapsedTimer SQLSpeedTest();
 };
 
 #endif // MAINWINDOW_H

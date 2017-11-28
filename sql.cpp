@@ -80,10 +80,10 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
 
 void SQL::makesqlreq(QString req)
 {
-//    QSqlQuery query;
-//    //Задаем запрос
-//    QString execc = req;
-execc = req;
+    QSqlQuery query;
+    //Задаем запрос
+    QString execc = req;
+
     if (!query.exec(execc)) {
         qDebug() << "Unable to execute query - exiting";
 

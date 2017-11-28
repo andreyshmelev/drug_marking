@@ -13,7 +13,58 @@
 #include "sql.h"
 
 
-#define testitemscount 2222
+#define testitemscount 0
+
+int aaa = 222;
+int bbb = 789;
+
+QElapsedTimer MainWindow::SQLSpeedTest()
+{
+    sqlSpeedTest = new SQL("C:/Work/SQL/ISMarkirovkaDB");
+
+    QString req;
+    // INSERT INTO "ScannerLog" ("date","Message") VALUES ('88.88.7777','0103400949288229171808001041211521010771693752');
+
+
+    qDebug() << "starttest";
+
+
+    QElapsedTimer timer;
+    timer.start();
+
+    for (int var = 0; var < testitemscount; ++var) {
+
+        time_t timer1;
+        struct tm x_years;
+        struct tm* current;
+        int how_many_years = 10;
+        int randomYear = (rand()%how_many_years)+1;
+        int randomMonth = (rand()%12)+1;
+        int randomDays = (rand()%30)+1;
+        time(&timer1);
+        current = localtime(&timer1);
+        x_years.tm_hour = 0;
+        x_years.tm_min = 0;
+        x_years.tm_sec = 0;
+        x_years.tm_year = current->tm_year - randomYear;
+        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
+        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
+        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
+
+//        qDebug() << req;
+//        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg("20","20","20","111111111111111111111111111111111111111111111");
+        sqlSpeedTest->makesqlreq(req);
+
+        //QString req = ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('28.11.2011','iPijFLGu9WMuIbGLO4jW1PGmSGXhINinNDyt7cx0ZdQpb8svYi')");
+    }
+
+
+    QString resl  = "The slow operation took " +  QString::number(timer.elapsed()/1000 ) +  "seconds";
+    qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
+    qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
+
+    return timer;
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -124,60 +175,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString wherecompany = "company = '" + company + "' ";
     QString fromcompany = "Company";
 
-
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
-    sqlSpeedTest = new SQL("C:/Work/SQL/SpeedTest");
-
-    QString req;
-    // INSERT INTO "ScannerLog" ("date","Message") VALUES ('88.88.7777','0103400949288229171808001041211521010771693752');
-
-
-    qDebug() << "starttest";
-
-
-    QElapsedTimer timer;
-    timer.start();
-
-    for (int var = 0; var < testitemscount; ++var) {
-
-        time_t timer1;
-        struct tm x_years;
-        struct tm* current;
-        int how_many_years = 10;
-        int randomYear = (rand()%how_many_years)+1;
-        int randomMonth = (rand()%12)+1;
-        int randomDays = (rand()%30)+1;
-        time(&timer1);
-        current = localtime(&timer1);
-        x_years.tm_hour = 0;
-        x_years.tm_min = 0;
-        x_years.tm_sec = 0;
-        x_years.tm_year = current->tm_year - randomYear;
-        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
-        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
-        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
-
-//        qDebug() << req;
-//        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg("20","20","20","111111111111111111111111111111111111111111111");
-        sqlSpeedTest->makesqlreq(req);
-
-        //QString req = ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('28.11.2011','iPijFLGu9WMuIbGLO4jW1PGmSGXhINinNDyt7cx0ZdQpb8svYi')");
-    }
-
-
-    QString resl  = "The slow operation took " +  QString::number(timer.elapsed()/1000 ) +  "seconds";
-    qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
-    qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
-    qDebug() << "The slow operation took" << timer.nsecsElapsed() << "nanoseconds";
-
-//    QMessageBox::warning(0,"Warning","The text in the file has changed,"
-//                                 "\n Do you want to save the changes?",
-//                                 "Yes",
-//                                 "No",
-//                                 QString(),
-//                                 0,
-//                                 1
-//                                );
 
     // подтягиваем параметры компании
 
@@ -201,6 +199,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
 
+
+    QElapsedTimer timer = SQLSpeedTest();
+    qDebug() << "The slow operation took" << timer.nsecsElapsed() << "nanoseconds";
     ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
 
     // adding TCP Client
@@ -1011,15 +1012,22 @@ void MainWindow::updateQRImage()
 
     QString a ;
 
-    a ="SLA|test5|VarField00=911|VarField01=001|";
-    a.append( (0x0d) );
+    // SLA|test5|VarField00=978|VarField01=088|
+//    a ="SLA|test5|VarField00=922|VarField01=033|";
+//    a.append( (0x0d) );
+//    a.append( (0x0A) );
+
+//    serverWrite(a);
+
+     a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
 
     serverWrite(a);
-    qDebug() << "a"<< a << 1 ;
-
-    a ="SLA|test5|VarField00=911|VarField01=001|\r";
+    qDebug() << "a"<< a << 1;
+    a ="\r";
     serverWrite(a);
     qDebug() << "a"<< a << 2;
+
+
 }
 
 QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
