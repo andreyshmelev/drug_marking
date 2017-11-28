@@ -121,7 +121,51 @@ MainWindow::MainWindow(QWidget *parent) :
     QString wherecompany = "company = '" + company + "' ";
     QString fromcompany = "Company";
 
+
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
+    sqlSpeedTest = new SQL("C:/Work/SQL/DBSpeedTest");
+
+    QString req;
+    // INSERT INTO "ScannerLog" ("date","Message") VALUES ('88.88.7777','0103400949288229171808001041211521010771693752');
+
+    for (int var = 0; var < 5; ++var) {
+
+        time_t timer;
+        struct tm x_years;
+        struct tm* current;
+        int how_many_years = 10;
+//        srand (time(NULL));
+        int randomYear = (rand()%how_many_years)+1;
+        int randomMonth = (rand()%12)+1;
+        int randomDays = (rand()%30)+1;
+        time(&timer);  /* get current time; same as: timer = time(NULL)  */
+        current = localtime(&timer);
+        x_years.tm_hour = 0;
+        x_years.tm_min = 0;
+        x_years.tm_sec = 0;
+        x_years.tm_year = current->tm_year - randomYear;
+        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
+        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
+
+        //returns seconds ever since the random generated date until now
+//        qDebug() << "Years rolled back: " << randomYear << endl;
+//        qDebug() << "Months rolled back: " << randomMonth << endl;
+//        qDebug() << "Days rolled back: " << randomDays << endl;
+//        qDebug() << endl;
+//        qDebug() << "Current Year: " <<  current->tm_year+1900 << endl;
+//        qDebug() << "Current Month: " <<  current->tm_mon << endl;
+//        qDebug() << "Current Day: " <<  current->tm_mday << endl;
+//        qDebug() << endl;
+//        qDebug() << "Year: " <<  x_years.tm_year+1900 << endl;
+//        qDebug() << "Month: " <<  x_years.tm_mon << endl;
+//        qDebug() << "Day: " <<  x_years.tm_mday << endl;
+
+        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
+        qDebug() << req;
+        sqlSpeedTest->makesqlreq(req);
+
+        //QString req = ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('28.11.2011','iPijFLGu9WMuIbGLO4jW1PGmSGXhINinNDyt7cx0ZdQpb8svYi')");
+    }
 
     // подтягиваем параметры компании
 
@@ -179,10 +223,10 @@ QString MainWindow::getSN()
     return SN;
 }
 
-QString MainWindow::generateSN()
+QString MainWindow::generateSN(int lenght)
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-    const int randomStringLength = SNlenght; // assuming you want random strings of 12 characters
+    const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
 
     QString randomString;
     for(int i=0; i<randomStringLength; ++i)
@@ -874,7 +918,7 @@ void MainWindow::updateTable()
 
 QString MainWindow::GenerateDMcode()
 {
-    QString DMCode = GTINid + getGuiGTIN() + SNid  +generateSN() + Batchid + getGuiBatchNumber() +  Experyid + getGuiExpery() + TNVEDid  + getGuiTNVED();
+    QString DMCode = GTINid + getGuiGTIN() + SNid  +generateSN(SNlenght) + Batchid + getGuiBatchNumber() +  Experyid + getGuiExpery() + TNVEDid  + getGuiTNVED();
     updateQRImage();
     return DMCode;
 }

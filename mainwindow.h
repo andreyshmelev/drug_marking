@@ -49,7 +49,7 @@ public:
 private:
     QString getGuiGTIN();
     QString getSN();
-    QString generateSN();
+    QString generateSN(int lenght);
     QString getGuiBatchNumber();
     QString getGuiExpery();
     QString getGuiTNVED();
@@ -79,6 +79,7 @@ private:
 private:
 
     SQL  * sqlDB;
+    SQL  * sqlSpeedTest;
     QTimer * journalTimer;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;

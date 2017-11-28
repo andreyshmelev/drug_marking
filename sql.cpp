@@ -78,6 +78,18 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     return strName;
 }
 
+void SQL::makesqlreq(QString req)
+{
+    QSqlQuery query;
+    //Задаем запрос
+    QString execc = req;
+
+    if (!query.exec(execc)) {
+        qDebug() << "Unable to execute query - exiting";
+
+    }
+}
+
 void SQL::upd(QString u, QString s, QString w)
 {
     QString qstr = "UPDATE " + u + " SET " + s + " WHERE " + w;
