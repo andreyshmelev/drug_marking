@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->installEventFilter(this);
 
     journalTimer = new QTimer();
-    journalTimer->setInterval(250);
+    journalTimer->setInterval(1000);
 
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMPicture()));
     connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMcode()));
@@ -77,8 +77,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
     connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
-
-
 
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
@@ -146,8 +144,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->clear();
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
-//    qDebug() << drugs;
 
+
+    // adding TCP Client
+    connectTcp(TCPaddress, TCPPort);
+
+    //    int n = 2 , x = 1;
+
+
+    //    int  number = 0b00001011;
+    //    number = number & ~(1 << n) | (x << n);
+
+    //    qDebug() << number << "number ";
 }
 
 MainWindow::~MainWindow()
@@ -759,6 +767,7 @@ void MainWindow::updateDMPicture()
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     ui->packagePicture->show();
+
 }
 
 void MainWindow::updateDMcode()
@@ -941,8 +950,19 @@ void MainWindow::updateQRImage()
                 encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
 
     ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
-
     setScale(3);
+
+    QString a ;
+
+    a ="SLA|test5|VarField00=911|VarField01=001|";
+    a.append( (0x0d) );
+
+    serverWrite(a);
+    qDebug() << "a"<< a << 1 ;
+
+    a ="SLA|test5|VarField00=911|VarField01=001|\r";
+    serverWrite(a);
+    qDebug() << "a"<< a << 2;
 }
 
 QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
@@ -1120,4 +1140,29 @@ void MainWindow::on_register_control_samples_Button_clicked()
 void MainWindow::on_register_end_packing_Button_clicked()
 {
     RegisterEndPackingPageOpen();
+}
+
+
+void MainWindow::connectTcp(QString address, int port)
+{
+    Socket = new QTcpSocket(this);
+    Socket->connectToHost(address, port);
+    Socket->waitForConnected(3000);
+}
+
+
+void MainWindow::serverWrite(QString str)
+{
+    if( Socket->waitForConnected() )
+    {
+        Socket->write( QstringToQbytearray(str) ); // пишем
+        Socket->waitForBytesWritten(1000); // ожидаем запись
+    }
+}
+
+QByteArray MainWindow::QstringToQbytearray(QString str)
+{
+    QByteArray endytearray;
+    endytearray.append(str);
+    return endytearray;
 }

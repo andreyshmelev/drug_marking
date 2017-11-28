@@ -21,6 +21,7 @@
 #include "medicament.h"
 #include "basetypes.h"
 #include "sql.h"
+#include <QTcpSocket>
 
 namespace Ui {
 class MainWindow;
@@ -39,7 +40,11 @@ public:
     static QString GetRegularString(QString stringforparse, QString SNRegularexpression);
     static QImage QRCodeToQImageConverter(QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
 
+//        const QString TCPaddress = "127.0.0.1";
+//        const int TCPPort = 1234;
 
+    const QString TCPaddress = "192.168.1.196";
+    const int TCPPort = 3002;
 
 private:
     QString getGuiGTIN();
@@ -68,6 +73,8 @@ private:
 
     QStringList drugs;
     QStringList companies;
+
+    int temp;
 
 private:
 
@@ -141,11 +148,8 @@ private:
 
     static QString GetISODate();
     static QString GetDOCDate();
-
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
-
     QImage QRCodeToQLabelConverter(QLabel* dddd,QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
-
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
@@ -177,6 +181,9 @@ private slots:
     void on_register_control_samples_Button_clicked();
     void on_register_end_packing_Button_clicked();
 
+    void connectTcp(QString address, int port);
+
+    void serverWrite(QString str);
 signals:
 
     void agregationstatusToggled();
@@ -192,6 +199,10 @@ signals:
     void statisticsQRCodeScanned();
     void Start312Process();
     void Stop312Process();
+
+private:
+    QTcpSocket *Socket ;
+    QByteArray QstringToQbytearray(QString str);
 };
 
 #endif // MAINWINDOW_H
