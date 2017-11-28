@@ -12,6 +12,9 @@
 #include "basetypes.h"
 #include "sql.h"
 
+
+#define testitemscount 2222
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -123,49 +126,58 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
-    sqlSpeedTest = new SQL("C:/Work/SQL/DBSpeedTest");
+    sqlSpeedTest = new SQL("C:/Work/SQL/SpeedTest");
 
     QString req;
     // INSERT INTO "ScannerLog" ("date","Message") VALUES ('88.88.7777','0103400949288229171808001041211521010771693752');
 
-    for (int var = 0; var < 5; ++var) {
 
-        time_t timer;
+    qDebug() << "starttest";
+
+
+    QElapsedTimer timer;
+    timer.start();
+
+    for (int var = 0; var < testitemscount; ++var) {
+
+        time_t timer1;
         struct tm x_years;
         struct tm* current;
         int how_many_years = 10;
-//        srand (time(NULL));
         int randomYear = (rand()%how_many_years)+1;
         int randomMonth = (rand()%12)+1;
         int randomDays = (rand()%30)+1;
-        time(&timer);  /* get current time; same as: timer = time(NULL)  */
-        current = localtime(&timer);
+        time(&timer1);
+        current = localtime(&timer1);
         x_years.tm_hour = 0;
         x_years.tm_min = 0;
         x_years.tm_sec = 0;
         x_years.tm_year = current->tm_year - randomYear;
         x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
         x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
-
-        //returns seconds ever since the random generated date until now
-//        qDebug() << "Years rolled back: " << randomYear << endl;
-//        qDebug() << "Months rolled back: " << randomMonth << endl;
-//        qDebug() << "Days rolled back: " << randomDays << endl;
-//        qDebug() << endl;
-//        qDebug() << "Current Year: " <<  current->tm_year+1900 << endl;
-//        qDebug() << "Current Month: " <<  current->tm_mon << endl;
-//        qDebug() << "Current Day: " <<  current->tm_mday << endl;
-//        qDebug() << endl;
-//        qDebug() << "Year: " <<  x_years.tm_year+1900 << endl;
-//        qDebug() << "Month: " <<  x_years.tm_mon << endl;
-//        qDebug() << "Day: " <<  x_years.tm_mday << endl;
-
         req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
-        qDebug() << req;
+
+//        qDebug() << req;
+//        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg("20","20","20","111111111111111111111111111111111111111111111");
         sqlSpeedTest->makesqlreq(req);
 
         //QString req = ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('28.11.2011','iPijFLGu9WMuIbGLO4jW1PGmSGXhINinNDyt7cx0ZdQpb8svYi')");
     }
+
+
+    QString resl  = "The slow operation took " +  QString::number(timer.elapsed()/1000 ) +  "seconds";
+    qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
+    qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
+    qDebug() << "The slow operation took" << timer.nsecsElapsed() << "nanoseconds";
+
+//    QMessageBox::warning(0,"Warning","The text in the file has changed,"
+//                                 "\n Do you want to save the changes?",
+//                                 "Yes",
+//                                 "No",
+//                                 QString(),
+//                                 0,
+//                                 1
+//                                );
 
     // подтягиваем параметры компании
 
@@ -189,6 +201,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
 
+    ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);

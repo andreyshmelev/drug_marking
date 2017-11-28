@@ -14,6 +14,11 @@ public slots:
     QStringList sel(QString select, QString from, QString where, QString rec);
     void makesqlreq(QString req);
     void upd(QString u, QString s, QString w);
+
+private:
+    QSqlQuery query;
+    //Задаем запрос
+    QString execc;
 };
 
 #endif // SQL_H
