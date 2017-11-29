@@ -310,12 +310,13 @@ void MainWindow::AddHandScannerLOG()
     QString date = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy");
     QString message = inputDataStringFromScaner;
 
-    QString req = QString ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES (' " ) + date +   QString (" ',' ')" );
+    QString req = QString ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES (' " ) + date +   QString (" ','") + message + QString ( "')" );
 //    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
 //    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),"01046017640016521719050010NKS0028002\u000092127A9BW42E59E81"); //.remove(30,10)
 
     req = req.replace("#","");
     req = req.replace("\\","");
+    req = req.replace("\"","");
     req = req.replace("\\u","");
 //    req = req.replace("\u","");
     qDebug() << req << "req";
