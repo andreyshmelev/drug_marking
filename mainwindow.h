@@ -205,6 +205,7 @@ private:
     QTcpSocket *Socket ;
     QByteArray QstringToQbytearray(QString str);
     QElapsedTimer SQLSpeedTest();
+    void SendCommandToVideoJet(QString a);
 };
 
 #endif // MAINWINDOW_H

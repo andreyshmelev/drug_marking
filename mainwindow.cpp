@@ -51,8 +51,8 @@ QElapsedTimer MainWindow::SQLSpeedTest()
         x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
         req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
 
-//        qDebug() << req;
-//        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg("20","20","20","111111111111111111111111111111111111111111111");
+        //        qDebug() << req;
+        //        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg("20","20","20","111111111111111111111111111111111111111111111");
         sqlSpeedTest->makesqlreq(req);
 
         //QString req = ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('28.11.2011','iPijFLGu9WMuIbGLO4jW1PGmSGXhINinNDyt7cx0ZdQpb8svYi')");
@@ -977,6 +977,13 @@ void MainWindow::setStackedPage(int newindex)
     ui->stackedWidget->setCurrentIndex(newindex);
 }
 
+void MainWindow::SendCommandToVideoJet(QString a)
+{
+    serverWrite(a);
+    qDebug() << "a"<< a << 1;
+    a ="\r";
+    serverWrite(a);
+}
 
 void MainWindow::updateQRImage()
 {
@@ -1013,19 +1020,13 @@ void MainWindow::updateQRImage()
     QString a ;
 
     // SLA|test5|VarField00=978|VarField01=088|
-//    a ="SLA|test5|VarField00=922|VarField01=033|";
-//    a.append( (0x0d) );
-//    a.append( (0x0A) );
+    //    a ="SLA|test5|VarField00=922|VarField01=033|";
+    //    a.append( (0x0d) );
+    //    a.append( (0x0A) );
+    //    serverWrite(a);
 
-//    serverWrite(a);
-
-     a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
-
-    serverWrite(a);
-    qDebug() << "a"<< a << 1;
-    a ="\r";
-    serverWrite(a);
-    qDebug() << "a"<< a << 2;
+    a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
+    SendCommandToVideoJet(a);
 
 
 }
