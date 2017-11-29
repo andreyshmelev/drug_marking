@@ -52,7 +52,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
         execc += " WHERE " + where;
     }
 
-//     qDebug() << execc;
+    //     qDebug() << execc;
 
 
     if (!query.exec(execc)) {
@@ -70,10 +70,9 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     while (query.next()) {
         strName.append( query.value(SQLrec.indexOf(rec)).toString() );
     }
-    strName += ""; // зачем?
 
-//    qDebug() << strName << ";\t";
-
+    if (strName.length() == 0)
+        strName.append(""); // зачем?
 
     return strName;
 }
@@ -85,8 +84,7 @@ void SQL::makesqlreq(QString req)
     QString execc = req;
 
     if (!query.exec(execc)) {
-        qDebug() << "Unable to execute query - exiting";
-
+        qDebug() << "Unable to execute query - exiting2";
     }
 }
 

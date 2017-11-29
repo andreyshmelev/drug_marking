@@ -27,7 +27,6 @@ namespace Ui {
 class MainWindow;
 }
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -79,7 +78,8 @@ private:
 private:
 
     SQL  * sqlDB;
-    SQL  * sqlSpeedTest;
+//    SQL  * sqlSpeedTest;
+//    SQL  * HandScannerLog;
     QTimer * journalTimer;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;
@@ -206,6 +206,7 @@ private:
     QByteArray QstringToQbytearray(QString str);
     QElapsedTimer SQLSpeedTest();
     void SendCommandToVideoJet(QString a);
+    void AddHandScannerLOG();
 };
 
 #endif // MAINWINDOW_H

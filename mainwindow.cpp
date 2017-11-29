@@ -12,7 +12,6 @@
 #include "basetypes.h"
 #include "sql.h"
 
-
 #define testitemscount 0
 
 int aaa = 222;
@@ -20,14 +19,7 @@ int bbb = 789;
 
 QElapsedTimer MainWindow::SQLSpeedTest()
 {
-    sqlSpeedTest = new SQL("C:/Work/SQL/ISMarkirovkaDB");
-
     QString req;
-    // INSERT INTO "ScannerLog" ("date","Message") VALUES ('88.88.7777','0103400949288229171808001041211521010771693752');
-
-
-    qDebug() << "starttest";
-
 
     QElapsedTimer timer;
     timer.start();
@@ -51,15 +43,8 @@ QElapsedTimer MainWindow::SQLSpeedTest()
         x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
         req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
 
-        //        qDebug() << req;
-        //        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg("20","20","20","111111111111111111111111111111111111111111111");
-        sqlSpeedTest->makesqlreq(req);
-
-        //QString req = ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('28.11.2011','iPijFLGu9WMuIbGLO4jW1PGmSGXhINinNDyt7cx0ZdQpb8svYi')");
+        sqlDB->makesqlreq(req);
     }
-
-
-    QString resl  = "The slow operation took " +  QString::number(timer.elapsed()/1000 ) +  "seconds";
     qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
 
@@ -70,12 +55,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+   ui->setupUi(this);
 
-    agregation = false;
+   agregation = false;
 
-    ui->setupUi(this);
+//       HandScannerLog = new SQL("C:/Work/SQL/HandScannerLog");
 
-    updateQRLabels();
+   updateQRLabels();
 
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
@@ -164,21 +150,16 @@ MainWindow::MainWindow(QWidget *parent) :
     updateAgregationGUI();
     setStackedPage(2);
 
+
     // читаем производителя из БД
-
-    manufacturer * KORVAS;
-
-    QString company = "BFZ";
     //QString company = "KORVAS";
-
-
+    QString company = "BFZ";
     QString wherecompany = "company = '" + company + "' ";
     QString fromcompany = "Company";
 
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
 
     // подтягиваем параметры компании
-
     QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
     QString company_subject_id = sqlDB->sel("subject_id", fromcompany, wherecompany,"subject_id")[0];
     QString company_owner_id = sqlDB->sel("owner_id", fromcompany, wherecompany,"owner_id")[0];
@@ -199,21 +180,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
 
-
     QElapsedTimer timer = SQLSpeedTest();
-    qDebug() << "The slow operation took" << timer.nsecsElapsed() << "nanoseconds";
     ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
-
-    //    int n = 2 , x = 1;
-
-
-    //    int  number = 0b00001011;
-    //    number = number & ~(1 << n) | (x << n);
-
-    //    qDebug() << number << "number ";
 }
 
 MainWindow::~MainWindow()
@@ -252,8 +223,6 @@ QString MainWindow::generateSN(int lenght)
 
     QString newSN = randomString;
     return newSN;
-
-
 }
 
 QString MainWindow::getGuiBatchNumber()
@@ -317,13 +286,22 @@ void MainWindow::updateTimeDate()
     ui->DateTimeLabelValue->setText(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"));
 }
 
+void MainWindow::AddHandScannerLOG()
+{
+    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner);
+    qDebug() << req << "req";
+    sqlDB->makesqlreq(req);
+}
+
 void MainWindow::updateReadedDMCode()
 {
-
-    ParseDMCode(inputDataStringFromScaner);
-    //qDebug() << "stop timeout timer";
-    DMCodeUpdateTimeoutTimer->stop();
-    inputDataStringFromScaner.clear();
+    if (inputDataStringFromScaner!="")
+    {
+        AddHandScannerLOG();
+        ParseDMCode(inputDataStringFromScaner);
+        DMCodeUpdateTimeoutTimer->stop();
+        inputDataStringFromScaner.clear();
+    }
 }
 
 QString MainWindow::GetRegularString(QString stringforparse, QString SNRegularexpression)
@@ -436,7 +414,6 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     // добавили doc_num
 
     for (int var = 0; var < MedList.length(); ++var) {
-
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
 
@@ -462,8 +439,6 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
         stream<< document.toString();
         file.close();
     }
-
-    // QDesktopServices::openUrl(filepath);  // раскомментить если мы хотим чтобы по окончании агрегации открывался XML файл
 }
 
 void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *> MedList)
@@ -719,13 +694,9 @@ void MainWindow::ParseDMCode(QString stringforparse)
         return;
     }
 
-
-
-
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
     // сюда перешли если нас устроил код
-
     // добавляем в конец строки символ завершения <GS>, точнее часть его,
     // чтобы обрабатывать поля, которые стоят в конце строки и которые не заканчиваются этим символом.
     // Но если эти поля в центре то они должны заканчиваться этим символом ( кроме даты выпуска )
@@ -790,7 +761,6 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // кончаем разбирать Срок Годности
 
-
     // начинаем разбирать Партию
 
     batchstring = GetRegularString(stringforparse, BatchRegularexpression);
@@ -806,13 +776,23 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // кончаем разбирать Партию
 
-    if(getAgregation()) // если у нас агрегация
+    if(getAgregation()) // если у нас агрегация то добавляем медикаменты в список
     {
-        ScannedMedicament = new medicament("Nimesulid",gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
+        QString medicamentName;
+        QString whereGtin = QString("gtin = '%1'  ").arg(gtinstring);
+        medicamentName = sqlDB->sel("drugs_name", "Drugs", whereGtin,"drugs_name").at(0);
+        if (medicamentName == "")
+            medicamentName = "No drug in DB found";
+        ScannedMedicament = new medicament(medicamentName,gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
+
+        foreach ( medicament * med , MedicamentsList)
+        {
+            qDebug() << med->GTIN <<" med->GTIN" ;
+        }
+
         MedicamentsList.append(ScannedMedicament);
         emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
-        SendMedicament(ScannedMedicament);
-        //        emit ParcingEndedWithPar(gtinstring, SNstring, tnvedstring, expstring, batchstring, sGTINString); // испускаем сигнал что закончили парсинг строки c параметрами естественно чтобы передать в другие виджеты
+        emit SendMedicament(ScannedMedicament);
     }
 }
 
@@ -839,10 +819,10 @@ void MainWindow::setAgregation(bool set)
     {
         inputDataStringFromScaner.clear();
     }
-    else    // если останавливаем агрегацию
+    else    // если закончили агрегацию
     {
-        CreateXML311Doc(BFZ,MedicamentsList,OrderTypeEnum::ContractProduction);
-        CreateXML312Doc(BFZ,MedicamentsList);
+        //        CreateXML311Doc(BFZ,MedicamentsList,OrderTypeEnum::ContractProduction);
+        //        CreateXML312Doc(BFZ,MedicamentsList);
         CreateXML313Doc(BFZ,MedicamentsList);
         inputDataStringFromScaner.clear();
     }
@@ -909,13 +889,11 @@ void MainWindow::updateAgregationGUI()
         ui->ScannedCode->setText(inputDataStringFromScaner);
     }
 
-
     ui->GTINTextAgregation->setText(gtinstring);
     ui->serialNumberAgregationValue->setText(SNstring);
     ui->batchnumberTextAgregation->setText(batchstring);
     ui->expirationdateAgregation->setText(expstring);
     ui->TNVEDValueAgregation->setText(tnvedstring);
-
 }
 
 void MainWindow::updateTable()
@@ -980,9 +958,8 @@ void MainWindow::setStackedPage(int newindex)
 void MainWindow::SendCommandToVideoJet(QString a)
 {
     serverWrite(a);
-    qDebug() << "a"<< a << 1;
-    a ="\r";
-    serverWrite(a);
+    a ="\r"; // посылаем знак завершения посылки.
+    //    serverWrite(a);
 }
 
 void MainWindow::updateQRImage()
