@@ -17,7 +17,7 @@
 int aaa = 222;
 int bbb = 789;
 
-QElapsedTimer MainWindow::SQLSpeedTest()
+QElapsedTimer MainWindow::SQLInsertSpeedTest()
 {
     QString req;
 
@@ -45,9 +45,24 @@ QElapsedTimer MainWindow::SQLSpeedTest()
 
         sqlDB->makesqlreq(req);
     }
+
     qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
+    return timer;
+}
 
+QElapsedTimer MainWindow::SQLSelectSpeedTest()
+{
+    QString req;
+    QElapsedTimer timer;
+    timer.start();
+    //    QStringList sellist = sqlDB->sel("company", "Company", "","company");
+    QStringList sellist = sqlDB->sel("date", "ScannerLog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
+
+    //    sqlDB->makesqlreq("SELECT * FROM ScannerLog");
+    qDebug() << sellist << "sellist";
+    qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed()/1000<< "seconds";
+    qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed() << "milliseconds";
     return timer;
 }
 
@@ -55,13 +70,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-   ui->setupUi(this);
+    ui->setupUi(this);
 
-   agregation = false;
+    agregation = false;
 
-//       HandScannerLog = new SQL("C:/Work/SQL/HandScannerLog");
-
-   updateQRLabels();
+    updateQRLabels();
 
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
@@ -157,7 +170,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QString wherecompany = "company = '" + company + "' ";
     QString fromcompany = "Company";
 
-    sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
+    //    sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
+    sqlDB = new SQL("C:/Work/SQL/ReadSpeedTest");
 
     // подтягиваем параметры компании
     QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
@@ -180,7 +194,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
 
-    QElapsedTimer timer = SQLSpeedTest();
+    //    QElapsedTimer timer = SQLInsertSpeedTest();
+    QElapsedTimer timer = SQLSelectSpeedTest();
     ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
 
     // adding TCP Client
@@ -288,9 +303,24 @@ void MainWindow::updateTimeDate()
 
 void MainWindow::AddHandScannerLOG()
 {
-    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner);
+
+    QElapsedTimer timer;
+    timer.start();
+
+    QString date = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy");
+    QString message = inputDataStringFromScaner;
+
+    QString req = QString ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES (' " ) + date +   QString (" ',' ')" );
+//    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
+//    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),"01046017640016521719050010NKS0028002\u000092127A9BW42E59E81"); //.remove(30,10)
+
+    req = req.replace("#","");
+    req = req.replace("\\","");
+    req = req.replace("\\u","");
+//    req = req.replace("\u","");
     qDebug() << req << "req";
-    sqlDB->makesqlreq(req);
+    sqlDB->makesqlreq(req );
+    qDebug() << "AddHandScannerLOG took" << timer.elapsed() << "milliseconds";
 }
 
 void MainWindow::updateReadedDMCode()
@@ -312,7 +342,6 @@ QString MainWindow::GetRegularString(QString stringforparse, QString SNRegularex
     if (match.hasMatch()) {
         matched = match.captured(0);
     }
-
     return matched;
 }
 
@@ -787,7 +816,12 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
         foreach ( medicament * med , MedicamentsList)
         {
-            qDebug() << med->GTIN <<" med->GTIN" ;
+            if(ScannedMedicament->SerialNumber == med->SerialNumber)
+            {
+                qDebug() << "косяк"; // если пачка уже была просканирована по не добавляем ее в стек
+                //emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
+                return;
+            }
         }
 
         MedicamentsList.append(ScannedMedicament);
@@ -1004,8 +1038,6 @@ void MainWindow::updateQRImage()
 
     a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
     SendCommandToVideoJet(a);
-
-
 }
 
 QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)

@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -823,7 +823,7 @@ border-radius: 0px;</string>
         <x>1</x>
         <y>41</y>
         <width>241</width>
-        <height>194</height>
+        <height>361</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">

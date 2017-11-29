@@ -47,6 +47,8 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     QSqlQuery query;
     //Задаем запрос
     QString execc = "SELECT " + select + " FROM " + from;
+
+//    qDebug() << execc;
     if (where != "")
     {
         execc += " WHERE " + where;
@@ -85,6 +87,7 @@ void SQL::makesqlreq(QString req)
 
     if (!query.exec(execc)) {
         qDebug() << "Unable to execute query - exiting2";
+        qDebug() << query.lastError();
     }
 }
 

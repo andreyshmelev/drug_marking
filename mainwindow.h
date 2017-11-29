@@ -204,7 +204,8 @@ signals:
 private:
     QTcpSocket *Socket ;
     QByteArray QstringToQbytearray(QString str);
-    QElapsedTimer SQLSpeedTest();
+    QElapsedTimer SQLInsertSpeedTest();
+    QElapsedTimer SQLSelectSpeedTest();
     void SendCommandToVideoJet(QString a);
     void AddHandScannerLOG();
 };
