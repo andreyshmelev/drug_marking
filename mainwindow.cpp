@@ -170,8 +170,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QString wherecompany = "company = '" + company + "' ";
     QString fromcompany = "Company";
 
-    //    sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
-    sqlDB = new SQL("C:/Work/SQL/ReadSpeedTest");
+    sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
+    //    sqlDB = new SQL("C:/Work/SQL/ReadSpeedTest");
 
     // подтягиваем параметры компании
     QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
@@ -215,7 +215,8 @@ int MainWindow::GenerateNumber(int High, int Low)
 
 QString MainWindow::getGuiGTIN()
 {
-    return ui->GTINText->toPlainText();
+
+    return ui->GTINVal->toPlainText();
 }
 
 QString MainWindow::getSN()
@@ -252,7 +253,7 @@ QString MainWindow::getGuiExpery()
 
 QString MainWindow::getGuiTNVED()
 {
-    return ui->TNVEDValue->toPlainText();
+    return ui->TNVEDVal->toPlainText();
 }
 
 void MainWindow::SetSN(QString newSN)
@@ -307,18 +308,11 @@ void MainWindow::AddHandScannerLOG()
     QElapsedTimer timer;
     timer.start();
 
-    QString date = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy");
-    QString message = inputDataStringFromScaner;
+    //QString date = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy");
+    //QString message = inputDataStringFromScaner;
+    //QString req = QString ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES (' " ) + date +   QString (" ','") + message + QString ( "')" );
+    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
 
-    QString req = QString ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES (' " ) + date +   QString (" ','") + message + QString ( "')" );
-//    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
-//    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),"01046017640016521719050010NKS0028002\u000092127A9BW42E59E81"); //.remove(30,10)
-
-    req = req.replace("#","");
-    req = req.replace("\\","");
-    req = req.replace("\"","");
-    req = req.replace("\\u","");
-//    req = req.replace("\u","");
     qDebug() << req << "req";
     sqlDB->makesqlreq(req );
     qDebug() << "AddHandScannerLOG took" << timer.elapsed() << "milliseconds";
@@ -328,7 +322,7 @@ void MainWindow::updateReadedDMCode()
 {
     if (inputDataStringFromScaner!="")
     {
-        AddHandScannerLOG();
+        //AddHandScannerLOG();
         ParseDMCode(inputDataStringFromScaner);
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
@@ -454,7 +448,9 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/313-register_product_emission.xml";
+    QString filepath = QDir::currentPath()   + "/313-register_product_emission (" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+
+    qDebug() <<filepath;
 
     QFile file(filepath);
 
@@ -620,7 +616,6 @@ void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *>
     // добавляем tnved_code
     addXMLTextNode(reg_end_pack_elem, MedicamentsList.at(0)->TNVED, "tnved_code", document);
     // добавили  tnved_code
-
 
 
     // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
@@ -815,11 +810,14 @@ void MainWindow::ParseDMCode(QString stringforparse)
             medicamentName = "No drug in DB found";
         ScannedMedicament = new medicament(medicamentName,gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
 
+        // проверяем если пачка с таким же номером партии и серийником была просканирована
+
+
         foreach ( medicament * med , MedicamentsList)
         {
-            if(ScannedMedicament->SerialNumber == med->SerialNumber)
+            if ( (ScannedMedicament->SerialNumber == med->SerialNumber)&&(ScannedMedicament->BatchNumber == med->BatchNumber) )
             {
-                qDebug() << "косяк"; // если пачка уже была просканирована по не добавляем ее в стек
+                qDebug() << "такой медикамент уже есть";
                 //emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
                 return;
             }
@@ -1029,15 +1027,7 @@ void MainWindow::updateQRImage()
     ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
     setScale(3);
 
-    QString a ;
-
-    // SLA|test5|VarField00=978|VarField01=088|
-    //    a ="SLA|test5|VarField00=922|VarField01=033|";
-    //    a.append( (0x0d) );
-    //    a.append( (0x0A) );
-    //    serverWrite(a);
-
-    a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
+    QString a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
     SendCommandToVideoJet(a);
 }
 
@@ -1241,4 +1231,15 @@ QByteArray MainWindow::QstringToQbytearray(QString str)
     QByteArray endytearray;
     endytearray.append(str);
     return endytearray;
+}
+
+void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
+{
+    qDebug() << index<< "index";
+
+    QString where = QString ( "drugs_name = '%1' " ).arg(ui->DrugsComboBox->itemText(index));
+    QString gtin = sqlDB->sel("gtin", "Drugs", where,"gtin").at(0);
+    QString tnved = sqlDB->sel("tnved", "Drugs", where,"tnved").at(0);
+    ui->GTINVal->setText(gtin);
+    ui->TNVEDVal->setText(tnved);
 }

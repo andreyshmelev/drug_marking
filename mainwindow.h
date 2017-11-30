@@ -185,6 +185,8 @@ private slots:
     void connectTcp(QString address, int port);
 
     void serverWrite(QString str);
+    void on_DrugsComboBox_currentIndexChanged(int index);
+
 signals:
 
     void agregationstatusToggled();
