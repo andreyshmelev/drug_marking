@@ -115,8 +115,6 @@ void UnitExtractWidget::StopRegistrationProcess()
         break;
     default:
         break;
-
-
     }
     emit RegistrationCompleted(MedicamentsList,controlsamplestype);
 
@@ -152,7 +150,6 @@ void UnitExtractWidget::updateGUI()
     {
         i = MainWindow::QRCodeToQImageConverter(Stop312ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
         ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
-
         ui->RegistrationStartButton->setText("Закончить регистрацию");
         ui->GTINTextAgregation->setEnabled(true);
         ui->batchnumberTextAgregation->setEnabled(true);
@@ -164,7 +161,6 @@ void UnitExtractWidget::updateGUI()
     {
         i = MainWindow::QRCodeToQImageConverter(Start312ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
         ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
-
         ui->RegistrationStartButton->setText("Начать регистрацию");
         ui->GTINTextAgregation->setEnabled(false);
         ui->batchnumberTextAgregation->setEnabled(false);

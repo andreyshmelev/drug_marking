@@ -108,32 +108,30 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->programOptionsButton, SIGNAL(pressed()), this, SLOT(productOptionsPageOpen())) ;
     connect(ui->agregationButton, SIGNAL(pressed()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), this, SLOT(statisticsPageOpen())) ;
+    connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
 
     connect(this, SIGNAL(printControlQRCodeScanned()), this, SLOT(PrintControlPageOpen())) ;
     connect(this, SIGNAL(programOptionsQRCodeScanned()), this, SLOT(productOptionsPageOpen())) ;
     connect(this, SIGNAL(agregationQRCodeScanned()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(this, SIGNAL(statisticsQRCodeScanned()), this, SLOT(statisticsPageOpen())) ;
 
-    connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
     connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateAgregationGUI())) ;
     connect(this, SIGNAL(register_product_emission_QR_Scanned()), this, SLOT(RegisterProductEmissionPageOpen())) ;
     connect(this, SIGNAL(register_control_samples_QR_Scanned()), this, SLOT(RegisterControlSamplesPageOpen())) ;
     connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
 
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)),this , SLOT(GetMedicament(medicament*))) ;
+    connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
+    connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
 
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
     // сигналы и слоты с другими виджетами
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
 
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)), this, SLOT(CreateXML312Doc(QList<medicament*>,uint8_t))) ;
-
-
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)),this , SLOT(GetMedicament(medicament*))) ;
-
-    connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
-    connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
-
+    connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)),this , SLOT(StopAgregation()) ) ;
+    connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -202,9 +200,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
-    setLanguageswitcher(false);
-
-    setRunningBuisenessProcess(false);
+StopAgregation();
 }
 
 MainWindow::~MainWindow()
@@ -702,6 +698,18 @@ void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype
 
 }
 
+void MainWindow::StartAgregation()
+{
+    setLanguageswitcher(true);
+    setRunningBuisenessProcess(true);
+}
+
+void MainWindow::StopAgregation()
+{
+    setLanguageswitcher(false);
+    setRunningBuisenessProcess(false);
+}
+
 void MainWindow::ParseHandScannerData(QString stringforparse)
 {
 
@@ -749,24 +757,21 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     {
         if (stringforparse == Start311ProcessQRString)
         {
-            setLanguageswitcher(true);
-            setRunningBuisenessProcess(true);
+            StartAgregation();
             emit Start311Process();
             return;
         }
 
         if (stringforparse == Start312ProcessQRString)
         {
-            setLanguageswitcher(true);
-            setRunningBuisenessProcess(true);
+            StartAgregation();
             emit Start312Process();
             return;
         }
 
         if (stringforparse == Start313ProcessQRString)
         {
-            setLanguageswitcher(true);
-            setRunningBuisenessProcess(true);
+            StartAgregation();
             emit Start313Process();
             Start313Process(true);
             return;
@@ -776,25 +781,22 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
 
     if (stringforparse == Stop311ProcessQRString)
     {
-        setLanguageswitcher(false);
+        StopAgregation();
         emit Stop311Process();
-        setRunningBuisenessProcess(false);
         return;
     }
 
 
     if (stringforparse == Stop312ProcessQRString)
     {
-        setRunningBuisenessProcess(false);
-        setLanguageswitcher(false);
+        StopAgregation();
         emit Stop312Process();
         return;
     }
 
     if (stringforparse == Stop313ProcessQRString)
     {
-        setRunningBuisenessProcess(false);
-        setLanguageswitcher(false);
+        StopAgregation();
         Start313Process(0);
         emit Stop313Process();
         return;

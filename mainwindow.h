@@ -60,6 +60,10 @@ public slots:
     void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
 
+    void StartAgregation();
+    
+    void StopAgregation();
+    
 private:
     QString getGuiGTIN();
     QString getSN();
