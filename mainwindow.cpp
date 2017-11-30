@@ -801,32 +801,44 @@ void MainWindow::ParseDMCode(QString stringforparse)
 
     // кончаем разбирать Партию
 
+    QString medicamentName;
+    QString whereGtin = QString("gtin = '%1'  ").arg(gtinstring);
+    medicamentName = sqlDB->sel("drugs_name", "Drugs", whereGtin,"drugs_name").at(0);
+    if (medicamentName == "")
+    {
+        medicamentName = "No drug in DB found";
+    }
+    else
+    {
+        ScannedMedicament = new medicament(medicamentName,gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
+        emit SendMedicament(ScannedMedicament);
+    }
+    // проверяем если пачка с таким же номером партии и серийником была просканирована
+
+
+
     if(getAgregation()) // если у нас агрегация то добавляем медикаменты в список
     {
-        QString medicamentName;
-        QString whereGtin = QString("gtin = '%1'  ").arg(gtinstring);
-        medicamentName = sqlDB->sel("drugs_name", "Drugs", whereGtin,"drugs_name").at(0);
-        if (medicamentName == "")
-            medicamentName = "No drug in DB found";
-        ScannedMedicament = new medicament(medicamentName,gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
-
-        // проверяем если пачка с таким же номером партии и серийником была просканирована
-
 
         foreach ( medicament * med , MedicamentsList)
         {
             if ( (ScannedMedicament->SerialNumber == med->SerialNumber)&&(ScannedMedicament->BatchNumber == med->BatchNumber) )
             {
                 qDebug() << "такой медикамент уже есть";
-                //emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
-                return;
             }
+            else
+            {
+                MedicamentsList.append(ScannedMedicament);
+            }
+
         }
 
-        MedicamentsList.append(ScannedMedicament);
-        emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
-        emit SendMedicament(ScannedMedicament);
+
     }
+
+    emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
+
+
 }
 
 void MainWindow::updateDMPicture()
@@ -931,6 +943,8 @@ void MainWindow::updateAgregationGUI()
 
 void MainWindow::updateTable()
 {
+    if (getAgregation() )
+    {
     ui->MedicamentsTable->insertRow(0);
     ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->medicament_name));
     ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(ScannedMedicament->GTIN));
@@ -939,6 +953,7 @@ void MainWindow::updateTable()
     ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(ScannedMedicament->TNVED));
     ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(ScannedMedicament->ExperyDate));
     ui->MedicamentsTable->scrollToTop();
+    }
 }
 
 QString MainWindow::GenerateDMcode()
