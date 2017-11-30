@@ -473,7 +473,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>Добавление упаковки</string>
+    <string>Регистрация сведений о завершении этапа окончательной упаковки (311)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
