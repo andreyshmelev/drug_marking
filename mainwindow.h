@@ -93,8 +93,6 @@ private:
 private:
 
     SQL  * sqlDB;
-    //    SQL  * sqlSpeedTest;
-    //    SQL  * HandScannerLog;
     QTimer * journalTimer;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;
@@ -187,7 +185,8 @@ private slots:
     void RegisterEndPackingPageOpen();
 
     void PrintControlPageOpen();
-    void productOptionsPageOpen();    void agregationOptionsPageOpen();
+    void productOptionsPageOpen();
+    void agregationOptionsPageOpen();
     void statisticsPageOpen();
 
 
@@ -206,7 +205,6 @@ signals:
 
     void agregationstatusToggled();
     void ParcingEnded();
-    void ParcingEndedWithPar(QString , QString, QString, QString, QString, QString);
     void SendMedicamentSignal(medicament * );
     void register_product_emission_QR_Scanned();
     void register_control_samples_QR_Scanned();

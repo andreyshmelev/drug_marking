@@ -46,7 +46,7 @@ private slots:
 
 signals:
 
-    void StartRegisterControlSamples();
+    void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();
     void RegistrationCompleted(QList<medicament *> MedList , uint8_t controlsamplestype);

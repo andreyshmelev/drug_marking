@@ -94,9 +94,8 @@ void UnitExtractWidget::GetMedicament(medicament * med )
 
 void UnitExtractWidget::StartRegistrationProcess()
 {
-    //    qDebug() << "registration was"<< registration ;
     registration = true;
-    //    qDebug() << "registration = true;";
+    emit RegistrationStarted();
     emit RegistrationToggled();
 }
 

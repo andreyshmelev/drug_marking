@@ -383,6 +383,7 @@ QString MainWindow::GetDOCDate()
 
 void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList)
 {
+    setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
     //  если пустой список то и генерировать то нечего
@@ -501,7 +502,9 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)
 {
 
+    setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
+
     manufacturer *organization = getcompany();
 
     //  если пустой список то и генерировать то нечего
@@ -608,6 +611,8 @@ void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue
 
 void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype)
 {
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
 
     manufacturer *organization = getcompany();
 
@@ -915,11 +920,13 @@ void MainWindow::Start313Process(bool set)
 {
     if (set == true) // если запускаем агрегацию
     {
+        setRunningBuisenessProcess(true);
         setLanguageswitcher(true);
         inputDataStringFromScaner.clear();
     }
     else    // если закончили агрегацию
     {
+        setRunningBuisenessProcess(false);
         setLanguageswitcher(false);
         CreateXML313Doc(Organizacia,MedicamentsList);
         inputDataStringFromScaner.clear();
@@ -945,11 +952,11 @@ void MainWindow::toggleAgregation()
 {
     if(getAgregation() == false)
     {
+
         Start313Process(true);
     }
     else
     {
-
         Start313Process(false);
     }
 }
