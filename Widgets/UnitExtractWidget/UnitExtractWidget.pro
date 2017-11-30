@@ -5,7 +5,10 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += xml
+QT += sql
 
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = UnitExtractWidget
@@ -25,10 +28,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        unitextractwidget.cpp
+        unitextractwidget.cpp \
+    ../../manufacturer.cpp \
+    ../../medicament.cpp
 
 HEADERS += \
-        unitextractwidget.h
+        unitextractwidget.h \
+    ../../manufacturer.h \
+    ../../medicament.h
 
 FORMS += \
         unitextractwidget.ui

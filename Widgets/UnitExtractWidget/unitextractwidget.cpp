@@ -1,6 +1,6 @@
 #include "unitextractwidget.h"
 #include "ui_unitextractwidget.h"
-#include "mainwindow.h"
+#include "../../mainwindow.h"
 #include <QDebug>
 
 UnitExtractWidget::UnitExtractWidget(QWidget *parent) :
@@ -12,6 +12,7 @@ UnitExtractWidget::UnitExtractWidget(QWidget *parent) :
     connect(this, SIGNAL(RegistrationToggled()), this, SLOT(updateGUI())) ;
 
     registration = false;
+    qDebug() << "registration  " << registration ;
     updateGUI();
 }
 
@@ -29,29 +30,98 @@ void UnitExtractWidget::updateWidgetGui(QString gtinstring, QString batchstring,
     ui->TNVEDValueAgregation->setText(tnvedstring);
 }
 
-void UnitExtractWidget::GetParsedString(QString gtinstring, QString SNstring, QString tnvedstring, QString expstring, QString batchstring, QString sGTINString)
+bool UnitExtractWidget::CheckMedicamentinDB(medicament *m)
 {
-    //    updateWidgetGui(gtinstring, batchstring, SNstring, tnvedstring, expstring);
-
-    qDebug() << gtinstring<< SNstring<< tnvedstring<< expstring<< batchstring<< sGTINString;
+    return false;
 }
 
-void UnitExtractWidget::GetMedicament(medicament * m )
+void UnitExtractWidget::GetMedicament(medicament * med )
 {
-    ScannedMedicament = m;
-    updateWidgetGui(ScannedMedicament->GTIN, ScannedMedicament->SerialNumber, ScannedMedicament->TNVED, ScannedMedicament->ExperyDate, ScannedMedicament->BatchNumber);
-    updateTable();
+    ScannedMedicament = med;
+    updateWidgetGui(med->GTIN, med->SerialNumber, med->TNVED, med->ExperyDate, med->BatchNumber);
+
+    qDebug() << "registration was"<< registration ;
+
+    if (registration == true)
+    {
+        qDebug() <<"UnitExtractWidget GetMedicament";
+        // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
+        foreach ( medicament * listmed , MedicamentsList)
+        {
+            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
+            {
+                qDebug() << "такой медикамент уже есть";
+                return;
+            }
+
+            if ( (med->GTIN != listmed->GTIN ) )
+            {
+                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+            }
+
+            if ( (med->ExperyDate != listmed->ExperyDate ) )
+            {
+                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+
+            }
+
+            if ( (med->BatchNumber != listmed->BatchNumber ) )
+            {
+                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+            }
+
+            if ( (med->TNVED != listmed->TNVED ) )
+            {
+                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+            }
+
+            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
+            {
+                return;
+            }
+        }
+        if (CheckMedicamentinDB(med))
+        {
+            qDebug() << "такой медикамент уже есть в базе данных";
+            return;
+        }
+
+        MedicamentsList.append(med);
+        AddMedicamentToTable(med);
+        AddMedicamentToDB(med);
+    }
 }
 
 void UnitExtractWidget::StartRegistrationProcess()
 {
+    //    qDebug() << "registration was"<< registration ;
     registration = true;
+    //    qDebug() << "registration = true;";
     emit RegistrationToggled();
 }
 
 void UnitExtractWidget::StopRegistrationProcess()
 {
     registration = false;
+    qDebug() << "RegistrationCompleted";
+
+    int controlsamplestype;
+
+    switch (ui->qualitycomboBox->currentIndex()) {
+    case 0:
+        controlsamplestype = ToQualityControl;
+        break;
+    case 1:
+        controlsamplestype = ToVerifyCompliance;
+        break;
+    default:
+        break;
+
+
+    }
+    emit RegistrationCompleted(MedicamentsList,controlsamplestype);
+
+    MedicamentsList.clear();
     emit RegistrationToggled();
 }
 
@@ -110,14 +180,18 @@ void UnitExtractWidget::updateGUI()
     ui->qrstartstop->setPixmap( scale_image );
 }
 
-void UnitExtractWidget::updateTable()
+void UnitExtractWidget::AddMedicamentToTable(medicament * m)
 {
-        ui->MedicamentsTable->insertRow(0);
-        ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->medicament_name));
-        ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(ScannedMedicament->GTIN));
-        ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(ScannedMedicament->BatchNumber));
-        ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(ScannedMedicament->SerialNumber));
-        ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(ScannedMedicament->TNVED));
-        ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(ScannedMedicament->ExperyDate));
-        ui->MedicamentsTable->scrollToTop();
+    ui->MedicamentsTable->insertRow(0);
+    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
+    ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(m->GTIN));
+    ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(m->BatchNumber));
+    ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(m->SerialNumber));
+    ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(m->TNVED));
+    ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
+    ui->MedicamentsTable->scrollToTop();
+}
+
+void UnitExtractWidget::AddMedicamentToDB(medicament *m)
+{
 }

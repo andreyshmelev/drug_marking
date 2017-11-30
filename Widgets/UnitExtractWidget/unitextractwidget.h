@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <medicament.h>
+#include <manufacturer.h>
 
 namespace Ui {
 class UnitExtractWidget;
@@ -24,28 +25,31 @@ private:
     Ui::UnitExtractWidget *ui;
     void updateWidgetGui(QString gtinstring, QString batchstring, QString SNstring, QString tnvedstring, QString expstring);
     bool registration ;
-     medicament * ScannedMedicament;
+    medicament * ScannedMedicament;
+    QList<medicament *> MedicamentsList;
+    bool CheckMedicamentinDB(medicament * m);
 
 public slots:
 
-    void GetParsedString (QString  gtinstring, QString SNstring, QString tnvedstring, QString expstring, QString batchstring, QString sGTINString);
-    void GetMedicament (medicament * m);
     void ToggleRegistration();
     void StartRegistrationProcess();
     void StopRegistrationProcess();
 
 private slots:
 
+    void GetMedicament (medicament * m);
     void on_RegistrationStartButton_clicked();
     void updateGUI();
 
-    void updateTable();
+    void AddMedicamentToTable(medicament * m);
+    void AddMedicamentToDB(medicament * m);
 
 signals:
 
     void StartRegisterControlSamples();
     void StopRegisterControlSamples();
     void RegistrationToggled();
+    void RegistrationCompleted(QList<medicament *> MedList , uint8_t controlsamplestype);
 };
 
 #endif // UNITEXTRACTWIDGET_H

@@ -117,7 +117,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
     connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
     connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateAgregationGUI())) ;
-    connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateTable())) ;
     connect(this, SIGNAL(register_product_emission_QR_Scanned()), this, SLOT(RegisterProductEmissionPageOpen())) ;
     connect(this, SIGNAL(register_control_samples_QR_Scanned()), this, SLOT(RegisterControlSamplesPageOpen())) ;
     connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
@@ -125,8 +124,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
     // сигналы и слоты с другими виджетами
-    //    connect(this, SIGNAL(ParcingEndedWithPar(QString,QString,QString,QString,QString,QString)), ui->ExtractWidget, SLOT(GetParsedString(QString,QString,QString,QString,QString,QString))) ;
-    connect(this, SIGNAL(SendMedicament(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
+
+    connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)), this, SLOT(CreateXML312Doc(QList<medicament*>,uint8_t))) ;
+
+
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)),this , SLOT(GetMedicament(medicament*))) ;
 
     connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
     connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
@@ -183,8 +186,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString company_inn = sqlDB->sel("inn", fromcompany, wherecompany,"inn")[0];
     QString company_kpp = sqlDB->sel("kpp", fromcompany, wherecompany,"kpp")[0];
 
-    BFZ = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
-    qDebug() << company_subject_id<<companyname<<company_email<< company_ul<< company_fl<< company_inn<<company_kpp<<company_owner_id ;
+    Organizacia = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
 
     drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
     companies = sqlDB->sel("company_name", "Company", "","company_name");
@@ -200,6 +202,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
+    setLanguageswitcher(false);
+
+    setRunningBuisenessProcess(false);
 }
 
 MainWindow::~MainWindow()
@@ -318,12 +323,32 @@ void MainWindow::AddHandScannerLOG()
     qDebug() << "AddHandScannerLOG took" << timer.elapsed() << "milliseconds";
 }
 
+bool MainWindow::getRunningBuisenessProcess() const
+{
+    return runningBuisenessProcess;
+}
+
+void MainWindow::setRunningBuisenessProcess(bool value)
+{
+    runningBuisenessProcess = value;
+}
+
+bool MainWindow::getLanguageswitcher() const
+{
+    return languageswitcher;
+}
+
+void MainWindow::setLanguageswitcher(bool value)
+{
+    languageswitcher = value;
+}
+
 void MainWindow::updateReadedDMCode()
 {
     if (inputDataStringFromScaner!="")
     {
         //AddHandScannerLOG();
-        ParseDMCode(inputDataStringFromScaner);
+        ParseHandScannerData(inputDataStringFromScaner);
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
     }
@@ -358,6 +383,12 @@ QString MainWindow::GetDOCDate()
 
 void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList)
 {
+    setLanguageswitcher(false);
+
+    //  если пустой список то и генерировать то нечего
+    if (MedList.length() == 0)
+        return;
+
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
@@ -467,8 +498,16 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     }
 }
 
-void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *> MedList)
+void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)
 {
+
+    setLanguageswitcher(false);
+    manufacturer *organization = getcompany();
+
+    //  если пустой список то и генерировать то нечего
+    if (MedList.length() == 0)
+        return;
+
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
@@ -507,7 +546,7 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
 
     QDomText control_samples_type_text  = document.createTextNode("control_samples_type");
 
-    control_samples_type_text.setNodeValue( QString::number( ControlSamplesTypeEnum::ToQualityControl ) );
+    control_samples_type_text.setNodeValue( QString::number(controlsamplestype) );
     control_samples_type_element.appendChild(control_samples_type_text);
 
     // добавили control_samples_type
@@ -539,8 +578,9 @@ void MainWindow::CreateXML312Doc(manufacturer *organization, QList<medicament *>
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/312-register_control_samples.xml";
+    QString filepath = QDir::currentPath()   + "/312-register_control_samples (" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
+    qDebug() <<filepath;
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -566,8 +606,10 @@ void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue
     q_dom_elem.appendChild(gtin_text);
 }
 
-void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *> MedList, OrderTypeEnum ordertype)
+void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype)
 {
+
+    manufacturer *organization = getcompany();
 
     if (MedList.length() <=0)
         return ;
@@ -655,21 +697,12 @@ void MainWindow::CreateXML311Doc(manufacturer *organization, QList<medicament *>
 
 }
 
-void MainWindow::ParseDMCode(QString stringforparse)
+void MainWindow::ParseHandScannerData(QString stringforparse)
 {
 
     // сначала проверяем ня соответствие QR кодам
 
-    if (stringforparse == Start313ProcessQRString)
-    {
-        setAgregation(1);
-        return;
-    }
-    if (stringforparse == Stop313ProcessQRString)
-    {
-        setAgregation(0);
-        return;
-    }
+
 
     if (stringforparse == register_product_emission_QR_string)
     {
@@ -707,17 +740,61 @@ void MainWindow::ParseDMCode(QString stringforparse)
         return;
     }
 
-    if (stringforparse == Start312ProcessQRString)
+    if (getRunningBuisenessProcess() == false)
     {
-        emit Start312Process();
+        if (stringforparse == Start311ProcessQRString)
+        {
+            setLanguageswitcher(true);
+            setRunningBuisenessProcess(true);
+            emit Start311Process();
+            return;
+        }
+
+        if (stringforparse == Start312ProcessQRString)
+        {
+            setLanguageswitcher(true);
+            setRunningBuisenessProcess(true);
+            emit Start312Process();
+            return;
+        }
+
+        if (stringforparse == Start313ProcessQRString)
+        {
+            setLanguageswitcher(true);
+            setRunningBuisenessProcess(true);
+            emit Start313Process();
+            Start313Process(true);
+            return;
+        }
+    }
+
+
+    if (stringforparse == Stop311ProcessQRString)
+    {
+        setLanguageswitcher(false);
+        emit Stop311Process();
+        setRunningBuisenessProcess(false);
         return;
     }
 
+
     if (stringforparse == Stop312ProcessQRString)
     {
+        setRunningBuisenessProcess(false);
+        setLanguageswitcher(false);
         emit Stop312Process();
         return;
     }
+
+    if (stringforparse == Stop313ProcessQRString)
+    {
+        setRunningBuisenessProcess(false);
+        setLanguageswitcher(false);
+        Start313Process(0);
+        emit Stop313Process();
+        return;
+    }
+
 
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
@@ -811,34 +888,10 @@ void MainWindow::ParseDMCode(QString stringforparse)
     else
     {
         ScannedMedicament = new medicament(medicamentName,gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
-        emit SendMedicament(ScannedMedicament);
-    }
-    // проверяем если пачка с таким же номером партии и серийником была просканирована
-
-
-
-    if(getAgregation()) // если у нас агрегация то добавляем медикаменты в список
-    {
-
-        foreach ( medicament * med , MedicamentsList)
-        {
-            if ( (ScannedMedicament->SerialNumber == med->SerialNumber)&&(ScannedMedicament->BatchNumber == med->BatchNumber) )
-            {
-                qDebug() << "такой медикамент уже есть";
-            }
-            else
-            {
-                MedicamentsList.append(ScannedMedicament);
-            }
-
-        }
-
-
+        emit SendMedicamentSignal(ScannedMedicament);
     }
 
     emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
-
-
 }
 
 void MainWindow::updateDMPicture()
@@ -858,17 +911,17 @@ void MainWindow::updateDMcode()
     ui->DMcodeValue->setText(GenerateDMcode());
 }
 
-void MainWindow::setAgregation(bool set)
+void MainWindow::Start313Process(bool set)
 {
     if (set == true) // если запускаем агрегацию
     {
+        setLanguageswitcher(true);
         inputDataStringFromScaner.clear();
     }
     else    // если закончили агрегацию
     {
-        //        CreateXML311Doc(BFZ,MedicamentsList,OrderTypeEnum::ContractProduction);
-        //        CreateXML312Doc(BFZ,MedicamentsList);
-        CreateXML313Doc(BFZ,MedicamentsList);
+        setLanguageswitcher(false);
+        CreateXML313Doc(Organizacia,MedicamentsList);
         inputDataStringFromScaner.clear();
     }
 
@@ -878,15 +931,26 @@ void MainWindow::setAgregation(bool set)
     emit agregationstatusToggled();
 }
 
+manufacturer *MainWindow::getcompany() const
+{
+    return Organizacia;
+}
+
+void MainWindow::setcompany(manufacturer *value)
+{
+    Organizacia = value;
+}
+
 void MainWindow::toggleAgregation()
 {
     if(getAgregation() == false)
     {
-        setAgregation(true);
+        Start313Process(true);
     }
     else
     {
-        setAgregation(false);
+
+        Start313Process(false);
     }
 }
 
@@ -941,19 +1005,36 @@ void MainWindow::updateAgregationGUI()
     ui->TNVEDValueAgregation->setText(tnvedstring);
 }
 
-void MainWindow::updateTable()
+void MainWindow::AddMedicamentToTable(medicament * m)
 {
     if (getAgregation() )
     {
-    ui->MedicamentsTable->insertRow(0);
-    ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(ScannedMedicament->medicament_name));
-    ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(ScannedMedicament->GTIN));
-    ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(ScannedMedicament->BatchNumber));
-    ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(ScannedMedicament->SerialNumber));
-    ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(ScannedMedicament->TNVED));
-    ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(ScannedMedicament->ExperyDate));
-    ui->MedicamentsTable->scrollToTop();
+        ui->MedicamentsTable->insertRow(0);
+        ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
+        ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(m->GTIN));
+        ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(m->BatchNumber));
+        ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(m->SerialNumber));
+        ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(m->TNVED));
+        ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
+        ui->MedicamentsTable->scrollToTop();
     }
+}
+
+void MainWindow::AddMedicamentToDB(medicament *m)
+{
+
+}
+
+bool MainWindow::CheckMedicamentinDB(medicament *m)
+{
+    QString where = QString ( "drugs_name = '%1' " ).arg(m->SerialNumber);
+
+    if (sqlDB->sel("tnved", "Drugs", where,"tnved").at(0) != "")
+    {
+
+    }
+
+    return false;
 }
 
 QString MainWindow::GenerateDMcode()
@@ -1128,7 +1209,7 @@ void MainWindow::addSymbolToInputString(QString str)
     //  qDebug() << "start timeout timer";
     QString wastext = inputDataStringFromScaner;
 
-    if (getAgregation() == true)
+    if (getLanguageswitcher() == true)
     {
         // Просто меняем раскладку если у нас агрегация.
         // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
@@ -1257,4 +1338,58 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     QString tnved = sqlDB->sel("tnved", "Drugs", where,"tnved").at(0);
     ui->GTINVal->setText(gtin);
     ui->TNVEDVal->setText(tnved);
+}
+
+void MainWindow::GetMedicament(medicament *med)
+{
+    //updateWidgetGui(ScannedMedicament->GTIN, ScannedMedicament->SerialNumber, ScannedMedicament->TNVED, ScannedMedicament->ExperyDate, ScannedMedicament->BatchNumber);
+    if (getAgregation())
+    {
+        qDebug() <<"MainWindow GetMedicament";
+        // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
+        foreach ( medicament * listmed , MedicamentsList)
+        {
+            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
+            {
+                qDebug() << "такой медикамент уже есть";
+                return;
+            }
+
+            if ( (med->GTIN != listmed->GTIN ) )
+            {
+                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+            }
+
+            if ( (med->ExperyDate != listmed->ExperyDate ) )
+            {
+                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+
+            }
+
+            if ( (med->BatchNumber != listmed->BatchNumber ) )
+            {
+                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+            }
+
+            if ( (med->TNVED != listmed->TNVED ) )
+            {
+                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+            }
+
+            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
+            {
+                return;
+            }
+        }
+
+        if (CheckMedicamentinDB(med))
+        {
+            qDebug() << "такой медикамент уже есть в базе данных";
+            return;
+        }
+
+        MedicamentsList.append(med);
+        AddMedicamentToTable(med);
+        AddMedicamentToDB(med);
+    }
 }

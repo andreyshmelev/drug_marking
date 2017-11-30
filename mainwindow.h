@@ -39,11 +39,26 @@ public:
     static QString GetRegularString(QString stringforparse, QString SNRegularexpression);
     static QImage QRCodeToQImageConverter(QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
 
-//        const QString TCPaddress = "127.0.0.1";
-//       const int TCPPort = 1234;
+    //        const QString TCPaddress = "127.0.0.1";
+    //       const int TCPPort = 1234;
 
     const QString TCPaddress = "192.168.1.196";
     const int TCPPort = 3002;
+
+    manufacturer *getcompany() const;
+    void setcompany(manufacturer *value);
+
+    bool getLanguageswitcher() const;
+    void setLanguageswitcher(bool value);
+
+    bool getRunningBuisenessProcess() const;
+    void setRunningBuisenessProcess(bool value);
+
+public slots:
+
+    void CreateXML311Doc(QList<medicament *> MedList, uint8_t ordertype);
+    void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
+    void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
 
 private:
     QString getGuiGTIN();
@@ -64,9 +79,9 @@ private:
     int encodeImageSize;
     QPoint lastPos;
     bool getAgregation(void);
-    void setAgregation(bool set);
+    void Start313Process(bool set);
 
-    manufacturer * BFZ;
+    manufacturer * Organizacia;
     medicament * ScannedMedicament;
     QList<medicament *> MedicamentsList;
 
@@ -78,8 +93,8 @@ private:
 private:
 
     SQL  * sqlDB;
-//    SQL  * sqlSpeedTest;
-//    SQL  * HandScannerLog;
+    //    SQL  * sqlSpeedTest;
+    //    SQL  * HandScannerLog;
     QTimer * journalTimer;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;
@@ -125,7 +140,7 @@ private:
     const QString GSSymbol = "002#";
     const QString Emptystring = "";
 
-    const QString SNRegularexpression = "21\\w{13,14}" + GSSymbol; // строка начинается  с 21, имеет длину 14 и заказчивается символом 0029
+    const QString SNRegularexpression = "21\\w{12,14}" + GSSymbol; // строка начинается  с 21, имеет длину 14 и заказчивается символом 0029
     const QString TNVEDRegularexpression = "240\\w{4}" + GSSymbol;
     const QString ExpRegularexpression = "17\\w{6}" ;
     const QString BatchRegularexpression = "10\\w{1,20}" + GSSymbol ;
@@ -143,10 +158,6 @@ private:
     QString expstring;
     QString tnvedstring;
 
-    void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
-    static void CreateXML312Doc(manufacturer * organization, QList<medicament *> MedList);
-    void CreateXML311Doc(manufacturer * organization, QList<medicament *> MedList, OrderTypeEnum ordertype);
-
     static QString GetISODate();
     static QString GetDOCDate();
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
@@ -160,12 +171,14 @@ private slots:
     void addMessageToJournal();
     void updateTimeDate();
     void updateReadedDMCode();
-    void ParseDMCode( QString stringtoparse);
+    void ParseHandScannerData( QString stringtoparse);
     void updateDMPicture();
     void updateDMcode();
     void toggleAgregation( void );
     void updateAgregationGUI();
-    void updateTable();
+    void AddMedicamentToTable(medicament * m);
+    void AddMedicamentToDB(medicament * m);
+    bool CheckMedicamentinDB(medicament * m);
     void setStackedPage(int newindex);
     QString GenerateDMcode();
 
@@ -187,12 +200,14 @@ private slots:
     void serverWrite(QString str);
     void on_DrugsComboBox_currentIndexChanged(int index);
 
+    void GetMedicament (medicament * m);
+
 signals:
 
     void agregationstatusToggled();
     void ParcingEnded();
     void ParcingEndedWithPar(QString , QString, QString, QString, QString, QString);
-    void SendMedicament(medicament * );
+    void SendMedicamentSignal(medicament * );
     void register_product_emission_QR_Scanned();
     void register_control_samples_QR_Scanned();
     void register_end_packing_QR_Scanned();
@@ -200,8 +215,15 @@ signals:
     void programOptionsQRCodeScanned();
     void agregationQRCodeScanned();
     void statisticsQRCodeScanned();
+
+signals:
+    // для виджетов
     void Start312Process();
     void Stop312Process();
+    void Start311Process();
+    void Stop311Process();
+    void Start313Process();
+    void Stop313Process();
 
 private:
     QTcpSocket *Socket ;
@@ -210,6 +232,8 @@ private:
     QElapsedTimer SQLSelectSpeedTest();
     void SendCommandToVideoJet(QString a);
     void AddHandScannerLOG();
+    bool languageswitcher;
+    bool runningBuisenessProcess;
 };
 
 #endif // MAINWINDOW_H
