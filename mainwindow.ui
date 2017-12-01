@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>10</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -1854,66 +1854,39 @@ p, li { white-space: pre-wrap; }
       </column>
      </widget>
     </widget>
-    <widget class="MoveOrder415" name="MoveOrderPage415">
-     <widget class="QLabel" name="scanerLabel_2">
+    <widget class="QWidget" name="MoveOrderPage415">
+     <widget class="MoveOrder415" name="MoveOrderWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>370</y>
-        <width>119</width>
-        <height>23</height>
+        <x>0</x>
+        <y>0</y>
+        <width>480</width>
+        <height>400</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Impact</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>9</string>
       </property>
      </widget>
     </widget>
-    <widget class="RelabelingWidget811" name="RelabelingPage811">
-     <widget class="QLabel" name="scanerLabel_3">
+    <widget class="QWidget" name="RelabelingPage811">
+     <widget class="RelabelingWidget811" name="RelabelingWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>220</y>
-        <width>119</width>
-        <height>23</height>
+        <x>0</x>
+        <y>0</y>
+        <width>480</width>
+        <height>400</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Impact</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>10</string>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="UnitPackPage911">
-     <widget class="QLabel" name="scanerLabel_4">
+     <widget class="UnitPackWidget911" name="UnitPackPageWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>230</y>
-        <width>119</width>
-        <height>23</height>
+        <x>0</x>
+        <y>0</y>
+        <width>480</width>
+        <height>400</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Impact</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>11</string>
       </property>
      </widget>
     </widget>
@@ -2595,6 +2568,12 @@ p, li { white-space: pre-wrap; }
    <class>RelabelingWidget811</class>
    <extends>QWidget</extends>
    <header>C:\Work\Application\Application\Widgets\RelabelingWidget811\relabelingwidget811.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UnitPackWidget911</class>
+   <extends>QWidget</extends>
+   <header>C:\Work\Application\Application\Widgets\UnitPackWidget911\unitpackwidget911.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

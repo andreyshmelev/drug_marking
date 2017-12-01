@@ -36,7 +36,8 @@ SOURCES += \
     sql.cpp \
     basebuisnessclass.cpp \
     Widgets/MoveOrderWidget415/moveorder415.cpp \
-    Widgets/RelabelingWidget811/relabelingwidget811.cpp
+    Widgets/RelabelingWidget811/relabelingwidget811.cpp \
+    Widgets/UnitPackWidget911/unitpackwidget911.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -49,11 +50,13 @@ HEADERS += \
     sql.h \
     basebuisnessclass.h \
     Widgets/MoveOrderWidget415/moveorder415.h \
-    Widgets/RelabelingWidget811/relabelingwidget811.h
+    Widgets/RelabelingWidget811/relabelingwidget811.h \
+    Widgets/UnitPackWidget911/unitpackwidget911.h
 
 FORMS += \
         mainwindow.ui \
     Widgets/UnitExtractWidget/unitextractwidget.ui \
     Widgets/UnitAppendWidget/unitappendwidget.ui \
     Widgets/MoveOrderWidget415/moveorder415.ui \
-    Widgets/RelabelingWidget811/relabelingwidget811.ui
+    Widgets/RelabelingWidget811/relabelingwidget811.ui \
+    Widgets/UnitPackWidget911/unitpackwidget911.ui
