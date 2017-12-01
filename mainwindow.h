@@ -205,6 +205,12 @@ private slots:
 
     void GetMedicament (medicament * m);
 
+    void on_move_order_Button_clicked();
+
+    void on_releabeling_Button_clicked();
+
+    void on_unit_pack_Button_clicked();
+
 signals:
 
     void agregationstatusToggled();

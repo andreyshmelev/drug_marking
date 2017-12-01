@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -843,75 +843,18 @@ p, li { white-space: pre-wrap; }
      <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>272</x>
-        <y>10</y>
-        <width>181</width>
-        <height>381</height>
+        <x>280</x>
+        <y>31</y>
+        <width>169</width>
+        <height>361</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="unit_pack_Button">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Упаковка в транс-
-портную тару (911)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="unit_unpack_Button">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Расформир. транс-
-портной упаковки (912)</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
-        <widget class="QPushButton" name="unit_extract_Button">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Изъятие элементов
-упаковки (913)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
         <widget class="QPushButton" name="unit_append_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -930,8 +873,11 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="3" column="0">
         <widget class="QPushButton" name="multi_pack_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -950,8 +896,11 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="recall_Button">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="unit_extract_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -965,13 +914,16 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="text">
-          <string>Отмена ранее зарег.
-операции (250)</string>
+          <string>Изъятие элементов
+упаковки (913)</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="5" column="0">
         <widget class="QPushButton" name="refusal_sender_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -991,8 +943,78 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="4" column="0">
+        <widget class="QPushButton" name="recall_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Отмена ранее зарег.
+операции (250)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QPushButton" name="withdrawal_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Вывод ЛП из оборота (552)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QPushButton" name="destruction_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Уничтожение ЛП (542)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
         <widget class="QPushButton" name="refusal_receiver_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1011,20 +1033,11 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>2</x>
-        <y>13</y>
-        <width>241</width>
-        <height>181</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="register_product_emission_Button">
+       <item row="8" column="0">
+        <widget class="QPushButton" name="move_destruction_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1038,14 +1051,72 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="text">
-          <string>Регистрация сведений
-о выпуске гото-
-вой продукции (313)</string>
+          <string>Передача на 
+ уничтожение ЛП (541)</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QLabel" name="register_product_emission_QRLabel">
+       <item row="7" column="0">
+        <widget class="QPushButton" name="move_place_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Перемещение ЛП между
+ адресами мест осуществления
+деятельности (431)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="unit_unpack_Button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Расформир. транс-
+портной упаковки (912)</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>14</y>
+        <width>235</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="1" column="1">
+        <widget class="QLabel" name="register_control_samples_Label">
          <property name="minimumSize">
           <size>
            <width>60</width>
@@ -1060,6 +1131,48 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="text">
           <string>register_product_emission_Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="releabeling_Button">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Регистрация сведений о
+переупаковке и пере-
+маркировке (811)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="unit_pack_Button">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Регистрация сведений
+об упаковке в транс-
+портную тару (911)</string>
          </property>
         </widget>
        </item>
@@ -1084,45 +1197,31 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="1" column="1" rowspan="2" colspan="2">
-        <widget class="QLabel" name="register_control_samples_Label">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>register_product_emission_Button</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2" rowspan="2">
-        <widget class="QLabel" name="register_end_packing_Label">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>register_product_emission_Button</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="0">
+        <widget class="QPushButton" name="move_order_Button">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Регистрация сведений
+об отгрузке ЛП со 
+склада Продавца (415)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QPushButton" name="register_end_packing_Button">
          <property name="minimumSize">
           <size>
@@ -1143,41 +1242,8 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>2</x>
-        <y>197</y>
-        <width>169</width>
-        <height>191</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_6">
        <item row="0" column="0">
-        <widget class="QPushButton" name="move_place_Button">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Перемещение ЛП между
- адресами мест осуществления
-деятельности (431)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="move_destruction_button">
+        <widget class="QPushButton" name="register_product_emission_Button">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1191,66 +1257,47 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="text">
-          <string>Передача на 
- уничтожение ЛП (541)</string>
+          <string>Регистрация сведений
+о выпуске гото-
+вой продукции (313)</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="destruction_Button">
+       <item row="0" column="1">
+        <widget class="QLabel" name="register_product_emission_QRLabel">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>30</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>50</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
-          <string>Уничтожение ЛП (542)</string>
+          <string>register_product_emission_Button</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="withdrawal_Button">
+       <item row="2" column="1">
+        <widget class="QLabel" name="register_end_packing_Label">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>30</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>50</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
-          <string>Вывод ЛП из оборота (552)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="releabeling_Button">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Переупаковка и
-перемаркировка (811)</string>
+          <string>register_product_emission_Button</string>
          </property>
         </widget>
        </item>
@@ -1315,7 +1362,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="ExtractPage">
+    <widget class="QWidget" name="RegisterExtractPage312">
      <widget class="UnitExtractWidget" name="ExtractWidget" native="true">
       <property name="geometry">
        <rect>
@@ -1327,7 +1374,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="AppendPage">
+    <widget class="QWidget" name="RegisterEndPackingPage311">
      <widget class="UnitAppendWidget" name="AppendWidget" native="true">
       <property name="geometry">
        <rect>
@@ -1339,7 +1386,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="RegisterProductEmissionPage">
+    <widget class="QWidget" name="RegisterProductEmissionPage313">
      <widget class="QLabel" name="AppendPageLabel_2">
       <property name="geometry">
        <rect>
@@ -1805,6 +1852,69 @@ p, li { white-space: pre-wrap; }
         <string>Годен до:</string>
        </property>
       </column>
+     </widget>
+    </widget>
+    <widget class="MoveOrder415" name="MoveOrderPage415">
+     <widget class="QLabel" name="scanerLabel_2">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>370</y>
+        <width>119</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Impact</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>9</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="RelabelingWidget811" name="RelabelingPage811">
+     <widget class="QLabel" name="scanerLabel_3">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>220</y>
+        <width>119</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Impact</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>10</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="UnitPackPage911">
+     <widget class="QLabel" name="scanerLabel_4">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>230</y>
+        <width>119</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Impact</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>11</string>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -2473,6 +2583,18 @@ p, li { white-space: pre-wrap; }
    <class>UnitAppendWidget</class>
    <extends>QWidget</extends>
    <header>C:\Work\Application\Application\Widgets\UnitAppendWidget\unitappendwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MoveOrder415</class>
+   <extends>QWidget</extends>
+   <header>C:\Work\Application\Application\Widgets\MoveOrderWidget415\moveorder415.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RelabelingWidget811</class>
+   <extends>QWidget</extends>
+   <header>C:\Work\Application\Application\Widgets\RelabelingWidget811\relabelingwidget811.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

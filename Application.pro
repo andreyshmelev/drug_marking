@@ -34,7 +34,9 @@ SOURCES += \
     Widgets/UnitExtractWidget/unitextractwidget.cpp \
     Widgets/UnitAppendWidget/unitappendwidget.cpp \
     sql.cpp \
-    basebuisnessclass.cpp
+    basebuisnessclass.cpp \
+    Widgets/MoveOrderWidget415/moveorder415.cpp \
+    Widgets/RelabelingWidget811/relabelingwidget811.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -45,9 +47,13 @@ HEADERS += \
     Widgets/UnitExtractWidget/unitextractwidget.h \
     Widgets/UnitAppendWidget/unitappendwidget.h \
     sql.h \
-    basebuisnessclass.h
+    basebuisnessclass.h \
+    Widgets/MoveOrderWidget415/moveorder415.h \
+    Widgets/RelabelingWidget811/relabelingwidget811.h
 
 FORMS += \
         mainwindow.ui \
     Widgets/UnitExtractWidget/unitextractwidget.ui \
-    Widgets/UnitAppendWidget/unitappendwidget.ui
+    Widgets/UnitAppendWidget/unitappendwidget.ui \
+    Widgets/MoveOrderWidget415/moveorder415.ui \
+    Widgets/RelabelingWidget811/relabelingwidget811.ui

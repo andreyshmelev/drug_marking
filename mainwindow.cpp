@@ -20,7 +20,6 @@ int bbb = 789;
 QElapsedTimer MainWindow::SQLInsertSpeedTest()
 {
     QString req;
-
     QElapsedTimer timer;
     timer.start();
 
@@ -1401,4 +1400,19 @@ void MainWindow::GetMedicament(medicament *med)
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);
     }
+}
+
+void MainWindow::on_move_order_Button_clicked()
+{
+    setStackedPage( 8);
+}
+
+void MainWindow::on_releabeling_Button_clicked()
+{
+    setStackedPage(9);
+}
+
+void MainWindow::on_unit_pack_Button_clicked()
+{
+    setStackedPage(10);
 }
