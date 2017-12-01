@@ -132,6 +132,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)), this, SLOT(CreateXML312Doc(QList<medicament*>,uint8_t))) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)),this , SLOT(StopAgregation()) ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
+    connect(ui->AppendWidget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -1321,10 +1322,9 @@ void MainWindow::connectTcp(QString address, int port)
     Socket->waitForConnected(3000);
 }
 
-
 void MainWindow::serverWrite(QString str)
 {
-    if( Socket->waitForConnected() )
+    if ( Socket->waitForConnected () )
     {
         Socket->write( QstringToQbytearray(str) ); // пишем
         Socket->waitForBytesWritten(1000); // ожидаем запись
@@ -1340,7 +1340,7 @@ QByteArray MainWindow::QstringToQbytearray(QString str)
 
 void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
 {
-    qDebug() << index<< "index";
+    qDebug() << index << "index";
 
     QString where = QString ( "drugs_name = '%1' " ).arg(ui->DrugsComboBox->itemText(index));
     QString gtin = sqlDB->sel("gtin", "Drugs", where,"gtin").at(0);

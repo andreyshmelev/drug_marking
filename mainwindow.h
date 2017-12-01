@@ -16,12 +16,12 @@
 #include <QPixmap>
 #include <QtXml>
 #include <QtSql>
+#include <QTcpSocket>
 #include "QRCodeGenerator.h"
 #include "manufacturer.h"
 #include "medicament.h"
 #include "basetypes.h"
 #include "sql.h"
-#include <QTcpSocket>
 
 namespace Ui {
 class MainWindow;

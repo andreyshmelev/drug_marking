@@ -2,6 +2,8 @@
 #define UNITAPPENDWIDGET_H
 
 #include <QWidget>
+#include <QObject>
+#include <C:\Work\Application\Application\basebuisnessclass.h>
 
 namespace Ui {
 class UnitAppendWidget;
@@ -14,12 +16,11 @@ class UnitAppendWidget : public QWidget
 public:
     explicit UnitAppendWidget(QWidget *parent = 0);
     ~UnitAppendWidget();
-
-    const QString Start311ProcessQRString = "501301";
-    const QString Stop311ProcessQRString  = "641195";
+    BaseBuisnessClass  * BaseClass;
 
 private:
     Ui::UnitAppendWidget *ui;
+
 };
 
 #endif // UNITAPPENDWIDGET_H
