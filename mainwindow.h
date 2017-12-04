@@ -55,7 +55,6 @@ public:
     void setRunningBuisenessProcess(bool value);
 
     void GetCompaniesList(QString company_inn, QString fromcompany, QString company_owner_id, QString company_email, QString wherecompany, QString company_kpp, QString companyname, QString company_subject_id, QString company_ul, QString company_fl);
-
     void GetCompaniesDBList();
 
 public slots:

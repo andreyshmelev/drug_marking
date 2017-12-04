@@ -139,3 +139,21 @@ void MoveOrder415::on_RegistrationStartButton_clicked()
 {
     ToggleRegistration();
 }
+
+
+void MoveOrder415::GetCompaniesDBList(QList<manufacturer*> man)
+{
+    QStringList a ;
+
+    foreach (manufacturer * d , man) {
+        manufacturesList.append(d);
+
+//        qDebug() << d->get_organisation_name() << "MoveOrder415";
+        a.append(d->get_organisation_name());
+    }
+
+    ui->senderCombobox->addItems(a);
+    ui->recieverCombobox->addItems(a);
+
+
+}

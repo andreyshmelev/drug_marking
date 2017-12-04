@@ -32,11 +32,15 @@ private:
     QList<medicament *> MedicamentsList;
     bool CheckMedicamentinDB(medicament * m);
 
+    QList<manufacturer *> manufacturesList;
+
 public slots:
 
     void ToggleRegistration();
     void StartRegistrationProcess();
     void StopRegistrationProcess();
+
+    void GetCompaniesDBList(QList<manufacturer *>);
 
 private slots:
 

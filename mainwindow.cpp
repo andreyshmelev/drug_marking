@@ -86,7 +86,7 @@ void MainWindow::GetCompaniesDBList()
 
         manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
         CompaniesListFromDB.append(c);
-        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
+//        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
     }
 
     emit SendCompaniesDBList(CompaniesListFromDB);
@@ -198,8 +198,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
     //    sqlDB = new SQL("C:/Work/SQL/ReadSpeedTest");
-
-
 
     // подтягиваем параметры препаратов из БД
     drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
