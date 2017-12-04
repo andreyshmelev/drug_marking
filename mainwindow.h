@@ -54,6 +54,10 @@ public:
     bool getRunningBuisenessProcess() const;
     void setRunningBuisenessProcess(bool value);
 
+    void GetCompaniesList(QString company_inn, QString fromcompany, QString company_owner_id, QString company_email, QString wherecompany, QString company_kpp, QString companyname, QString company_subject_id, QString company_ul, QString company_fl);
+
+    void GetCompaniesDBList();
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, uint8_t ordertype);
@@ -61,9 +65,9 @@ public slots:
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
 
     void StartAgregation();
-    
+
     void StopAgregation();
-    
+
 private:
     QString getGuiGTIN();
     QString getSN();
@@ -87,7 +91,10 @@ private:
 
     manufacturer * Organizacia;
     medicament * ScannedMedicament;
+
     QList<medicament *> MedicamentsList;
+    QList<medicament *> MedicamentsListFromDB;
+    QList<manufacturer *> CompaniesListFromDB;
 
     QStringList drugs;
     QStringList companies;
@@ -216,6 +223,7 @@ signals:
     void agregationstatusToggled();
     void ParcingEnded();
     void SendMedicamentSignal(medicament * );
+    void SendCompaniesDBList(QList<manufacturer *> );
     void register_product_emission_QR_Scanned();
     void register_control_samples_QR_Scanned();
     void register_end_packing_QR_Scanned();

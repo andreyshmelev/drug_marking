@@ -37,7 +37,7 @@ public slots:
 
 private slots:
 
-    void GetMedicament (medicament * m);
+    void GetMedicament (medicament * med);
     void on_RegistrationStartButton_clicked();
     void updateGUI();
 

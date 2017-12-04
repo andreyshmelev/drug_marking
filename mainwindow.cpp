@@ -59,10 +59,37 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
     QStringList sellist = sqlDB->sel("date", "ScannerLog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
 
     //    sqlDB->makesqlreq("SELECT * FROM ScannerLog");
-    qDebug() << sellist << "sellist";
+    //    qDebug() << sellist << "sellist";
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed() << "milliseconds";
     return timer;
+}
+
+void MainWindow::GetCompaniesDBList()
+{
+    companies = sqlDB->sel("company_name", "Company", "","company_name");
+
+    foreach (QString s, companies) {
+
+        // читаем производителя из БД
+        QString fromcompany = "Company";
+        QString    wherecompany = "company_name = '" + s + "' ";
+        // подтягиваем параметры компании
+        QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
+        QString company_subject_id = sqlDB->sel("subject_id", fromcompany, wherecompany,"subject_id")[0];
+        QString company_owner_id = sqlDB->sel("owner_id", fromcompany, wherecompany,"owner_id")[0];
+        QString company_email = sqlDB->sel("email", fromcompany, wherecompany,"email")[0];
+        QString company_ul = sqlDB->sel("ul", fromcompany, wherecompany,"ul")[0];
+        QString company_fl = sqlDB->sel("fl", fromcompany, wherecompany,"fl")[0];
+        QString company_inn = sqlDB->sel("inn", fromcompany, wherecompany,"inn")[0];
+        QString company_kpp = sqlDB->sel("kpp", fromcompany, wherecompany,"kpp")[0];
+
+        manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
+        CompaniesListFromDB.append(c);
+        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
+    }
+
+    emit SendCompaniesDBList(CompaniesListFromDB);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -125,6 +152,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
     connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
 
+    connect(this, SIGNAL(SendCompaniesDBList(QList<manufacturer*>)), ui->MoveOrderWidget, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
+
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
     // сигналы и слоты с другими виджетами
 
@@ -132,6 +161,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)),this , SLOT(StopAgregation()) ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
     connect(ui->AppendWidget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
+
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->MoveOrderWidget, SLOT(GetMedicament(medicament*))) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -164,30 +195,18 @@ MainWindow::MainWindow(QWidget *parent) :
     updateAgregationGUI();
     setStackedPage(2);
 
-
-    // читаем производителя из БД
-    //QString company = "KORVAS";
-    QString company = "BFZ";
-    QString wherecompany = "company = '" + company + "' ";
-    QString fromcompany = "Company";
-
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
     //    sqlDB = new SQL("C:/Work/SQL/ReadSpeedTest");
 
-    // подтягиваем параметры компании
-    QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
-    QString company_subject_id = sqlDB->sel("subject_id", fromcompany, wherecompany,"subject_id")[0];
-    QString company_owner_id = sqlDB->sel("owner_id", fromcompany, wherecompany,"owner_id")[0];
-    QString company_email = sqlDB->sel("email", fromcompany, wherecompany,"email")[0];
-    QString company_ul = sqlDB->sel("ul", fromcompany, wherecompany,"ul")[0];
-    QString company_fl = sqlDB->sel("fl", fromcompany, wherecompany,"fl")[0];
-    QString company_inn = sqlDB->sel("inn", fromcompany, wherecompany,"inn")[0];
-    QString company_kpp = sqlDB->sel("kpp", fromcompany, wherecompany,"kpp")[0];
 
-    Organizacia = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
 
+    // подтягиваем параметры препаратов из БД
     drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
-    companies = sqlDB->sel("company_name", "Company", "","company_name");
+
+    // подтягиваем параметры компании
+    GetCompaniesDBList();
+
+    Organizacia = CompaniesListFromDB.at(1);
 
     ui->CompaniesCombobox->clear();
     ui->DrugsComboBox->clear();
@@ -200,7 +219,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
-StopAgregation();
+    StopAgregation();
+
 }
 
 MainWindow::~MainWindow()

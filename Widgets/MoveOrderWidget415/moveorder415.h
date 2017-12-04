@@ -46,6 +46,8 @@ private slots:
     void AddMedicamentToTable(medicament * m);
     void AddMedicamentToDB(medicament * m);
 
+    void on_RegistrationStartButton_clicked();
+
 signals:
 
     void RegistrationStarted();
