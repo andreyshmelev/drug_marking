@@ -29,6 +29,9 @@ private:
     QList<medicament *> MedicamentsList;
     bool CheckMedicamentinDB(medicament * m);
 
+    QImage QRCodeToQImageConverter(QString textcode, int scale, int versionIndex, int levelIndex, bool bExtent, int maskIndex);
+
+
 public slots:
 
     void ToggleRegistration();

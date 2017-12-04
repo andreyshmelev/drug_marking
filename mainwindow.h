@@ -62,6 +62,7 @@ public slots:
     void CreateXML311Doc(QList<medicament *> MedList, uint8_t ordertype);
     void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
+    void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype);
 
     void StartAgregation();
 

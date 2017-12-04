@@ -8,11 +8,8 @@ UnitExtractWidget::UnitExtractWidget(QWidget *parent) :
     ui(new Ui::UnitExtractWidget)
 {
     ui->setupUi(this);
-
     connect(this, SIGNAL(RegistrationToggled()), this, SLOT(updateGUI())) ;
-
     registration = false;
-    qDebug() << "registration  " << registration ;
     updateGUI();
 }
 
@@ -189,4 +186,24 @@ void UnitExtractWidget::AddMedicamentToTable(medicament * m)
 
 void UnitExtractWidget::AddMedicamentToDB(medicament *m)
 {
+}
+
+QImage UnitExtractWidget::QRCodeToQImageConverter( QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
+{
+    CQR_Encode qrEncode;
+
+    qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, textcode.toUtf8().data() );
+    int qrImageSize = qrEncode.m_nSymbleSize;
+    // Создаем двумерный образ кода
+
+    int encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
+    QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
+    encodeImage2.fill( 1 );
+
+    // Создать двумерный образ кода
+    for ( int i = 0; i < qrImageSize; i++ )
+        for ( int j = 0; j < qrImageSize; j++ )
+            if ( qrEncode.m_byModuleData[i][j] )
+                encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
+    return encodeImage2;
 }

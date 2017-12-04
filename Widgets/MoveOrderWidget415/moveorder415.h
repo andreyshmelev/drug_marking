@@ -1,6 +1,7 @@
 #ifndef MOVEORDER415_H
 #define MOVEORDER415_H
 
+#include <QtCore>
 #include <QWidget>
 #include <medicament.h>
 #include <manufacturer.h>
@@ -32,7 +33,24 @@ private:
     QList<medicament *> MedicamentsList;
     bool CheckMedicamentinDB(medicament * m);
 
+    const QString Start415ProcessQRString = "963274";
+    const QString Stop415ProcessQRString  = "900865";
+
     QList<manufacturer *> manufacturesList;
+
+    manufacturer * getcompanyreciver();
+
+    manufacturer *getcompanysender();
+    QDate getoperationDate();
+
+    QString getDocNum();
+
+    QDate getDocDate();
+    int getTurnoverType();
+
+    int getSourceType();
+
+    int getContractType();
 
 public slots:
 
@@ -57,7 +75,7 @@ signals:
     void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();
-    void RegistrationCompleted(QList<medicament *> MedList , uint8_t controlsamplestype);
+    void RegistrationCompleted (QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype);
 };
 
 #endif // MOVEORDER415_H

@@ -1,5 +1,6 @@
 #include "moveorder415.h"
 #include "ui_moveorder415.h"
+#include "../../mainwindow.h"
 #include <QDebug>
 
 MoveOrder415::MoveOrder415(QWidget *parent) :
@@ -7,6 +8,11 @@ MoveOrder415::MoveOrder415(QWidget *parent) :
     ui(new Ui::MoveOrder415)
 {
     ui->setupUi(this);
+
+    connect(this, SIGNAL(RegistrationToggled()), this, SLOT(updateGUI())) ;
+    registration = false;
+    updateGUI();
+
 }
 
 MoveOrder415::~MoveOrder415()
@@ -48,12 +54,155 @@ void MoveOrder415::ToggleRegistration()
 
 void MoveOrder415::StartRegistrationProcess()
 {
+    registration = true;
+    emit RegistrationStarted();
+    emit RegistrationToggled();
+}
 
+manufacturer * MoveOrder415::getcompanyreciver()
+{
+    manufacturer *companyreciver = manufacturesList.at(ui->recieverCombobox->currentIndex());
+
+    return companyreciver;
+}
+
+manufacturer * MoveOrder415::getcompanysender()
+{
+    manufacturer *companysender = manufacturesList.at(ui->senderCombobox->currentIndex());
+
+    return companysender;
+}
+
+QDate MoveOrder415::getoperationDate()
+{
+    QDate operation_date = QDate::currentDate();
+
+    return operation_date;
+}
+
+QDate MoveOrder415::getDocDate()
+{
+    QDate Docdate = QDate::currentDate();
+
+    return Docdate;
+}
+
+QString MoveOrder415::getDocNum()
+{
+    QString DocNum = ui->documentnumber->toPlainText();
+
+    return DocNum;
+}
+
+int MoveOrder415::getTurnoverType()
+{
+    int turnovertype;
+
+    switch (ui->turnovertypecombo->currentIndex()) {
+    case 0:
+    {
+        turnovertype = 1;
+        break;
+    }
+    case 1:
+    {
+        turnovertype = 2;
+        break;
+    }
+
+    default:
+    {
+        turnovertype = -1;
+        break;
+    }
+    }
+
+    return turnovertype;
+}
+
+int MoveOrder415::getSourceType()
+{
+    int sourcetype ;
+
+
+    switch (ui->sourcecombo->currentIndex()) {
+    case 0:
+    {
+        sourcetype = 1;
+        break;
+    }
+    case 1:
+    {
+        sourcetype = 2;
+        break;
+    }
+
+    default:
+    {
+        sourcetype = -1;
+        break;
+    }
+    }
+
+    return sourcetype;
+}
+
+int MoveOrder415::getContractType()
+{
+    int contracttype ;
+
+
+    switch (ui->contracttype->currentIndex()) {
+    case 0:
+    {
+        contracttype = 1;
+        break;
+    }
+    case 1:
+    {
+        contracttype = 2;
+        break;
+    }
+    case 2:
+    {
+        contracttype = 3;
+        break;
+    }
+    default:
+    {
+        contracttype = -1;
+        break;
+    }
+    }
+
+    return contracttype;
 }
 
 void MoveOrder415::StopRegistrationProcess()
 {
+    registration = false;
+    qDebug() << "RegistrationCompleted";
+    int controlsamplestype;
 
+    manufacturer *companyreciver = getcompanyreciver();
+
+    manufacturer *companysender = getcompanysender();
+
+    QDate operation_date = getoperationDate();
+    QDate doc_date = getDocDate();
+    QString DocNum = getDocNum();
+
+
+    int turnovertype = getTurnoverType();
+    int sourcetype = getSourceType();
+    int contracttype = getSourceType();
+
+
+
+//    void RegistrationCompleted (QList<medicament *> MedList, companyreciver, companysender,  operation_date, DocNum, doc_date, turnovertype, int source, int contracttype);
+//    emit RegistrationCompleted(MedicamentsList,controlsamplestype);
+    MedicamentsList.clear();
+    emit RegistrationToggled();
 }
 
 void MoveOrder415::GetMedicament(medicament *med)
@@ -106,7 +255,6 @@ void MoveOrder415::GetMedicament(medicament *med)
             qDebug() << "такой медикамент уже есть в базе данных";
             return;
         }
-
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);
@@ -115,7 +263,42 @@ void MoveOrder415::GetMedicament(medicament *med)
 
 void MoveOrder415::updateGUI()
 {
+    int levelIndex = 1;
+    int versionIndex = 0;
+    bool bExtent = true;
+    int maskIndex = -1;
+    double scale_size = 2.2;
 
+    QImage i;
+    QPixmap scale_image ;
+
+    if (registration != false) // if true
+    {
+        i = MainWindow::QRCodeToQImageConverter(Stop415ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
+        ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
+        ui->RegistrationStartButton->setText("Закончить регистрацию");
+        ui->GTINTextAgregation->setEnabled(true);
+        ui->batchnumberTextAgregation->setEnabled(true);
+        ui->expirationdateAgregation->setEnabled(true);
+        ui->TNVEDValueAgregation->setEnabled(true);
+        ui->serialNumberAgregationValue->setEnabled(true);
+    }
+    else
+    {
+        i = MainWindow::QRCodeToQImageConverter(Start415ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
+        ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
+        ui->RegistrationStartButton->setText("Начать регистрацию");
+        ui->GTINTextAgregation->setEnabled(false);
+        ui->batchnumberTextAgregation->setEnabled(false);
+        ui->expirationdateAgregation->setEnabled(false);
+        ui->TNVEDValueAgregation->setEnabled(false);
+        ui->serialNumberAgregationValue->setEnabled(false);
+        ui->MedicamentsTable->clearContents();
+    }
+
+    double scale = 29 * scale_size;
+    scale_image =  ui->qrstartstop->pixmap()->scaled( scale, scale );
+    ui->qrstartstop->setPixmap( scale_image );
 }
 
 void MoveOrder415::AddMedicamentToTable(medicament *m)
@@ -148,12 +331,10 @@ void MoveOrder415::GetCompaniesDBList(QList<manufacturer*> man)
     foreach (manufacturer * d , man) {
         manufacturesList.append(d);
 
-//        qDebug() << d->get_organisation_name() << "MoveOrder415";
+        //        qDebug() << d->get_organisation_name() << "MoveOrder415";
         a.append(d->get_organisation_name());
     }
 
     ui->senderCombobox->addItems(a);
     ui->recieverCombobox->addItems(a);
-
-
 }

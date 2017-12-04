@@ -514,6 +514,11 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     }
 }
 
+void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype)
+{
+
+}
+
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)
 {
 
