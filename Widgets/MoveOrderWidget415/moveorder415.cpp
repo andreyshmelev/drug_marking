@@ -182,25 +182,20 @@ void MoveOrder415::StopRegistrationProcess()
 {
     registration = false;
     qDebug() << "RegistrationCompleted";
-    int controlsamplestype;
 
     manufacturer *companyreciver = getcompanyreciver();
-
     manufacturer *companysender = getcompanysender();
-
     QDate operation_date = getoperationDate();
-    QDate doc_date = getDocDate();
     QString DocNum = getDocNum();
-
+    QDate doc_date = getDocDate();
 
     int turnovertype = getTurnoverType();
     int sourcetype = getSourceType();
     int contracttype = getSourceType();
 
+    emit RegistrationCompleted (MedicamentsList, companyreciver, companysender,  operation_date, DocNum, doc_date, turnovertype, sourcetype, contracttype);
 
-
-//    void RegistrationCompleted (QList<medicament *> MedList, companyreciver, companysender,  operation_date, DocNum, doc_date, turnovertype, int source, int contracttype);
-//    emit RegistrationCompleted(MedicamentsList,controlsamplestype);
+    //    emit RegistrationCompleted(MedicamentsList,controlsamplestype);
     MedicamentsList.clear();
     emit RegistrationToggled();
 }
