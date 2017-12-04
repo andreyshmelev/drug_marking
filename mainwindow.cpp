@@ -162,6 +162,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
     connect(ui->AppendWidget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
 
+
     connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->MoveOrderWidget, SLOT(GetMedicament(medicament*))) ;
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
