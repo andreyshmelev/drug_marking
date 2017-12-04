@@ -52,12 +52,15 @@ private:
 
     int getContractType();
 
+    QString getPrice();
+
+    QString getVat();
+
 public slots:
 
     void ToggleRegistration();
     void StartRegistrationProcess();
     void StopRegistrationProcess();
-
     void GetCompaniesDBList(QList<manufacturer *>);
 
 private slots:
@@ -75,7 +78,7 @@ signals:
     void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();
-    void RegistrationCompleted (QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype);
+    void RegistrationCompleted (QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
 };
 
 #endif // MOVEORDER415_H

@@ -75,14 +75,14 @@ manufacturer * MoveOrder415::getcompanysender()
 
 QDate MoveOrder415::getoperationDate()
 {
-    QDate operation_date = QDate::currentDate();
+    QDate operation_date = ui->operationDate->date();
 
     return operation_date;
 }
 
 QDate MoveOrder415::getDocDate()
 {
-    QDate Docdate = QDate::currentDate();
+    QDate Docdate = ui->documentdate->date();
 
     return Docdate;
 }
@@ -178,26 +178,46 @@ int MoveOrder415::getContractType()
     return contracttype;
 }
 
+QString MoveOrder415::getPrice()
+{
+    QString Price;
+
+    Price = QString::number( ui->priceValue->value() );
+
+    return Price;
+}
+
+QString MoveOrder415::getVat()
+{
+    QString Vat;
+
+    Vat = QString::number( ui->vatValue->value() );
+
+    return Vat;
+}
+
 void MoveOrder415::StopRegistrationProcess()
 {
     registration = false;
-    qDebug() << "RegistrationCompleted";
 
     manufacturer *companyreciver = getcompanyreciver();
     manufacturer *companysender = getcompanysender();
     QDate operation_date = getoperationDate();
     QString DocNum = getDocNum();
     QDate doc_date = getDocDate();
+    QString Price = getPrice();
+    QString Vat = getVat();
 
     int turnovertype = getTurnoverType();
     int sourcetype = getSourceType();
-    int contracttype = getSourceType();
+    int contracttype = getContractType();
 
-    emit RegistrationCompleted (MedicamentsList, companyreciver, companysender,  operation_date, DocNum, doc_date, turnovertype, sourcetype, contracttype);
-
-    //    emit RegistrationCompleted(MedicamentsList,controlsamplestype);
-    MedicamentsList.clear();
+    emit RegistrationCompleted (MedicamentsList, companyreciver, companysender,  operation_date, DocNum, doc_date, turnovertype, sourcetype, contracttype, Price, Vat);
     emit RegistrationToggled();
+
+    MedicamentsList.clear();
+
+    qDebug() << "RegistrationCompleted";
 }
 
 void MoveOrder415::GetMedicament(medicament *med)
@@ -211,45 +231,45 @@ void MoveOrder415::GetMedicament(medicament *med)
     {
         qDebug() <<"UnitExtractWidget GetMedicament";
         // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
-        foreach ( medicament * listmed , MedicamentsList)
-        {
-            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
-            {
-                qDebug() << "такой медикамент уже есть";
-                return;
-            }
+//        foreach ( medicament * listmed , MedicamentsList)
+//        {
+//            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
+//            {
+//                qDebug() << "такой медикамент уже есть";
+//                return;
+//            }
 
-            if ( (med->GTIN != listmed->GTIN ) )
-            {
-                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
-            }
+//            if ( (med->GTIN != listmed->GTIN ) )
+//            {
+//                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+//            }
 
-            if ( (med->ExperyDate != listmed->ExperyDate ) )
-            {
-                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+//            if ( (med->ExperyDate != listmed->ExperyDate ) )
+//            {
+//                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
 
-            }
+//            }
 
-            if ( (med->BatchNumber != listmed->BatchNumber ) )
-            {
-                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
-            }
+//            if ( (med->BatchNumber != listmed->BatchNumber ) )
+//            {
+//                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+//            }
 
-            if ( (med->TNVED != listmed->TNVED ) )
-            {
-                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
-            }
+//            if ( (med->TNVED != listmed->TNVED ) )
+//            {
+//                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+//            }
 
-            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
-            {
-                return;
-            }
-        }
-        if (CheckMedicamentinDB(med))
-        {
-            qDebug() << "такой медикамент уже есть в базе данных";
-            return;
-        }
+//            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
+//            {
+//                return;
+//            }
+//        }
+//        if (CheckMedicamentinDB(med))
+//        {
+//            qDebug() << "такой медикамент уже есть в базе данных";
+//            return;
+//        }
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);

@@ -58,8 +58,6 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
     //    QStringList sellist = sqlDB->sel("company", "Company", "","company");
     QStringList sellist = sqlDB->sel("date", "ScannerLog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
 
-    //    sqlDB->makesqlreq("SELECT * FROM ScannerLog");
-    //    qDebug() << sellist << "sellist";
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed() << "milliseconds";
     return timer;
@@ -161,6 +159,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)),this , SLOT(StopAgregation()) ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
     connect(ui->AppendWidget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
+
+
+    // сигналы и слоты для 415 бизнес процесса
+
+    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
 
 
     connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->MoveOrderWidget, SLOT(GetMedicament(medicament*))) ;
@@ -514,9 +517,93 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     }
 }
 
-void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype)
+void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companysender, QDate operation_date, QString DocNum, QDate DocDate, int turnovertype, int source, int contracttype , QString Price, QString Vat)
 {
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
 
+    if (MedList.length() <=0)
+        return ;
+
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    QDomElement move_order_elem  = document.createElement("move_order");
+    move_order_elem.setAttribute("action_id", "415");
+    root.appendChild(move_order_elem);
+
+    // добавляем subject_id
+    addXMLTextNode(move_order_elem,  companysender->get_subject_id() , "subject_id", document);
+    // добавили subject_id
+
+    // добавляем receiver_id
+    addXMLTextNode(move_order_elem,  companyreciver->get_subject_id() , "receiver_id", document);
+    // добавили receiver_id
+
+    // добавляем operation_date
+    addXMLTextNode(move_order_elem,  operation_date.toString("dd.MM.yy") , "operation_date", document);
+    // добавили operation_date
+
+    // добавляем doc_num
+    addXMLTextNode(move_order_elem, DocNum , "doc_num", document);
+    // добавили doc_num
+
+    // добавляем doc_date
+    addXMLTextNode(move_order_elem, DocDate.toString("dd.MM.yy") , "doc_date", document);
+    // добавили doc_date
+
+    // добавляем turnover_type
+    addXMLTextNode(move_order_elem, QString::number(turnovertype) , "turnover_type", document);
+    // добавили turnover_type
+
+    if (source!=-1) // если у нас регламентируется источник
+    {
+        // добавляем source
+        addXMLTextNode(move_order_elem, QString::number(source) , "source", document);
+        // добавили source
+    }
+
+    // добавляем contract_type
+    addXMLTextNode(move_order_elem, QString::number(contracttype), "contract_type", document);
+    // добавили contract_type
+
+
+    QDomElement order_details_element  = document.createElement("order_details");
+    move_order_elem.appendChild(order_details_element);
+
+
+//    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+//    // добавляем sgtin
+
+    for (int var = 0; var < MedList.length(); ++var) {
+        QDomElement union_element  = document.createElement("union");
+        order_details_element.appendChild(union_element);
+
+
+    }
+
+    // добавили signs
+
+    QString filepath = QDir::currentPath()   + "/415-move_order(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+
+    qDebug() <<filepath;
+
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+        return;
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream<< document.toString();
+        file.close();
+    }
+
+ qDebug() << "CreateXML415Doc";
 }
 
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)
