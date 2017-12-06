@@ -45,6 +45,8 @@ public:
     const QString TCPaddress = "192.168.1.196";
     const int TCPPort = 3002;
 
+    const QString SSCCGS1Prefix = "4649728";
+
     manufacturer *getcompany() const;
     void setcompany(manufacturer *value);
 
@@ -62,7 +64,7 @@ public slots:
     void CreateXML311Doc(QList<medicament *> MedList, uint8_t ordertype);
     void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
-    void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
+    void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
     void StartAgregation();
     void StopAgregation();
 
@@ -146,6 +148,7 @@ private:
 
     const QString GSSymbol = "002#";
     const QString Emptystring = "";
+    const QString VideoJetFileName = "JET8510BFZTemplatev2";
 
     const QString SNRegularexpression = "21\\w{12,14}" + GSSymbol; // строка начинается  с 21, имеет длину 14 и заказчивается символом 0029
     const QString TNVEDRegularexpression = "240\\w{4}" + GSSymbol;
@@ -215,6 +218,9 @@ private slots:
     void on_releabeling_Button_clicked();
 
     void on_unit_pack_Button_clicked();
+
+
+    void on_pushButton_2_clicked();
 
 signals:
 

@@ -84,7 +84,7 @@ void MainWindow::GetCompaniesDBList()
 
         manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
         CompaniesListFromDB.append(c);
-//        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
+        //        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
     }
 
     emit SendCompaniesDBList(CompaniesListFromDB);
@@ -517,7 +517,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     }
 }
 
-void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companysender, QDate operation_date, QString DocNum, QDate DocDate, int turnovertype, int source, int contracttype , QString Price, QString Vat)
+void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companysender, QDateTime operation_date, QString DocNum, QDate DocDate, int turnovertype, int source, int contracttype , QString Price, QString Vat)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
@@ -542,7 +542,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     // добавили receiver_id
 
     // добавляем operation_date
-    addXMLTextNode(move_order_elem,  operation_date.toString("dd.MM.yy") , "operation_date", document);
+    addXMLTextNode(move_order_elem,  operation_date.toString((Qt::ISODate)) , "operation_date", document);
     // добавили operation_date
 
     // добавляем doc_num
@@ -550,7 +550,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     // добавили doc_num
 
     // добавляем doc_date
-    addXMLTextNode(move_order_elem, DocDate.toString("dd.MM.yy") , "doc_date", document);
+    addXMLTextNode(move_order_elem, DocDate.toString("dd.MM.yyyy") , "doc_date", document);
     // добавили doc_date
 
     // добавляем turnover_type
@@ -573,14 +573,24 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     move_order_elem.appendChild(order_details_element);
 
 
-//    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
-//    // добавляем sgtin
+    //    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+    //    // добавляем sgtin
 
     for (int var = 0; var < MedList.length(); ++var) {
         QDomElement union_element  = document.createElement("union");
         order_details_element.appendChild(union_element);
 
+        // добавляем sgtin в union
+        addXMLTextNode(union_element,  MedList.at(var)->sGTIN , "sgtin", document);
+        // добавили sgtin в union
 
+        // добавляем cost в union
+        addXMLTextNode(union_element,  Price, "cost", document);
+        // добавили cost в union
+
+        // добавляем vat_value в union
+        addXMLTextNode(union_element,  Vat, "vat_value", document);
+        // добавили vat_value в union
     }
 
     // добавили signs
@@ -603,7 +613,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
         file.close();
     }
 
- qDebug() << "CreateXML415Doc";
+    qDebug() << "CreateXML415Doc";
 }
 
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)
@@ -1243,8 +1253,6 @@ void MainWindow::updateQRImage()
     ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
     setScale(3);
 
-    QString a = QString("SLA|test5|VarField00=%1|VarField01=%2|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
-    SendCommandToVideoJet(a);
 }
 
 QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
@@ -1506,7 +1514,6 @@ void MainWindow::GetMedicament(medicament *med)
             qDebug() << "такой медикамент уже есть в базе данных";
             return;
         }
-
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);
@@ -1515,7 +1522,7 @@ void MainWindow::GetMedicament(medicament *med)
 
 void MainWindow::on_move_order_Button_clicked()
 {
-    setStackedPage( 8);
+    setStackedPage(8);
 }
 
 void MainWindow::on_releabeling_Button_clicked()
@@ -1526,4 +1533,12 @@ void MainWindow::on_releabeling_Button_clicked()
 void MainWindow::on_unit_pack_Button_clicked()
 {
     setStackedPage(10);
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    //QString a = QString("SLA|%1|VarField00=|VarField01|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
+    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchNumber(), getGuiExpery()) ;
+    qDebug() << a ;
+    SendCommandToVideoJet(a);
 }

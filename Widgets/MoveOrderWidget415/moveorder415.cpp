@@ -73,9 +73,9 @@ manufacturer * MoveOrder415::getcompanysender()
     return companysender;
 }
 
-QDate MoveOrder415::getoperationDate()
+QDateTime MoveOrder415::getoperationDate()
 {
-    QDate operation_date = ui->operationDate->date();
+    QDateTime operation_date = ui->operationDate->dateTime();
 
     return operation_date;
 }
@@ -202,7 +202,7 @@ void MoveOrder415::StopRegistrationProcess()
 
     manufacturer *companyreciver = getcompanyreciver();
     manufacturer *companysender = getcompanysender();
-    QDate operation_date = getoperationDate();
+    QDateTime operation_date = getoperationDate();
     QString DocNum = getDocNum();
     QDate doc_date = getDocDate();
     QString Price = getPrice();

@@ -41,7 +41,7 @@ private:
     manufacturer * getcompanyreciver();
 
     manufacturer *getcompanysender();
-    QDate getoperationDate();
+    QDateTime getoperationDate();
 
     QString getDocNum();
 
@@ -78,7 +78,7 @@ signals:
     void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();
-    void RegistrationCompleted (QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companytranciver, QDate operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
+    void RegistrationCompleted (QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companytranciver, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
 };
 
 #endif // MOVEORDER415_H
