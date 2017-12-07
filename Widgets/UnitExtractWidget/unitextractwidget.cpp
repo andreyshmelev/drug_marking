@@ -165,6 +165,7 @@ void UnitExtractWidget::updateGUI()
         ui->TNVEDValueAgregation->setEnabled(false);
         ui->serialNumberAgregationValue->setEnabled(false);
         ui->MedicamentsTable->clearContents();
+        ui->MedicamentsTable->setRowCount(0);
     }
 
     double scale = 29 * scale_size;

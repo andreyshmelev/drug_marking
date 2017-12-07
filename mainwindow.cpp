@@ -163,7 +163,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)), this, SLOT(CreateXML312Doc(QList<medicament*>,uint8_t))) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)),this , SLOT(StopAgregation()) ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
-    connect(ui->AppendWidget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
+    connect(ui->RegisterEndPackingPage311Widget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
 
 
     // сигналы и слоты для 415 бизнес процесса
@@ -1131,7 +1131,7 @@ void MainWindow::updateAgregationGUI()
         ui->qrstartstop->setScaledContents(1);
 
         ui->MedicamentsTable->clearContents();
-
+        ui->MedicamentsTable->setRowCount(0);
         ui->qrstartstop->show();
         ui->qrstartstop->setScaledContents(1);
     }

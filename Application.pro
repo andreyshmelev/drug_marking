@@ -37,7 +37,8 @@ SOURCES += \
     basebuisnessclass.cpp \
     Widgets/MoveOrderWidget415/moveorder415.cpp \
     Widgets/RelabelingWidget811/relabelingwidget811.cpp \
-    Widgets/UnitPackWidget911/unitpackwidget911.cpp
+    Widgets/UnitPackWidget911/unitpackwidget911.cpp \
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +52,8 @@ HEADERS += \
     basebuisnessclass.h \
     Widgets/MoveOrderWidget415/moveorder415.h \
     Widgets/RelabelingWidget811/relabelingwidget811.h \
-    Widgets/UnitPackWidget911/unitpackwidget911.h
+    Widgets/UnitPackWidget911/unitpackwidget911.h \
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.h
 
 FORMS += \
         mainwindow.ui \
@@ -59,4 +61,5 @@ FORMS += \
     Widgets/UnitAppendWidget/unitappendwidget.ui \
     Widgets/MoveOrderWidget415/moveorder415.ui \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
-    Widgets/UnitPackWidget911/unitpackwidget911.ui
+    Widgets/UnitPackWidget911/unitpackwidget911.ui \
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui

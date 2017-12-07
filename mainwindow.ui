@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -1394,7 +1394,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
     <widget class="QWidget" name="RegisterEndPackingPage311">
-     <widget class="UnitAppendWidget" name="AppendWidget" native="true">
+     <widget class="RegisterEndPackingWidget311" name="RegisterEndPackingPage311Widget" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -2593,6 +2593,12 @@ p, li { white-space: pre-wrap; }
    <class>UnitPackWidget911</class>
    <extends>QWidget</extends>
    <header>C:\Work\Application\Application\Widgets\UnitPackWidget911\unitpackwidget911.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RegisterEndPackingWidget311</class>
+   <extends>QWidget</extends>
+   <header>C:\Work\Application\Application\Widgets\RegisterEndPackingWidget311\registerendpackingwidget311.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
