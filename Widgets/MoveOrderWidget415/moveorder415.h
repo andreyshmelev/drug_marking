@@ -62,15 +62,13 @@ public slots:
     void StartRegistrationProcess();
     void StopRegistrationProcess();
     void GetCompaniesDBList(QList<manufacturer *>);
+    void GetMedicament (medicament * m);
 
 private slots:
 
-    void GetMedicament (medicament * m);
     void updateGUI();
-
     void AddMedicamentToTable(medicament * m);
     void AddMedicamentToDB(medicament * m);
-
     void on_RegistrationStartButton_clicked();
 
 signals:

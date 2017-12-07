@@ -61,7 +61,7 @@ public:
 
 public slots:
 
-    void CreateXML311Doc(QList<medicament *> MedList, uint8_t ordertype);
+    void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
     void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);

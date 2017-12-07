@@ -441,43 +441,22 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="otpravit">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Отправитель</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QComboBox" name="senderID"/>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="owner">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Собственник</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
+    <item row="3" column="1">
+     <widget class="QComboBox" name="OrderTypeCombo">
+      <item>
+       <property name="text">
+        <string>1 - Собственное пр-во</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2 - Контрактное пр-во</string>
+       </property>
+      </item>
      </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="ownerID"/>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="dataotgruzki">
@@ -494,6 +473,9 @@ p, li { white-space: pre-wrap; }
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="ownerID"/>
     </item>
     <item row="2" column="1">
      <widget class="QDateTimeEdit" name="operationDate">
@@ -550,29 +532,16 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>Тип опер. отгр.</string>
+       <string>Тип производствен-
+ного заказа</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QComboBox" name="turnovertypecombo">
-      <item>
-       <property name="text">
-        <string>1 - Возврат</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>2 - Продажа</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="AppendPageLabel_8">
+    <item row="0" column="0">
+     <widget class="QLabel" name="otpravit">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -580,29 +549,15 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>Ист. финансир.</string>
+       <string>Отправитель</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QComboBox" name="sourcecombo">
-      <item>
-       <property name="text">
-        <string>1 - Собственные средства</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>2 - Средства гос.бюджетов</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="AppendPageLabel_9">
+    <item row="1" column="0">
+     <widget class="QLabel" name="owner">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -610,30 +565,11 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>Тип договора</string>
+       <string>Собственник</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QComboBox" name="contracttype">
-      <item>
-       <property name="text">
-        <string>1 - Купли продажи</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>2 - Комиссия</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>3 - Агентский</string>
-       </property>
-      </item>
      </widget>
     </item>
    </layout>

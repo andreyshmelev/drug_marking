@@ -155,7 +155,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
     connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
 
-    connect(this, SIGNAL(SendCompaniesDBList(QList<manufacturer*>)), ui->MoveOrderWidget, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
 
     // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
     // сигналы и слоты с другими виджетами
@@ -170,9 +169,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
     connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+        connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
+    connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
 
 
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->MoveOrderWidget, SLOT(GetMedicament(medicament*))) ;
+
+    // сигналы и слоты для 311 бизнес процесса
+
+    //connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::RegistrationCompleted, this, &MainWindow::CreateXML311Doc) ;
+
+    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::RegistrationCompleted, this, &MainWindow::CreateXML311Doc);
+    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+    connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
+    connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
+    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::RegistrationCompleted, this, &MainWindow::CreateXML311Doc);
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -742,12 +752,10 @@ void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue
     q_dom_elem.appendChild(gtin_text);
 }
 
-void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype)
+void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype, QDateTime operation_date)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
-    manufacturer *organization = getcompany();
 
     if (MedList.length() <=0)
         return ;
@@ -761,11 +769,13 @@ void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype
     root.appendChild(reg_end_pack_elem);
 
     // добавляем subject_id
-    addXMLTextNode(reg_end_pack_elem,  organization->get_subject_id() , "subject_id", document);
+    addXMLTextNode(reg_end_pack_elem,  sender->get_subject_id() , "subject_id", document);
     // добавили subject_id
 
+
+
     // добавляем operation_date
-    addXMLTextNode(reg_end_pack_elem,  GetISODate() , "operation_date", document);
+    addXMLTextNode(reg_end_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     // добавили operation_date
 
     // добавляем order_type
@@ -773,10 +783,10 @@ void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype
     // добавили order_type
 
     // если у нас контрактное производство то мы вводим идентификатор собственника
-    if (ordertype == ContractProduction)
+    if (ordertype == 2)
     {
         // добавляем owner_id
-        addXMLTextNode(reg_end_pack_elem, organization->get_owner_id(), "owner_id", document);
+        addXMLTextNode(reg_end_pack_elem, owner->get_owner_id(), "owner_id", document);
         // добавили owner_id
     }
 
@@ -813,11 +823,11 @@ void MainWindow::CreateXML311Doc( QList<medicament *> MedList, uint8_t ordertype
 
     }
 
-    //addXMLTextNode(sgtin_element,MedList.at(var)->sGTIN, "sgtin", document);
-
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/311-register_end_packing.xml";
+    QString filepath = QDir::currentPath()   + "/311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+
+    qDebug() <<filepath;
 
     QFile file(filepath);
 
