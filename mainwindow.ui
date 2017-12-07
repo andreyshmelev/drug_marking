@@ -174,7 +174,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -766,7 +766,7 @@ p, li { white-space: pre-wrap; }
           </date>
          </property>
          <property name="displayFormat">
-          <string>yyMMdd</string>
+          <string>dd.MM.yyyy</string>
          </property>
         </widget>
        </item>

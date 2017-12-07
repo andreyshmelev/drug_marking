@@ -55,6 +55,7 @@ void MoveOrder415::ToggleRegistration()
 void MoveOrder415::StartRegistrationProcess()
 {
     registration = true;
+    emit setScannerLanguage(true);
     emit RegistrationStarted();
     emit RegistrationToggled();
 }
@@ -214,6 +215,7 @@ void MoveOrder415::StopRegistrationProcess()
 
     emit RegistrationCompleted (MedicamentsList, companyreciver, companysender,  operation_date, DocNum, doc_date, turnovertype, sourcetype, contracttype, Price, Vat);
     emit RegistrationToggled();
+    emit setScannerLanguage(false);
 
     MedicamentsList.clear();
 
@@ -231,45 +233,45 @@ void MoveOrder415::GetMedicament(medicament *med)
     {
         qDebug() <<"UnitExtractWidget GetMedicament";
         // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
-//        foreach ( medicament * listmed , MedicamentsList)
-//        {
-//            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
-//            {
-//                qDebug() << "такой медикамент уже есть";
-//                return;
-//            }
+        foreach ( medicament * listmed , MedicamentsList)
+        {
+            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
+            {
+                qDebug() << "такой медикамент уже есть";
+                return;
+            }
 
-//            if ( (med->GTIN != listmed->GTIN ) )
-//            {
-//                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
-//            }
+            if ( (med->GTIN != listmed->GTIN ) )
+            {
+                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+            }
 
-//            if ( (med->ExperyDate != listmed->ExperyDate ) )
-//            {
-//                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+            if ( (med->ExperyDate != listmed->ExperyDate ) )
+            {
+                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
 
-//            }
+            }
 
-//            if ( (med->BatchNumber != listmed->BatchNumber ) )
-//            {
-//                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
-//            }
+            if ( (med->BatchNumber != listmed->BatchNumber ) )
+            {
+                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+            }
 
-//            if ( (med->TNVED != listmed->TNVED ) )
-//            {
-//                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
-//            }
+            if ( (med->TNVED != listmed->TNVED ) )
+            {
+                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+            }
 
-//            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
-//            {
-//                return;
-//            }
-//        }
-//        if (CheckMedicamentinDB(med))
-//        {
-//            qDebug() << "такой медикамент уже есть в базе данных";
-//            return;
-//        }
+            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
+            {
+                return;
+            }
+        }
+        if (CheckMedicamentinDB(med))
+        {
+            qDebug() << "такой медикамент уже есть в базе данных";
+            return;
+        }
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);

@@ -75,6 +75,7 @@ private slots:
 
 signals:
 
+    void setScannerLanguage(bool);
     void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();

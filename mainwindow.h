@@ -50,14 +50,14 @@ public:
     manufacturer *getcompany() const;
     void setcompany(manufacturer *value);
 
-    bool getLanguageswitcher() const;
-    void setLanguageswitcher(bool value);
+
 
     bool getRunningBuisenessProcess() const;
     void setRunningBuisenessProcess(bool value);
 
     void GetCompaniesList(QString company_inn, QString fromcompany, QString company_owner_id, QString company_email, QString wherecompany, QString company_kpp, QString companyname, QString company_subject_id, QString company_ul, QString company_fl);
     void GetCompaniesDBList();
+
 
 public slots:
 
@@ -67,14 +67,18 @@ public slots:
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
     void StartAgregation();
     void StopAgregation();
+    bool getLanguageswitcher() const;
+    void setLanguageswitcher(bool value);
 
 private:
     QString getGuiGTIN();
     QString getSN();
     QString generateSN(int lenght);
     QString getGuiBatchNumber();
+    QString getGuiBatchValue();
     QString getGuiExpery();
     QString getGuiTNVED();
+    QDateTime getGuiExperyDate();
 
     void updateQRImage();
     void updateQRLabels();
@@ -107,6 +111,7 @@ private:
     QTimer * journalTimer;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;
+    QTimer *RandomStringSenderToVideoJetTimer;
     Ui::MainWindow *ui;
     QStringList * messages;
     QString KeyspressedString;
@@ -184,7 +189,7 @@ private slots:
     void ParseHandScannerData( QString stringtoparse);
     void updateDMPicture();
     void updateDMcode();
-    void toggleAgregation( void );
+    void Toggle313Process( void );
     void updateAgregationGUI();
     void AddMedicamentToTable(medicament * m);
     void AddMedicamentToDB(medicament * m);
@@ -222,6 +227,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_agregationStartButton_clicked();
+
 signals:
 
     void agregationstatusToggled();
@@ -254,6 +261,8 @@ private:
     void AddHandScannerLOG();
     bool languageswitcher;
     bool runningBuisenessProcess;
+    void SendParamsToVideoJet();
+    void SendRandomToVideoJet();
 };
 
 #endif // MAINWINDOW_H

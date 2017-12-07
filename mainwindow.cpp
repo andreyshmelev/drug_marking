@@ -111,11 +111,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->installEventFilter(this);
 
+    RandomStringSenderToVideoJetTimer = new QTimer();
+    RandomStringSenderToVideoJetTimer->setInterval(1000*45); // каждые сорок пять секунд посылаем новую произвольную строку
+    connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
+    RandomStringSenderToVideoJetTimer->start();
+
     journalTimer = new QTimer();
     journalTimer->setInterval(1000);
 
-    connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMPicture()));
-    connect(journalTimer, SIGNAL(timeout()), this, SLOT(updateDMcode()));
+    connect(journalTimer, &QTimer::timeout, this, &MainWindow::updateDMPicture);
+    connect(journalTimer, &QTimer::timeout, this, &MainWindow::updateDMcode);
 
     datetimeTimer = new QTimer();
     datetimeTimer->setInterval(1000);
@@ -132,7 +137,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->programOptionsButton, SIGNAL(pressed()), this, SLOT(productOptionsPageOpen())) ;
     connect(ui->agregationButton, SIGNAL(pressed()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), this, SLOT(statisticsPageOpen())) ;
-    connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(toggleAgregation())) ;
+    connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(Toggle313Process())) ;
 
     connect(this, SIGNAL(printControlQRCodeScanned()), this, SLOT(PrintControlPageOpen())) ;
     connect(this, SIGNAL(programOptionsQRCodeScanned()), this, SLOT(productOptionsPageOpen())) ;
@@ -164,6 +169,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // сигналы и слоты для 415 бизнес процесса
 
     connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
+    connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
 
 
     connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->MoveOrderWidget, SLOT(GetMedicament(medicament*))) ;
@@ -200,7 +206,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setStackedPage(2);
 
     sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
-    //    sqlDB = new SQL("C:/Work/SQL/ReadSpeedTest");
 
     // подтягиваем параметры препаратов из БД
     drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
@@ -269,9 +274,19 @@ QString MainWindow::getGuiBatchNumber()
     return ui->batchvalue->text();
 }
 
+QString MainWindow::getGuiBatchValue()
+{
+    return ui->batchnumberText->toPlainText();
+}
+
 QString MainWindow::getGuiExpery()
 {
     return ui->expirationdate->text();
+}
+
+QDateTime MainWindow::getGuiExperyDate()
+{
+    return ui->expirationdate->dateTime();
 }
 
 QString MainWindow::getGuiTNVED()
@@ -359,6 +374,7 @@ bool MainWindow::getLanguageswitcher() const
 void MainWindow::setLanguageswitcher(bool value)
 {
     languageswitcher = value;
+    qDebug() << "languageswitcher =" << value;
 }
 
 void MainWindow::updateReadedDMCode()
@@ -1056,10 +1072,10 @@ void MainWindow::Start313Process(bool set)
     }
 
     MedicamentsList.clear();
-
     agregation = set;
     emit agregationstatusToggled();
 }
+
 
 manufacturer *MainWindow::getcompany() const
 {
@@ -1071,7 +1087,7 @@ void MainWindow::setcompany(manufacturer *value)
     Organizacia = value;
 }
 
-void MainWindow::toggleAgregation()
+void MainWindow::Toggle313Process()
 {
     if(getAgregation() == false)
     {
@@ -1535,10 +1551,29 @@ void MainWindow::on_unit_pack_Button_clicked()
     setStackedPage(10);
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::SendParamsToVideoJet()
 {
-    //QString a = QString("SLA|%1|VarField00=|VarField01|").arg(QString::number((aaa++)%999),QString::number((bbb++)%999) ) ;
-    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchNumber(), getGuiExpery()) ;
+    QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
+    QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
+    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED());
     qDebug() << a ;
     SendCommandToVideoJet(a);
+}
+
+void MainWindow::SendRandomToVideoJet()
+{
+    QString randstr = generateSN(11);
+    QString a = QString("SLA|%1|randomvalue=%2|").arg(VideoJetFileName,randstr);
+    qDebug() << a ;
+    SendCommandToVideoJet(a);
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    SendParamsToVideoJet();
+}
+
+void MainWindow::on_agregationStartButton_clicked()
+{
+
 }
