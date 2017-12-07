@@ -85,8 +85,6 @@ QDateTime RegisterEndPackingWidget311::getoperationDate()
 }
 
 
-
-
 int RegisterEndPackingWidget311::getOrderType()
 {
     int ordertype ;
@@ -121,6 +119,7 @@ void RegisterEndPackingWidget311::StopRegistrationProcess()
 
     manufacturer *companysender = getcompanysender();
     manufacturer *companyowner = getcompanyowner();
+
     QDateTime operation_date = getoperationDate();
     int ordertype = getOrderType();
 
