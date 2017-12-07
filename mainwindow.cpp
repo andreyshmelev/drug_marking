@@ -11,7 +11,9 @@
 #include "manufacturer.h"
 #include "basetypes.h"
 #include "sql.h"
-
+#include "QtPrintSupport/qprinter.h"
+#include "QtPrintSupport/QPrinter"
+#include "QtPrintSupport/QPrintDialog"
 #define testitemscount 0
 
 int aaa = 222;
@@ -176,8 +178,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
-    //    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::RegistrationCompleted, this, &MainWindow::CreateXML311Doc);
     connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
+
+
+    // сигналы и слоты для 911 бизнес процесса
+
+    connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+    connect(this, &MainWindow::SendMedicamentSignal, ui->UnitPackPageWidget, &UnitPackWidget911::GetMedicament) ;
+    connect(this, &MainWindow::SendCompaniesDBList, ui->UnitPackPageWidget, &UnitPackWidget911::GetCompaniesDBList) ;
+
+    connect(ui->UnitPackPageWidget, &UnitPackWidget911::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
+
+//CreateXML911Doc();
+
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -260,6 +273,25 @@ QString MainWindow::getSN()
 QString MainWindow::generateSN(int lenght)
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
+
+    QString randomString;
+    for(int i=0; i<randomStringLength; ++i)
+    {
+        int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+
+    QString newSN = randomString;
+    return newSN;
+}
+QString MainWindow::generateCode128(int lenght)
+{
+    lenght = 16;
+
+//    const QString possibleCharacters("0123456789");
+    const QString possibleCharacters("01234567890123456789012345678901234567890123456789012345678901");
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
 
     QString randomString;
@@ -380,6 +412,34 @@ void MainWindow::setLanguageswitcher(bool value)
 {
     languageswitcher = value;
     qDebug() << "languageswitcher =" << value;
+}
+
+void MainWindow::PrintSSCCCode(QString newcode)
+{
+
+    m_Barcode = new Code128Item();
+    m_Barcode->setWidth( 100 );
+    m_Barcode->setHeight( 80 );
+    m_Barcode->setPos(0,40);
+    m_Barcode->setText(newcode);
+    m_Scene.clear();
+    m_Scene.addItem( m_Barcode );
+    m_Scene.update();
+    m_Barcode->update();
+
+
+    QPrinter printer;
+    QSize size(35, 20);
+     printer.setPageSizeMM(size);
+
+
+    if (QPrintDialog(&printer).exec() == QDialog::Accepted) {
+        QPainter painter(&printer);
+        painter.setRenderHint(QPainter::Antialiasing);
+        m_Scene.render(&painter);
+
+
+    }
 }
 
 void MainWindow::updateReadedDMCode()
@@ -635,6 +695,75 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     }
 
     qDebug() << "CreateXML415Doc";
+}
+
+void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date)
+{
+    //qDebug() << "sender" << sender->get_organisation_name();
+    //qDebug() << "owner" << owner->get_organisation_name();
+
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
+
+    if (MedList.length() <=0)
+        return ;
+
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    QDomElement unit_pack_elem  = document.createElement("unit_pack");
+    unit_pack_elem.setAttribute("action_id", "911");
+    root.appendChild(unit_pack_elem);
+
+    // добавляем subject_id
+    addXMLTextNode(unit_pack_elem,  companysender->get_subject_id() , "subject_id", document);
+    // добавили subject_id
+
+
+    QString SSCCCode128 = generateCode128(16);
+
+    PrintSSCCCode(SSCCCode128);
+
+    // добавляем subject_id
+    addXMLTextNode(unit_pack_elem,  SSCCCode128 , "sscc", document);
+    // добавили subject_id
+
+    // добавляем operation_date
+    addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    // добавили operation_date
+
+
+    QDomElement signs_element  = document.createElement("signs");
+    unit_pack_elem.appendChild(signs_element);
+
+    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+    // добавляем sgtin
+
+    for (int var = 0; var < MedList.length(); ++var) {
+
+        addXMLTextNode(signs_element, MedList.at(var)->sGTIN, "sgtin", document);
+
+    }
+    // добавили signs
+
+    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+
+    qDebug() <<filepath;
+
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+        return;
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream<< document.toString();
+        file.close();
+    }
 }
 
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)

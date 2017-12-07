@@ -17,6 +17,8 @@
 #include <QtXml>
 #include <QtSql>
 #include <QTcpSocket>
+#include <QGraphicsScene>
+#include "code128item.h"
 #include "QRCodeGenerator.h"
 #include "manufacturer.h"
 #include "medicament.h"
@@ -65,15 +67,19 @@ public slots:
     void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
+    void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
     void StartAgregation();
     void StopAgregation();
     bool getLanguageswitcher() const;
     void setLanguageswitcher(bool value);
 
+    void PrintSSCCCode(QString newcode);
+
 private:
     QString getGuiGTIN();
     QString getSN();
     QString generateSN(int lenght);
+    QString generateCode128 (int lenght);
     QString getGuiBatchNumber();
     QString getGuiBatchValue();
     QString getGuiExpery();
@@ -104,6 +110,9 @@ private:
     QStringList companies;
 
     int temp;
+
+    QGraphicsScene m_Scene;
+    Code128Item * m_Barcode;
 
 private:
 

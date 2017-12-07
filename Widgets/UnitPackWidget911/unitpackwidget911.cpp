@@ -3,6 +3,7 @@
 #include "../../mainwindow.h"
 #include <QDebug>
 
+
 UnitPackWidget911::UnitPackWidget911(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::UnitPackWidget911)
@@ -11,12 +12,16 @@ UnitPackWidget911::UnitPackWidget911(QWidget *parent) :
 
     connect(this, SIGNAL(RegistrationToggled()), this, SLOT(updateGUI())) ;
     registration = false;
-    updateGUI();}
+    updateGUI();
+
+
+}
 
 UnitPackWidget911::~UnitPackWidget911()
 {
     delete ui;
 }
+
 
 
 
@@ -64,7 +69,6 @@ void UnitPackWidget911::StartRegistrationProcess()
 manufacturer * UnitPackWidget911::getcompanysender()
 {
     manufacturer *companysender = manufacturesList.at(ui->senderID->currentIndex());
-
     return companysender;
 }
 
@@ -82,18 +86,15 @@ void UnitPackWidget911::StopRegistrationProcess()
     registration = false;
 
     manufacturer *companysender = getcompanysender();
-
-
-
     QDateTime operation_date = getoperationDate();
 
-//    emit RegistrationCompleted(MedicamentsList,companysender,companyowner,ordertype,operation_date);
+    emit RegistrationCompleted(MedicamentsList,companysender,operation_date);
     emit RegistrationToggled();
     emit setScannerLanguage(false);
-
+//    emit PrintSSCC("123456789");
     MedicamentsList.clear();
 
-    qDebug() << "RegistrationCompleted";
+
 }
 
 void UnitPackWidget911::GetMedicament(medicament *med)
@@ -105,7 +106,6 @@ void UnitPackWidget911::GetMedicament(medicament *med)
 
     if (registration == true)
     {
-        qDebug() <<"311 GetMedicament";
         // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
         foreach ( medicament * listmed , MedicamentsList)
         {

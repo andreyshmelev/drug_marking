@@ -60,12 +60,12 @@ private slots:
 
 signals:
 
+    void PrintSSCC(QString str);
     void setScannerLanguage(bool);
     void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();
-    void RegistrationCompleted (QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype, QDateTime operation_date);
-
+    void RegistrationCompleted (QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date);
 
 private:
     Ui::UnitPackWidget911 *ui;

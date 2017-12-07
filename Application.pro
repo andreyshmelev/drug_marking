@@ -8,6 +8,8 @@ QT       += core gui
 QT       += xml
 QT += sql
 QT += network
+QT       += printsupport
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Application
@@ -38,7 +40,9 @@ SOURCES += \
     Widgets/MoveOrderWidget415/moveorder415.cpp \
     Widgets/RelabelingWidget811/relabelingwidget811.cpp \
     Widgets/UnitPackWidget911/unitpackwidget911.cpp \
-    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.cpp
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.cpp \
+    code128.cpp \
+    code128item.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +57,9 @@ HEADERS += \
     Widgets/MoveOrderWidget415/moveorder415.h \
     Widgets/RelabelingWidget811/relabelingwidget811.h \
     Widgets/UnitPackWidget911/unitpackwidget911.h \
-    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.h
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.h \
+    code128.h \
+    code128item.h
 
 FORMS += \
         mainwindow.ui \
