@@ -100,7 +100,8 @@ void UnitPackWidget911::StopRegistrationProcess()
 void UnitPackWidget911::GetMedicament(medicament *med)
 {
     ScannedMedicament = med;
-    updateWidgetGui(med->GTIN, med->SerialNumber, med->TNVED, med->ExperyDate, med->BatchNumber);
+
+    updateWidgetGui(med->GTIN, med->BatchNumber, med->SerialNumber, med->TNVED, med->ExperyDate);
 
     qDebug() << "registration was"<< registration ;
 

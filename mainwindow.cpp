@@ -418,18 +418,19 @@ void MainWindow::PrintSSCCCode(QString newcode)
 {
 
     m_Barcode = new Code128Item();
-    m_Barcode->setWidth( 100 );
-    m_Barcode->setHeight( 80 );
-    m_Barcode->setPos(0,40);
+    m_Barcode->setWidth( 190/1.5 );
+    m_Barcode->setHeight( 110/1.3 );
     m_Barcode->setText(newcode);
     m_Scene.clear();
     m_Scene.addItem( m_Barcode );
     m_Scene.update();
+
     m_Barcode->update();
 
 
     QPrinter printer;
-    QSize size(35, 20);
+    QSize size(30,40);
+
     printer.setPageSizeMM(size);
     QPainter painter(&printer);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -693,9 +694,6 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 
 void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date)
 {
-    //qDebug() << "sender" << sender->get_organisation_name();
-    //qDebug() << "owner" << owner->get_organisation_name();
-
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
@@ -724,7 +722,8 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     // добавили subject_id
 
     // добавляем operation_date
-    addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+//    addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    addXMLTextNode(unit_pack_elem,  GetISODate(), "operation_date", document);
     // добавили operation_date
 
 
