@@ -189,7 +189,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
 
-//CreateXML911Doc();
+    //CreateXML911Doc();
 
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
@@ -290,7 +290,7 @@ QString MainWindow::generateCode128(int lenght)
 {
     lenght = 16;
 
-//    const QString possibleCharacters("0123456789");
+    //    const QString possibleCharacters("0123456789");
     const QString possibleCharacters("01234567890123456789012345678901234567890123456789012345678901");
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
 
@@ -430,16 +430,10 @@ void MainWindow::PrintSSCCCode(QString newcode)
 
     QPrinter printer;
     QSize size(35, 20);
-     printer.setPageSizeMM(size);
-
-
-    if (QPrintDialog(&printer).exec() == QDialog::Accepted) {
-        QPainter painter(&printer);
-        painter.setRenderHint(QPainter::Antialiasing);
-        m_Scene.render(&painter);
-
-
-    }
+    printer.setPageSizeMM(size);
+    QPainter painter(&printer);
+    painter.setRenderHint(QPainter::Antialiasing);
+    m_Scene.render(&painter);
 }
 
 void MainWindow::updateReadedDMCode()
@@ -912,7 +906,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     if (ordertype == 2)
     {
         // добавляем owner_id
-//        addXMLTextNode(reg_end_pack_elem, owner->get_owner_id(), "owner_id", document);
+        //        addXMLTextNode(reg_end_pack_elem, owner->get_owner_id(), "owner_id", document);
         addXMLTextNode(reg_end_pack_elem, owner->get_subject_id(),"owner_id", document);
         // добавили owner_id
     }

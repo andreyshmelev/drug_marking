@@ -272,6 +272,7 @@ private:
     bool runningBuisenessProcess;
     void SendParamsToVideoJet();
     void SendRandomToVideoJet();
+    void GenerateCode128(QString newcode);
 };
 
 #endif // MAINWINDOW_H
