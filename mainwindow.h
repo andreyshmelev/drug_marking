@@ -29,6 +29,33 @@ namespace Ui {
 class MainWindow;
 }
 
+
+class eticetka
+{
+public:
+    eticetka();
+    eticetka(QString OrgTextstring, QString Dosetext,   QString Addresstext, QString PreparatText, int kolvoupakovoktext, QString gtinText, QString SeriaText,  QString dataproizvodstvaText,  QString SrokgodnostiText, QString usloviahraneniaText, QString regnomerText, QString SSCCCodetext  );
+
+    QGraphicsRectItem* mainrect ;
+    QGraphicsRectItem* logorect ;
+    QGraphicsTextItem* OrgText ;
+    QGraphicsTextItem* Dose ;
+    QGraphicsTextItem* AddressItem;
+    QGraphicsTextItem* PreparatItem;
+    QGraphicsTextItem* kolichestvouoakovok;
+    QGraphicsTextItem* GTIN;
+    QGraphicsTextItem* Seria;
+    QGraphicsTextItem* dataproizvodstva;
+    QGraphicsTextItem* srokgodnosti;
+    QGraphicsTextItem* usloviahranenia;
+    QGraphicsTextItem* regnomer;
+    QGraphicsTextItem* SSCCCode;
+
+    QGraphicsScene m_Scene;
+    QGraphicsScene all_etiketka;
+    Code128Item * m_Barcode;
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -53,6 +80,7 @@ public:
     void setcompany(manufacturer *value);
 
 
+eticetka * EticetkaBFZ;
 
     bool getRunningBuisenessProcess() const;
     void setRunningBuisenessProcess(bool value);
@@ -74,6 +102,7 @@ public slots:
     void setLanguageswitcher(bool value);
 
     void PrintSSCCCode(QString newcode);
+    void PrintBIGEtiketka(eticetka * et);
 
 private:
     QString getGuiGTIN();

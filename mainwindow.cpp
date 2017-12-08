@@ -414,6 +414,8 @@ void MainWindow::setLanguageswitcher(bool value)
     qDebug() << "languageswitcher =" << value;
 }
 
+
+
 void MainWindow::PrintSSCCCode(QString newcode)
 {
 
@@ -435,6 +437,17 @@ void MainWindow::PrintSSCCCode(QString newcode)
     QPainter painter(&printer);
     painter.setRenderHint(QPainter::Antialiasing);
     m_Scene.render(&painter);
+}
+
+void MainWindow::PrintBIGEtiketka(eticetka * et)
+{
+    QPrinter printer;
+    QSize size(100,150);
+
+    printer.setPageSizeMM(size);
+    QPainter painter(&printer);
+    painter.setRenderHint(QPainter::Antialiasing);
+    et->all_etiketka.render(&painter);
 }
 
 void MainWindow::updateReadedDMCode()
@@ -689,9 +702,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
         file.close();
     }
 
-    QDesktopServices::openUrl(QUrl::fromLocalFile(filepath));
-
-//    qDebug() << "CreateXML415Doc";
+    QDesktopServices::openUrl(filepath);  // раскомментить если мы хотим чтобы по окончании агрегации открывался XML файл
 }
 
 void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date)
@@ -714,17 +725,18 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     addXMLTextNode(unit_pack_elem,  companysender->get_subject_id() , "subject_id", document);
     // добавили subject_id
 
-
     QString SSCCCode128 = generateCode128(16);
 
-    PrintSSCCCode(SSCCCode128);
+    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а","Лефлуномид",MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("hh:mm dd.MM.yyyy"),MedList.at(0)->ExperyDate,"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
+
+    PrintBIGEtiketka(EticetkaBFZ);
 
     // добавляем subject_id
     addXMLTextNode(unit_pack_elem,  SSCCCode128 , "sscc", document);
     // добавили subject_id
 
     // добавляем operation_date
-//    addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     addXMLTextNode(unit_pack_elem,  GetISODate(), "operation_date", document);
     // добавили operation_date
 
@@ -742,7 +754,8 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     }
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+//    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
     qDebug() <<filepath;
 
@@ -1709,4 +1722,222 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_agregationStartButton_clicked()
 {
 
+}
+
+
+
+eticetka::eticetka()
+{
+    m_Barcode = new Code128Item();
+
+    int vertikotstup = 50;
+
+    QString ssccString = "6936756510728528";
+
+    // 150 x 100 ok
+    m_Barcode->setWidth( 190*2.5 );
+    m_Barcode->setHeight( 110*2.5 );
+    m_Barcode->setText(ssccString);
+    m_Scene.clear();
+    m_Scene.addItem( m_Barcode );
+    m_Scene.update();
+
+    m_Barcode->setRotation(-90);
+    m_Barcode->update();
+    m_Barcode->setPos(550,600);
+    m_Barcode->setTextVisible(false);
+
+    all_etiketka.clear();
+    all_etiketka.addItem( m_Barcode);
+    OrgText = new QGraphicsTextItem("ЗАО \"Березовский фармацевтический завод\"");
+    OrgText->setPos(60,900);
+    OrgText->setRotation(-90);
+    OrgText->setFont(QFont("Helvetica", 25, QFont::Bold ));
+    all_etiketka.addItem(OrgText);
+
+    AddressItem = new QGraphicsTextItem("623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а");
+    AddressItem->setPos(100,1000);
+    AddressItem->setRotation(-90);
+    AddressItem->setFont(QFont("Helvetica", 20 , QFont::Bold));
+    all_etiketka.addItem(AddressItem);
+
+
+    PreparatItem = new QGraphicsTextItem("Лефлуномид");
+    PreparatItem->setPos(140,800);
+    PreparatItem->setRotation(-90);
+    PreparatItem->setFont(QFont("Helvetica", 60 , QFont::Bold));
+    all_etiketka.addItem(PreparatItem);
+
+    Dose = new QGraphicsTextItem("таблетки 10 мг №30");
+    Dose->setPos(230,700);
+    Dose->setRotation(-90);
+    Dose->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(Dose);
+
+    mainrect = new QGraphicsRectItem(0,0,850,1270);
+    mainrect->setPos(10,10);
+    mainrect->setPen(QPen(Qt::black,3));
+    all_etiketka.addItem(mainrect);
+
+
+    logorect = new QGraphicsRectItem(0,0,20*8,20*8);
+    logorect->setPos(20,1110);
+    logorect->setPen(QPen(Qt::black,3));
+    all_etiketka.addItem(logorect);
+
+
+    kolichestvouoakovok = new QGraphicsTextItem("Количество упаковок");
+    kolichestvouoakovok->setPos(300,1275);
+    kolichestvouoakovok->setRotation(-90);
+    kolichestvouoakovok->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(kolichestvouoakovok);
+
+
+    GTIN = new QGraphicsTextItem("GTIN: ");
+    GTIN ->setPos(400 + vertikotstup,1275);
+    GTIN ->setRotation(-90);
+    GTIN ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(GTIN );
+
+    Seria = new QGraphicsTextItem("Серия: ");
+    Seria ->setPos(400 + vertikotstup*2,1275);
+    Seria ->setRotation(-90);
+    Seria ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(Seria );
+
+    dataproizvodstva = new QGraphicsTextItem("Дата производства: ");
+    dataproizvodstva ->setPos(400 + vertikotstup*3,1275);
+    dataproizvodstva ->setRotation(-90);
+    dataproizvodstva ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(dataproizvodstva );
+
+    srokgodnosti = new QGraphicsTextItem("Срок годности: ");
+    srokgodnosti ->setPos(400 + vertikotstup*4,1275);
+    srokgodnosti ->setRotation(-90);
+    srokgodnosti ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(srokgodnosti);
+
+
+    usloviahranenia = new QGraphicsTextItem("Хранить и транспортировать \nпри температуре от 15 до 30 C°");
+    usloviahranenia ->setPos(400 + vertikotstup*5,1275);
+    usloviahranenia ->setRotation(-90);
+    usloviahranenia ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(usloviahranenia);
+
+    SSCCCode = new QGraphicsTextItem(ssccString);
+    SSCCCode ->setPos(810,490);
+    SSCCCode ->setRotation(-90);
+    SSCCCode ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(SSCCCode);
+
+
+
+    all_etiketka.update();
+}
+
+eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext, QString PreparatText, int kolvoupakovoktext, QString gtinText, QString SeriaText, QString dataproizvodstvaText, QString SrokgodnostiText, QString usloviahraneniaText, QString regnomerText, QString SSCCCodetext)
+{
+    m_Barcode = new Code128Item();
+
+    int vertikotstup = 50;
+
+    QString ssccString = SSCCCodetext;
+
+    // 150 x 100 ok
+    m_Barcode->setWidth( 190*2.5 );
+    m_Barcode->setHeight( 110*2.5 );
+    m_Barcode->setText(ssccString);
+    m_Scene.clear();
+    m_Scene.addItem( m_Barcode );
+    m_Scene.update();
+
+    m_Barcode->setRotation(-90);
+    m_Barcode->update();
+    m_Barcode->setPos(550,600);
+    m_Barcode->setTextVisible(false);
+
+    all_etiketka.clear();
+    all_etiketka.addItem( m_Barcode);
+    OrgText = new QGraphicsTextItem(OrgTextstring);
+    OrgText->setPos(60,900);
+    OrgText->setRotation(-90);
+    OrgText->setFont(QFont("Helvetica", 25, QFont::Bold ));
+    all_etiketka.addItem(OrgText);
+
+    AddressItem = new QGraphicsTextItem(Addresstext);
+    AddressItem->setPos(100,1000);
+    AddressItem->setRotation(-90);
+    AddressItem->setFont(QFont("Helvetica", 20 , QFont::Bold));
+    all_etiketka.addItem(AddressItem);
+
+
+    PreparatItem = new QGraphicsTextItem(PreparatText);
+    PreparatItem->setPos(140,800);
+    PreparatItem->setRotation(-90);
+    PreparatItem->setFont(QFont("Helvetica", 60 , QFont::Bold));
+    all_etiketka.addItem(PreparatItem);
+
+    Dose = new QGraphicsTextItem(Dosetext);
+    Dose->setPos(230,700);
+    Dose->setRotation(-90);
+    Dose->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(Dose);
+
+    mainrect = new QGraphicsRectItem(0,0,850,1270);
+    mainrect->setPos(10,10);
+    mainrect->setPen(QPen(Qt::black,3));
+    all_etiketka.addItem(mainrect);
+
+
+    logorect = new QGraphicsRectItem(0,0,20*8,20*8);
+    logorect->setPos(20,1110);
+    logorect->setPen(QPen(Qt::black,3));
+    all_etiketka.addItem(logorect);
+
+
+    kolichestvouoakovok = new QGraphicsTextItem("Количество упаковок: " + QString::number(kolvoupakovoktext));
+    kolichestvouoakovok->setPos(300,1275);
+    kolichestvouoakovok->setRotation(-90);
+    kolichestvouoakovok->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(kolichestvouoakovok);
+
+
+    GTIN = new QGraphicsTextItem("GTIN: " + gtinText);
+    GTIN ->setPos(400 + vertikotstup,1275);
+    GTIN ->setRotation(-90);
+    GTIN ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(GTIN );
+
+    Seria = new QGraphicsTextItem("Серия: " + SeriaText);
+    Seria ->setPos(400 + vertikotstup*2,1275);
+    Seria ->setRotation(-90);
+    Seria ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(Seria );
+
+    dataproizvodstva = new QGraphicsTextItem("Дата производства: " + dataproizvodstvaText);
+    dataproizvodstva ->setPos(400 + vertikotstup*3,1275);
+    dataproizvodstva ->setRotation(-90);
+    dataproizvodstva ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(dataproizvodstva );
+
+    srokgodnosti = new QGraphicsTextItem("Срок годности: " + SrokgodnostiText);
+    srokgodnosti ->setPos(400 + vertikotstup*4,1275);
+    srokgodnosti ->setRotation(-90);
+    srokgodnosti ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(srokgodnosti);
+
+
+    usloviahranenia = new QGraphicsTextItem(usloviahraneniaText);
+    usloviahranenia ->setPos(400 + vertikotstup*5,1275);
+    usloviahranenia ->setRotation(-90);
+    usloviahranenia ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(usloviahranenia);
+
+    SSCCCode = new QGraphicsTextItem(ssccString);
+    SSCCCode ->setPos(810,490);
+    SSCCCode ->setRotation(-90);
+    SSCCCode ->setFont(QFont("Helvetica", 25 , QFont::Bold));
+    all_etiketka.addItem(SSCCCode);
+
+    all_etiketka.update();
 }
