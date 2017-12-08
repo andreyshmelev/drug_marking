@@ -679,7 +679,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Failed to open";
+//        qDebug() << "Failed to open";
         return;
     }
     else
@@ -689,7 +689,9 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
         file.close();
     }
 
-    qDebug() << "CreateXML415Doc";
+    QDesktopServices::openUrl(QUrl::fromLocalFile(filepath));
+
+//    qDebug() << "CreateXML415Doc";
 }
 
 void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date)
