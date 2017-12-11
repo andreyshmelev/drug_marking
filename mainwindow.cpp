@@ -744,7 +744,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
 
     QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
 
-    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а","Лефлуномид",MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
+    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а",MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
 
     if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
         return;
@@ -1914,19 +1914,13 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     mainrect->setPen(QPen(Qt::black,3));
     all_etiketka.addItem(mainrect);
 
-
-    //    logorect = new QGraphicsRectItem(0,0,20*8,20*8);
-    //    logorect->setPos(20,1110);
-    //    logorect->setPen(QPen(Qt::black,3));
-    //    all_etiketka.addItem(logorect);
-
     QPixmap pixmap("C:/Work/Application/BFZLogo.jpg");
     //    QPixmap pixmap("C://Work/Application//BFZLogo.bmp");
 
     logo = new QGraphicsPixmapItem(pixmap);
     logo ->setPos(15,1275);
     logo->setRotation(-90);
-    logo->setScale(1.5);
+    logo->setScale(0.25);
     all_etiketka.addItem(logo);
 
     kolichestvouoakovok = new QGraphicsTextItem("Количество упаковок: " + QString::number(kolvoupakovoktext));

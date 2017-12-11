@@ -19,6 +19,7 @@ public:
     QString ExperyDate;
     QString sGTIN;
     QString TNVED;
+    QString condidions;
 
 public slots:
 };
