@@ -54,6 +54,7 @@ public:
     QGraphicsScene m_Scene;
     QGraphicsScene all_etiketka;
     Code128Item * m_Barcode;
+    QGraphicsPixmapItem * logo;
 };
 
 class MainWindow : public QMainWindow

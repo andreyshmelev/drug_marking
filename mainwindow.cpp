@@ -273,7 +273,6 @@ int MainWindow::GenerateNumber(int High, int Low)
 
 QString MainWindow::getGuiGTIN()
 {
-
     return ui->GTINVal->toPlainText();
 }
 
@@ -1916,11 +1915,19 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     all_etiketka.addItem(mainrect);
 
 
-    logorect = new QGraphicsRectItem(0,0,20*8,20*8);
-    logorect->setPos(20,1110);
-    logorect->setPen(QPen(Qt::black,3));
-    all_etiketka.addItem(logorect);
+    //    logorect = new QGraphicsRectItem(0,0,20*8,20*8);
+    //    logorect->setPos(20,1110);
+    //    logorect->setPen(QPen(Qt::black,3));
+    //    all_etiketka.addItem(logorect);
 
+    QPixmap pixmap("C:/Work/Application/BFZLogo.jpg");
+    //    QPixmap pixmap("C://Work/Application//BFZLogo.bmp");
+
+    logo = new QGraphicsPixmapItem(pixmap);
+    logo ->setPos(15,1275);
+    logo->setRotation(-90);
+    logo->setScale(1.5);
+    all_etiketka.addItem(logo);
 
     kolichestvouoakovok = new QGraphicsTextItem("Количество упаковок: " + QString::number(kolvoupakovoktext));
     kolichestvouoakovok->setPos(300,1275);
