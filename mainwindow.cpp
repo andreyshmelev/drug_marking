@@ -92,6 +92,19 @@ void MainWindow::GetCompaniesDBList()
     emit SendCompaniesDBList(CompaniesListFromDB);
 }
 
+bool MainWindow::IsDateProper(QString stringtotest)
+{
+    QDate TestDate = QDate::fromString(stringtotest,"yyMMdd");
+    bool result;
+    qDebug() << TestDate << "TestDate ";
+    if (TestDate.toString("yyMMdd") != stringtotest)
+        result = false;
+    else
+        result = true;
+
+    return result;
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -245,7 +258,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
-
 }
 
 MainWindow::~MainWindow()
@@ -439,7 +451,7 @@ void MainWindow::PrintSSCCCode(QString newcode)
     m_Scene.render(&painter);
 }
 
-void MainWindow::PrintBIGEtiketka(eticetka * et)
+bool MainWindow::PrintBIGEtiketka(eticetka * et)
 {
     QPrinter printer;
     QSize size(100,150);
@@ -448,6 +460,8 @@ void MainWindow::PrintBIGEtiketka(eticetka * et)
     QPainter painter(&printer);
     painter.setRenderHint(QPainter::Antialiasing);
     et->all_etiketka.render(&painter);
+
+    return true;
 }
 
 void MainWindow::updateReadedDMCode()
@@ -692,7 +706,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-//        qDebug() << "Failed to open";
+        //        qDebug() << "Failed to open";
         return;
     }
     else
@@ -727,9 +741,14 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
 
     QString SSCCCode128 = generateCode128(16);
 
-    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а","Лефлуномид",MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("hh:mm dd.MM.yyyy"),MedList.at(0)->ExperyDate,"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
+    QString CorrectedDate = "20" + MedList.at(0)->ExperyDate;
 
-    PrintBIGEtiketka(EticetkaBFZ);
+    QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
+
+    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а","Лефлуномид",MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
+
+    if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
+        return;
 
     // добавляем subject_id
     addXMLTextNode(unit_pack_elem,  SSCCCode128 , "sscc", document);
@@ -754,7 +773,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     }
     // добавили signs
 
-//    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    //    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
     QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
     qDebug() <<filepath;
@@ -1150,6 +1169,14 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     {
         expstring = NotFoundString;
     }
+
+    // если прочитали неверную дату годности
+    if( IsDateProper(expstring) == false)
+    {
+        expstring = NotFoundString;
+    }
+
+
 
     // кончаем разбирать Срок Годности
 

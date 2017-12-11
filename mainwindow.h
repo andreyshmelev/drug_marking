@@ -89,6 +89,8 @@ eticetka * EticetkaBFZ;
     void GetCompaniesDBList();
 
 
+    bool IsDateProper(QString stringtotest);
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -102,7 +104,7 @@ public slots:
     void setLanguageswitcher(bool value);
 
     void PrintSSCCCode(QString newcode);
-    void PrintBIGEtiketka(eticetka * et);
+    bool PrintBIGEtiketka(eticetka * et);
 
 private:
     QString getGuiGTIN();
