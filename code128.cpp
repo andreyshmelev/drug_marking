@@ -36,7 +36,7 @@
 
 #include "code128.h"
 
-Code128::Symbol Code128::symbols[108] = {
+QString Code128::symbols[108] = {
 
     "212222", "222122", "222221", "121223", "121322", "131222", "122213", "122312", "132212", "221213",
     "221312", "231212", "112232", "122132", "122231", "113222", "123122", "123221", "223211", "221132",
@@ -52,7 +52,7 @@ Code128::Symbol Code128::symbols[108] = {
 };
 
 
-Code128::Symbol Code128::symbolCode(quint8 c)
+QString Code128::symbolCode(quint8 c)
 {
     if ( c > SYM_Stop )
     {
@@ -76,14 +76,14 @@ void Code128::addSymbolCodeChar(char c, QStringList &symbols, int &checksum)
         c = 32;
     }
     quint8 value = (unsigned int)c - 32;
-    Code128::Symbol symbol = symbolCode(value);
+    QString symbol = symbolCode(value);
     symbols += symbol;
     checksum += value * ( symbols.count() == 1 ? 1 : symbols.count() - 1 );
 }
 
 void Code128::addSymbolCodeInt(quint8 value, QStringList &symbols, int &checksum)
 {
-    Code128::Symbol symbol = symbolCode(value);
+    QString symbol = symbolCode(value);
     symbols += symbol;
     checksum += value * ( symbols.count() == 1 ? 1 : symbols.count() - 1 );
 }

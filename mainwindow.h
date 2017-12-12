@@ -73,7 +73,7 @@ public:
     //       const int TCPPort = 1234;
 
     const QString TCPaddress = "192.168.1.196";
-    const int TCPPort = 3002;
+    const int TCPPort = 3007;
 
     const QString SSCCGS1Prefix = "4649728";
 
@@ -194,7 +194,7 @@ private:
 
     const QString GSSymbol = "002#";
     const QString Emptystring = "";
-    const QString VideoJetFileName = "JET8510BFZTemplatev2";
+    const QString VideoJetFileName = "JET8510BFZTest1";
 
     const QString SNRegularexpression = "21\\w{12,14}" + GSSymbol; // строка начинается  с 21, имеет длину 14 и заказчивается символом 0029
     const QString TNVEDRegularexpression = "240\\w{4}" + GSSymbol;

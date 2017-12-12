@@ -25,27 +25,27 @@ QElapsedTimer MainWindow::SQLInsertSpeedTest()
     QElapsedTimer timer;
     timer.start();
 
-    for (int var = 0; var < testitemscount; ++var) {
+//    for (int var = 0; var < testitemscount; ++var) {
 
-        time_t timer1;
-        struct tm x_years;
-        struct tm* current;
-        int how_many_years = 10;
-        int randomYear = (rand()%how_many_years)+1;
-        int randomMonth = (rand()%12)+1;
-        int randomDays = (rand()%30)+1;
-        time(&timer1);
-        current = localtime(&timer1);
-        x_years.tm_hour = 0;
-        x_years.tm_min = 0;
-        x_years.tm_sec = 0;
-        x_years.tm_year = current->tm_year - randomYear;
-        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
-        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
-        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
+//        time_t timer1;
+//        struct tm x_years;
+//        struct tm* current;
+//        int how_many_years = 10;
+//        int randomYear = (rand()%how_many_years)+1;
+//        int randomMonth = (rand()%12)+1;
+//        int randomDays = (rand()%30)+1;
+//        time(&timer1);
+//        current = localtime(&timer1);
+//        x_years.tm_hour = 0;
+//        x_years.tm_min = 0;
+//        x_years.tm_sec = 0;
+//        x_years.tm_year = current->tm_year - randomYear;
+//        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
+//        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
+//        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
 
-        sqlDB->makesqlreq(req);
-    }
+//        sqlDB->makesqlreq(req);
+//    }
 
     qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
@@ -83,8 +83,9 @@ void MainWindow::GetCompaniesDBList()
         QString company_fl = sqlDB->sel("fl", fromcompany, wherecompany,"fl")[0];
         QString company_inn = sqlDB->sel("inn", fromcompany, wherecompany,"inn")[0];
         QString company_kpp = sqlDB->sel("kpp", fromcompany, wherecompany,"kpp")[0];
+        QString company_gs1id = sqlDB->sel("gs1id", fromcompany, wherecompany,"gs1id")[0];
 
-        manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id );
+        manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id , company_gs1id);
         CompaniesListFromDB.append(c);
         //        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
     }
@@ -127,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->installEventFilter(this);
 
     RandomStringSenderToVideoJetTimer = new QTimer();
-    RandomStringSenderToVideoJetTimer->setInterval(1000*45); // каждые сорок пять секунд посылаем новую произвольную строку
+    RandomStringSenderToVideoJetTimer->setInterval(100*45); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
@@ -227,6 +228,7 @@ MainWindow::MainWindow(QWidget *parent) :
     imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
 
+
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
@@ -283,7 +285,8 @@ QString MainWindow::getSN()
 
 QString MainWindow::generateSN(int lenght)
 {
-    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");  // abcdefghijklmnopqrstuvwxyz
+
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
 
     QString randomString;
@@ -299,8 +302,6 @@ QString MainWindow::generateSN(int lenght)
 }
 QString MainWindow::generateCode128(int lenght)
 {
-    lenght = 16;
-
     //    const QString possibleCharacters("0123456789");
     const QString possibleCharacters("01234567890123456789012345678901234567890123456789012345678901");
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
@@ -394,11 +395,7 @@ void MainWindow::AddHandScannerLOG()
     QElapsedTimer timer;
     timer.start();
 
-    //QString date = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy");
-    //QString message = inputDataStringFromScaner;
-    //QString req = QString ("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES (' " ) + date +   QString (" ','") + message + QString ( "')" );
     QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
-
     qDebug() << req << "req";
     sqlDB->makesqlreq(req );
     qDebug() << "AddHandScannerLOG took" << timer.elapsed() << "milliseconds";
@@ -424,8 +421,6 @@ void MainWindow::setLanguageswitcher(bool value)
     languageswitcher = value;
     qDebug() << "languageswitcher =" << value;
 }
-
-
 
 void MainWindow::PrintSSCCCode(QString newcode)
 {
@@ -734,14 +729,13 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     unit_pack_elem.setAttribute("action_id", "911");
     root.appendChild(unit_pack_elem);
 
-    // добавляем subject_id
+    //добавляем subject_id
     addXMLTextNode(unit_pack_elem,  companysender->get_subject_id() , "subject_id", document);
-    // добавили subject_id
+    //добавили subject_id
 
-    QString SSCCCode128 = generateCode128(16);
-
+    //QString SSCCCode128 ="(00) " + companysender->getGS1id() + " " +  generateCode128(8);
+    QString SSCCCode128 = "00" +  companysender->getGS1id() +  generateCode128(8);
     QString CorrectedDate = "20" + MedList.at(0)->ExperyDate;
-
     QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
 
     EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а",MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
@@ -1017,40 +1011,47 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     // сначала проверяем ня соответствие QR кодам
 
 
+    qDebug() << stringforparse;
 
     if (stringforparse == register_product_emission_QR_string)
     {
         emit register_product_emission_QR_Scanned();
+        qDebug() << "1";
         return;
     }
 
     if (stringforparse == register_control_samples_QR_string)
     {
         emit register_control_samples_QR_Scanned();
+        qDebug() << "2";
         return;
     }
 
     if (stringforparse == register_end_packing_QR_string)
     {
         emit register_end_packing_QR_Scanned();
+        qDebug() << "3";
         return;
     }
 
     if (stringforparse == printControlQRCode)
     {
         emit printControlQRCodeScanned();
+        qDebug() << "4";
         return;
     }
 
     if (stringforparse == programOptionsQRCode)
     {
         emit programOptionsQRCodeScanned();
+        qDebug() << "5";
         return;
     }
 
     if (stringforparse == agregationQRCode)
     {
         emit agregationQRCodeScanned();
+        qDebug() << "6";
         return;
     }
 
@@ -1170,10 +1171,10 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     }
 
     // если прочитали неверную дату годности
-    if( IsDateProper(expstring) == false)
-    {
-        expstring = NotFoundString;
-    }
+//    if( IsDateProper(expstring) == false)
+//    {
+//        expstring = NotFoundString;
+//    }
 
 
 
@@ -1406,7 +1407,7 @@ void MainWindow::SendCommandToVideoJet(QString a)
 {
     serverWrite(a);
     a ="\r"; // посылаем знак завершения посылки.
-    //    serverWrite(a);
+    serverWrite(a);
 }
 
 void MainWindow::updateQRImage()
@@ -1736,6 +1737,7 @@ void MainWindow::SendRandomToVideoJet()
 {
     QString randstr = generateSN(11);
     QString a = QString("SLA|%1|randomvalue=%2|").arg(VideoJetFileName,randstr);
+
     qDebug() << a ;
     SendCommandToVideoJet(a);
 }
@@ -1962,7 +1964,7 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     all_etiketka.addItem(usloviahranenia);
 
     SSCCCode = new QGraphicsTextItem(ssccString);
-    SSCCCode ->setPos(810,490);
+    SSCCCode ->setPos(810,570);
     SSCCCode ->setRotation(-90);
     SSCCCode ->setFont(QFont("Helvetica", 25 , QFont::Bold));
     all_etiketka.addItem(SSCCCode);

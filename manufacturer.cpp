@@ -6,7 +6,7 @@ manufacturer::manufacturer()
     //    set_organisation_name("ЗАО \"Берёзовский фармацевтический завод\"");
 }
 
-manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc, QString owneridc)
+manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc, QString owneridc, QString gs1idc)
 {
     set_subject_id( subject_idc );
     set_company_name(organisation_namec);
@@ -16,7 +16,9 @@ manufacturer::manufacturer(QString subject_idc, QString organisation_namec, QStr
     set_inn(innc);
     set_kpp(kppc);
     set_ownerid(owneridc);
+    setGS1id(gs1idc);
 }
+
 
 QString manufacturer::get_subject_id()
 {
@@ -96,4 +98,14 @@ void manufacturer::set_kpp(QString new_kpp)
 void manufacturer::set_ownerid(QString new_ownerid)
 {
     ownerid = new_ownerid;
+}
+
+QString manufacturer::getGS1id() const
+{
+    return GS1id;
+}
+
+void manufacturer::setGS1id(const QString &value)
+{
+    GS1id = value;
 }

@@ -8,7 +8,7 @@ class manufacturer
 public:
 
     manufacturer();     // конструктор в котором подгружаем все данные производителя
-    manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc, QString owneridc);     // конструктор в котором подгружаем все данные производителя
+    manufacturer(QString subject_idc, QString organisation_namec, QString emailc, QString ulc, QString flc, QString innc, QString kppc, QString owneridc, QString gs1idc);     // конструктор в котором подгружаем все данные производителя
     QString get_subject_id();           // Идентификатор субъекта обращения в ИС "Маркировка товаров"
     QString get_owner_id();             // Идентификатор собственника в случае контрактного производства
     QString get_organisation_name();    // Наименование организации
@@ -17,6 +17,9 @@ public:
     QString get_fl();   //Идентификационный номер налогоплательщика - физического лица
     QString get_inn();  //Идентификационный номер налогоплательщика
     QString get_kpp();  //Код причины постановки на учет
+
+    QString getGS1id() const;
+    void setGS1id(const QString &value);
 
 private: // methods
 
@@ -40,6 +43,7 @@ private: // variables
     QString ownerid;
     QString email;
     QString subject_id;
+    QString GS1id;
 };
 
 #endif // MANUFACTURER_H

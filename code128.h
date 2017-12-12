@@ -45,10 +45,10 @@ class Code128
 {
     typedef char * Symbol;
     enum Symbols { SYM_CodeC=99, SYM_CodeB = 100, SYM_StartA=103, SYM_StartB, SYM_StartC, SYM_Stop, SYM_NA };
-    static Code128::Symbol symbols[108];
+    static QString symbols[108];
 
     enum Mode { MODE_A, MODE_B, MODE_C, IDLE };
-    static Symbol symbolCode(quint8 c );
+    static QString symbolCode(quint8 c );
     static void addSymbolCodeChar( char c, QStringList & symbols, int & checksum );
     static void addSymbolCodeInt(quint8 value, QStringList & symbols, int & checksum );
     static quint8 digitCount( const QString & data, int startPos );
