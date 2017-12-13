@@ -131,6 +131,8 @@ private:
     bool getAgregation(void);
     void Start313Process(bool set);
 
+
+    const uint8_t maxserialnumberlenght = 16;
     manufacturer * Organizacia;
     medicament * ScannedMedicament;
 
@@ -269,6 +271,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_agregationStartButton_clicked();
+
+    void on_batchnumberText_textChanged();
 
 signals:
 

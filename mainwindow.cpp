@@ -128,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->installEventFilter(this);
 
     RandomStringSenderToVideoJetTimer = new QTimer();
-    RandomStringSenderToVideoJetTimer->setInterval(100*45); // каждые сорок пять секунд посылаем новую произвольную строку
+    RandomStringSenderToVideoJetTimer->setInterval(1000*45); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
@@ -1728,7 +1728,8 @@ void MainWindow::SendParamsToVideoJet()
 {
     QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
     QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
-    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED());
+        QString randstr = generateSN(11);
+    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
     qDebug() << a ;
     SendCommandToVideoJet(a);
 }
@@ -1970,4 +1971,17 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     all_etiketka.addItem(SSCCCode);
 
     all_etiketka.update();
+}
+
+void MainWindow::on_batchnumberText_textChanged()
+{
+    if (ui->batchnumberText->toPlainText().length()>maxserialnumberlenght)
+    {
+        QString s = ui->batchnumberText->toPlainText();
+        qDebug() << s;
+        s.truncate(maxserialnumberlenght);
+        qDebug() << s;
+        ui->batchnumberText->clear();
+        ui->batchnumberText->appendPlainText(s);
+    }
 }
