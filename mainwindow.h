@@ -90,7 +90,10 @@ eticetka * EticetkaBFZ;
     void GetCompaniesDBList();
 
 
+
     bool IsDateProper(QString stringtotest);
+
+    void SQLInit();
 
 public slots:
 
@@ -103,7 +106,7 @@ public slots:
     void StopAgregation();
     bool getLanguageswitcher() const;
     void setLanguageswitcher(bool value);
-
+void Getmessage(QString m);
     void PrintSSCCCode(QString newcode);
     bool PrintBIGEtiketka(eticetka * et);
 
@@ -273,6 +276,8 @@ private slots:
     void on_agregationStartButton_clicked();
 
     void on_batchnumberText_textChanged();
+
+    void on_pushButton_clicked();
 
 signals:
 

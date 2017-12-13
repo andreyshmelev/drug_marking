@@ -12,9 +12,8 @@ public:
 public slots:
     void baseConnection();
     QStringList sel(QString select, QString from, QString where, QString rec);
-    void makesqlreq(QString req);
+    QSqlError makesqlreq(QString req);
     void upd(QString u, QString s, QString w);
-
 };
 
 #endif // SQL_H

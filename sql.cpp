@@ -9,18 +9,38 @@ SQL::SQL()
 
 SQL::SQL(QString path)
 {
-
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path);
-    db.setUserName("korvas");
-    db.setHostName("localhost");
-    db.setPassword("password");
+    //    db.setUserName("korvas");
+    //    db.setHostName("localhost");
+    //    db.setPassword("password");
     if (!db.open()) {
+
         qDebug() << "Cannot open database:" << db.lastError();
     }
 
+    QString as =  db.lastError().text();
+
+    QString filepath ="O:/log.txt";
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream << as ;
+        file.close();
+    }
+
+
     qDebug() << sel("company_name", "Company", "company = 'BFZ' ","company_name")[0];
     qDebug() << sel("company_name", "Company", "company = 'KORVAS' ","company_name")[0];
+
+
+
 
 }
 
@@ -48,7 +68,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     //Задаем запрос
     QString execc = "SELECT " + select + " FROM " + from;
 
-//    qDebug() << execc;
+    //    qDebug() << execc;
     if (where != "")
     {
         execc += " WHERE " + where;
@@ -63,7 +83,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     }
     else
     {
-//        qDebug() << "Exec success";
+        //        qDebug() << "Exec success";
     }
     //Reading of the data
     QSqlRecord SQLrec     = query.record();
@@ -79,7 +99,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     return strName;
 }
 
-void SQL::makesqlreq(QString req)
+QSqlError SQL::makesqlreq(QString req)
 {
     QSqlQuery query;
     //Задаем запрос
@@ -88,7 +108,13 @@ void SQL::makesqlreq(QString req)
     if (!query.exec(execc)) {
         qDebug() << "Unable to execute query - exiting2";
         qDebug() << query.lastError();
+
+        //        sendmessage(query.lastQuery());
     }
+
+
+    return query.lastError() ;
+
 }
 
 void SQL::upd(QString u, QString s, QString w)

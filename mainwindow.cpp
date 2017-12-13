@@ -25,27 +25,27 @@ QElapsedTimer MainWindow::SQLInsertSpeedTest()
     QElapsedTimer timer;
     timer.start();
 
-//    for (int var = 0; var < testitemscount; ++var) {
+    //    for (int var = 0; var < testitemscount; ++var) {
 
-//        time_t timer1;
-//        struct tm x_years;
-//        struct tm* current;
-//        int how_many_years = 10;
-//        int randomYear = (rand()%how_many_years)+1;
-//        int randomMonth = (rand()%12)+1;
-//        int randomDays = (rand()%30)+1;
-//        time(&timer1);
-//        current = localtime(&timer1);
-//        x_years.tm_hour = 0;
-//        x_years.tm_min = 0;
-//        x_years.tm_sec = 0;
-//        x_years.tm_year = current->tm_year - randomYear;
-//        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
-//        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
-//        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
+    //        time_t timer1;
+    //        struct tm x_years;
+    //        struct tm* current;
+    //        int how_many_years = 10;
+    //        int randomYear = (rand()%how_many_years)+1;
+    //        int randomMonth = (rand()%12)+1;
+    //        int randomDays = (rand()%30)+1;
+    //        time(&timer1);
+    //        current = localtime(&timer1);
+    //        x_years.tm_hour = 0;
+    //        x_years.tm_min = 0;
+    //        x_years.tm_sec = 0;
+    //        x_years.tm_year = current->tm_year - randomYear;
+    //        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
+    //        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
+    //        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
 
-//        sqlDB->makesqlreq(req);
-//    }
+    //        sqlDB->makesqlreq(req);
+    //    }
 
     qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
@@ -104,6 +104,18 @@ bool MainWindow::IsDateProper(QString stringtotest)
         result = true;
 
     return result;
+}
+
+void MainWindow::SQLInit()
+{
+    sqlDB = new SQL("C:/SQL/ISMarkirovkaDB.db");
+    //sqlDB = new SQL(QDir::currentPath() + "/ISMarkirovkaDB.db");
+    //qDebug() << QDir::currentPath() + "/SQL" + "/ISMarkirovkaDB.db";
+    //connect(sqlDB, &SQL::sendmessage, this, &MainWindow::Getmessage) ;
+    //подтягиваем параметры препаратов из БД
+    drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
+    // подтягиваем параметры компании
+    GetCompaniesDBList();
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -238,13 +250,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateAgregationGUI();
     setStackedPage(2);
 
-    sqlDB = new SQL("C:/Work/SQL/ISMarkirovkaDB");
-
-    // подтягиваем параметры препаратов из БД
-    drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
-
-    // подтягиваем параметры компании
-    GetCompaniesDBList();
+    SQLInit();
 
     Organizacia = CompaniesListFromDB.at(1);
 
@@ -420,6 +426,11 @@ void MainWindow::setLanguageswitcher(bool value)
 {
     languageswitcher = value;
     qDebug() << "languageswitcher =" << value;
+}
+
+void MainWindow::Getmessage(QString m)
+{
+    ui->dbLog->setText(m);
 }
 
 void MainWindow::PrintSSCCCode(QString newcode)
@@ -1171,10 +1182,10 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     }
 
     // если прочитали неверную дату годности
-//    if( IsDateProper(expstring) == false)
-//    {
-//        expstring = NotFoundString;
-//    }
+    //    if( IsDateProper(expstring) == false)
+    //    {
+    //        expstring = NotFoundString;
+    //    }
 
 
 
@@ -1728,7 +1739,7 @@ void MainWindow::SendParamsToVideoJet()
 {
     QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
     QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
-        QString randstr = generateSN(11);
+    QString randstr = generateSN(11);
     QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
     qDebug() << a ;
     SendCommandToVideoJet(a);
@@ -1736,9 +1747,10 @@ void MainWindow::SendParamsToVideoJet()
 
 void MainWindow::SendRandomToVideoJet()
 {
+    QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
+    QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
     QString randstr = generateSN(11);
-    QString a = QString("SLA|%1|randomvalue=%2|").arg(VideoJetFileName,randstr);
-
+    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
     qDebug() << a ;
     SendCommandToVideoJet(a);
 }
@@ -1754,15 +1766,11 @@ void MainWindow::on_agregationStartButton_clicked()
 }
 
 
-
 eticetka::eticetka()
 {
     m_Barcode = new Code128Item();
-
     int vertikotstup = 50;
-
     QString ssccString = "6936756510728528";
-
     // 150 x 100 ok
     m_Barcode->setWidth( 190*2.5 );
     m_Barcode->setHeight( 110*2.5 );
@@ -1984,4 +1992,9 @@ void MainWindow::on_batchnumberText_textChanged()
         ui->batchnumberText->clear();
         ui->batchnumberText->appendPlainText(s);
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    SQLInit();
 }

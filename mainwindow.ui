@@ -157,7 +157,8 @@ border-radius: 10px;</string>
      </font>
     </property>
     <property name="text">
-     <string>Агрегация</string>
+     <string>Бизнес
+процессы</string>
     </property>
    </widget>
    <widget class="QStackedWidget" name="stackedWidget">
@@ -174,7 +175,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -399,6 +400,19 @@ border-radius: 0px;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>280</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
       </property>
      </widget>
     </widget>
@@ -1261,8 +1275,7 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="text">
-          <string>Регистрация сведений
-об упаковке в транс-
+          <string>Упаковка в транс-
 портную тару (911)</string>
          </property>
         </widget>
