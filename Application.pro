@@ -34,7 +34,6 @@ SOURCES += \
     manufacturer.cpp \
     medicament.cpp \
     Widgets/UnitExtractWidget/unitextractwidget.cpp \
-    Widgets/UnitAppendWidget/unitappendwidget.cpp \
     sql.cpp \
     basebuisnessclass.cpp \
     Widgets/MoveOrderWidget415/moveorder415.cpp \
@@ -51,7 +50,6 @@ HEADERS += \
     medicament.h \
     basetypes.h \
     Widgets/UnitExtractWidget/unitextractwidget.h \
-    Widgets/UnitAppendWidget/unitappendwidget.h \
     sql.h \
     basebuisnessclass.h \
     Widgets/MoveOrderWidget415/moveorder415.h \
@@ -64,7 +62,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     Widgets/UnitExtractWidget/unitextractwidget.ui \
-    Widgets/UnitAppendWidget/unitappendwidget.ui \
     Widgets/MoveOrderWidget415/moveorder415.ui \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
     Widgets/UnitPackWidget911/unitpackwidget911.ui \

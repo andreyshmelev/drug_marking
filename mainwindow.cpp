@@ -165,32 +165,35 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->programOptionsButton, SIGNAL(pressed()), this, SLOT(productOptionsPageOpen())) ;
     connect(ui->agregationButton, SIGNAL(pressed()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), this, SLOT(statisticsPageOpen())) ;
-    connect(ui->agregationStartButton, SIGNAL(pressed()), this, SLOT(Toggle313Process())) ;
 
     connect(this, SIGNAL(printControlQRCodeScanned()), this, SLOT(PrintControlPageOpen())) ;
     connect(this, SIGNAL(programOptionsQRCodeScanned()), this, SLOT(productOptionsPageOpen())) ;
     connect(this, SIGNAL(agregationQRCodeScanned()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(this, SIGNAL(statisticsQRCodeScanned()), this, SLOT(statisticsPageOpen())) ;
 
-    connect(this, SIGNAL(agregationstatusToggled()), this, SLOT(updateAgregationGUI())) ;
-    connect(this, SIGNAL(ParcingEnded()), this, SLOT(updateAgregationGUI())) ;
-    connect(this, SIGNAL(register_product_emission_QR_Scanned()), this, SLOT(RegisterProductEmissionPageOpen())) ;
-    connect(this, SIGNAL(register_control_samples_QR_Scanned()), this, SLOT(RegisterControlSamplesPageOpen())) ;
-    connect(this, SIGNAL(register_end_packing_QR_Scanned()), this, SLOT(RegisterEndPackingPageOpen())) ;
-
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)),this , SLOT(GetMedicament(medicament*))) ;
-    connect(this, SIGNAL(Start312Process()), ui->ExtractWidget, SLOT(StartRegistrationProcess()) ) ;
-    connect(this, SIGNAL(Stop312Process()), ui->ExtractWidget, SLOT(StopRegistrationProcess()) ) ;
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
-
-
-    // при парсинге сигнала по сигналу заполняются объекты виджета UnitExtract
-    // сигналы и слоты с другими виджетами
-
-    connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)), this, SLOT(CreateXML312Doc(QList<medicament*>,uint8_t))) ;
-    connect(ui->ExtractWidget, SIGNAL(RegistrationCompleted(QList<medicament*>,uint8_t)),this , SLOT(StopAgregation()) ) ;
-    connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
+    // сигналы и слоты для 311 бизнес процесса
     connect(ui->RegisterEndPackingPage311Widget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
+    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+    connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
+    connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
+    connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
+
+    // сигналы и слоты для 312 бизнес процесса
+    connect(this, &MainWindow::Start312Process, ui->ExtractWidget, &UnitExtractWidget::StartRegistrationProcess ) ;
+    connect(this, &MainWindow::Stop312Process, ui->ExtractWidget, &UnitExtractWidget::StopRegistrationProcess ) ;
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
+    connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted, this, &MainWindow::CreateXML312Doc) ;
+    connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
+    connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
+
+    // сигналы и слоты для 313 бизнес процесса, пока он в форме mainwindow, позже нужно будет создать отдельный виджет
+    connect(ui->agregationStartButton, &QAbstractButton::pressed, this, &MainWindow::Toggle313Process) ;
+    connect(this, &MainWindow::agregationstatusToggled, this, &MainWindow::updateAgregationGUI) ;
+    connect(this, &MainWindow::ParcingEnded, this, &MainWindow::updateAgregationGUI) ;
+    connect(this, &MainWindow::register_product_emission_QR_Scanned, this, &MainWindow::RegisterProductEmissionPageOpen) ;
+    connect(this, &MainWindow::register_control_samples_QR_Scanned, this, &MainWindow::RegisterControlSamplesPageOpen) ;
+    connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
+    connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicament) ;
 
 
     // сигналы и слоты для 415 бизнес процесса
@@ -199,13 +202,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
-
-    // сигналы и слоты для 311 бизнес процесса
-    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
-    connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
-    connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
-    connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
-
 
     // сигналы и слоты для 911 бизнес процесса
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
@@ -1428,9 +1424,6 @@ void MainWindow::AddMedicamentToTable(medicament * m)
         ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
         ui->MedicamentsTable->scrollToTop();
         ui->MedicamentsTable->horizontalHeader()->setVisible(true);
-
-        ui->tableWidget->insertRow(0);
-        ui->tableWidget->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
     }
 }
 
@@ -1763,28 +1756,33 @@ void MainWindow::GetMedicament(medicament *med)
             if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
             {
                 qDebug() << "такой медикамент уже есть";
+                ui->errorLabel->setText("Медикамент уже просканирован");
                 return;
             }
 
             if ( (med->GTIN != listmed->GTIN ) )
             {
                 qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+                ui->errorLabel->setText("неверный GTIN");
             }
 
             if ( (med->ExperyDate != listmed->ExperyDate ) )
             {
                 qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+                ui->errorLabel->setText("неверная Дата");
 
             }
 
             if ( (med->BatchNumber != listmed->BatchNumber ) )
             {
                 qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+                ui->errorLabel->setText("неверная партия");
             }
 
             if ( (med->TNVED != listmed->TNVED ) )
             {
                 qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+                ui->errorLabel->setText("неверная ТНВЭД");
             }
 
             if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
@@ -1796,11 +1794,17 @@ void MainWindow::GetMedicament(medicament *med)
         if (CheckMedicamentinDB(med))
         {
             qDebug() << "такой медикамент уже есть в базе данных";
+            ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }
+
+
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);
+
+        ui->errorLabel->clear();
+        ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
     }
 }
 
