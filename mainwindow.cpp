@@ -208,15 +208,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // сигналы и слоты для 911 бизнес процесса
-
-    connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
-    connect(this, &MainWindow::SendMedicamentSignal, ui->UnitPackPageWidget, &UnitPackWidget911::GetMedicament) ;
-    connect(this, &MainWindow::SendCompaniesDBList, ui->UnitPackPageWidget, &UnitPackWidget911::GetCompaniesDBList) ;
-
+    connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
+    connect(this, &MainWindow::SendMedicamentSignal, ui->UnitPackPageWidget, &UnitPackWidget911::GetMedicament);
+    connect(this, &MainWindow::SendCompaniesDBList, ui->UnitPackPageWidget, &UnitPackWidget911::GetCompaniesDBList);
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
 
-    //CreateXML911Doc();
+    // сигналы и слоты для 811 бизнес процесса
 
+//    connect(ui->RelabelingWidget, &RelabelingWidget811::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
+//    connect(this, &MainWindow::SendMedicamentSignal, ui->RelabelingWidget, &RelabelingWidget811::GetMedicament);
+//    connect(this, &MainWindow::SendCompaniesDBList, ui->RelabelingWidget, &RelabelingWidget811::GetCompaniesDBList);
+//    connect(ui->RelabelingWidget, &RelabelingWidget811::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -752,19 +754,7 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     addXMLTextNode(relabeling_elem,  company_subject->get_subject_id() , "subject_id", document);
     //добавили subject_id
 
-    //QString SSCCCode128 ="(00) " + companysender->getGS1id() + " " +  generateCode128(8);
-    QString SSCCCode128 = "00" +  company_subject->getGS1id() +  generateCode128(8);
-    QString CorrectedDate = "20" + MedListOld.at(0)->ExperyDate;
-    QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
 
-    EticetkaBFZ = new eticetka(company_subject->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а",MedListOld.at(0)->medicament_name,MedListOld.length(),MedListOld.at(0)->GTIN,MedListOld.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
-
-    if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
-        return;
-
-    // добавляем subject_id
-    addXMLTextNode(relabeling_elem,  SSCCCode128 , "sscc", document);
-    // добавили subject_id
 
     // добавляем operation_date
     // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
@@ -772,20 +762,28 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     // добавили operation_date
 
 
-    QDomElement signs_element  = document.createElement("signs");
-    relabeling_elem.appendChild(signs_element);
+    QDomElement relabeling_detail_element  = document.createElement("relabeling_detail");
+    relabeling_elem.appendChild(relabeling_detail_element);
 
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
 
     for (int var = 0; var < MedListOld.length(); ++var) {
 
-        addXMLTextNode(signs_element, MedListOld.at(var)->sGTIN, "sgtin", document);
+        QDomElement detail_element  = document.createElement("detail");
+        relabeling_elem.appendChild(detail_element);
 
+        // добавляем new_sgtin в detail
+        addXMLTextNode(detail_element,  MedListNew.at(var)->sGTIN , "new_sgtin", document);
+        // добавили new_sgtin в detail
+
+        // добавляем old_sgtin в detail
+        addXMLTextNode(detail_element,  MedListOld.at(var)->sGTIN , "old_sgtin", document);
+        // добавили old_sgtin в detail
     }
-    // добавили signs
 
-    //    QString filepath = QDir::currentPath()   + "/811-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    //добавили signs
+
     QString filepath ="C:/Work/Generated XML/811-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
     qDebug() <<filepath;
