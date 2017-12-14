@@ -61,9 +61,9 @@
    <property name="geometry">
     <rect>
      <x>1</x>
-     <y>325</y>
+     <y>275</y>
      <width>481</width>
-     <height>91</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="columnCount">
@@ -431,13 +431,13 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>220</x>
      <y>90</y>
-     <width>251</width>
-     <height>221</height>
+     <width>274</width>
+     <height>181</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">

@@ -81,7 +81,7 @@ public:
     void setcompany(manufacturer *value);
 
 
-eticetka * EticetkaBFZ;
+    eticetka * EticetkaBFZ;
 
     bool getRunningBuisenessProcess() const;
     void setRunningBuisenessProcess(bool value);
@@ -101,12 +101,13 @@ public slots:
     void CreateXML312Doc(QList<medicament *> MedList , uint8_t controlsamplestype);
     void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
+    void CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer * companysender, QDateTime operation_date);
     void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
     void StartAgregation();
     void StopAgregation();
     bool getLanguageswitcher() const;
     void setLanguageswitcher(bool value);
-void Getmessage(QString m);
+    void Getmessage(QString m);
     void PrintSSCCCode(QString newcode);
     bool PrintBIGEtiketka(eticetka * et);
 

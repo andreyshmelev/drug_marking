@@ -266,6 +266,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
+
+    ui->MedicamentsTable->horizontalHeader()->setVisible(true);
 }
 
 MainWindow::~MainWindow()
@@ -722,6 +724,85 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     }
 
     QDesktopServices::openUrl(filepath);  // раскомментить если мы хотим чтобы по окончании агрегации открывался XML файл
+}
+
+void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer *company_subject, QDateTime operation_date)
+{
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
+
+    if (MedListOld.length() <=0)
+        return ;
+
+    if (MedListNew.length() <=0)
+        return ;
+
+    if (MedListNew.length() != MedListOld.length())
+        return ;
+
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    QDomElement relabeling_elem  = document.createElement("relabeling");
+    relabeling_elem.setAttribute("action_id", "811");
+    root.appendChild(relabeling_elem);
+
+    //добавляем subject_id
+    addXMLTextNode(relabeling_elem,  company_subject->get_subject_id() , "subject_id", document);
+    //добавили subject_id
+
+    //QString SSCCCode128 ="(00) " + companysender->getGS1id() + " " +  generateCode128(8);
+    QString SSCCCode128 = "00" +  company_subject->getGS1id() +  generateCode128(8);
+    QString CorrectedDate = "20" + MedListOld.at(0)->ExperyDate;
+    QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
+
+    EticetkaBFZ = new eticetka(company_subject->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а",MedListOld.at(0)->medicament_name,MedListOld.length(),MedListOld.at(0)->GTIN,MedListOld.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
+
+    if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
+        return;
+
+    // добавляем subject_id
+    addXMLTextNode(relabeling_elem,  SSCCCode128 , "sscc", document);
+    // добавили subject_id
+
+    // добавляем operation_date
+    // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    addXMLTextNode(relabeling_elem,  GetISODate(), "operation_date", document);
+    // добавили operation_date
+
+
+    QDomElement signs_element  = document.createElement("signs");
+    relabeling_elem.appendChild(signs_element);
+
+    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+    // добавляем sgtin
+
+    for (int var = 0; var < MedListOld.length(); ++var) {
+
+        addXMLTextNode(signs_element, MedListOld.at(var)->sGTIN, "sgtin", document);
+
+    }
+    // добавили signs
+
+    //    QString filepath = QDir::currentPath()   + "/811-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    QString filepath ="C:/Work/Generated XML/811-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+
+    qDebug() <<filepath;
+
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open";
+        return;
+    }
+    else
+    {
+        QTextStream stream(&file);
+        stream<< document.toString();
+        file.close();
+    }
 }
 
 void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date)
@@ -1340,6 +1421,7 @@ void MainWindow::AddMedicamentToTable(medicament * m)
     if (getAgregation() )
     {
         ui->MedicamentsTable->insertRow(0);
+
         ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
         ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(m->GTIN));
         ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(m->BatchNumber));
@@ -1347,6 +1429,10 @@ void MainWindow::AddMedicamentToTable(medicament * m)
         ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(m->TNVED));
         ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
         ui->MedicamentsTable->scrollToTop();
+        ui->MedicamentsTable->horizontalHeader()->setVisible(true);
+
+        ui->tableWidget->insertRow(0);
+        ui->tableWidget->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
     }
 }
 
