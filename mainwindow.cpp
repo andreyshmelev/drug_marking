@@ -141,6 +141,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     RandomStringSenderToVideoJetTimer = new QTimer();
     RandomStringSenderToVideoJetTimer->setInterval(1000*45); // каждые сорок пять секунд посылаем новую произвольную строку
+//    RandomStringSenderToVideoJetTimer->setInterval(1000); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
@@ -824,7 +825,13 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     QString CorrectedDate = "20" + MedList.at(0)->ExperyDate;
     QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
 
-    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),"таблетки 10 мг №30","623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а",MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),"Хранить и транспортировать \nпри температуре от 15 до 30 C°","0000",SSCCCode128 );
+
+    QString where1 = QString ( "drugs_name = '%1' " ).arg(MedList.at(0)->medicament_name);
+    QString dose = sqlDB->sel("Dose", "Drugs", where1,"Dose").at(0);
+    QString conditions = sqlDB->sel("conditions", "Drugs", where1,"conditions").at(0);
+    QString address = "623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а";
+
+    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),conditions,"0000",SSCCCode128 );
 
     if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
         return;
@@ -1740,8 +1747,14 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     QString where = QString ( "drugs_name = '%1' " ).arg(ui->DrugsComboBox->itemText(index));
     QString gtin = sqlDB->sel("gtin", "Drugs", where,"gtin").at(0);
     QString tnved = sqlDB->sel("tnved", "Drugs", where,"tnved").at(0);
+    QString dose = sqlDB->sel("Dose", "Drugs", where,"Dose").at(0);
+    QString conditions = sqlDB->sel("conditions", "Drugs", where,"conditions").at(0);
+
     ui->GTINVal->setText(gtin);
     ui->TNVEDVal->setText(tnved);
+    ui->DoseVal->setText(dose);
+    ui->conditions->clear();
+    ui->conditions->appendPlainText(conditions);
 }
 
 void MainWindow::GetMedicament(medicament *med)
@@ -1749,7 +1762,6 @@ void MainWindow::GetMedicament(medicament *med)
     //updateWidgetGui(ScannedMedicament->GTIN, ScannedMedicament->SerialNumber, ScannedMedicament->TNVED, ScannedMedicament->ExperyDate, ScannedMedicament->BatchNumber);
     if (getAgregation())
     {
-        qDebug() <<"MainWindow GetMedicament";
         // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
         foreach ( medicament * listmed , MedicamentsList)
         {
@@ -1797,7 +1809,6 @@ void MainWindow::GetMedicament(medicament *med)
             ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }
-
 
         MedicamentsList.append(med);
         AddMedicamentToTable(med);

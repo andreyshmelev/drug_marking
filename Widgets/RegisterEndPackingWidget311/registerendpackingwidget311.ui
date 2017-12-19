@@ -112,7 +112,7 @@
      <x>0</x>
      <y>30</y>
      <width>181</width>
-     <height>31</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="font">
@@ -130,10 +130,13 @@
      <x>4</x>
      <y>70</y>
      <width>211</width>
-     <height>171</height>
+     <height>176</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QLabel" name="GTINLabelAgregation">
       <property name="minimumSize">
@@ -226,7 +229,7 @@ p, li { white-space: pre-wrap; }
       <property name="minimumSize">
        <size>
         <width>120</width>
-        <height>0</height>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -344,7 +347,7 @@ p, li { white-space: pre-wrap; }
       <property name="minimumSize">
        <size>
         <width>120</width>
-        <height>0</height>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -394,7 +397,7 @@ p, li { white-space: pre-wrap; }
        <string>ТН ВЭД</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -408,7 +411,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="maximumSize">
        <size>
-        <width>80</width>
+        <width>150</width>
         <height>30</height>
        </size>
       </property>
@@ -426,149 +429,6 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>70</y>
-     <width>274</width>
-     <height>171</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="1">
-     <widget class="QComboBox" name="senderID"/>
-    </item>
-    <item row="3" column="1">
-     <widget class="QComboBox" name="OrderTypeCombo">
-      <item>
-       <property name="text">
-        <string>1 - Собственное пр-во</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>2 - Контрактное пр-во</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="dataotgruzki">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Дата упаковки</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="ownerID"/>
-    </item>
-    <item row="2" column="1">
-     <widget class="QDateTimeEdit" name="operationDate">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="date">
-       <date>
-        <year>2017</year>
-        <month>10</month>
-        <day>15</day>
-       </date>
-      </property>
-      <property name="maximumDate">
-       <date>
-        <year>2099</year>
-        <month>1</month>
-        <day>1</day>
-       </date>
-      </property>
-      <property name="minimumDate">
-       <date>
-        <year>2010</year>
-        <month>1</month>
-        <day>1</day>
-       </date>
-      </property>
-      <property name="displayFormat">
-       <string>dd.MM.yy</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="turntype">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Тип производствен-
-ного заказа</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="otpravit">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Отправитель</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="owner">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Собственник</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -627,6 +487,172 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string/>
    </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>221</x>
+     <y>69</y>
+     <width>251</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="otpravit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Отправитель</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="senderID">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="owner">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Собственник</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="ownerID">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="dataotgruzki">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Дата упаковки</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QDateTimeEdit" name="operationDate">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="date">
+       <date>
+        <year>2017</year>
+        <month>10</month>
+        <day>15</day>
+       </date>
+      </property>
+      <property name="maximumDate">
+       <date>
+        <year>2099</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>2010</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="displayFormat">
+       <string>dd.MM.yy</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="turntype">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Тип 
+заказа</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QComboBox" name="OrderTypeCombo">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>1 - Собственное пр-во</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2 - Контрактное пр-во</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

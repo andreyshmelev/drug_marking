@@ -57,7 +57,7 @@ void MoveOrder415::ToggleRegistration()
 void MoveOrder415::StartRegistrationProcess()
 {
     registration = true;
-//    emit setLanguageswitcher(true);
+    emit setScannerLanguage(true);
     emit RegistrationStarted();
     emit RegistrationToggled();
 }
@@ -227,58 +227,66 @@ void MoveOrder415::StopRegistrationProcess()
 void MoveOrder415::GetMedicament(medicament *med)
 {
     ScannedMedicament = med;
-    updateWidgetGui(med->GTIN, med->SerialNumber, med->TNVED, med->ExperyDate, med->BatchNumber);
+    updateWidgetGui(med->GTIN, med->BatchNumber, med->SerialNumber, med->TNVED, med->ExperyDate);
 
-    qDebug() << "registration was 22 "<< registration ;
+
 
 //    registration = true;
 
     if (registration == true)
     {
-        qDebug() <<"UnitExtractWidget GetMedicament";
         // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
-//        foreach ( medicament * listmed , MedicamentsList)
-//        {
-//            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
-//            {
-//                qDebug() << "такой медикамент уже есть";
-//                return;
-//            }
+        foreach ( medicament * listmed , MedicamentsList)
+        {
+            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
+            {
+                qDebug() << "такой медикамент уже есть";
+                ui->errorLabel->setText("Медикамент уже просканирован");
+                return;
+            }
 
-//            if ( (med->GTIN != listmed->GTIN ) )
-//            {
-//                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
-//            }
+            if ( (med->GTIN != listmed->GTIN ) )
+            {
+                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+                ui->errorLabel->setText("неверный GTIN");
+            }
 
-//            if ( (med->ExperyDate != listmed->ExperyDate ) )
-//            {
-//                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+            if ( (med->ExperyDate != listmed->ExperyDate ) )
+            {
+                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+                ui->errorLabel->setText("неверная Дата");
 
-//            }
+            }
 
-//            if ( (med->BatchNumber != listmed->BatchNumber ) )
-//            {
-//                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
-//            }
+            if ( (med->BatchNumber != listmed->BatchNumber ) )
+            {
+                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+                ui->errorLabel->setText("неверная партия");
+            }
 
-//            if ( (med->TNVED != listmed->TNVED ) )
-//            {
-//                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
-//            }
+            if ( (med->TNVED != listmed->TNVED ) )
+            {
+                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+                ui->errorLabel->setText("неверная ТНВЭД");
+            }
 
-//            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
-//            {
-//                return;
-//            }
-//        }
-//        if (CheckMedicamentinDB(med))
-//        {
-//            qDebug() << "такой медикамент уже есть в базе данных";
-//            return;
-//        }
+            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
+            {
+                return;
+            }
+        }
+        if (CheckMedicamentinDB(med))
+        {
+            qDebug() << "такой медикамент уже есть в базе данных";
+            ui->errorLabel->setText("Медикамент есть в БД");
+            return;
+        }
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);
+
+        ui->errorLabel->clear();
+        ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
     }
 }
 
@@ -293,7 +301,7 @@ void MoveOrder415::updateGUI()
     QImage i;
     QPixmap scale_image ;
 
-    if (registration != false) // if true
+    if (registration == true) // if true
     {
         i = MainWindow::QRCodeToQImageConverter(Stop415ProcessQRString,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
         ui->qrstartstop->setPixmap( QPixmap::fromImage( i ) );
@@ -315,6 +323,9 @@ void MoveOrder415::updateGUI()
         ui->TNVEDValueAgregation->setEnabled(false);
         ui->serialNumberAgregationValue->setEnabled(false);
         ui->MedicamentsTable->clearContents();
+        ui->MedicamentsTable->clearContents();
+        ui->MedicamentsTable->setRowCount(0);
+
     }
 
     double scale = 29 * scale_size;
