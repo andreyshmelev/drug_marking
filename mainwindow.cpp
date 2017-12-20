@@ -87,9 +87,7 @@ void MainWindow::GetCompaniesDBList()
 
         manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id , company_gs1id);
         CompaniesListFromDB.append(c);
-        //        qDebug() << c->get_email() << c->get_organisation_name() << c->get_owner_id() << c->get_ul();
     }
-
     emit SendCompaniesDBList(CompaniesListFromDB);
 }
 
@@ -102,7 +100,6 @@ bool MainWindow::IsDateProper(QString stringtotest)
         result = false;
     else
         result = true;
-
     return result;
 }
 

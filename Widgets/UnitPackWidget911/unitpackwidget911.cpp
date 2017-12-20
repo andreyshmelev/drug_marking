@@ -22,9 +22,6 @@ UnitPackWidget911::~UnitPackWidget911()
     delete ui;
 }
 
-
-
-
 bool UnitPackWidget911::getRegistration() const
 {
     return registration;

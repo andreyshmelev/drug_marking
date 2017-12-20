@@ -370,3 +370,8 @@ void MoveOrder415::GetCompaniesDBList(QList<manufacturer*> man)
     ui->senderCombobox->addItems(a);
     ui->recieverCombobox->addItems(a);
 }
+
+void MoveOrder415::on_priceValue_valueChanged(double arg1)
+{
+    ui->vatValue->setValue(arg1*0.18);
+}
