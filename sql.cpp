@@ -13,16 +13,13 @@ SQL::SQL(QString path)
 //    db.setDatabaseName(path);
 
 //    QString hostname = "LOCALHOST\\MySQL57";
-    QString hostname = "";
     QString dbname = "mark";
+    QString hostname = "192.168.1.37";
     int port = 3306;
 
-    QString user = "root";
-    QString password = "12345";
-//    QString user = "markirovka";
-//    QString password = "WD8NHWq3T0zT";
+    QString user = "markirovka";
+    QString password = "WD8NHWq3T0zT";
     QString driver = "QMYSQL";
-
 
     QSqlError err;
     QSqlDatabase db = QSqlDatabase::addDatabase(driver, QString("drivername"));
@@ -32,35 +29,15 @@ SQL::SQL(QString path)
     db.setPort(port);
     if (!db.open(user, password)) {
         err = db.lastError();
-
-        qDebug() << "Base NOT opened!";
+        qDebug() << "NOT opened!";
     }
     else
     {
         qDebug() << "Base opened!";
     }
 
-//    QString filepath ="O:/log.txt";
-//    QFile file(filepath);
-
-//    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
-//    {
-//        qDebug() << "Failed to open";
-//    }
-//    else
-//    {
-//        QTextStream stream(&file);
-//        stream << as ;
-//        file.close();
-//    }
-
-
-    qDebug() << sel("company_name", "Company", "company = 'BFZ' ","company_name")[0];
-    qDebug() << sel("company_name", "Company", "company = 'KORVAS' ","company_name")[0];
-
-
-
-
+//    qDebug() << sel("company_name", "Company", "company = 'BFZ' ","company_name")[0];
+//    qDebug() << sel("company_name", "Company", "company = 'KORVAS' ","company_name")[0];
 }
 
 void SQL::baseConnection()
