@@ -281,6 +281,7 @@ void MoveOrder415::GetMedicament(medicament *med)
             ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }
+
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         AddMedicamentToDB(med);

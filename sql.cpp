@@ -9,31 +9,50 @@ SQL::SQL()
 
 SQL::SQL(QString path)
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path);
-    //    db.setUserName("korvas");
-    //    db.setHostName("localhost");
-    //    db.setPassword("password");
-    if (!db.open()) {
+//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+//    db.setDatabaseName(path);
 
-        qDebug() << "Cannot open database:" << db.lastError();
-    }
+//    QString hostname = "LOCALHOST\\MySQL57";
+    QString hostname = "";
+    QString dbname = "mark";
+    int port = 3306;
 
-    QString as =  db.lastError().text();
+    QString user = "root";
+    QString password = "12345";
+//    QString user = "markirovka";
+//    QString password = "WD8NHWq3T0zT";
+    QString driver = "QMYSQL";
 
-    QString filepath ="O:/log.txt";
-    QFile file(filepath);
 
-    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        qDebug() << "Failed to open";
+    QSqlError err;
+    QSqlDatabase db = QSqlDatabase::addDatabase(driver, QString("drivername"));
+
+    db.setDatabaseName(dbname);
+    db.setHostName(hostname);
+    db.setPort(port);
+    if (!db.open(user, password)) {
+        err = db.lastError();
+
+        qDebug() << "Base NOT opened!";
     }
     else
     {
-        QTextStream stream(&file);
-        stream << as ;
-        file.close();
+        qDebug() << "Base opened!";
     }
+
+//    QString filepath ="O:/log.txt";
+//    QFile file(filepath);
+
+//    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+//    {
+//        qDebug() << "Failed to open";
+//    }
+//    else
+//    {
+//        QTextStream stream(&file);
+//        stream << as ;
+//        file.close();
+//    }
 
 
     qDebug() << sel("company_name", "Company", "company = 'BFZ' ","company_name")[0];

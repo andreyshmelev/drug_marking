@@ -105,6 +105,8 @@ bool MainWindow::IsDateProper(QString stringtotest)
 
 void MainWindow::SQLInit()
 {
+    qDebug() << "987987987987";
+
     sqlDB = new SQL("C:/SQL/ISMarkirovkaDB.db");
     //sqlDB = new SQL(QDir::currentPath() + "/ISMarkirovkaDB.db");
     //qDebug() << QDir::currentPath() + "/SQL" + "/ISMarkirovkaDB.db";
