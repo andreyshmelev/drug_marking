@@ -9,6 +9,7 @@ class SQL : public QObject
 public:
     SQL();
     SQL(QString path);
+    QSqlDatabase db;
 public slots:
     void baseConnection();
     QStringList sel(QString select, QString from, QString where, QString rec);

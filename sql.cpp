@@ -9,20 +9,25 @@ SQL::SQL()
 
 SQL::SQL(QString path)
 {
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-//    db.setDatabaseName(path);
+    //    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    //    db.setDatabaseName(path);
 
-//    QString hostname = "LOCALHOST\\MySQL57";
+    //    QString hostname = "LOCALHOST\\MySQL57";
     QString dbname = "mark";
-    QString hostname = "192.168.1.37";
+    QString hostname = ""; // 192.168.1.37
     int port = 3306;
 
     QString user = "markirovka";
     QString password = "WD8NHWq3T0zT";
+
+    //    QString user = "root";
+    //    QString password = "12345";
+
+
     QString driver = "QMYSQL";
 
     QSqlError err;
-    QSqlDatabase db = QSqlDatabase::addDatabase(driver, QString("drivername"));
+    db = QSqlDatabase::addDatabase(driver, QString("drivername"));
 
     db.setDatabaseName(dbname);
     db.setHostName(hostname);
@@ -35,9 +40,6 @@ SQL::SQL(QString path)
     {
         qDebug() << "Base opened!";
     }
-
-//    qDebug() << sel("company_name", "Company", "company = 'BFZ' ","company_name")[0];
-//    qDebug() << sel("company_name", "Company", "company = 'KORVAS' ","company_name")[0];
 }
 
 void SQL::baseConnection()
@@ -45,7 +47,7 @@ void SQL::baseConnection()
     QString path  = "C:/Work/SQL/mydatabase";
     //    QString path  = "C:/Work/SQL/DB";
     {
-        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db = QSqlDatabase::addDatabase("QSQLITE");
         db.setDatabaseName(path);
         db.setUserName("korvas");
         db.setHostName("localhost");
@@ -60,27 +62,25 @@ void SQL::baseConnection()
 
 QStringList SQL::sel(QString select, QString from, QString where, QString rec)
 {
-    QSqlQuery query;
+    QSqlQuery query("", db);
     //Задаем запрос
     QString execc = "SELECT " + select + " FROM " + from;
 
-    //    qDebug() << execc;
+    qDebug() << execc;
     if (where != "")
     {
         execc += " WHERE " + where;
     }
 
-    //     qDebug() << execc;
-
-
     if (!query.exec(execc)) {
-        qDebug() << "Unable to execute query - exiting";
+        //        qDebug() << "Unable to execute query - exiting";
+        qDebug() << "Last DataBase Error" << query.lastError();
+    }
+    //    else
+    //    {
+    //        //        qDebug() << "Exec success";
+    //    }
 
-    }
-    else
-    {
-        //        qDebug() << "Exec success";
-    }
     //Reading of the data
     QSqlRecord SQLrec     = query.record();
     QStringList    strName;
@@ -97,7 +97,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
 
 QSqlError SQL::makesqlreq(QString req)
 {
-    QSqlQuery query;
+    QSqlQuery query("", db);
     //Задаем запрос
     QString execc = req;
 

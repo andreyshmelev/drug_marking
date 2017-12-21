@@ -25,28 +25,6 @@ QElapsedTimer MainWindow::SQLInsertSpeedTest()
     QElapsedTimer timer;
     timer.start();
 
-    //    for (int var = 0; var < testitemscount; ++var) {
-
-    //        time_t timer1;
-    //        struct tm x_years;
-    //        struct tm* current;
-    //        int how_many_years = 10;
-    //        int randomYear = (rand()%how_many_years)+1;
-    //        int randomMonth = (rand()%12)+1;
-    //        int randomDays = (rand()%30)+1;
-    //        time(&timer1);
-    //        current = localtime(&timer1);
-    //        x_years.tm_hour = 0;
-    //        x_years.tm_min = 0;
-    //        x_years.tm_sec = 0;
-    //        x_years.tm_year = current->tm_year - randomYear;
-    //        x_years.tm_mon = (current->tm_mon - randomMonth) <= 0 ? current->tm_mon + (12-randomMonth) : current->tm_mon - randomMonth;
-    //        x_years.tm_mday = (current->tm_mday - randomDays) <= 0 ? current->tm_mday + (30-randomDays) : current->tm_mday - randomDays;
-    //        req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1.%2.%3','%4')").arg(QString::number(x_years.tm_mday),QString::number(x_years.tm_mon),QString::number(x_years.tm_year+1900),generateSN(50));
-
-    //        sqlDB->makesqlreq(req);
-    //    }
-
     qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
     return timer;
@@ -57,7 +35,7 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
     QString req;
     QElapsedTimer timer;
     timer.start();
-    //    QStringList sellist = sqlDB->sel("company", "Company", "","company");
+    //    QStringList sellist = sqlDB->sel("company", "company", "","company");
     QStringList sellist = sqlDB->sel("date", "ScannerLog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
 
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed()/1000<< "seconds";
@@ -67,12 +45,12 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
 
 void MainWindow::GetCompaniesDBList()
 {
-    companies = sqlDB->sel("company_name", "Company", "","company_name");
+    companies = sqlDB->sel("company_name", "company", "","company_name");
 
     foreach (QString s, companies) {
 
         // читаем производителя из БД
-        QString fromcompany = "Company";
+        QString fromcompany = "company";
         QString    wherecompany = "company_name = '" + s + "' ";
         // подтягиваем параметры компании
         QString companyname = sqlDB->sel("company_name", fromcompany, wherecompany,"company_name")[0];
@@ -105,14 +83,8 @@ bool MainWindow::IsDateProper(QString stringtotest)
 
 void MainWindow::SQLInit()
 {
-    qDebug() << "987987987987";
-
-    sqlDB = new SQL("C:/SQL/ISMarkirovkaDB.db");
-    //sqlDB = new SQL(QDir::currentPath() + "/ISMarkirovkaDB.db");
-    //qDebug() << QDir::currentPath() + "/SQL" + "/ISMarkirovkaDB.db";
-    //connect(sqlDB, &SQL::sendmessage, this, &MainWindow::Getmessage) ;
-    //подтягиваем параметры препаратов из БД
-    drugs = sqlDB->sel("drugs_name", "Drugs", "","drugs_name");
+    sqlDB = new SQL("ненужная строка");
+    drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
     // подтягиваем параметры компании
     GetCompaniesDBList();
 }
@@ -826,8 +798,8 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
 
 
     QString where1 = QString ( "drugs_name = '%1' " ).arg(MedList.at(0)->medicament_name);
-    QString dose = sqlDB->sel("Dose", "Drugs", where1,"Dose").at(0);
-    QString conditions = sqlDB->sel("conditions", "Drugs", where1,"conditions").at(0);
+    QString dose = sqlDB->sel("Dose", "drugs", where1,"Dose").at(0);
+    QString conditions = sqlDB->sel("conditions", "drugs", where1,"conditions").at(0);
     QString address = "623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а";
 
     EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),conditions,"0000",SSCCCode128 );
@@ -1289,7 +1261,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
 
     QString medicamentName;
     QString whereGtin = QString("gtin = '%1'  ").arg(gtinstring);
-    medicamentName = sqlDB->sel("drugs_name", "Drugs", whereGtin,"drugs_name").at(0);
+    medicamentName = sqlDB->sel("drugs_name", "drugs", whereGtin,"drugs_name").at(0);
     if (medicamentName == "")
     {
         medicamentName = "No drug in DB found";
@@ -1442,7 +1414,7 @@ bool MainWindow::CheckMedicamentinDB(medicament *m)
 {
     QString where = QString ( "drugs_name = '%1' " ).arg(m->SerialNumber);
 
-    if (sqlDB->sel("tnved", "Drugs", where,"tnved").at(0) != "")
+    if (sqlDB->sel("tnved", "drugs", where,"tnved").at(0) != "")
     {
 
     }
@@ -1744,10 +1716,10 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     qDebug() << index << "index";
 
     QString where = QString ( "drugs_name = '%1' " ).arg(ui->DrugsComboBox->itemText(index));
-    QString gtin = sqlDB->sel("gtin", "Drugs", where,"gtin").at(0);
-    QString tnved = sqlDB->sel("tnved", "Drugs", where,"tnved").at(0);
-    QString dose = sqlDB->sel("Dose", "Drugs", where,"Dose").at(0);
-    QString conditions = sqlDB->sel("conditions", "Drugs", where,"conditions").at(0);
+    QString gtin = sqlDB->sel("gtin", "drugs", where,"gtin").at(0);
+    QString tnved = sqlDB->sel("tnved", "drugs", where,"tnved").at(0);
+    QString dose = sqlDB->sel("Dose", "drugs", where,"Dose").at(0);
+    QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
 
     ui->GTINVal->setText(gtin);
     ui->TNVEDVal->setText(tnved);
