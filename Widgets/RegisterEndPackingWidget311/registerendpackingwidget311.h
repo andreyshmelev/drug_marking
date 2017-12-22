@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <medicament.h>
 #include <manufacturer.h>
+#include "sql.h"
 
 namespace Ui {
 class RegisterEndPackingWidget311;
@@ -23,6 +24,7 @@ public:
 
 private:
 
+    SQL  * sqlDB;
     void updateWidgetGui(QString gtinstring, QString batchstring, QString SNstring, QString tnvedstring, QString expstring);
     bool registration ;
     medicament * ScannedMedicament;
@@ -33,8 +35,6 @@ private:
     const QString Stop311ProcessQRString  = "641195";
 
     QList<manufacturer *> manufacturesList;
-
-
 
     manufacturer *getcompanysender();
     manufacturer *getcompanyowner();

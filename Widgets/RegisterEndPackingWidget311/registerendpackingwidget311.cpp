@@ -249,7 +249,8 @@ void RegisterEndPackingWidget311::AddMedicamentToTable(medicament *m)
 
 void RegisterEndPackingWidget311::AddMedicamentToDB(medicament *m)
 {
-
+    sqlDB = new SQL("ненужная строка");
+    sqlDB->makesqlreq(QString("insert into process311 values (%1,%2,%3,%4)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),""));
 }
 
 void RegisterEndPackingWidget311::on_RegistrationStartButton_clicked()

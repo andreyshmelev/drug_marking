@@ -3,7 +3,6 @@
 #include "../../mainwindow.h"
 #include <QDebug>
 
-
 UnitPackWidget911::UnitPackWidget911(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::UnitPackWidget911)
@@ -73,7 +72,6 @@ manufacturer * UnitPackWidget911::getcompanysender()
 QDateTime UnitPackWidget911::getoperationDate()
 {
     QDateTime operation_date = ui->operationDate->dateTime();
-
     return operation_date;
 }
 
@@ -81,17 +79,12 @@ QDateTime UnitPackWidget911::getoperationDate()
 void UnitPackWidget911::StopRegistrationProcess()
 {
     registration = false;
-
     manufacturer *companysender = getcompanysender();
     QDateTime operation_date = getoperationDate();
-
     emit RegistrationCompleted(MedicamentsList,companysender,operation_date);
     emit RegistrationToggled();
     emit setScannerLanguage(false);
-//    emit PrintSSCC("123456789");
     MedicamentsList.clear();
-
-
 }
 
 void UnitPackWidget911::GetMedicament(medicament *med)
@@ -149,8 +142,6 @@ void UnitPackWidget911::GetMedicament(medicament *med)
         }
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
-        AddMedicamentToDB(med);
-
         ui->errorLabel->clear();
         ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
     }
@@ -190,7 +181,6 @@ void UnitPackWidget911::updateGUI()
         ui->serialNumberAgregationValue->setEnabled(false);
         ui->MedicamentsTable->clearContents();
         ui->MedicamentsTable->setRowCount(0);
-
     }
 
     double scale = 29 * scale_size;
@@ -212,7 +202,10 @@ void UnitPackWidget911::AddMedicamentToTable(medicament *m)
 
 void UnitPackWidget911::AddMedicamentToDB(medicament *m)
 {
+    sqlDB = new SQL("ненужная строка");
+    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
 
+//    drugs = sqlDB->sel("drugs_name", "process311", "","drugs_name");
 }
 
 void UnitPackWidget911::on_RegistrationStartButton_clicked()
@@ -220,17 +213,13 @@ void UnitPackWidget911::on_RegistrationStartButton_clicked()
     ToggleRegistration();
 }
 
-
 void UnitPackWidget911::GetCompaniesDBList(QList<manufacturer*> man)
 {
     QStringList a ;
 
     foreach (manufacturer * d , man) {
         manufacturesList.append(d);
-
-        //        qDebug() << d->get_organisation_name() << "UnitPackWidget911";
         a.append(d->get_organisation_name());
     }
-
     ui->senderID->addItems(a);
 }

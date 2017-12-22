@@ -649,7 +649,6 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     addXMLTextNode(move_order_elem, QString::number(contracttype), "contract_type", document);
     // добавили contract_type
 
-
     QDomElement order_details_element  = document.createElement("order_details");
     move_order_elem.appendChild(order_details_element);
 
