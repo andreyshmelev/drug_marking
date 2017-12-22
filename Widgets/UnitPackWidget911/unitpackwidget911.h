@@ -52,12 +52,13 @@ private slots:
     void updateGUI();
 
     void AddMedicamentToTable(medicament * m);
-    void AddMedicamentToDB(medicament * m);
+
 
     void on_RegistrationStartButton_clicked();
 
 signals:
 
+    void AddMedicamentToDB(medicament * m, QString table);
     void PrintSSCC(QString str);
     void setScannerLanguage(bool);
     void RegistrationStarted();

@@ -187,8 +187,7 @@ void RegisterEndPackingWidget311::GetMedicament(medicament *med)
         }
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
-        AddMedicamentToDB(med);
-
+        emit AddMedicamentToDBTable(med, "process311");
         ui->errorLabel->clear();
         ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
     }
@@ -247,11 +246,11 @@ void RegisterEndPackingWidget311::AddMedicamentToTable(medicament *m)
     ui->MedicamentsTable->scrollToTop();
 }
 
-void RegisterEndPackingWidget311::AddMedicamentToDB(medicament *m)
-{
-    sqlDB = new SQL("ненужная строка");
-    sqlDB->makesqlreq(QString("insert into process311 values (%1,%2,%3,%4)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),""));
-}
+//void RegisterEndPackingWidget311::AddMedicamentToDB(medicament *m)
+//{
+//    sqlDB = new SQL("ненужная строка");
+//    sqlDB->makesqlreq(QString("insert into process311 values (%1,%2,%3,%4)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),""));
+//}
 
 void RegisterEndPackingWidget311::on_RegistrationStartButton_clicked()
 {

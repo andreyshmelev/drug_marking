@@ -200,13 +200,12 @@ void UnitPackWidget911::AddMedicamentToTable(medicament *m)
     ui->MedicamentsTable->scrollToTop();
 }
 
-void UnitPackWidget911::AddMedicamentToDB(medicament *m)
-{
-    sqlDB = new SQL("ненужная строка");
-    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
-
-//    drugs = sqlDB->sel("drugs_name", "process311", "","drugs_name");
-}
+//void UnitPackWidget911::AddMedicamentToDB(medicament *m)
+//{
+//    sqlDB = new SQL("ненужная строка");
+//    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
+//    //    drugs = sqlDB->sel("drugs_name", "process311", "","drugs_name");
+//}
 
 void UnitPackWidget911::on_RegistrationStartButton_clicked()
 {

@@ -53,14 +53,13 @@ public slots:
 private slots:
 
     void updateGUI();
-
     void AddMedicamentToTable(medicament * m);
-    void AddMedicamentToDB(medicament * m);
-
     void on_RegistrationStartButton_clicked();
 
 signals:
 
+
+    void AddMedicamentToDBTable(medicament * m, QString tablename); // tablename - например process311
     void setScannerLanguage(bool);
     void RegistrationStarted();
     void StopRegisterControlSamples();

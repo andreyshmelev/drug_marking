@@ -85,6 +85,9 @@ void MainWindow::SQLInit()
 {
     sqlDB = new SQL("ненужная строка");
     drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
+
+//    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg("insertfromQt",QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
+    sqlDB->makesqlreq(QString("insert into process911 values (\"qt53\",\"qt53\",\"qt33\",\"44\",\"55\");") );
     // подтягиваем параметры компании
     GetCompaniesDBList();
 }
@@ -144,9 +147,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(statisticsQRCodeScanned()), this, SLOT(statisticsPageOpen())) ;
 
     // сигналы и слоты для 311 бизнес процесса
-    connect(ui->RegisterEndPackingPage311Widget, SIGNAL(),this , SLOT(StartAgregation()) ) ;
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
-    connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
+    connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
+   connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
     connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
 
@@ -157,6 +160,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted, this, &MainWindow::CreateXML312Doc) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
+    connect(ui->ExtractWidget, &UnitExtractWidget::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
 
     // сигналы и слоты для 313 бизнес процесса, пока он в форме mainwindow, позже нужно будет создать отдельный виджет
     connect(ui->agregationStartButton, &QAbstractButton::pressed, this, &MainWindow::Toggle313Process) ;
@@ -1405,10 +1409,7 @@ void MainWindow::AddMedicamentToTable(medicament * m)
     }
 }
 
-void MainWindow::AddMedicamentToDB(medicament *m)
-{
 
-}
 
 bool MainWindow::CheckMedicamentinDB(medicament *m)
 {
@@ -1783,7 +1784,7 @@ void MainWindow::GetMedicament(medicament *med)
 
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
-        AddMedicamentToDB(med);
+        AddMedicamentToDBTable(med, "process313");
 
         ui->errorLabel->clear();
         ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
@@ -2056,9 +2057,7 @@ void MainWindow::on_batchnumberText_textChanged()
     if (ui->batchnumberText->toPlainText().length()>maxserialnumberlenght)
     {
         QString s = ui->batchnumberText->toPlainText();
-        qDebug() << s;
         s.truncate(maxserialnumberlenght);
-        qDebug() << s;
         ui->batchnumberText->clear();
         ui->batchnumberText->appendPlainText(s);
     }
@@ -2067,4 +2066,11 @@ void MainWindow::on_batchnumberText_textChanged()
 void MainWindow::on_pushButton_clicked()
 {
     SQLInit();
+}
+
+void MainWindow::AddMedicamentToDBTable(medicament *m, QString tablename)
+{
+    QString req = QString("insert into %1 values (\"%2\",\"%3\",\"%4\",%5);").arg(tablename, m->GTIN + m->SerialNumber,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"null");
+    sqlDB->makesqlreq(req);
+    qDebug() << "add to " << req;
 }

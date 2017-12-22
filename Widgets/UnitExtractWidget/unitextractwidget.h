@@ -45,7 +45,6 @@ private slots:
     void updateGUI();
 
     void AddMedicamentToTable(medicament * m);
-    void AddMedicamentToDB(medicament * m);
 
 signals:
 
@@ -53,6 +52,7 @@ signals:
     void StopRegisterControlSamples();
     void RegistrationToggled();
     void RegistrationCompleted(QList<medicament *> MedList , uint8_t controlsamplestype);
+        void AddMedicamentToDBTable(medicament * m, QString tablename); // tablename - например process311
 };
 
 #endif // UNITEXTRACTWIDGET_H

@@ -20,8 +20,8 @@ SQL::SQL(QString path)
     QString user = "markirovka";
     QString password = "WD8NHWq3T0zT";
     
-    //    QString user = "root";
-    //    QString password = "12345";
+//        QString user = "root";
+//        QString password = "12345";
     
     
     QString driver = "QMYSQL";

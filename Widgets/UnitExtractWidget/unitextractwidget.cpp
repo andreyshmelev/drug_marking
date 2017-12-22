@@ -89,7 +89,7 @@ void UnitExtractWidget::GetMedicament(medicament * med )
 
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
-        AddMedicamentToDB(med);
+        emit AddMedicamentToDBTable(med, "process312");
 
         ui->errorLabel->clear();
         ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
@@ -192,9 +192,6 @@ void UnitExtractWidget::AddMedicamentToTable(medicament * m)
     ui->MedicamentsTable->scrollToTop();
 }
 
-void UnitExtractWidget::AddMedicamentToDB(medicament *m)
-{
-}
 
 QImage UnitExtractWidget::QRCodeToQImageConverter( QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
 {

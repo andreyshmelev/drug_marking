@@ -110,6 +110,7 @@ public slots:
     void Getmessage(QString m);
     void PrintSSCCCode(QString newcode);
     bool PrintBIGEtiketka(eticetka * et);
+    void AddMedicamentToDBTable(medicament *m, QString tablename);
 
 private:
     QString getGuiGTIN();
@@ -230,6 +231,8 @@ protected:
 
 
 private slots:
+
+
     void addMessageToJournal();
     void updateTimeDate();
     void updateReadedDMCode();
@@ -239,7 +242,6 @@ private slots:
     void Toggle313Process( void );
     void updateAgregationGUI();
     void AddMedicamentToTable(medicament * m);
-    void AddMedicamentToDB(medicament * m);
     bool CheckMedicamentinDB(medicament * m);
     void setStackedPage(int newindex);
     QString GenerateDMcode();
@@ -280,6 +282,7 @@ private slots:
 
     void on_pushButton_clicked();
 
+
 signals:
 
     void agregationstatusToggled();
@@ -315,6 +318,7 @@ private:
     void SendParamsToVideoJet();
     void SendRandomToVideoJet();
     void GenerateCode128(QString newcode);
+
 };
 
 #endif // MAINWINDOW_H
