@@ -36,7 +36,7 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
     QElapsedTimer timer;
     timer.start();
     //    QStringList sellist = sqlDB->sel("company", "company", "","company");
-    QStringList sellist = sqlDB->sel("date", "ScannerLog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
+    QStringList sellist = sqlDB->sel("date", "scannerlog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
 
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed() << "milliseconds";
@@ -230,14 +230,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->CompaniesCombobox->addItems(companies);
 
     //    QElapsedTimer timer = SQLInsertSpeedTest();
-    QElapsedTimer timer = SQLSelectSpeedTest();
-    ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
+//    QElapsedTimer timer = SQLSelectSpeedTest();
+//    ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
 
     ui->MedicamentsTable->horizontalHeader()->setVisible(true);
+
+    QCoreApplication::addLibraryPath(QDir::currentPath());
 }
 
 MainWindow::~MainWindow()
@@ -373,10 +375,10 @@ void MainWindow::AddHandScannerLOG()
     QElapsedTimer timer;
     timer.start();
 
-    QString req = QString("INSERT INTO \"ScannerLog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
+    QString req = QString("INSERT INTO \"scannerlog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
     qDebug() << req << "req";
     sqlDB->makesqlreq(req );
-    qDebug() << "AddHandScannerLOG took" << timer.elapsed() << "milliseconds";
+    qDebug() << "AddHand scannerlog took" << timer.elapsed() << "milliseconds";
 }
 
 bool MainWindow::getRunningBuisenessProcess() const
@@ -409,8 +411,8 @@ void MainWindow::PrintSSCCCode(QString newcode)
 {
 
     m_Barcode = new Code128Item();
-    m_Barcode->setWidth( 190/1.5 );
-    m_Barcode->setHeight( 110/1.3 );
+    m_Barcode->setWidth( 190 / 1.5 );
+    m_Barcode->setHeight( 110 / 1.3 );
     m_Barcode->setText(newcode);
     m_Scene.clear();
     m_Scene.addItem( m_Barcode );
@@ -445,7 +447,6 @@ void MainWindow::updateReadedDMCode()
 {
     if (inputDataStringFromScaner!="")
     {
-        //AddHandScannerLOG();
         ParseHandScannerData(inputDataStringFromScaner);
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
