@@ -58,7 +58,7 @@ private slots:
 
 signals:
 
-    void AddMedicamentToDB(medicament * m, QString table);
+    void AddMedicamentToDBTable(medicament * m, QString tablename); // tablename - например process311
     void PrintSSCC(QString str);
     void setScannerLanguage(bool);
     void RegistrationStarted();

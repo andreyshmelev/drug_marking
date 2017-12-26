@@ -42,7 +42,7 @@ signals:
     void RegistrationStarted();
     void StopRegisterControlSamples();
     void RegistrationToggled();
-//    void RegistrationCompleted(QList<medicament *> MedList , uint8_t controlsamplestype);
+//    void RegistrationCompleted(QList<medicament *> MedList , quint8 controlsamplestype);
 };
 
 #endif // BASEBUISNESSCLASS_H

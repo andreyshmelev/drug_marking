@@ -142,6 +142,8 @@ void UnitPackWidget911::GetMedicament(medicament *med)
         }
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
+
+        emit AddMedicamentToDBTable(med, "process911");
         ui->errorLabel->clear();
         ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
     }

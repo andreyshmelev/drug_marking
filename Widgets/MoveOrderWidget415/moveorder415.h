@@ -68,13 +68,12 @@ private slots:
 
     void updateGUI();
     void AddMedicamentToTable(medicament * m);
-    void AddMedicamentToDB(medicament * m);
     void on_RegistrationStartButton_clicked();
-
     void on_priceValue_valueChanged(double arg1);
 
 signals:
 
+    void AddMedicamentToDBTable(medicament * m, QString tablename); // tablename - например process311
     void setScannerLanguage(bool);
     void RegistrationStarted();
     void StopRegisterControlSamples();

@@ -284,7 +284,7 @@ void MoveOrder415::GetMedicament(medicament *med)
 
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
-        AddMedicamentToDB(med);
+        emit AddMedicamentToDBTable(med, "process415");
 
         ui->errorLabel->clear();
         ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
@@ -346,10 +346,7 @@ void MoveOrder415::AddMedicamentToTable(medicament *m)
     ui->MedicamentsTable->scrollToTop();
 }
 
-void MoveOrder415::AddMedicamentToDB(medicament *m)
-{
 
-}
 
 void MoveOrder415::on_RegistrationStartButton_clicked()
 {

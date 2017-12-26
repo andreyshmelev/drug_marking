@@ -171,13 +171,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
     connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicament) ;
 
-
     // сигналы и слоты для 415 бизнес процесса
 
     connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
     connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
+    connect(ui->MoveOrderWidget, &MoveOrder415::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
 
     // сигналы и слоты для 911 бизнес процесса
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
@@ -209,11 +209,9 @@ MainWindow::MainWindow(QWidget *parent) :
     messages->append("Брак");
     messages->append("Ок");
 
-
     imageObject = new QImage();
     imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
-
 
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
@@ -223,19 +221,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateAgregationGUI();
     setStackedPage(2);
-
     SQLInit();
-
     Organizacia = CompaniesListFromDB.at(1);
 
     ui->CompaniesCombobox->clear();
     ui->DrugsComboBox->clear();
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
-
-    //    QElapsedTimer timer = SQLInsertSpeedTest();
-//    QElapsedTimer timer = SQLSelectSpeedTest();
-//    ui->dbLog->setText("загрузка " +  QString::number(testitemscount) + "элементов заняла " +  QString::number(timer.elapsed()/1000 ) + '.'  + QString::number(timer.elapsed()%1000 ) +  "seconds");
 
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
@@ -543,7 +535,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     reg_prod_emis_elem.appendChild(doc_num_element);
 
     QDomText doc_num_text  = document.createTextNode("doc_num");
-    doc_num_text.setNodeValue("ds1");
+    doc_num_text.setNodeValue("  ds1");
     doc_num_element.appendChild(doc_num_text);
 
     // добавили doc_num
