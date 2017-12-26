@@ -11,6 +11,7 @@ SQL::SQL(QString path)
 {
     //    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     //    db.setDatabaseName(path);
+    return;
     
     //    QString hostname = "LOCALHOST\\MySQL57";
     QString dbname = "mark";

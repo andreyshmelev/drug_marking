@@ -171,13 +171,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
     connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicament) ;
 
-    // сигналы и слоты для 415 бизнес процесса
+//    // сигналы и слоты для 415 бизнес процесса
 
-    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
-    connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
-    connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
-    connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
-    connect(ui->MoveOrderWidget, &MoveOrder415::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
+//    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
+//    connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+//    connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
+//    connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
+//    connect(ui->MoveOrderWidget, &MoveOrder415::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
 
     // сигналы и слоты для 911 бизнес процесса
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
@@ -490,7 +490,7 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     document.appendChild(root);
 
     QDomElement reg_prod_emis_elem  = document.createElement("register_product_emission");
-    reg_prod_emis_elem.setAttribute("action_id", ActionIDTypeEnum::RegisterProductEmission);
+    reg_prod_emis_elem.setAttribute("action_id", "313");
     root.appendChild(reg_prod_emis_elem);
 
     // добавляем subject_id
@@ -846,7 +846,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     }
 }
 
-void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsamplestype)
+void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsamplestype)
 {
 
     setRunningBuisenessProcess(false);
@@ -863,7 +863,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, uint8_t controlsa
     document.appendChild(root);
 
     QDomElement reg_ctrl_smples_elem  = document.createElement("register_control_samples");
-    reg_ctrl_smples_elem.setAttribute("action_id", ActionIDTypeEnum::RegisterControlSamples);
+    reg_ctrl_smples_elem.setAttribute("action_id", "313");
     root.appendChild(reg_ctrl_smples_elem);
 
     // добавляем subject_id
@@ -972,7 +972,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     document.appendChild(root);
 
     QDomElement reg_end_pack_elem  = document.createElement("register_end_packing");
-    reg_end_pack_elem.setAttribute("action_id", ActionIDTypeEnum::RegisterEndPacking);
+    reg_end_pack_elem.setAttribute("action_id", "311");
     root.appendChild(reg_end_pack_elem);
 
     // добавляем subject_id
