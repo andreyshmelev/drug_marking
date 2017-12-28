@@ -23,8 +23,6 @@ SQL::SQL(QString path)
     
 //        QString user = "root";
 //        QString password = "12345";
-    
-    
     QString driver = "QMYSQL";
     
     QSqlError err;

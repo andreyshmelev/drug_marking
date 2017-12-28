@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
-    <height>600</height>
+    <width>1200</width>
+    <height>800</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -60,7 +60,7 @@
    <widget class="QListWidget" name="journalList">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>950</x>
       <y>69</y>
       <width>150</width>
       <height>471</height>
@@ -74,8 +74,8 @@ border-radius: 10px;</string>
    <widget class="QPushButton" name="printControlButton">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>460</y>
+      <x>10</x>
+      <y>550</y>
       <width>100</width>
       <height>45</height>
      </rect>
@@ -96,8 +96,8 @@ border-radius: 10px;</string>
    <widget class="QPushButton" name="programOptionsButton">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>460</y>
+      <x>110</x>
+      <y>550</y>
       <width>100</width>
       <height>45</height>
      </rect>
@@ -121,8 +121,8 @@ border-radius: 10px;</string>
    <widget class="QPushButton" name="statisticksButton">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>460</y>
+      <x>310</x>
+      <y>550</y>
       <width>100</width>
       <height>45</height>
      </rect>
@@ -142,8 +142,8 @@ border-radius: 10px;</string>
    <widget class="QPushButton" name="agregationButton">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>460</y>
+      <x>210</x>
+      <y>550</y>
       <width>100</width>
       <height>45</height>
      </rect>
@@ -166,8 +166,8 @@ border-radius: 10px;</string>
      <rect>
       <x>0</x>
       <y>60</y>
-      <width>480</width>
-      <height>400</height>
+      <width>761</width>
+      <height>481</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -175,7 +175,7 @@ border-radius: 10px;</string>
 /*border-radius: 10px;*/</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -191,8 +191,8 @@ border-radius: 10px;</string>
      <widget class="QLabel" name="serialnumberlabel">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>370</y>
+        <x>20</x>
+        <y>440</y>
         <width>131</width>
         <height>25</height>
        </rect>
@@ -223,8 +223,8 @@ border-radius: 0px;</string>
      <widget class="QLabel" name="serialnumbervalue">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>370</y>
+        <x>160</x>
+        <y>440</y>
         <width>61</width>
         <height>25</height>
        </rect>
@@ -255,8 +255,8 @@ border-radius: 0px;</string>
      <widget class="QLabel" name="statuslabel">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>370</y>
+        <x>240</x>
+        <y>440</y>
         <width>81</width>
         <height>25</height>
        </rect>
@@ -287,8 +287,8 @@ border-radius: 0px;</string>
      <widget class="QLabel" name="statuslabel_2">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>370</y>
+        <x>330</x>
+        <y>440</y>
         <width>61</width>
         <height>25</height>
        </rect>
@@ -402,6 +402,60 @@ border-radius: 0px;</string>
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="StartSerializationButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>340</y>
+        <width>100</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Запуск
+сериализации</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="PauseSerializationButton">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>340</y>
+        <width>100</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Пауза</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ContinueSerializationButton">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>340</y>
+        <width>100</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Продолжить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ContinueSerializationButton_2">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>340</y>
+        <width>100</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Остановить
+сериализацию</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="productOptionsPage">
      <widget class="QLabel" name="LPLabel_3">
@@ -469,7 +523,7 @@ border-radius: 0px;</string>
         <x>5</x>
         <y>69</y>
         <width>461</width>
-        <height>181</height>
+        <height>267</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -2047,7 +2101,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="optionsButton">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>790</x>
       <y>460</y>
       <width>161</width>
       <height>41</height>
@@ -2068,7 +2122,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="keyboardButton">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>790</x>
       <y>500</y>
       <width>110</width>
       <height>40</height>
@@ -2089,7 +2143,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="infoButton">
     <property name="geometry">
      <rect>
-      <x>599</x>
+      <x>899</x>
       <y>500</y>
       <width>51</width>
       <height>40</height>
@@ -2152,7 +2206,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="manualButton">
     <property name="geometry">
      <rect>
-      <x>492</x>
+      <x>792</x>
       <y>420</y>
       <width>111</width>
       <height>35</height>
@@ -2173,7 +2227,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="listingButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>910</x>
       <y>420</y>
       <width>41</width>
       <height>35</height>
@@ -2194,7 +2248,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>479</x>
+      <x>779</x>
       <y>50</y>
       <width>171</width>
       <height>351</height>
@@ -2431,8 +2485,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="printControlLabel">
     <property name="geometry">
      <rect>
-      <x>25</x>
-      <y>510</y>
+      <x>35</x>
+      <y>600</y>
       <width>55</width>
       <height>55</height>
      </rect>
@@ -2465,8 +2519,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="programOptionsLabel">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>510</y>
+      <x>130</x>
+      <y>600</y>
       <width>55</width>
       <height>55</height>
      </rect>
@@ -2499,8 +2553,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="agregationLabel">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>510</y>
+      <x>230</x>
+      <y>600</y>
       <width>55</width>
       <height>55</height>
      </rect>
@@ -2533,8 +2587,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="statisticsLabel">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>510</y>
+      <x>330</x>
+      <y>600</y>
       <width>55</width>
       <height>55</height>
      </rect>
