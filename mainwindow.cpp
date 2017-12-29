@@ -126,7 +126,7 @@ void MainWindow::SetStyleSheets()
 
     QString styleMainButtons = "QPushButton\
     {\
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
     \
     \
         border-style: outset;\
@@ -162,7 +162,7 @@ void MainWindow::SetStyleSheets()
             ;
     QString styleRegularButtons = "QPushButton\
     {\
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
     \
     \
         border-style: outset;\
@@ -205,8 +205,6 @@ void MainWindow::SetStyleSheets()
     ui->programOptionsButton->setStyleSheet(styleMainButtons);
     ui->agregationButton->setStyleSheet(styleMainButtons);
     ui->statisticksButton->setStyleSheet(styleMainButtons);
-
-
 
 }
 
