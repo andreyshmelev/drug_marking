@@ -104,13 +104,8 @@ QSqlError SQL::makesqlreq(QString req)
     if (!query.exec(execc)) {
         qDebug() << "Unable to execute query - exiting2";
         qDebug() << query.lastError();
-
-        //        sendmessage(query.lastQuery());
     }
-
-
     return query.lastError() ;
-
 }
 
 void SQL::upd(QString u, QString s, QString w)

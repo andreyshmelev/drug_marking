@@ -85,14 +85,9 @@ public:
 
     bool getRunningBuisenessProcess() const;
     void setRunningBuisenessProcess(bool value);
-
     void GetCompaniesList(QString company_inn, QString fromcompany, QString company_owner_id, QString company_email, QString wherecompany, QString company_kpp, QString companyname, QString company_subject_id, QString company_ul, QString company_fl);
     void GetCompaniesDBList();
-
-
-
     bool IsDateProper(QString stringtotest);
-
     void SQLInit();
 
 public slots:
@@ -111,6 +106,12 @@ public slots:
     void PrintSSCCCode(QString newcode);
     bool PrintBIGEtiketka(eticetka * et);
     void AddMedicamentToDBTable(medicament *m, QString tablename);
+    //слоты сериализации
+
+    void StartSerialization();
+    void StopSerialization();
+    void PauseSerialization();
+    void ContinueSerialization();
 
 private:
     QString getGuiGTIN();
@@ -121,6 +122,8 @@ private:
     QString getGuiBatchValue();
     QString getGuiExpery();
     QString getGuiTNVED();
+    QString getGuiDrugsName();
+    QString getGuiDose();
     QDateTime getGuiExperyDate();
 
     void updateQRImage();
@@ -221,6 +224,20 @@ private:
     QString expstring;
     QString tnvedstring;
 
+
+    // параметры сериализации
+
+    QString SerializationGTINString;
+    QString SerializationSNstring;
+    QString SerializationBatchstring;
+    QString SerializationEXPstring;
+    QString SerializationPreparatstring;
+    QString SerializationDoseString;
+    QString SerializationTNVEDstring;
+
+
+
+
     static QString GetISODate();
     static QString GetDOCDate();
     void addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document);
@@ -233,7 +250,7 @@ protected:
 private slots:
 
 
-    void addMessageToJournal();
+    void addMessageToJournal(QString message, QColor textcolor,QColor backcolor);
     void updateTimeDate();
     void updateReadedDMCode();
     void ParseHandScannerData( QString stringtoparse);
@@ -264,23 +281,16 @@ private slots:
 
     void serverWrite(QString str);
     void on_DrugsComboBox_currentIndexChanged(int index);
-
     void GetMedicament (medicament * m);
-
     void on_move_order_Button_clicked();
-
     void on_releabeling_Button_clicked();
-
     void on_unit_pack_Button_clicked();
-
-
     void on_pushButton_2_clicked();
-
     void on_agregationStartButton_clicked();
-
     void on_batchnumberText_textChanged();
-
     void on_pushButton_clicked();
+
+
 
 
 signals:
@@ -296,6 +306,7 @@ signals:
     void programOptionsQRCodeScanned();
     void agregationQRCodeScanned();
     void statisticsQRCodeScanned();
+
 
 signals:
     // для виджетов

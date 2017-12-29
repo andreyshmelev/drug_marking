@@ -31,8 +31,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>91</width>
-      <height>51</height>
+      <width>121</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -62,7 +62,7 @@
      <rect>
       <x>950</x>
       <y>69</y>
-      <width>150</width>
+      <width>241</width>
       <height>471</height>
      </rect>
     </property>
@@ -71,103 +71,13 @@
 border-radius: 10px;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="printControlButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>550</y>
-      <width>100</width>
-      <height>45</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Печать
-Контроль</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="programOptionsButton">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>550</y>
-      <width>100</width>
-      <height>45</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Продукт
-Настройки</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="statisticksButton">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>550</y>
-      <width>100</width>
-      <height>45</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Статистика</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="agregationButton">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>550</y>
-      <width>100</width>
-      <height>45</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Бизнес
-процессы</string>
-    </property>
-   </widget>
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>60</y>
+      <y>90</y>
       <width>761</width>
-      <height>481</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -181,148 +91,20 @@ border-radius: 10px;</string>
      <widget class="QGraphicsView" name="packagePicture">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>40</y>
-        <width>371</width>
-        <height>16</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serialnumberlabel">
-      <property name="geometry">
-       <rect>
         <x>20</x>
-        <y>440</y>
-        <width>131</width>
-        <height>25</height>
+        <y>30</y>
+        <width>250</width>
+        <height>100</height>
        </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 0px solid gray;
-border-radius: 0px;</string>
-      </property>
-      <property name="text">
-       <string>Порядковый номер</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serialnumbervalue">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>440</y>
-        <width>61</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 0px solid gray;
-border-radius: 0px;</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="statuslabel">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>440</y>
-        <width>81</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 0px solid gray;
-border-radius: 0px;</string>
-      </property>
-      <property name="text">
-       <string>Статус:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="statuslabel_2">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>440</y>
-        <width>61</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 0px solid gray;
-border-radius: 0px;</string>
-      </property>
-      <property name="text">
-       <string>В работе</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QLabel" name="image_label">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>60</y>
-        <width>161</width>
-        <height>121</height>
+        <x>280</x>
+        <y>30</y>
+        <width>100</width>
+        <height>100</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -342,7 +124,7 @@ border-radius: 0px;</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>190</y>
+        <y>270</y>
         <width>71</width>
         <height>25</height>
        </rect>
@@ -374,7 +156,7 @@ border-radius: 0px;</string>
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>190</y>
+        <y>270</y>
         <width>301</width>
         <height>25</height>
        </rect>
@@ -402,68 +184,237 @@ border-radius: 0px;</string>
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="StartSerializationButton">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>340</y>
-        <width>100</width>
-        <height>70</height>
+        <width>651</width>
+        <height>91</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Запуск
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="StartSerializationButton">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Запуск
 сериализации</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="PauseSerializationButton">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>340</y>
-        <width>100</width>
-        <height>70</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Пауза</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="ContinueSerializationButton">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>340</y>
-        <width>100</width>
-        <height>70</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Продолжить</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="ContinueSerializationButton_2">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>340</y>
-        <width>100</width>
-        <height>70</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Остановить
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="PauseSerializationButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Пауза</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="ContinueSerializationButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Продолжить</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="StopSerializationButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>55</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Остановить
 сериализацию</string>
-      </property>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="productOptionsPage">
-     <widget class="QLabel" name="LPLabel_3">
+     <widget class="QLabel" name="LPLabel_Name">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>180</x>
         <y>10</y>
-        <width>200</width>
+        <width>341</width>
         <height>31</height>
        </rect>
       </property>
@@ -474,7 +425,7 @@ border-radius: 0px;</string>
        </font>
       </property>
       <property name="text">
-       <string>Наименование препарата</string>
+       <string>Параметры лекарственного препарата</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -483,8 +434,8 @@ border-radius: 0px;</string>
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>330</y>
+        <x>250</x>
+        <y>340</y>
         <width>231</width>
         <height>61</height>
        </rect>
@@ -499,31 +450,62 @@ border-radius: 0px;</string>
 линию сериализаци</string>
       </property>
      </widget>
-     <widget class="QPlainTextEdit" name="conditions">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
+     <widget class="QLabel" name="LineLabel">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>260</y>
-        <width>471</width>
-        <height>71</height>
+        <x>20</x>
+        <y>340</y>
+        <width>173</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Производственная
+линия</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>350</y>
+        <width>51</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>6</pointsize>
+        <pointsize>14</pointsize>
        </font>
       </property>
+      <item>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </item>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>5</x>
-        <y>69</y>
-        <width>461</width>
-        <height>267</height>
+        <x>20</x>
+        <y>50</y>
+        <width>651</width>
+        <height>281</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -569,11 +551,6 @@ border-radius: 0px;</string>
            <pointsize>12</pointsize>
           </font>
          </property>
-         <item>
-          <property name="text">
-           <string>ЗАО &quot;Березовский фармацевтический завод&quot;</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="1" column="0">
@@ -598,43 +575,6 @@ border-radius: 0px;</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1" colspan="3">
-        <widget class="QComboBox" name="DrugsComboBox">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <item>
-          <property name="text">
-           <string>Нимесулид</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Ацеклофенак</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Парацетамол</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="GTINLabel_2">
          <property name="maximumSize">
@@ -653,7 +593,7 @@ border-radius: 0px;</string>
           <string>Дозировка</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -667,8 +607,8 @@ border-radius: 0px;</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>500</width>
-           <height>100</height>
+           <width>16777215</width>
+           <height>135</height>
           </size>
          </property>
          <property name="font">
@@ -689,6 +629,47 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="3" column="0">
+        <widget class="QLabel" name="GTINLabel_3">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Условия
+хранения</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="3">
+        <widget class="QPlainTextEdit" name="conditions">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>6</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
         <widget class="QLabel" name="GTINLabel">
          <property name="maximumSize">
           <size>
@@ -706,11 +687,11 @@ p, li { white-space: pre-wrap; }
           <string>GTIN</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QTextEdit" name="GTINVal">
          <property name="minimumSize">
           <size>
@@ -741,7 +722,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="4" column="2">
         <widget class="QLabel" name="TNVEDabel">
          <property name="maximumSize">
           <size>
@@ -763,7 +744,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
+       <item row="4" column="3">
         <widget class="QTextEdit" name="TNVEDVal">
          <property name="minimumSize">
           <size>
@@ -773,7 +754,7 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="maximumSize">
           <size>
-           <width>150</width>
+           <width>135</width>
            <height>35</height>
           </size>
          </property>
@@ -794,7 +775,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="productlifeimeLabel">
          <property name="maximumSize">
           <size>
@@ -816,7 +797,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QDateTimeEdit" name="expirationdate">
          <property name="minimumSize">
           <size>
@@ -862,7 +843,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
+       <item row="5" column="2">
         <widget class="QLabel" name="batchnumberLabel">
          <property name="maximumSize">
           <size>
@@ -884,7 +865,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="4" column="3">
+       <item row="5" column="3">
         <widget class="QPlainTextEdit" name="batchnumberText">
          <property name="minimumSize">
           <size>
@@ -894,7 +875,7 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>135</width>
            <height>40</height>
           </size>
          </property>
@@ -905,11 +886,11 @@ p, li { white-space: pre-wrap; }
           </font>
          </property>
          <property name="plainText">
-          <string>321654</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="batchvalueLabel">
          <property name="maximumSize">
           <size>
@@ -931,7 +912,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1">
         <widget class="QSpinBox" name="batchvalue">
          <property name="minimumSize">
           <size>
@@ -955,7 +936,29 @@ p, li { white-space: pre-wrap; }
           <number>9999999</number>
          </property>
          <property name="value">
-          <number>1000</number>
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="3">
+        <widget class="QComboBox" name="DrugsComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
          </property>
         </widget>
        </item>
@@ -2079,7 +2082,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="journalLabel">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>600</x>
       <y>0</y>
       <width>91</width>
       <height>40</height>
@@ -2164,7 +2167,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="journalButtonDown">
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>720</x>
       <y>35</y>
       <width>31</width>
       <height>35</height>
@@ -2185,7 +2188,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="journalButtonUp">
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>720</x>
       <y>0</y>
       <width>31</width>
       <height>35</height>
@@ -2482,194 +2485,373 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="printControlLabel">
+   <widget class="QLabel" name="DateTimeLabel">
     <property name="geometry">
      <rect>
-      <x>35</x>
-      <y>600</y>
-      <width>55</width>
-      <height>55</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>55</width>
-      <height>55</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>80</width>
-      <height>80</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>5</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>printControlQR</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="programOptionsLabel">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>600</y>
-      <width>55</width>
-      <height>55</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>55</width>
-      <height>55</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>80</width>
-      <height>80</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>5</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>programOptionsLabel</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="agregationLabel">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>600</y>
-      <width>55</width>
-      <height>55</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>55</width>
-      <height>55</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>80</width>
-      <height>80</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>5</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>programOptionsLabel</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="statisticsLabel">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>600</y>
-      <width>55</width>
-      <height>55</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>55</width>
-      <height>55</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>80</width>
-      <height>80</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>5</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>programOptionsLabel</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>91</x>
+      <x>180</x>
       <y>1</y>
-      <width>194</width>
-      <height>56</height>
+      <width>76</width>
+      <height>17</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Дата/Время</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="DateTimeLabelValue">
+    <property name="geometry">
+     <rect>
+      <x>272</x>
+      <y>1</y>
+      <width>300</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>01.01.10</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LPLabel">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>26</y>
+      <width>60</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Препарат</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LPLabelName">
+    <property name="geometry">
+     <rect>
+      <x>272</x>
+      <y>26</y>
+      <width>300</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LPDoseLabel">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>51</y>
+      <width>65</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Дозировка</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LPDose">
+    <property name="geometry">
+     <rect>
+      <x>272</x>
+      <y>51</y>
+      <width>300</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>551</y>
+      <width>660</width>
+      <height>123</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0">
-      <widget class="QLabel" name="DateTimeLabel">
+      <widget class="QPushButton" name="printControlButton">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <family>Times New Roman</family>
-         <pointsize>8</pointsize>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
         </font>
        </property>
-       <property name="text">
-        <string>Дата/Время</string>
+       <property name="styleSheet">
+        <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+       <property name="text">
+        <string>Печать
+Контроль</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLabel" name="DateTimeLabelValue">
+      <widget class="QPushButton" name="programOptionsButton">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <family>Times New Roman</family>
-         <pointsize>8</pointsize>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
         </font>
        </property>
-       <property name="text">
-        <string>01.01.10</string>
+       <property name="styleSheet">
+        <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <property name="text">
+        <string>Продукт
+Настройки</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="agregationButton">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+       </property>
+       <property name="text">
+        <string>Бизнес
+процессы</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="statisticksButton">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>160</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+       </property>
+       <property name="text">
+        <string>Статистика</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="LPLabel">
+      <widget class="QLabel" name="printControlLabel">
+       <property name="minimumSize">
+        <size>
+         <width>55</width>
+         <height>55</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>80</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Times New Roman</family>
-         <pointsize>8</pointsize>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Препарат</string>
+        <string>printControlQR</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -2677,50 +2859,86 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLabel" name="LPLabel_2">
+      <widget class="QLabel" name="programOptionsLabel">
+       <property name="minimumSize">
+        <size>
+         <width>55</width>
+         <height>55</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>80</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Times New Roman</family>
-         <pointsize>8</pointsize>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>НИМЕСУЛИД</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="LPDoseLabel">
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Дозировка</string>
+        <string>programOptionsLabel</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="LPDoseLabel_2">
+     <item row="1" column="2">
+      <widget class="QLabel" name="agregationLabel">
+       <property name="minimumSize">
+        <size>
+         <width>55</width>
+         <height>55</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>80</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Times New Roman</family>
-         <pointsize>8</pointsize>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>20 ТАБЛЕТОК ПО 100 ГР</string>
+        <string>programOptionsLabel</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="statisticsLabel">
+       <property name="minimumSize">
+        <size>
+         <width>55</width>
+         <height>55</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>5</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>programOptionsLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

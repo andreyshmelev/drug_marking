@@ -192,6 +192,13 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(this, &MainWindow::SendCompaniesDBList, ui->RelabelingWidget, &RelabelingWidget811::GetCompaniesDBList);
 //    connect(ui->RelabelingWidget, &RelabelingWidget811::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
 
+    // сигнал-слоты для сериализации
+
+    connect(ui->StartSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StartSerialization) ;
+    connect(ui->PauseSerializationButton, &QAbstractButton::pressed, this, &MainWindow::PauseSerialization);
+            connect(ui->ContinueSerializationButton, &QAbstractButton::pressed, this, &MainWindow::ContinueSerialization);
+            connect(ui->StopSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StopSerialization);
+
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
     signalMapper -> setMapping (ui->programOptionsButton, 1) ;
@@ -236,6 +243,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->MedicamentsTable->horizontalHeader()->setVisible(true);
 
     QCoreApplication::addLibraryPath(QDir::currentPath());
+
+//    ui->printControlButton->setStyleSheet("QPushButton {"
+//                                          "color: blue;"
+//                                          "background-color: rgb(255, 255, 127);"
+//                                          "}"
+//                                          "QPushButton:pressed {"
+//                                          "  color: red;"
+//                                          "}"
+//                                          );
+//    qDebug() << ui->printControlButton->styleSheet();
+
 }
 
 MainWindow::~MainWindow()
@@ -311,12 +329,23 @@ QString MainWindow::getGuiExpery()
 
 QDateTime MainWindow::getGuiExperyDate()
 {
+
     return ui->expirationdate->dateTime();
 }
 
 QString MainWindow::getGuiTNVED()
 {
     return ui->TNVEDVal->toPlainText();
+}
+
+QString MainWindow::getGuiDrugsName()
+{
+    return ui->DrugsComboBox->currentText();
+}
+
+QString MainWindow::getGuiDose()
+{
+    return ui->DoseVal->toPlainText();
 }
 
 void MainWindow::SetSN(QString newSN)
@@ -330,34 +359,17 @@ bool MainWindow::getAgregation()
 }
 
 
-void MainWindow::addMessageToJournal()
+void MainWindow::addMessageToJournal(QString message, QColor textcolor,QColor backcolor)
 {
 
+    QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
+
     QListWidgetItem * item = new QListWidgetItem ();
-
-    int High = 100, Low = 0;
-
-    int val = GenerateNumber(High, Low);
-
-    if( val > 30)
-    {
-        item->setTextColor(Qt::green);
-        item->setText(messages->at(1));
-    }
-    else
-    {
-        item->setTextColor(Qt::red);
-        item->setText(messages->at(0));
-    }
-
+    item->setTextColor( textcolor);
+    item->setBackgroundColor(backcolor);
+    item->setText(ctime + message);
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
-
-    if (ui->journalList->count()>100)
-    {
-        ui->journalList->clear();
-    }
-
 }
 
 void MainWindow::updateTimeDate()
@@ -1821,6 +1833,15 @@ void MainWindow::SendRandomToVideoJet()
 void MainWindow::on_pushButton_2_clicked()
 {
     SendParamsToVideoJet();
+    //    SerializationGTINString = getGuiGTIN();
+    //    SerializationEXPstring = getGuiExperyDate().toString("dd.MM.yyyy");
+    SerializationPreparatstring = getGuiDrugsName();
+    SerializationDoseString = getGuiDose();
+
+    ui->LPLabelName->setText(getGuiDrugsName());
+    ui->LPDose->setText(getGuiDose());
+
+
 }
 
 void MainWindow::on_agregationStartButton_clicked()
@@ -2065,4 +2086,66 @@ void MainWindow::AddMedicamentToDBTable(medicament *m, QString tablename)
     QString req = QString("insert into %1 values (\"%2\",\"%3\",\"%4\",%5);").arg(tablename, m->GTIN + m->SerialNumber,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"null");
     sqlDB->makesqlreq(req);
     qDebug() << "add to " << req;
+}
+
+void MainWindow::StartSerialization()
+{
+
+ui->CompaniesCombobox->setEnabled(false);
+ui->DrugsComboBox->setEnabled(false);
+ui->conditions->setEnabled(false);
+ui->GTINVal->setEnabled(false);
+ui->TNVEDVal->setEnabled(false);
+ui->expirationdate->setEnabled(false);
+ui->batchnumberText->setEnabled(false);
+ui->batchvalue->setEnabled(false);
+
+ui->StartSerializationButton->setEnabled(false);
+ui->PauseSerializationButton->setEnabled(true);
+ui->ContinueSerializationButton->setEnabled(false);
+ui->StopSerializationButton->setEnabled(true);
+
+addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
+}
+
+void MainWindow::StopSerialization()
+{
+
+ui->CompaniesCombobox->setEnabled(true);
+ui->DrugsComboBox->setEnabled(true);
+ui->conditions->setEnabled(true);
+ui->GTINVal->setEnabled(true);
+ui->TNVEDVal->setEnabled(true);
+ui->expirationdate->setEnabled(true);
+ui->batchnumberText->setEnabled(true);
+ui->batchvalue->setEnabled(true);
+
+
+ui->StartSerializationButton->setEnabled(true);
+ui->PauseSerializationButton->setEnabled(false);
+ui->ContinueSerializationButton->setEnabled(false);
+ui->StopSerializationButton->setEnabled(false);
+
+addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
+}
+
+void MainWindow::PauseSerialization()
+{
+
+ui->StartSerializationButton->setEnabled(false);
+ui->PauseSerializationButton->setEnabled(false);
+ui->ContinueSerializationButton->setEnabled(true);
+ui->StopSerializationButton->setEnabled(true);
+
+addMessageToJournal("Пауза сериализации",Qt::blue,Qt::white);
+
+}
+
+void MainWindow::ContinueSerialization()
+{
+ui->StartSerializationButton->setEnabled(false);
+ui->PauseSerializationButton->setEnabled(true);
+ui->ContinueSerializationButton->setEnabled(false);
+ui->StopSerializationButton->setEnabled(true);
+addMessageToJournal("Продолж.сериализации",Qt::green,Qt::white);
 }
