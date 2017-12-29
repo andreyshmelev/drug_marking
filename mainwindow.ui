@@ -25,6 +25,14 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">/*border: 1px solid gray;*/
+/*border-radius: 10px;*/
+
+background-color: rgb(15,82,146);
+
+   color: white;</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="organizationLabel">
     <property name="geometry">
@@ -81,11 +89,13 @@ border-radius: 10px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">/*border: 1px solid gray;*/
-/*border-radius: 10px;*/</string>
+     <string notr="true">    border-style: outset;
+    border-width:1px;
+    border-radius: 10px;
+    border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -219,7 +229,20 @@ border-radius: 0px;</string>
          <property name="styleSheet">
           <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -230,7 +253,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -273,7 +296,20 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          <property name="styleSheet">
           <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -284,7 +320,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -326,7 +362,20 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          <property name="styleSheet">
           <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -337,7 +386,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -379,7 +428,20 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          <property name="styleSheet">
           <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -390,7 +452,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
@@ -412,7 +474,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <widget class="QLabel" name="LPLabel_Name">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>260</x>
         <y>10</y>
         <width>341</width>
         <height>31</height>
@@ -434,70 +496,60 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>340</y>
+        <x>20</x>
+        <y>350</y>
         <width>231</width>
         <height>61</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>-1</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
       </property>
       <property name="text">
        <string>Передать данные в
 линию сериализаци</string>
       </property>
-     </widget>
-     <widget class="QLabel" name="LineLabel">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>340</y>
-        <width>173</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Производственная
-линия</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBox">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>350</y>
-        <width>51</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <item>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
      </widget>
      <widget class="QWidget" name="">
       <property name="geometry">
@@ -522,6 +574,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;
+   color: white;</string>
          </property>
          <property name="text">
           <string>Производитель</string>
@@ -551,6 +610,12 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -566,6 +631,12 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>Наименование</string>
@@ -588,6 +659,12 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>Дозировка</string>
@@ -613,8 +690,15 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -623,8 +707,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Times New Roman'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -641,6 +725,12 @@ p, li { white-space: pre-wrap; }
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>Условия
@@ -664,8 +754,15 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="font">
           <font>
-           <pointsize>6</pointsize>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
         </widget>
        </item>
@@ -682,6 +779,12 @@ p, li { white-space: pre-wrap; }
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>GTIN</string>
@@ -707,8 +810,15 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -717,8 +827,8 @@ p, li { white-space: pre-wrap; }
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Times New Roman'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -735,6 +845,12 @@ p, li { white-space: pre-wrap; }
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>ТН ВЭД</string>
@@ -760,8 +876,15 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -770,8 +893,8 @@ p, li { white-space: pre-wrap; }
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Times New Roman'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -788,6 +911,12 @@ p, li { white-space: pre-wrap; }
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>Срок годности</string>
@@ -816,6 +945,17 @@ p, li { white-space: pre-wrap; }
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QDateTimeEdit::up-button { width: 32px; }
+QDateTimeEdit::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }
+
+QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
          </property>
          <property name="date">
           <date>
@@ -857,6 +997,12 @@ p, li { white-space: pre-wrap; }
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
+         </property>
          <property name="text">
           <string>Партия</string>
          </property>
@@ -894,7 +1040,7 @@ p, li { white-space: pre-wrap; }
         <widget class="QLabel" name="batchvalueLabel">
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>16777213</width>
            <height>25</height>
           </size>
          </property>
@@ -903,6 +1049,12 @@ p, li { white-space: pre-wrap; }
            <family>Times New Roman</family>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
          </property>
          <property name="text">
           <string>Объем партии</string>
@@ -932,6 +1084,13 @@ p, li { white-space: pre-wrap; }
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+down-arrow
+QComboBox::drop-down 
+{ width: 32px; }</string>
+         </property>
          <property name="maximum">
           <number>9999999</number>
          </property>
@@ -960,6 +1119,61 @@ p, li { white-space: pre-wrap; }
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLabel" name="LineLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    border-style: outset;
+    border-width:0px;
+    border-radius: 10px;
+    border-color: beige;</string>
+         </property>
+         <property name="text">
+          <string>Производственная
+линия</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QComboBox" name="comboBox">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -991,9 +1205,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>280</x>
+        <x>490</x>
         <y>31</y>
-        <width>169</width>
+        <width>248</width>
         <height>402</height>
        </rect>
       </property>
@@ -1014,6 +1228,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Включение элементов в
@@ -1038,6 +1288,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Упаковка во множество
 трансп тар (915)</string>
@@ -1061,6 +1347,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Изъятие элементов
 упаковки (913)</string>
@@ -1083,6 +1405,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Отзыв ЛП– Отправителем
@@ -1108,6 +1466,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Отмена ранее зарег.
 операции (250)</string>
@@ -1131,6 +1525,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Вывод ЛП из оборота (552)</string>
          </property>
@@ -1153,6 +1583,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Уничтожение ЛП (542)</string>
          </property>
@@ -1174,6 +1640,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Отказ получателя
@@ -1198,6 +1700,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Передача на 
  уничтожение ЛП (541)</string>
@@ -1220,6 +1758,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Перемещение ЛП между
@@ -1245,6 +1819,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Расформир. транс-
 портной упаковки (912)</string>
@@ -1258,8 +1868,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>30</y>
-        <width>271</width>
-        <height>361</height>
+        <width>371</width>
+        <height>411</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -1276,6 +1886,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Регистрация сведений о
@@ -1317,6 +1963,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Регистрация сведений
 об отборе образцов ле-
@@ -1356,6 +2038,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Регистрация сведений
@@ -1400,6 +2118,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Регистрация сведений
 об отгрузке ЛП со 
@@ -1424,6 +2178,42 @@ p, li { white-space: pre-wrap; }
            <height>50</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+         </property>
          <property name="text">
           <string>Регистрация сведений о
 переупаковке и пере-
@@ -1444,6 +2234,42 @@ p, li { white-space: pre-wrap; }
            <width>16777215</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
          </property>
          <property name="text">
           <string>Упаковка в транс-
@@ -2652,28 +3478,41 @@ p, li { white-space: pre-wrap; }
        <property name="styleSheet">
         <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 17px; color: white;
     padding: 6px;
 }
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
     padding: 6px;
 }</string>
        </property>
        <property name="text">
-        <string>Печать
+        <string>Сериализация
 Контроль</string>
        </property>
       </widget>
@@ -2703,28 +3542,41 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
        <property name="styleSheet">
         <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 17px; color: white;
     padding: 6px;
 }
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
     padding: 6px;
 }</string>
        </property>
        <property name="text">
-        <string>Продукт
+        <string>Препарат
 Настройки</string>
        </property>
       </widget>
@@ -2754,23 +3606,36 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
        <property name="styleSheet">
         <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 17px; color: white;
     padding: 6px;
 }
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
     padding: 6px;
 }</string>
        </property>
@@ -2805,23 +3670,36 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
        <property name="styleSheet">
         <string notr="true">QPushButton 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 255), stop:1 rgba(226,83,3, 255));
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 17px; color: white;
     padding: 6px;
 }
 
 QPushButton:pressed 
 {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 100), stop:1 rgba(226,83,3, 100));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
     border-style: outset;
     border-width: 2px;
     border-radius: 10px;
     border-color: beige;
-    font: bold 14px; color: white;
+    font: bold 17px; color: white;
     padding: 6px;
 }</string>
        </property>

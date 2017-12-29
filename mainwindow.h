@@ -293,6 +293,8 @@ private slots:
 
 
 
+    void on_StartSerializationButton_clicked();
+
 signals:
 
     void agregationstatusToggled();
@@ -330,6 +332,8 @@ private:
     void SendRandomToVideoJet();
     void GenerateCode128(QString newcode);
 
+    void SetLibrariesPath();
+    void SetStyleSheets();
 };
 
 #endif // MAINWINDOW_H

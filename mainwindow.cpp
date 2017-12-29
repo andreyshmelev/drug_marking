@@ -92,6 +92,124 @@ void MainWindow::SQLInit()
     GetCompaniesDBList();
 }
 
+void MainWindow::SetLibrariesPath()
+{
+    QCoreApplication::addLibraryPath(QDir::currentPath());
+}
+
+void MainWindow::SetStyleSheets()
+{
+
+    //    ui->printControlButton->setStyleSheet("QPushButton {"
+    //                                          "color: blue;"
+    //                                          "background-color: rgb(255, 255, 127);"
+    //                                          "}"
+    //                                          "QPushButton:pressed {"
+    //                                          "  color: red;"
+    //                                          "}"
+    //                                          );
+    //    qDebug() << ui->printControlButton->styleSheet();
+
+    QList<QLabel *> list = this->findChildren<QLabel *>();
+
+    int i = 0 ;
+    foreach(QLabel *l, list)
+    {
+//     qDebug() <<l-> ;
+
+//        l->setText(QString::number(i++));
+        l->setStyleSheet("    border-style: outset;border-width:0px;border-radius: 10px;border-color: beige;");
+    }
+
+
+    QList<QPushButton *> but = this->findChildren<QPushButton *>();
+
+    QString styleMainButtons = "QPushButton\
+    {\
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+    \
+    \
+        border-style: outset;\
+        border-width: 2px;\
+        border-radius: 10px;\
+        border-color: beige;\
+        font: bold 18px; color: white;\
+        padding: 6px;\
+    }\
+    QPushButton:disabled \
+    {\
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));\
+        border-style: outset;\
+        border-width: 2px;\
+        border-radius: 10px;\
+        border-color: beige;\
+        font: bold 18px; color: white;\
+        padding: 6px;\
+    }\
+    \
+    QPushButton:pressed \
+    {\
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));\
+        border-style: outset;\
+        border-width: 2px;\
+        border-radius: 10px;\
+        border-color: beige;\
+        font: bold 18px; color: white;\
+        padding: 6px;\
+    }";
+
+
+            ;
+    QString styleRegularButtons = "QPushButton\
+    {\
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+    \
+    \
+        border-style: outset;\
+        border-width: 2px;\
+        border-radius: 10px;\
+        border-color: beige;\
+        font: bold 14px; color: white;\
+        padding: 6px;\
+    }\
+    QPushButton:disabled \
+    {\
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));\
+        border-style: outset;\
+        border-width: 2px;\
+        border-radius: 10px;\
+        border-color: beige;\
+        font: bold 14px; color: white;\
+        padding: 6px;\
+    }\
+    \
+    QPushButton:pressed \
+    {\
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));\
+        border-style: outset;\
+        border-width: 2px;\
+        border-radius: 10px;\
+        border-color: beige;\
+        font: bold 14px; color: white;\
+        padding: 6px;\
+    }";
+
+     i = 0 ;
+    foreach(QPushButton *b, but)
+    {
+        b->setStyleSheet(styleRegularButtons);
+    }
+
+
+    ui->printControlButton->setStyleSheet(styleMainButtons);
+    ui->programOptionsButton->setStyleSheet(styleMainButtons);
+    ui->agregationButton->setStyleSheet(styleMainButtons);
+    ui->statisticksButton->setStyleSheet(styleMainButtons);
+
+
+
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -242,17 +360,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->MedicamentsTable->horizontalHeader()->setVisible(true);
 
-    QCoreApplication::addLibraryPath(QDir::currentPath());
+    SetLibrariesPath();
 
-//    ui->printControlButton->setStyleSheet("QPushButton {"
-//                                          "color: blue;"
-//                                          "background-color: rgb(255, 255, 127);"
-//                                          "}"
-//                                          "QPushButton:pressed {"
-//                                          "  color: red;"
-//                                          "}"
-//                                          );
-//    qDebug() << ui->printControlButton->styleSheet();
+
+    SetStyleSheets();
+
+
 
 }
 
@@ -2148,4 +2261,9 @@ ui->PauseSerializationButton->setEnabled(true);
 ui->ContinueSerializationButton->setEnabled(false);
 ui->StopSerializationButton->setEnabled(true);
 addMessageToJournal("Продолж.сериализации",Qt::green,Qt::white);
+}
+
+void MainWindow::on_StartSerializationButton_clicked()
+{
+
 }
