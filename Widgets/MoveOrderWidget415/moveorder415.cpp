@@ -282,6 +282,12 @@ void MoveOrder415::GetMedicament(medicament *med)
             return;
         }
 
+        if (MedicamentsList.length()>=25000)
+        {
+            StopRegistrationProcess();
+        }
+
+
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
         emit AddMedicamentToDBTable(med, "process415");

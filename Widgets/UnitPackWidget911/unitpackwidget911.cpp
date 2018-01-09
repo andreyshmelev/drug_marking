@@ -140,6 +140,12 @@ void UnitPackWidget911::GetMedicament(medicament *med)
             ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }
+
+        if (MedicamentsList.length()>=25000)
+        {
+            StopRegistrationProcess();
+        }
+
         MedicamentsList.append(med);
         AddMedicamentToTable(med);
 

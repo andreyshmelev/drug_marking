@@ -200,7 +200,6 @@ void MainWindow::SetStyleSheets()
         b->setStyleSheet(styleRegularButtons);
     }
 
-
     ui->printControlButton->setStyleSheet(styleMainButtons);
     ui->programOptionsButton->setStyleSheet(styleMainButtons);
     ui->agregationButton->setStyleSheet(styleMainButtons);
