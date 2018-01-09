@@ -66,12 +66,12 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     //Задаем запрос
     QString execc = "SELECT " + select + " FROM " + from;
 
-    qDebug() << execc;
     if (where != "")
     {
         execc += " WHERE " + where;
     }
 
+    qDebug() << execc;
     if (!query.exec(execc)) {
         //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();

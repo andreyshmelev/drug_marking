@@ -75,12 +75,11 @@ void MainWindow::GetStatisticsFromDB()
     ui->StatistBPcomboBox->addItems(statisticsbisnessprocesses);
 
     statisticsmedicaments = sqlDB->seldistinct("LPName", "mark.statistics", "","LPName");
-    ui->StatistMedicamentComboBox->addItem("");
+    ui->StatistMedicamentComboBox->addItem("%");
     ui->StatistMedicamentComboBox->addItems(statisticsmedicaments);
 
-
     statisticsbatches = sqlDB->seldistinct("batch", "mark.statistics", "","batch");
-    ui->StatistBatchComboBox->addItem("");
+    ui->StatistBatchComboBox->addItem("%");
     ui->StatistBatchComboBox->addItems(statisticsbatches);
 }
 
@@ -2270,4 +2269,10 @@ void MainWindow::ContinueSerialization()
 void MainWindow::on_StartSerializationButton_clicked()
 {
 
+}
+
+void MainWindow::on_StatistFindButton_clicked()
+{
+    QStringList ssss = sqlDB->sel("SUM(count) AS Total", "mark.statistics", "batch like \"A12345\" and GTIN like \"%\"","SUM(count) AS Total");
+    qDebug() << ssss ;
 }

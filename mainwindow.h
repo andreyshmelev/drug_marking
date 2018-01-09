@@ -301,6 +301,8 @@ private slots:
 
     void on_StartSerializationButton_clicked();
 
+    void on_StatistFindButton_clicked();
+
 signals:
 
     void agregationstatusToggled();
