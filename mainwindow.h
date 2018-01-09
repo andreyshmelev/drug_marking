@@ -106,6 +106,8 @@ public slots:
     void PrintSSCCCode(QString newcode);
     bool PrintBIGEtiketka(eticetka * et);
     void AddMedicamentToDBTable(medicament *m, QString tablename);
+    void AddStatisticsToDB(QString bisnessprocessname, medicament *m, QDateTime datetime, int count,QString XMLFileName);
+
     //слоты сериализации
 
     void StartSerialization();

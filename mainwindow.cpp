@@ -1080,9 +1080,6 @@ void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue
 
 void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype, QDateTime operation_date)
 {
-    //qDebug() << "sender" << sender->get_organisation_name();
-    //qDebug() << "owner" << owner->get_organisation_name();
-
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
@@ -1137,25 +1134,20 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->TNVED, "tnved_code", document);
     // добавили  tnved_code
 
-
     // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
-
     QDomElement signs_element  = document.createElement("signs");
     reg_end_pack_elem.appendChild(signs_element);
-
-
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
 
     for (int var = 0; var < MedList.length(); ++var) {
-
         addXMLTextNode(signs_element, MedList.at(var)->sGTIN, "sgtin", document);
-
     }
 
     // добавили signs
 
     QString filepath = QDir::currentPath()   + "/311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    QString filename = "311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
     qDebug() <<filepath;
 
@@ -1173,6 +1165,8 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
         file.close();
     }
 
+    AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+
 }
 
 void MainWindow::StartAgregation()
@@ -1189,51 +1183,50 @@ void MainWindow::StopAgregation()
 
 void MainWindow::ParseHandScannerData(QString stringforparse)
 {
-
     // сначала проверяем ня соответствие QR кодам
-
-
     qDebug() << stringforparse;
 
     if (stringforparse == register_product_emission_QR_string)
     {
         emit register_product_emission_QR_Scanned();
-        qDebug() << "1";
         return;
     }
 
     if (stringforparse == register_control_samples_QR_string)
     {
         emit register_control_samples_QR_Scanned();
-        qDebug() << "2";
         return;
     }
 
     if (stringforparse == register_end_packing_QR_string)
     {
         emit register_end_packing_QR_Scanned();
-        qDebug() << "3";
         return;
     }
 
     if (stringforparse == printControlQRCode)
     {
         emit printControlQRCodeScanned();
-        qDebug() << "4";
         return;
     }
 
     if (stringforparse == programOptionsQRCode)
     {
         emit programOptionsQRCodeScanned();
-        qDebug() << "5";
         return;
     }
+
+    if (stringforparse == statisticsQRCode)
+    {
+        emit statisticsQRCodeScanned();
+        return;
+    }
+
+
 
     if (stringforparse == agregationQRCode)
     {
         emit agregationQRCodeScanned();
-        qDebug() << "6";
         return;
     }
 
@@ -1262,14 +1255,12 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         }
     }
 
-
     if (stringforparse == Stop311ProcessQRString)
     {
         StopAgregation();
         emit Stop311Process();
         return;
     }
-
 
     if (stringforparse == Stop312ProcessQRString)
     {
@@ -1285,7 +1276,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         emit Stop313Process();
         return;
     }
-
 
     ui->ScannedCode->setText(inputDataStringFromScaner);
 
@@ -2195,7 +2185,14 @@ void MainWindow::AddMedicamentToDBTable(medicament *m, QString tablename)
 {
     QString req = QString("insert into %1 values (\"%2\",\"%3\",\"%4\",%5);").arg(tablename, m->GTIN + m->SerialNumber,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"null");
     sqlDB->makesqlreq(req);
-    qDebug() << "add to " << req;
+}
+
+void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QDateTime datetime, int count,QString XMLFileName)
+{
+    QString tablename = "`mark`.`statistics`" ;
+    QString req = QString("INSERT INTO %1 (`BProcess`, `GTIN`, `LPName`, `batch`, `date`, `count`, `xmlfilename`) VALUES (\"%2\",\"%3\",\"%4\",\"%5\",'%6','%7',\"%8\");").arg(tablename, bisnessprocessname,m->GTIN,m->medicament_name, m->BatchNumber,datetime.toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"),QString::number(count), XMLFileName);
+    sqlDB->makesqlreq(req);
+    qDebug() << "AddStatisticsToDB " << req;
 }
 
 void MainWindow::StartSerialization()
