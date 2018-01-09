@@ -17,12 +17,16 @@ SQL::SQL(QString path)
     QString hostname = ""; // 192.168.1.37
     int port = 3306;
 
-    QString user = "markirovka";
-    QString password = "WD8NHWq3T0zT";
+//    QString user = "markirovka";
+//    QString password = "WD8NHWq3T0zT";
+
+    QString user = "Andrey";
+    QString password = "12345";
 
     //    QString user = "root";
     //    QString password = "12345";
 
+    qDebug() << QSqlDatabase::drivers();
 
     QString driver = "QMYSQL";
 
