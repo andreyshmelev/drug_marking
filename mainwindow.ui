@@ -101,7 +101,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -200,7 +200,7 @@ border-radius: 0px;</string>
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -503,7 +503,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>350</y>
+        <y>380</y>
         <width>231</width>
         <height>61</height>
        </rect>
@@ -557,13 +557,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 линию сериализаци</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>50</y>
         <width>651</width>
-        <height>281</height>
+        <height>301</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -1874,7 +1874,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
        <rect>
         <x>0</x>
         <y>30</y>
-        <width>371</width>
+        <width>261</width>
         <height>411</height>
        </rect>
       </property>
@@ -1930,9 +1930,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
          </property>
          <property name="text">
-          <string>Регистрация сведений о
-завершении этапа
-окончательной упаковки (311)</string>
+          <string>Окончательная
+упаковка (311)</string>
          </property>
         </widget>
        </item>
@@ -2006,9 +2005,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
          </property>
          <property name="text">
-          <string>Регистрация сведений
-об отборе образцов ле-
-карственных препаратов (312)</string>
+          <string>Отбор образцов 
+ЛП (312)</string>
          </property>
         </widget>
        </item>
@@ -2082,9 +2080,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
          </property>
          <property name="text">
-          <string>Регистрация сведений
-о выпуске гото-
-вой продукции (313)</string>
+          <string>Выпуск готовой
+продукции (313)</string>
          </property>
         </widget>
        </item>
@@ -2161,8 +2158,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
          </property>
          <property name="text">
-          <string>Регистрация сведений
-об отгрузке ЛП со 
+          <string>Отгрузка со 
 склада Продавца (415)</string>
          </property>
         </widget>
@@ -2221,9 +2217,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
          </property>
          <property name="text">
-          <string>Регистрация сведений о
-переупаковке и пере-
-маркировке (811)</string>
+          <string>Переупаковка и пере-
+маркировка (811)</string>
          </property>
         </widget>
        </item>
@@ -3449,7 +3444,7 @@ p, li { white-space: pre-wrap; }
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>21</x>
