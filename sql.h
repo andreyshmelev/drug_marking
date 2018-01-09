@@ -13,6 +13,7 @@ public:
 public slots:
     void baseConnection();
     QStringList sel(QString select, QString from, QString where, QString rec);
+    QStringList seldistinct(QString select, QString from, QString where, QString rec);
     QSqlError makesqlreq(QString req);
     void upd(QString u, QString s, QString w);
 };

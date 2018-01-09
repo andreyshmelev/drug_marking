@@ -69,6 +69,21 @@ void MainWindow::GetCompaniesDBList()
     emit SendCompaniesDBList(CompaniesListFromDB);
 }
 
+void MainWindow::GetStatisticsFromDB()
+{
+    statisticsbisnessprocesses = sqlDB->seldistinct("BProcess", "mark.statistics", "","BProcess");
+    ui->StatistBPcomboBox->addItems(statisticsbisnessprocesses);
+
+    statisticsmedicaments = sqlDB->seldistinct("LPName", "mark.statistics", "","LPName");
+    ui->StatistMedicamentComboBox->addItem("");
+    ui->StatistMedicamentComboBox->addItems(statisticsmedicaments);
+
+
+    statisticsbatches = sqlDB->seldistinct("batch", "mark.statistics", "","batch");
+    ui->StatistBatchComboBox->addItem("");
+    ui->StatistBatchComboBox->addItems(statisticsbatches);
+}
+
 bool MainWindow::IsDateProper(QString stringtotest)
 {
     QDate TestDate = QDate::fromString(stringtotest,"yyMMdd");
@@ -86,10 +101,11 @@ void MainWindow::SQLInit()
     sqlDB = new SQL("ненужная строка");
     drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
 
-//    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg("insertfromQt",QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
+    //    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg("insertfromQt",QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
     sqlDB->makesqlreq(QString("insert into process911 values (\"qt53\",\"qt53\",\"qt33\",\"44\",\"55\");") );
     // подтягиваем параметры компании
     GetCompaniesDBList();
+    GetStatisticsFromDB();
 }
 
 void MainWindow::SetLibrariesPath()
@@ -115,9 +131,9 @@ void MainWindow::SetStyleSheets()
     int i = 0 ;
     foreach(QLabel *l, list)
     {
-//     qDebug() <<l-> ;
+        //     qDebug() <<l-> ;
 
-//        l->setText(QString::number(i++));
+        //        l->setText(QString::number(i++));
         l->setStyleSheet("    border-style: outset;border-width:0px;border-radius: 10px;border-color: beige;");
     }
 
@@ -126,75 +142,75 @@ void MainWindow::SetStyleSheets()
 
     QString styleMainButtons = "QPushButton\
     {\
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
-    \
-    \
-        border-style: outset;\
-        border-width: 2px;\
-        border-radius: 10px;\
-        border-color: beige;\
-        font: bold 18px; color: white;\
-        padding: 6px;\
-    }\
-    QPushButton:disabled \
+            background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
+            \
+            \
+            border-style: outset;\
+            border-width: 2px;\
+            border-radius: 10px;\
+            border-color: beige;\
+            font: bold 18px; color: white;\
+            padding: 6px;\
+}\
+            QPushButton:disabled \
     {\
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));\
-        border-style: outset;\
-        border-width: 2px;\
-        border-radius: 10px;\
-        border-color: beige;\
-        font: bold 18px; color: white;\
-        padding: 6px;\
-    }\
-    \
-    QPushButton:pressed \
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));\
+            border-style: outset;\
+            border-width: 2px;\
+            border-radius: 10px;\
+            border-color: beige;\
+            font: bold 18px; color: white;\
+            padding: 6px;\
+}\
+            \
+            QPushButton:pressed \
     {\
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));\
-        border-style: outset;\
-        border-width: 2px;\
-        border-radius: 10px;\
-        border-color: beige;\
-        font: bold 18px; color: white;\
-        padding: 6px;\
-    }";
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));\
+            border-style: outset;\
+            border-width: 2px;\
+            border-radius: 10px;\
+            border-color: beige;\
+            font: bold 18px; color: white;\
+            padding: 6px;\
+}";
 
 
             ;
     QString styleRegularButtons = "QPushButton\
     {\
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
-    \
-    \
-        border-style: outset;\
-        border-width: 2px;\
-        border-radius: 10px;\
-        border-color: beige;\
-        font: bold 14px; color: white;\
-        padding: 6px;\
-    }\
-    QPushButton:disabled \
+            background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
+            \
+            \
+            border-style: outset;\
+            border-width: 2px;\
+            border-radius: 10px;\
+            border-color: beige;\
+            font: bold 14px; color: white;\
+            padding: 6px;\
+}\
+            QPushButton:disabled \
     {\
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));\
-        border-style: outset;\
-        border-width: 2px;\
-        border-radius: 10px;\
-        border-color: beige;\
-        font: bold 14px; color: white;\
-        padding: 6px;\
-    }\
-    \
-    QPushButton:pressed \
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));\
+            border-style: outset;\
+            border-width: 2px;\
+            border-radius: 10px;\
+            border-color: beige;\
+            font: bold 14px; color: white;\
+            padding: 6px;\
+}\
+            \
+            QPushButton:pressed \
     {\
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));\
-        border-style: outset;\
-        border-width: 2px;\
-        border-radius: 10px;\
-        border-color: beige;\
-        font: bold 14px; color: white;\
-        padding: 6px;\
-    }";
+            background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));\
+            border-style: outset;\
+            border-width: 2px;\
+            border-radius: 10px;\
+            border-color: beige;\
+            font: bold 14px; color: white;\
+            padding: 6px;\
+}";
 
-     i = 0 ;
+            i = 0 ;
     foreach(QPushButton *b, but)
     {
         b->setStyleSheet(styleRegularButtons);
@@ -207,6 +223,7 @@ void MainWindow::SetStyleSheets()
 
 }
 
+// MainWindow  constructor
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -230,7 +247,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     RandomStringSenderToVideoJetTimer = new QTimer();
     RandomStringSenderToVideoJetTimer->setInterval(1000*45); // каждые сорок пять секунд посылаем новую произвольную строку
-//    RandomStringSenderToVideoJetTimer->setInterval(1000); // каждые сорок пять секунд посылаем новую произвольную строку
+    //    RandomStringSenderToVideoJetTimer->setInterval(1000); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
@@ -264,7 +281,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // сигналы и слоты для 311 бизнес процесса
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
-   connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
+    connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
     connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
 
@@ -286,13 +303,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
     connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicament) ;
 
-//    // сигналы и слоты для 415 бизнес процесса
+    //    // сигналы и слоты для 415 бизнес процесса
 
-//    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
-//    connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
-//    connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
-//    connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
-//    connect(ui->MoveOrderWidget, &MoveOrder415::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
+    //    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
+    //    connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+    //    connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
+    //    connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
+    //    connect(ui->MoveOrderWidget, &MoveOrder415::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
 
     // сигналы и слоты для 911 бизнес процесса
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
@@ -302,17 +319,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // сигналы и слоты для 811 бизнес процесса
 
-//    connect(ui->RelabelingWidget, &RelabelingWidget811::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
-//    connect(this, &MainWindow::SendMedicamentSignal, ui->RelabelingWidget, &RelabelingWidget811::GetMedicament);
-//    connect(this, &MainWindow::SendCompaniesDBList, ui->RelabelingWidget, &RelabelingWidget811::GetCompaniesDBList);
-//    connect(ui->RelabelingWidget, &RelabelingWidget811::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
+    //    connect(ui->RelabelingWidget, &RelabelingWidget811::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
+    //    connect(this, &MainWindow::SendMedicamentSignal, ui->RelabelingWidget, &RelabelingWidget811::GetMedicament);
+    //    connect(this, &MainWindow::SendCompaniesDBList, ui->RelabelingWidget, &RelabelingWidget811::GetCompaniesDBList);
+    //    connect(ui->RelabelingWidget, &RelabelingWidget811::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
 
     // сигнал-слоты для сериализации
 
     connect(ui->StartSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StartSerialization) ;
     connect(ui->PauseSerializationButton, &QAbstractButton::pressed, this, &MainWindow::PauseSerialization);
-            connect(ui->ContinueSerializationButton, &QAbstractButton::pressed, this, &MainWindow::ContinueSerialization);
-            connect(ui->StopSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StopSerialization);
+    connect(ui->ContinueSerializationButton, &QAbstractButton::pressed, this, &MainWindow::ContinueSerialization);
+    connect(ui->StopSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StopSerialization);
 
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
@@ -354,16 +371,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
-
     ui->MedicamentsTable->horizontalHeader()->setVisible(true);
-
     SetLibrariesPath();
-
-
     SetStyleSheets();
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -2198,63 +2208,63 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
 void MainWindow::StartSerialization()
 {
 
-ui->CompaniesCombobox->setEnabled(false);
-ui->DrugsComboBox->setEnabled(false);
-ui->conditions->setEnabled(false);
-ui->GTINVal->setEnabled(false);
-ui->TNVEDVal->setEnabled(false);
-ui->expirationdate->setEnabled(false);
-ui->batchnumberText->setEnabled(false);
-ui->batchvalue->setEnabled(false);
+    ui->CompaniesCombobox->setEnabled(false);
+    ui->DrugsComboBox->setEnabled(false);
+    ui->conditions->setEnabled(false);
+    ui->GTINVal->setEnabled(false);
+    ui->TNVEDVal->setEnabled(false);
+    ui->expirationdate->setEnabled(false);
+    ui->batchnumberText->setEnabled(false);
+    ui->batchvalue->setEnabled(false);
 
-ui->StartSerializationButton->setEnabled(false);
-ui->PauseSerializationButton->setEnabled(true);
-ui->ContinueSerializationButton->setEnabled(false);
-ui->StopSerializationButton->setEnabled(true);
+    ui->StartSerializationButton->setEnabled(false);
+    ui->PauseSerializationButton->setEnabled(true);
+    ui->ContinueSerializationButton->setEnabled(false);
+    ui->StopSerializationButton->setEnabled(true);
 
-addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
+    addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
 }
 
 void MainWindow::StopSerialization()
 {
 
-ui->CompaniesCombobox->setEnabled(true);
-ui->DrugsComboBox->setEnabled(true);
-ui->conditions->setEnabled(true);
-ui->GTINVal->setEnabled(true);
-ui->TNVEDVal->setEnabled(true);
-ui->expirationdate->setEnabled(true);
-ui->batchnumberText->setEnabled(true);
-ui->batchvalue->setEnabled(true);
+    ui->CompaniesCombobox->setEnabled(true);
+    ui->DrugsComboBox->setEnabled(true);
+    ui->conditions->setEnabled(true);
+    ui->GTINVal->setEnabled(true);
+    ui->TNVEDVal->setEnabled(true);
+    ui->expirationdate->setEnabled(true);
+    ui->batchnumberText->setEnabled(true);
+    ui->batchvalue->setEnabled(true);
 
 
-ui->StartSerializationButton->setEnabled(true);
-ui->PauseSerializationButton->setEnabled(false);
-ui->ContinueSerializationButton->setEnabled(false);
-ui->StopSerializationButton->setEnabled(false);
+    ui->StartSerializationButton->setEnabled(true);
+    ui->PauseSerializationButton->setEnabled(false);
+    ui->ContinueSerializationButton->setEnabled(false);
+    ui->StopSerializationButton->setEnabled(false);
 
-addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
+    addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
 }
 
 void MainWindow::PauseSerialization()
 {
 
-ui->StartSerializationButton->setEnabled(false);
-ui->PauseSerializationButton->setEnabled(false);
-ui->ContinueSerializationButton->setEnabled(true);
-ui->StopSerializationButton->setEnabled(true);
+    ui->StartSerializationButton->setEnabled(false);
+    ui->PauseSerializationButton->setEnabled(false);
+    ui->ContinueSerializationButton->setEnabled(true);
+    ui->StopSerializationButton->setEnabled(true);
 
-addMessageToJournal("Пауза сериализации",Qt::blue,Qt::white);
+    addMessageToJournal("Пауза сериализации",Qt::blue,Qt::white);
 
 }
 
 void MainWindow::ContinueSerialization()
 {
-ui->StartSerializationButton->setEnabled(false);
-ui->PauseSerializationButton->setEnabled(true);
-ui->ContinueSerializationButton->setEnabled(false);
-ui->StopSerializationButton->setEnabled(true);
-addMessageToJournal("Продолж.сериализации",Qt::green,Qt::white);
+    ui->StartSerializationButton->setEnabled(false);
+    ui->PauseSerializationButton->setEnabled(true);
+    ui->ContinueSerializationButton->setEnabled(false);
+    ui->StopSerializationButton->setEnabled(true);
+    addMessageToJournal("Продолж.сериализации",Qt::green,Qt::white);
 }
 
 void MainWindow::on_StartSerializationButton_clicked()

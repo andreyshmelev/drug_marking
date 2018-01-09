@@ -95,6 +95,37 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     return strName;
 }
 
+QStringList SQL::seldistinct(QString select, QString from, QString where, QString rec)
+{
+    QSqlQuery query("", db);
+    //Задаем запрос
+    QString execc = "SELECT DISTINCT " + select + " FROM " + from;
+
+    qDebug() << execc;
+    if (where != "")
+    {
+        execc += " WHERE " + where;
+    }
+
+    if (!query.exec(execc)) {
+        //        qDebug() << "Unable to execute query - exiting";
+        qDebug() << "Last DataBase Error" << query.lastError();
+    }
+
+    //Reading of the data
+    QSqlRecord SQLrec     = query.record();
+    QStringList    strName;
+
+    while (query.next()) {
+        strName.append( query.value(SQLrec.indexOf(rec)).toString() );
+    }
+
+    if (strName.length() == 0)
+        strName.append(""); // зачем?
+
+    return strName;
+}
+
 QSqlError SQL::makesqlreq(QString req)
 {
     QSqlQuery query("", db);

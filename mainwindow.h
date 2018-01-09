@@ -87,6 +87,7 @@ public:
     void setRunningBuisenessProcess(bool value);
     void GetCompaniesList(QString company_inn, QString fromcompany, QString company_owner_id, QString company_email, QString wherecompany, QString company_kpp, QString companyname, QString company_subject_id, QString company_ul, QString company_fl);
     void GetCompaniesDBList();
+    void GetStatisticsFromDB();
     bool IsDateProper(QString stringtotest);
     void SQLInit();
 
@@ -153,8 +154,11 @@ private:
     QStringList drugs;
     QStringList companies;
 
-    int temp;
+    QStringList statisticsbisnessprocesses;
+    QStringList statisticsmedicaments;
+    QStringList statisticsbatches;
 
+    int temp;
     QGraphicsScene m_Scene;
     Code128Item * m_Barcode;
 
