@@ -101,7 +101,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -2373,13 +2373,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="StatistBPLabel">
+     <widget class="QComboBox" name="StatistBPcomboBox">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>60</y>
-        <width>121</width>
-        <height>41</height>
+        <x>31</x>
+        <y>80</y>
+        <width>173</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="font">
@@ -2387,22 +2387,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         <family>Times New Roman</family>
         <pointsize>12</pointsize>
        </font>
-      </property>
-      <property name="text">
-       <string>Бизнес процесс</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="StatistBPcomboBox">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>120</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QSpinBox::up-button { width: 32px; }
@@ -2411,13 +2395,13 @@ QComboBox::drop-down
 { width: 32px; }</string>
       </property>
      </widget>
-     <widget class="QLabel" name="StatistMedicamentLabel">
+     <widget class="QComboBox" name="StatistMedicamentComboBox">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>60</y>
-        <width>121</width>
-        <height>41</height>
+        <x>210</x>
+        <y>80</y>
+        <width>173</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="font">
@@ -2425,22 +2409,6 @@ QComboBox::drop-down
         <family>Times New Roman</family>
         <pointsize>12</pointsize>
        </font>
-      </property>
-      <property name="text">
-       <string>Препарат</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="StatistMedicamentComboBox">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>120</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QSpinBox::up-button { width: 32px; }
@@ -2452,26 +2420,10 @@ QComboBox::drop-down
      <widget class="QComboBox" name="StatistBatchComboBox">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>120</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QSpinBox::up-button { width: 32px; }
-QSpinBox::down-button { width: 32px; }
-QComboBox::drop-down 
-{ width: 32px; }</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="StatistBatchLabel">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>60</y>
-        <width>121</width>
-        <height>41</height>
+        <x>389</x>
+        <y>80</y>
+        <width>173</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="font">
@@ -2480,18 +2432,18 @@ QComboBox::drop-down
         <pointsize>12</pointsize>
        </font>
       </property>
-      <property name="text">
-       <string>Партия</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+      <property name="styleSheet">
+       <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
       </property>
      </widget>
      <widget class="QLabel" name="FoundLabel">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>270</y>
+        <x>210</x>
+        <y>360</y>
         <width>121</width>
         <height>41</height>
        </rect>
@@ -2581,8 +2533,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
      <widget class="QLabel" name="Foundvalue">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>270</y>
+        <x>330</x>
+        <y>360</y>
         <width>121</width>
         <height>41</height>
        </rect>
@@ -2599,6 +2551,186 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
+     </widget>
+     <widget class="QComboBox" name="StatistGTINCombobox">
+      <property name="geometry">
+       <rect>
+        <x>567</x>
+        <y>80</y>
+        <width>173</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
+      </property>
+     </widget>
+     <widget class="QDateTimeEdit" name="StatistDateTimeFromEdit">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>170</y>
+        <width>351</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="displayFormat">
+       <string>yyyy-MM-dd hh:mm:ss</string>
+      </property>
+     </widget>
+     <widget class="QDateTimeEdit" name="StatistDateTimeToEdit">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>170</y>
+        <width>351</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="displayFormat">
+       <string>yyyy-MM-dd hh:mm:ss</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>130</y>
+        <width>711</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="QLabel" name="StatistDateTimeFromLabel">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Дата от</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="StatistDateTimeToLabel">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Дата до</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>711</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0">
+        <widget class="QLabel" name="StatistBPLabel">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Бизнес процесс</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="StatistMedicamentLabel">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Препарат</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="StatistBatchLabel">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Партия</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="StatistGTINLabel">
+         <property name="font">
+          <font>
+           <family>Times New Roman</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>GTIN</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="xmlPage">
