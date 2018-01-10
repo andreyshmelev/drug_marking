@@ -536,7 +536,6 @@ void MainWindow::Getmessage(QString m)
 
 void MainWindow::PrintSSCCCode(QString newcode)
 {
-
     m_Barcode = new Code128Item();
     m_Barcode->setWidth( 190 / 1.5 );
     m_Barcode->setHeight( 110 / 1.3 );
@@ -544,9 +543,7 @@ void MainWindow::PrintSSCCCode(QString newcode)
     m_Scene.clear();
     m_Scene.addItem( m_Barcode );
     m_Scene.update();
-
     m_Barcode->update();
-
 
     QPrinter printer;
     QSize size(30,40);
@@ -2268,11 +2265,13 @@ void MainWindow::ContinueSerialization()
 
 void MainWindow::on_StartSerializationButton_clicked()
 {
-
 }
 
 void MainWindow::on_StatistFindButton_clicked()
 {
-    QStringList ssss = sqlDB->sel("SUM(count) AS Total", "mark.statistics", "batch like \"A12345\" and GTIN like \"%\"","SUM(count) AS Total");
-    qDebug() << ssss ;
+    QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics", "batch like 'A12345' and GTIN like '%';","Total");
+
+    //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
+
+    qDebug() << "SUM" << ssss ;
 }

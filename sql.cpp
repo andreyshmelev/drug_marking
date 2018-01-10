@@ -14,14 +14,11 @@ SQL::SQL(QString path)
 
     //    QString hostname = "LOCALHOST\\MySQL57";
     QString dbname = "mark";
-    QString hostname = ""; // 192.168.1.37
+    QString hostname = "192.168.1.37"; // 192.168.1.37
     int port = 3306;
 
-//    QString user = "markirovka";
-//    QString password = "WD8NHWq3T0zT";
-
-    QString user = "Andrey";
-    QString password = "12345";
+    QString user = "markirovka";
+    QString password = "WD8NHWq3T0zT";
 
     //    QString user = "root";
     //    QString password = "12345";
@@ -88,6 +85,40 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     //Reading of the data
     QSqlRecord SQLrec     = query.record();
     QStringList    strName;
+
+    while (query.next()) {
+        strName.append( query.value(SQLrec.indexOf(rec)).toString() );
+    }
+
+    if (strName.length() == 0)
+        strName.append(""); // зачем?
+
+    return strName;
+}
+
+QStringList SQL::getsumm(QString select, QString from, QString where, QString rec)
+{
+    QSqlQuery query("", db);
+    //Задаем запрос
+    QString execc = "SELECT " + select + " FROM " + from;
+
+    if (where != "")
+    {
+        execc += " WHERE " + where;
+    }
+
+    qDebug() << execc;
+    if (!query.exec(execc)) {
+        //        qDebug() << "Unable to execute query - exiting";
+        qDebug() << "Last DataBase Error" << query.lastError();
+    }
+// qDebug() << "No DataBase Error" ;
+
+    //Reading of the data
+    QSqlRecord SQLrec     = query.record();
+    QStringList    strName;
+
+    qDebug() << "query.record()" << query.record() ;
 
     while (query.next()) {
         strName.append( query.value(SQLrec.indexOf(rec)).toString() );

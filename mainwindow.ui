@@ -29,7 +29,7 @@
    <string notr="true">/*border: 1px solid gray;*/
 /*border-radius: 10px;*/
 
-background-color: rgb(15,82,146);
+background-color: rgb(103,158,210);
 
    color: white;</string>
   </property>
@@ -1885,13 +1885,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>33</y>
+        <y>34</y>
         <width>258</width>
-        <height>392</height>
+        <height>411</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0" colspan="2">
+       <item row="0" column="0">
         <widget class="QPushButton" name="register_end_packing_Button">
          <property name="minimumSize">
           <size>
@@ -1947,7 +1947,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="0" column="1">
         <widget class="QLabel" name="register_end_packing_Label">
          <property name="minimumSize">
           <size>
@@ -1967,25 +1967,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="register_control_samples_Label">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>register_product_emission_Button</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
         <widget class="QPushButton" name="register_control_samples_Button">
          <property name="minimumSize">
           <size>
@@ -2041,7 +2022,26 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="1" column="1">
+        <widget class="QLabel" name="register_control_samples_Label">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>register_product_emission_Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QPushButton" name="register_product_emission_Button">
          <property name="minimumSize">
           <size>
@@ -2097,7 +2097,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item row="2" column="1">
         <widget class="QLabel" name="register_product_emission_QRLabel">
          <property name="minimumSize">
           <size>
@@ -2117,25 +2117,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="move_order_QRLabel">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>register_product_emission_Button</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="2">
         <widget class="QPushButton" name="move_order_Button">
          <property name="enabled">
           <bool>true</bool>
@@ -2194,7 +2175,26 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2">
+       <item row="3" column="1">
+        <widget class="QLabel" name="move_order_QRLabel">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>register_product_emission_Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
         <widget class="QPushButton" name="releabeling_Button">
          <property name="enabled">
           <bool>true</bool>
@@ -2253,7 +2253,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
+       <item row="4" column="1">
         <widget class="QLabel" name="releabeling_QRLabel">
          <property name="minimumSize">
           <size>
@@ -2273,25 +2273,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="unit_pack_QRLabel">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>60</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>register_product_emission_Button</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1" colspan="2">
         <widget class="QPushButton" name="unit_pack_Button">
          <property name="minimumSize">
           <size>
@@ -2344,6 +2325,25 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
          <property name="text">
           <string>Упаковка в транс-
 портную тару (911)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="unit_pack_QRLabel">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>register_product_emission_Button</string>
          </property>
         </widget>
        </item>
