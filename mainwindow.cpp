@@ -2269,7 +2269,15 @@ void MainWindow::on_StartSerializationButton_clicked()
 
 void MainWindow::on_StatistFindButton_clicked()
 {
-    QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics", "batch like 'A12345' and GTIN like '%';","Total");
+    QString statbisnesprocess = ui->StatistBPcomboBox->currentText();
+    QString statmedicament = ui->StatistMedicamentComboBox->currentText();
+    QString statbatch = ui->StatistBatchComboBox->currentText();
+
+
+    QString reqstring = QString("batch like '%1' and BProcess like '%2' and LPName like '%3' ;").arg(statbatch,statbisnesprocess,statmedicament);
+    QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics",reqstring,"Total");
+
+    ui->Foundvalue->setText(ssss.at(0));
 
     //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
 
