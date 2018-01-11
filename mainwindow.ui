@@ -101,7 +101,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>10</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -3755,12 +3755,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>UnitExtractWidget</class>
-   <extends>QWidget</extends>
-   <header>C:\Work\Application\Application\Widgets\UnitExtractWidget\unitextractwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>MoveOrder415</class>
    <extends>QWidget</extends>
    <header>C:\Work\Application\Application\Widgets\MoveOrderWidget415\moveorder415.h</header>
@@ -3779,15 +3773,21 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>RegisterEndPackingWidget311</class>
-   <extends>QWidget</extends>
-   <header>C:\Work\Application\Application\Widgets\RegisterEndPackingWidget311\registerendpackingwidget311.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>widget313</class>
    <extends>QWidget</extends>
    <header>Widgets/Widget313/widget313.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RegisterEndPackingWidget311</class>
+   <extends>QWidget</extends>
+   <header>Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UnitExtractWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/UnitExtractWidget/unitextractwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
