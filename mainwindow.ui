@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1200</width>
-    <height>800</height>
+    <width>1920</width>
+    <height>1080</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -74,10 +74,10 @@ background-color: rgb(103,158,210);
    <widget class="QListWidget" name="journalList">
     <property name="geometry">
      <rect>
-      <x>950</x>
-      <y>69</y>
-      <width>241</width>
-      <height>471</height>
+      <x>970</x>
+      <y>90</y>
+      <width>221</width>
+      <height>450</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -90,9 +90,21 @@ border-radius: 10px;</string>
      <rect>
       <x>0</x>
       <y>90</y>
-      <width>771</width>
-      <height>451</height>
+      <width>770</width>
+      <height>450</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>770</width>
+      <height>450</height>
+     </size>
     </property>
     <property name="styleSheet">
      <string notr="true">    border-style: outset;
@@ -101,7 +113,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>10</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -563,7 +575,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         <x>20</x>
         <y>50</y>
         <width>651</width>
-        <height>321</height>
+        <height>343</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -2612,7 +2624,7 @@ QComboBox::drop-down
        <string>yyyy-MM-dd hh:mm:ss</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -2656,7 +2668,7 @@ QComboBox::drop-down
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -2997,6 +3009,18 @@ QComboBox::drop-down
         <height>440</height>
        </rect>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>760</width>
+        <height>440</height>
+       </size>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="UnitPackPage911">
@@ -3034,160 +3058,13 @@ QComboBox::drop-down
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="optionsButton">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>460</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Настройки системы</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="keyboardButton">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>500</y>
-      <width>110</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>клавиатура</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="infoButton">
-    <property name="geometry">
-     <rect>
-      <x>899</x>
-      <y>500</y>
-      <width>51</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>инф</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="journalButtonDown">
-    <property name="geometry">
-     <rect>
-      <x>720</x>
-      <y>35</y>
-      <width>31</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>↓</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="journalButtonUp">
-    <property name="geometry">
-     <rect>
-      <x>720</x>
-      <y>0</y>
-      <width>31</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>↑</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="manualButton">
-    <property name="geometry">
-     <rect>
-      <x>792</x>
-      <y>420</y>
-      <width>111</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;&lt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="listingButton">
-    <property name="geometry">
-     <rect>
-      <x>910</x>
-      <y>420</y>
-      <width>41</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>&gt;&gt;</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>779</x>
-      <y>50</y>
+      <x>780</x>
+      <y>90</y>
       <width>171</width>
-      <height>351</height>
+      <height>450</height>
      </rect>
     </property>
     <property name="title">
@@ -3196,10 +3073,10 @@ QComboBox::drop-down
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>100</x>
        <y>30</y>
-       <width>121</width>
-       <height>141</height>
+       <width>51</width>
+       <height>151</height>
       </rect>
      </property>
      <property name="font">
@@ -3281,8 +3158,8 @@ QComboBox::drop-down
       <rect>
        <x>9</x>
        <y>30</y>
-       <width>121</width>
-       <height>141</height>
+       <width>88</width>
+       <height>151</height>
       </rect>
      </property>
      <property name="font">
@@ -3358,64 +3235,6 @@ QComboBox::drop-down
        </widget>
       </item>
      </layout>
-    </widget>
-    <widget class="QTextEdit" name="ScannedCode">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>200</y>
-       <width>151</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="CodeLabel">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>180</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Times New Roman</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Сканированный код:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="dbLog">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>270</y>
-       <width>151</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
     </widget>
    </widget>
    <widget class="QLabel" name="DateTimeLabel">
@@ -3944,6 +3763,130 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="journalButtonUp">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>110</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>↑</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="journalButtonDown">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>140</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>↓</string>
+    </property>
+   </widget>
+   <widget class="QSplitter" name="splitter_2">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>560</y>
+      <width>231</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QPushButton" name="infoButton">
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Помощь</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="keyboardButton">
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Клавиатура</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="optionsButton">
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Настройки системы</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>organizationLabel</zorder>
+   <zorder>journalList</zorder>
+   <zorder>stackedWidget</zorder>
+   <zorder>journalLabel</zorder>
+   <zorder>optionsButton</zorder>
+   <zorder>keyboardButton</zorder>
+   <zorder>infoButton</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>DateTimeLabel</zorder>
+   <zorder>DateTimeLabelValue</zorder>
+   <zorder>LPLabel</zorder>
+   <zorder>LPLabelName</zorder>
+   <zorder>LPDoseLabel</zorder>
+   <zorder>LPDose</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>splitter</zorder>
+   <zorder>journalButtonUp</zorder>
+   <zorder>journalButtonDown</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

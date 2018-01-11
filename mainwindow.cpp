@@ -555,7 +555,6 @@ void MainWindow::setLanguageswitcher(bool value)
 
 void MainWindow::Getmessage(QString m)
 {
-    ui->dbLog->setText(m);
 }
 
 void MainWindow::PrintSSCCCode(QString newcode)
@@ -1307,7 +1306,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         return;
     }
 
-    ui->ScannedCode->setText(inputDataStringFromScaner);
 
     // сюда перешли если нас устроил код
     // добавляем в конец строки символ завершения <GS>, точнее часть его,
