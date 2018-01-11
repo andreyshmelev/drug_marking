@@ -101,7 +101,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -563,7 +563,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         <x>20</x>
         <y>50</y>
         <width>651</width>
-        <height>343</height>
+        <height>321</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -2763,8 +2763,8 @@ QComboBox::drop-down
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>480</width>
-        <height>400</height>
+        <width>760</width>
+        <height>440</height>
        </rect>
       </property>
      </widget>
@@ -2775,8 +2775,8 @@ QComboBox::drop-down
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>480</width>
-        <height>400</height>
+        <width>760</width>
+        <height>440</height>
        </rect>
       </property>
      </widget>
@@ -2785,10 +2785,10 @@ QComboBox::drop-down
      <widget class="widget313" name="widget" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>741</width>
-        <height>431</height>
+        <x>0</x>
+        <y>0</y>
+        <width>760</width>
+        <height>440</height>
        </rect>
       </property>
      </widget>
@@ -2799,20 +2799,20 @@ QComboBox::drop-down
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>480</width>
-        <height>400</height>
+        <width>760</width>
+        <height>440</height>
        </rect>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="RelabelingPage811">
-     <widget class="RelabelingWidget811" name="RelabelingWidget" native="true">
+     <widget class="QWidget" name="RelabelingWidget" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>480</width>
-        <height>400</height>
+        <width>760</width>
+        <height>440</height>
        </rect>
       </property>
      </widget>
@@ -2823,8 +2823,8 @@ QComboBox::drop-down
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>480</width>
-        <height>400</height>
+        <width>760</width>
+        <height>440</height>
        </rect>
       </property>
      </widget>
@@ -3749,6 +3749,19 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
      </item>
     </layout>
    </widget>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>0</width>
+      <height>0</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
@@ -3782,12 +3795,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
    <class>MoveOrder415</class>
    <extends>QWidget</extends>
    <header>Widgets/MoveOrderWidget415/moveorder415.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>RelabelingWidget811</class>
-   <extends>QWidget</extends>
-   <header>Widgets/RelabelingWidget811/relabelingwidget811.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
