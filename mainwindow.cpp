@@ -71,16 +71,40 @@ void MainWindow::GetCompaniesDBList()
 
 void MainWindow::GetStatisticsFromDB()
 {
+    QString curtext ;
+
     statisticsbisnessprocesses = sqlDB->seldistinct("BProcess", "mark.statistics", "","BProcess");
+
+    curtext = ui->StatistBPcomboBox->currentText();
+
+    ui->StatistBPcomboBox->clear();
+    ui->StatistBPcomboBox->addItem("%");
     ui->StatistBPcomboBox->addItems(statisticsbisnessprocesses);
+    ui->StatistBPcomboBox->setCurrentText(curtext);
 
     statisticsmedicaments = sqlDB->seldistinct("LPName", "mark.statistics", "","LPName");
+
+    curtext = ui->StatistMedicamentComboBox->currentText();
+    ui->StatistMedicamentComboBox->clear();
     ui->StatistMedicamentComboBox->addItem("%");
     ui->StatistMedicamentComboBox->addItems(statisticsmedicaments);
+    ui->StatistMedicamentComboBox->setCurrentText(curtext);
 
     statisticsbatches = sqlDB->seldistinct("batch", "mark.statistics", "","batch");
+
+    curtext = ui->StatistBatchComboBox->currentText();
+    ui->StatistBatchComboBox->clear();
     ui->StatistBatchComboBox->addItem("%");
     ui->StatistBatchComboBox->addItems(statisticsbatches);
+    ui->StatistBatchComboBox->setCurrentText(curtext);
+
+    QStringList statisticsgtin = sqlDB->seldistinct("GTIN", "mark.statistics", "","GTIN");
+
+    curtext = ui->StatistGTINCombobox->currentText();
+    ui->StatistGTINCombobox->clear();
+    ui->StatistGTINCombobox->addItem("%");
+    ui->StatistGTINCombobox->addItems(statisticsgtin);
+    ui->StatistGTINCombobox->setCurrentText(curtext);
 }
 
 bool MainWindow::IsDateProper(QString stringtotest)
@@ -2269,14 +2293,14 @@ void MainWindow::on_StatistFindButton_clicked()
     QString statbisnesprocess = ui->StatistBPcomboBox->currentText();
     QString statmedicament = ui->StatistMedicamentComboBox->currentText();
     QString statbatch = ui->StatistBatchComboBox->currentText();
+    QString statGtin = ui->StatistGTINCombobox->currentText();
     QString datefrom = ui->StatistDateTimeFromEdit->dateTime().toString("yyyy-MM-dd hh:mm:ss");
     QString dateto = ui->StatistDateTimeToEdit->dateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-
-    QString reqstring = QString("batch like '%1' and BProcess like '%2' and LPName like '%3' and date BETWEEN '%4' and '%5';").arg(statbatch,statbisnesprocess,statmedicament,datefrom,dateto);
+    QString reqstring = QString("batch like '%1' and BProcess like '%2' and LPName like '%3' and date BETWEEN '%4' and '%5'  and GTIN like '%6';").arg(statbatch,statbisnesprocess,statmedicament,datefrom,dateto,statGtin);
     QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics",reqstring,"Total");
 
     ui->Foundvalue->setText(ssss.at(0));
     //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
     qDebug() << "SUM" << ssss ;
+    GetStatisticsFromDB();
 }

@@ -101,7 +101,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
