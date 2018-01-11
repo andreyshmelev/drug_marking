@@ -101,7 +101,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
     </property>
     <property name="currentIndex">
-     <number>10</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="PrintControlPage">
      <widget class="QGraphicsView" name="packagePicture">
@@ -3755,24 +3755,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>MoveOrder415</class>
-   <extends>QWidget</extends>
-   <header>C:\Work\Application\Application\Widgets\MoveOrderWidget415\moveorder415.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>RelabelingWidget811</class>
-   <extends>QWidget</extends>
-   <header>C:\Work\Application\Application\Widgets\RelabelingWidget811\relabelingwidget811.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>UnitPackWidget911</class>
-   <extends>QWidget</extends>
-   <header>C:\Work\Application\Application\Widgets\UnitPackWidget911\unitpackwidget911.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>widget313</class>
    <extends>QWidget</extends>
    <header>Widgets/Widget313/widget313.h</header>
@@ -3788,6 +3770,24 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
    <class>UnitExtractWidget</class>
    <extends>QWidget</extends>
    <header>Widgets/UnitExtractWidget/unitextractwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UnitPackWidget911</class>
+   <extends>QWidget</extends>
+   <header>Widgets/UnitPackWidget911/unitpackwidget911.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MoveOrder415</class>
+   <extends>QWidget</extends>
+   <header>Widgets/MoveOrderWidget415/moveorder415.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RelabelingWidget811</class>
+   <extends>QWidget</extends>
+   <header>Widgets/RelabelingWidget811/relabelingwidget811.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
