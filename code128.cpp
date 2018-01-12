@@ -62,8 +62,6 @@ QString Code128::symbolCode(quint8 c)
     return symbols[c];
 }
 
-
-
 void Code128::addSymbolCodeChar(char c, QStringList &symbols, int &checksum)
 {
     // keep characters in valid range.
