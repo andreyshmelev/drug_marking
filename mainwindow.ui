@@ -39,6 +39,9 @@ background-color: rgb(103,158,210);
     <height>60</height>
    </size>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_15">
     <item row="0" column="0">
@@ -633,7 +636,7 @@ border-radius: 10px;</string>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <layout class="QGridLayout" name="gridLayout_11">
           <item row="0" column="0">
            <widget class="QPushButton" name="infoButton">
@@ -886,7 +889,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>8</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <widget class="QGraphicsView" name="packagePicture">
@@ -933,7 +936,7 @@ border-radius: 10px;</string>
            <set>Qt::NoTextInteraction</set>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -3759,7 +3762,7 @@ QComboBox::drop-down
         <widget class="QWidget" name="RegisterProductEmissionPage313">
          <layout class="QGridLayout" name="gridLayout_22">
           <item row="0" column="0">
-           <widget class="widget313" name="widget" native="true"/>
+           <widget class="QWidget" name="widget" native="true"/>
           </item>
          </layout>
         </widget>
@@ -3802,41 +3805,12 @@ QComboBox::drop-down
      </layout>
     </item>
    </layout>
-   <zorder>organizationLabel</zorder>
-   <zorder>journalList</zorder>
-   <zorder>stackedWidget</zorder>
-   <zorder>optionsButton</zorder>
-   <zorder>keyboardButton</zorder>
-   <zorder>infoButton</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>DateTimeLabel</zorder>
-   <zorder>DateTimeLabelValue</zorder>
-   <zorder>LPLabel</zorder>
-   <zorder>LPLabelName</zorder>
-   <zorder>LPDoseLabel</zorder>
-   <zorder>LPDose</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>journalButtonDown</zorder>
-   <zorder>statisticsLabel</zorder>
-   <zorder>agregationButton</zorder>
-   <zorder>agregationLabel</zorder>
-   <zorder>statisticksButton</zorder>
-   <zorder>printControlLabel</zorder>
-   <zorder>printControlButton</zorder>
-   <zorder>programOptionsButton</zorder>
-   <zorder>programOptionsLabel</zorder>
    <zorder></zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>widget313</class>
-   <extends>QWidget</extends>
-   <header>Widgets/Widget313/widget313.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>RegisterEndPackingWidget311</class>
    <extends>QWidget</extends>

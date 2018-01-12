@@ -43,9 +43,7 @@ SOURCES += \
     Widgets/UnitPackWidget911/unitpackwidget911.cpp \
     Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.cpp \
     code128.cpp \
-    code128item.cpp \
-    Widgets/Widget313/widget313.cpp \
-    Widgets/Widget313/widget313.cpp
+    code128item.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -61,9 +59,7 @@ HEADERS += \
     Widgets/UnitPackWidget911/unitpackwidget911.h \
     Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.h \
     code128.h \
-    code128item.h \
-    Widgets/Widget313/widget313.h \
-    Widgets/Widget313/widget313.h
+    code128item.h
 
 FORMS += \
         mainwindow.ui \
@@ -71,6 +67,4 @@ FORMS += \
     Widgets/MoveOrderWidget415/moveorder415.ui \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
     Widgets/UnitPackWidget911/unitpackwidget911.ui \
-    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui \
-    Widgets/Widget313/widget313.ui \
-    Widgets/Widget313/widget313.ui
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui
