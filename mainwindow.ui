@@ -633,7 +633,7 @@ border-radius: 10px;</string>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <layout class="QGridLayout" name="gridLayout_11">
           <item row="0" column="0">
            <widget class="QPushButton" name="infoButton">
@@ -746,7 +746,20 @@ border-radius: 10px;</string>
                 </font>
                </property>
                <property name="text">
-                <string>NOK</string>
+                <string>Брак</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="BatchLabel">
+               <property name="font">
+                <font>
+                 <family>Impact</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Партия</string>
                </property>
               </widget>
              </item>
@@ -808,6 +821,19 @@ border-radius: 10px;</string>
              </item>
              <item>
               <widget class="QLabel" name="NOKlabelValue">
+               <property name="font">
+                <font>
+                 <family>Impact</family>
+                 <pointsize>22</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="BatchLabelValue">
                <property name="font">
                 <font>
                  <family>Impact</family>
@@ -886,7 +912,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <widget class="QGraphicsView" name="packagePicture">
@@ -933,7 +959,7 @@ border-radius: 10px;</string>
            <set>Qt::NoTextInteraction</set>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -1207,6 +1233,45 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QCheckBox" name="SerializAutoUpakovkaCheckBox">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>190</y>
+            <width>271</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Создание файлов упаковки автоматически</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>240</y>
+            <width>271</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Автоматическая агрегация</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_3">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>290</y>
+            <width>271</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Программная агрегация</string>
+          </property>
          </widget>
         </widget>
         <widget class="QWidget" name="productOptionsPage">
@@ -3802,41 +3867,12 @@ QComboBox::drop-down
      </layout>
     </item>
    </layout>
-   <zorder>organizationLabel</zorder>
-   <zorder>journalList</zorder>
-   <zorder>stackedWidget</zorder>
-   <zorder>optionsButton</zorder>
-   <zorder>keyboardButton</zorder>
-   <zorder>infoButton</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>DateTimeLabel</zorder>
-   <zorder>DateTimeLabelValue</zorder>
-   <zorder>LPLabel</zorder>
-   <zorder>LPLabelName</zorder>
-   <zorder>LPDoseLabel</zorder>
-   <zorder>LPDose</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>journalButtonDown</zorder>
-   <zorder>statisticsLabel</zorder>
-   <zorder>agregationButton</zorder>
-   <zorder>agregationLabel</zorder>
-   <zorder>statisticksButton</zorder>
-   <zorder>printControlLabel</zorder>
-   <zorder>printControlButton</zorder>
-   <zorder>programOptionsButton</zorder>
-   <zorder>programOptionsLabel</zorder>
    <zorder></zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>widget313</class>
-   <extends>QWidget</extends>
-   <header>Widgets/Widget313/widget313.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>RegisterEndPackingWidget311</class>
    <extends>QWidget</extends>
@@ -3865,6 +3901,12 @@ QComboBox::drop-down
    <class>RelabelingWidget811</class>
    <extends>QWidget</extends>
    <header>Widgets/RelabelingWidget811/relabelingwidget811.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>widget313</class>
+   <extends>QWidget</extends>
+   <header>Widgets/Widget313/widget313.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
