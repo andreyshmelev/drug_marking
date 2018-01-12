@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1589</width>
+    <width>1326</width>
     <height>1080</height>
    </rect>
   </property>
@@ -40,73 +40,30 @@ background-color: rgb(103,158,210);
    </size>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QSplitter" name="splitter">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>910</y>
-      <width>905</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>1291</width>
-      <height>611</height>
+      <width>1262</width>
+      <height>760</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_9">
-     <item row="3" column="2">
-      <widget class="QSplitter" name="splitter_2">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+     <item row="1" column="2">
+      <widget class="QLabel" name="journalLabel">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
        </property>
-       <widget class="QPushButton" name="infoButton">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Помощь</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="keyboardButton">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Клавиатура</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="optionsButton">
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Настройки системы</string>
-        </property>
-       </widget>
+       <property name="text">
+        <string>Журнал</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item row="0" column="0">
@@ -239,6 +196,85 @@ background-color: rgb(103,158,210);
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="4" column="0">
+      <layout class="QGridLayout" name="gridLayout_5"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QSplitter" name="splitter_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QWidget" name="">
+        <layout class="QGridLayout" name="gridLayout_11">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="infoButton">
+           <property name="font">
+            <font>
+             <family>Times New Roman</family>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Помощь</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="keyboardButton">
+           <property name="font">
+            <font>
+             <family>Times New Roman</family>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Клавиатура</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="optionsButton">
+           <property name="font">
+            <font>
+             <family>Times New Roman</family>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Настройки системы</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QListWidget" name="journalList">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>220</width>
+         <height>450</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 1px solid gray;
+border-radius: 10px;</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
       <widget class="QGroupBox" name="groupBox">
@@ -423,42 +459,6 @@ background-color: rgb(103,158,210);
          </item>
         </layout>
        </widget>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QListWidget" name="journalList">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>220</width>
-         <height>450</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: 1px solid gray;
-border-radius: 10px;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="journalLabel">
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Журнал</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
       </widget>
      </item>
      <item row="2" column="0" rowspan="2">
@@ -3399,31 +3399,31 @@ QComboBox::drop-down
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>720</y>
-      <width>811</width>
-      <height>151</height>
+      <x>30</x>
+      <y>788</y>
+      <width>701</width>
+      <height>211</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_5">
+    <layout class="QGridLayout" name="gridLayout_12">
      <item row="0" column="0">
       <widget class="QPushButton" name="printControlButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>160</width>
+         <width>80</width>
          <height>60</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>160</width>
-         <height>60</height>
+         <width>320</width>
+         <height>160</height>
         </size>
        </property>
        <property name="font">
@@ -3481,21 +3481,21 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
      <item row="0" column="1">
       <widget class="QPushButton" name="programOptionsButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>160</width>
+         <width>80</width>
          <height>60</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>160</width>
-         <height>60</height>
+         <width>320</width>
+         <height>160</height>
         </size>
        </property>
        <property name="font">
@@ -3551,21 +3551,21 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
      <item row="0" column="2">
       <widget class="QPushButton" name="agregationButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>160</width>
+         <width>80</width>
          <height>60</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>160</width>
-         <height>60</height>
+         <width>320</width>
+         <height>160</height>
         </size>
        </property>
        <property name="font">
@@ -3621,21 +3621,21 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
      <item row="0" column="3">
       <widget class="QPushButton" name="statisticksButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>160</width>
+         <width>80</width>
          <height>60</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>160</width>
-         <height>60</height>
+         <width>320</width>
+         <height>160</height>
         </size>
        </property>
        <property name="font">
@@ -3691,8 +3691,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <widget class="QLabel" name="printControlLabel">
        <property name="minimumSize">
         <size>
-         <width>55</width>
-         <height>55</height>
+         <width>80</width>
+         <height>80</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -3719,8 +3719,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <widget class="QLabel" name="programOptionsLabel">
        <property name="minimumSize">
         <size>
-         <width>55</width>
-         <height>55</height>
+         <width>80</width>
+         <height>80</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -3747,8 +3747,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <widget class="QLabel" name="agregationLabel">
        <property name="minimumSize">
         <size>
-         <width>55</width>
-         <height>55</height>
+         <width>80</width>
+         <height>80</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -3775,8 +3775,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
       <widget class="QLabel" name="statisticsLabel">
        <property name="minimumSize">
         <size>
-         <width>55</width>
-         <height>55</height>
+         <width>80</width>
+         <height>80</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -3815,8 +3815,15 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
    <zorder>LPDoseLabel</zorder>
    <zorder>LPDose</zorder>
    <zorder>layoutWidget</zorder>
-   <zorder>splitter</zorder>
    <zorder>journalButtonDown</zorder>
+   <zorder>statisticsLabel</zorder>
+   <zorder>agregationButton</zorder>
+   <zorder>agregationLabel</zorder>
+   <zorder>statisticksButton</zorder>
+   <zorder>printControlLabel</zorder>
+   <zorder>printControlButton</zorder>
+   <zorder>programOptionsButton</zorder>
+   <zorder>programOptionsLabel</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
@@ -3853,6 +3860,54 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>register_end_packing_Button</tabstop>
+  <tabstop>register_control_samples_Button</tabstop>
+  <tabstop>register_product_emission_Button</tabstop>
+  <tabstop>move_order_Button</tabstop>
+  <tabstop>releabeling_Button</tabstop>
+  <tabstop>unit_pack_Button</tabstop>
+  <tabstop>unit_unpack_Button</tabstop>
+  <tabstop>unit_extract_Button</tabstop>
+  <tabstop>unit_append_Button</tabstop>
+  <tabstop>multi_pack_Button</tabstop>
+  <tabstop>recall_Button</tabstop>
+  <tabstop>refusal_sender_Button</tabstop>
+  <tabstop>refusal_receiver_Button</tabstop>
+  <tabstop>move_place_Button</tabstop>
+  <tabstop>move_destruction_button</tabstop>
+  <tabstop>destruction_Button</tabstop>
+  <tabstop>withdrawal_Button</tabstop>
+  <tabstop>StartSerializationButton</tabstop>
+  <tabstop>PauseSerializationButton</tabstop>
+  <tabstop>ContinueSerializationButton</tabstop>
+  <tabstop>StopSerializationButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>StatistFindButton</tabstop>
+  <tabstop>DrugsComboBox</tabstop>
+  <tabstop>journalList</tabstop>
+  <tabstop>packagePicture</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>batchnumberText</tabstop>
+  <tabstop>CompaniesCombobox</tabstop>
+  <tabstop>expirationdate</tabstop>
+  <tabstop>StatistBPcomboBox</tabstop>
+  <tabstop>StatistMedicamentComboBox</tabstop>
+  <tabstop>StatistBatchComboBox</tabstop>
+  <tabstop>batchvalue</tabstop>
+  <tabstop>StatistGTINCombobox</tabstop>
+  <tabstop>StatistDateTimeFromEdit</tabstop>
+  <tabstop>StatistDateTimeToEdit</tabstop>
+  <tabstop>StatistDateTimeFromEdit</tabstop>
+  <tabstop>StatistDateTimeToEdit</tabstop>
+  <tabstop>optionsButton</tabstop>
+  <tabstop>keyboardButton</tabstop>
+  <tabstop>infoButton</tabstop>
+  <tabstop>DoseVal</tabstop>
+  <tabstop>conditions</tabstop>
+  <tabstop>GTINVal</tabstop>
+  <tabstop>TNVEDVal</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
