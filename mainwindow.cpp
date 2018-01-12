@@ -262,9 +262,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->organizationLabel->show();
 
     pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
-//    ui->qrstartstop->setPixmap(*pixmapqr);
-//    ui->qrstartstop->show();
-//    ui->qrstartstop->setScaledContents(1);
+    //    ui->qrstartstop->setPixmap(*pixmapqr);
+    //    ui->qrstartstop->show();
+    //    ui->qrstartstop->setScaledContents(1);
 
     this->installEventFilter(this);
 
@@ -318,7 +318,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, &UnitExtractWidget::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
 
     // сигналы и слоты для 313 бизнес процесса, пока он в форме mainwindow, позже нужно будет создать отдельный виджет
-//    connect(ui->agregationStartButton, &QAbstractButton::pressed, this, &MainWindow::Toggle313Process) ;
+    //    connect(ui->agregationStartButton, &QAbstractButton::pressed, this, &MainWindow::Toggle313Process) ;
     connect(this, &MainWindow::agregationstatusToggled, this, &MainWindow::updateAgregationGUI) ;
     connect(this, &MainWindow::ParcingEnded, this, &MainWindow::updateAgregationGUI) ;
     connect(this, &MainWindow::register_product_emission_QR_Scanned, this, &MainWindow::RegisterProductEmissionPageOpen) ;
@@ -394,7 +394,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
-//    ui->MedicamentsTable->horizontalHeader()->setVisible(true);
+    //    ui->MedicamentsTable->horizontalHeader()->setVisible(true);
     SetLibrariesPath();
     SetStyleSheets();
 }
@@ -1425,7 +1425,7 @@ void MainWindow::updateDMPicture()
 
 void MainWindow::updateDMcode()
 {
-    ui->DMcodeValue->setText(GenerateDMcode());
+    //    ui->DMcodeValue->setText(GenerateDMcode());
 }
 
 void MainWindow::Start313Process(bool set)
@@ -1475,70 +1475,70 @@ void MainWindow::Toggle313Process()
 
 void MainWindow::updateAgregationGUI()
 {
-//    if (getAgregation() == true)
-//    {
-//        ui->agregationStartButton->setText("Закончить регистрацию");
-//        ui->GTINTextAgregation->setEnabled(true);
-//        ui->batchnumberTextAgregation->setEnabled(true);
-//        ui->expirationdateAgregation->setEnabled(true);
-//        ui->TNVEDValueAgregation->setEnabled(true);
-//        ui->ScannedCode->setEnabled(true);
-//        ui->serialNumberAgregationValue->setEnabled(true);
+    //    if (getAgregation() == true)
+    //    {
+    //        ui->agregationStartButton->setText("Закончить регистрацию");
+    //        ui->GTINTextAgregation->setEnabled(true);
+    //        ui->batchnumberTextAgregation->setEnabled(true);
+    //        ui->expirationdateAgregation->setEnabled(true);
+    //        ui->TNVEDValueAgregation->setEnabled(true);
+    //        ui->ScannedCode->setEnabled(true);
+    //        ui->serialNumberAgregationValue->setEnabled(true);
 
-//        pixmapqr->load(QDir::currentPath() + "/stopapp.jpg");
-//        ui->qrstartstop->setPixmap(*pixmapqr);
-//    }
-//    else
-//    {
-//        ui->agregationStartButton->setText("Начать регистрацию");
-//        ui->GTINTextAgregation->setEnabled(false);
-//        ui->batchnumberTextAgregation->setEnabled(false);
-//        ui->expirationdateAgregation->setEnabled(false);
-//        ui->TNVEDValueAgregation->setEnabled(false);
-//        ui->ScannedCode->setEnabled(false);
-//        ui->serialNumberAgregationValue->setEnabled(false);
+    //        pixmapqr->load(QDir::currentPath() + "/stopapp.jpg");
+    //        ui->qrstartstop->setPixmap(*pixmapqr);
+    //    }
+    //    else
+    //    {
+    //        ui->agregationStartButton->setText("Начать регистрацию");
+    //        ui->GTINTextAgregation->setEnabled(false);
+    //        ui->batchnumberTextAgregation->setEnabled(false);
+    //        ui->expirationdateAgregation->setEnabled(false);
+    //        ui->TNVEDValueAgregation->setEnabled(false);
+    //        ui->ScannedCode->setEnabled(false);
+    //        ui->serialNumberAgregationValue->setEnabled(false);
 
-//        pixmapqr->load(QDir::currentPath() + "/startapp.jpg");
-//        ui->qrstartstop->setPixmap(*pixmapqr);
-//        ui->qrstartstop->show();
-//        ui->qrstartstop->setScaledContents(1);
+    //        pixmapqr->load(QDir::currentPath() + "/startapp.jpg");
+    //        ui->qrstartstop->setPixmap(*pixmapqr);
+    //        ui->qrstartstop->show();
+    //        ui->qrstartstop->setScaledContents(1);
 
-//        ui->MedicamentsTable->clearContents();
-//        ui->MedicamentsTable->setRowCount(0);
-//        ui->qrstartstop->show();
-//        ui->qrstartstop->setScaledContents(1);
-//    }
+    //        ui->MedicamentsTable->clearContents();
+    //        ui->MedicamentsTable->setRowCount(0);
+    //        ui->qrstartstop->show();
+    //        ui->qrstartstop->setScaledContents(1);
+    //    }
 
-//    if (inputDataStringFromScaner.isEmpty())
-//        ui->ScannedCode->clear();
+    //    if (inputDataStringFromScaner.isEmpty())
+    //        ui->ScannedCode->clear();
 
-//    if ( (inputDataStringFromScaner!= Start313ProcessQRString) && (inputDataStringFromScaner!= Stop313ProcessQRString) )
-//    {
-//        ui->ScannedCode->setText(inputDataStringFromScaner);
-//    }
+    //    if ( (inputDataStringFromScaner!= Start313ProcessQRString) && (inputDataStringFromScaner!= Stop313ProcessQRString) )
+    //    {
+    //        ui->ScannedCode->setText(inputDataStringFromScaner);
+    //    }
 
-//    ui->GTINTextAgregation->setText(gtinstring);
-//    ui->serialNumberAgregationValue->setText(SNstring);
-//    ui->batchnumberTextAgregation->setText(batchstring);
-//    ui->expirationdateAgregation->setText(expstring);
-//    ui->TNVEDValueAgregation->setText(tnvedstring);
+    //    ui->GTINTextAgregation->setText(gtinstring);
+    //    ui->serialNumberAgregationValue->setText(SNstring);
+    //    ui->batchnumberTextAgregation->setText(batchstring);
+    //    ui->expirationdateAgregation->setText(expstring);
+    //    ui->TNVEDValueAgregation->setText(tnvedstring);
 }
 
 void MainWindow::AddMedicamentToTable(medicament * m)
 {
-//    if (getAgregation() )
-//    {
-//        ui->MedicamentsTable->insertRow(0);
+    //    if (getAgregation() )
+    //    {
+    //        ui->MedicamentsTable->insertRow(0);
 
-//        ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
-//        ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(m->GTIN));
-//        ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(m->BatchNumber));
-//        ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(m->SerialNumber));
-//        ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(m->TNVED));
-//        ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
-//        ui->MedicamentsTable->scrollToTop();
-//        ui->MedicamentsTable->horizontalHeader()->setVisible(true);
-//    }
+    //        ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
+    //        ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(m->GTIN));
+    //        ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(m->BatchNumber));
+    //        ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(m->SerialNumber));
+    //        ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(m->TNVED));
+    //        ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
+    //        ui->MedicamentsTable->scrollToTop();
+    //        ui->MedicamentsTable->horizontalHeader()->setVisible(true);
+    //    }
 }
 
 
@@ -1564,17 +1564,17 @@ QString MainWindow::GenerateDMcode()
 
 void MainWindow::RegisterProductEmissionPageOpen()
 {
-    setStackedPage(7);
+    setStackedPage(8);
 }
 
 void MainWindow::RegisterControlSamplesPageOpen()
 {
-    setStackedPage(5);
+    setStackedPage(6);
 }
 
 void MainWindow::RegisterEndPackingPageOpen()
 {
-    setStackedPage(6);
+    setStackedPage(7);
 }
 
 void MainWindow::PrintControlPageOpen()
@@ -1600,6 +1600,7 @@ void MainWindow::statisticsPageOpen()
 void MainWindow::setStackedPage(int newindex)
 {
     ui->stackedWidget->setCurrentIndex(newindex);
+    qDebug() << newindex;
 }
 
 void MainWindow::SendCommandToVideoJet(QString a)
@@ -1615,7 +1616,7 @@ void MainWindow::updateQRImage()
     int versionIndex = 0;
     bool bExtent = true;
     int maskIndex = -1;
-    QString encodeString = ui->DMcodeValue->text();
+    QString encodeString = generateSN(11);;
 
     successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
     if ( !successfulEncoding )
@@ -1640,7 +1641,6 @@ void MainWindow::updateQRImage()
 
     ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
     setScale(3);
-
 }
 
 QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
@@ -1864,78 +1864,78 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
 void MainWindow::GetMedicament(medicament *med)
 {
     //updateWidgetGui(ScannedMedicament->GTIN, ScannedMedicament->SerialNumber, ScannedMedicament->TNVED, ScannedMedicament->ExperyDate, ScannedMedicament->BatchNumber);
-//    if (getAgregation())
-//    {
-//        // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
-//        foreach ( medicament * listmed , MedicamentsList)
-//        {
-//            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
-//            {
-//                qDebug() << "такой медикамент уже есть";
-//                ui->errorLabel->setText("Медикамент уже просканирован");
-//                return;
-//            }
+    //    if (getAgregation())
+    //    {
+    //        // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
+    //        foreach ( medicament * listmed , MedicamentsList)
+    //        {
+    //            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
+    //            {
+    //                qDebug() << "такой медикамент уже есть";
+    //                ui->errorLabel->setText("Медикамент уже просканирован");
+    //                return;
+    //            }
 
-//            if ( (med->GTIN != listmed->GTIN ) )
-//            {
-//                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
-//                ui->errorLabel->setText("неверный GTIN");
-//            }
+    //            if ( (med->GTIN != listmed->GTIN ) )
+    //            {
+    //                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
+    //                ui->errorLabel->setText("неверный GTIN");
+    //            }
 
-//            if ( (med->ExperyDate != listmed->ExperyDate ) )
-//            {
-//                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
-//                ui->errorLabel->setText("неверная Дата");
+    //            if ( (med->ExperyDate != listmed->ExperyDate ) )
+    //            {
+    //                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
+    //                ui->errorLabel->setText("неверная Дата");
 
-//            }
+    //            }
 
-//            if ( (med->BatchNumber != listmed->BatchNumber ) )
-//            {
-//                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
-//                ui->errorLabel->setText("неверная партия");
-//            }
+    //            if ( (med->BatchNumber != listmed->BatchNumber ) )
+    //            {
+    //                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
+    //                ui->errorLabel->setText("неверная партия");
+    //            }
 
-//            if ( (med->TNVED != listmed->TNVED ) )
-//            {
-//                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
-//                ui->errorLabel->setText("неверная ТНВЭД");
-//            }
+    //            if ( (med->TNVED != listmed->TNVED ) )
+    //            {
+    //                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
+    //                ui->errorLabel->setText("неверная ТНВЭД");
+    //            }
 
-//            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
-//            {
-//                return;
-//            }
-//        }
+    //            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
+    //            {
+    //                return;
+    //            }
+    //        }
 
-//        if (CheckMedicamentinDB(med))
-//        {
-//            qDebug() << "такой медикамент уже есть в базе данных";
-//            ui->errorLabel->setText("Медикамент есть в БД");
-//            return;
-//        }
+    //        if (CheckMedicamentinDB(med))
+    //        {
+    //            qDebug() << "такой медикамент уже есть в базе данных";
+    //            ui->errorLabel->setText("Медикамент есть в БД");
+    //            return;
+    //        }
 
-//        MedicamentsList.append(med);
-//        AddMedicamentToTable(med);
-//        AddMedicamentToDBTable(med, "process313");
+    //        MedicamentsList.append(med);
+    //        AddMedicamentToTable(med);
+    //        AddMedicamentToDBTable(med, "process313");
 
-//        ui->errorLabel->clear();
-//        ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
-//    }
+    //        ui->errorLabel->clear();
+    //        ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
+    //    }
 }
 
 void MainWindow::on_move_order_Button_clicked()
 {
-    setStackedPage(8);
+    setStackedPage(9);
 }
 
 void MainWindow::on_releabeling_Button_clicked()
 {
-    setStackedPage(9);
+    setStackedPage(10);
 }
 
 void MainWindow::on_unit_pack_Button_clicked()
 {
-    setStackedPage(10);
+    setStackedPage(11);
 }
 
 void MainWindow::SendParamsToVideoJet()
@@ -1968,8 +1968,6 @@ void MainWindow::on_pushButton_2_clicked()
 
     ui->LPLabelName->setText(getGuiDrugsName());
     ui->LPDose->setText(getGuiDose());
-
-
 }
 
 void MainWindow::on_agregationStartButton_clicked()
@@ -2239,13 +2237,11 @@ void MainWindow::StartSerialization()
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(true);
-
     addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
 }
 
 void MainWindow::StopSerialization()
 {
-
     ui->CompaniesCombobox->setEnabled(true);
     ui->DrugsComboBox->setEnabled(true);
     ui->conditions->setEnabled(true);
@@ -2254,13 +2250,10 @@ void MainWindow::StopSerialization()
     ui->expirationdate->setEnabled(true);
     ui->batchnumberText->setEnabled(true);
     ui->batchvalue->setEnabled(true);
-
-
     ui->StartSerializationButton->setEnabled(true);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(false);
-
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
 }
 
@@ -2296,9 +2289,9 @@ void MainWindow::on_StatistFindButton_clicked()
     QString dateto = ui->StatistDateTimeToEdit->dateTime().toString("yyyy-MM-dd hh:mm:ss");
     QString reqstring = QString("batch like '%1' and BProcess like '%2' and LPName like '%3' and date BETWEEN '%4' and '%5'  and GTIN like '%6';").arg(statbatch,statbisnesprocess,statmedicament,datefrom,dateto,statGtin);
     QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics",reqstring,"Total");
-
-    ui->Foundvalue->setText(ssss.at(0));
+    QString summ = ssss.at(0);
+    ui->FoundLabel->setText("Найдено: " + summ);
     //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
-    qDebug() << "SUM" << ssss ;
+    //    qDebug() << "SUM" << ssss ;
     GetStatisticsFromDB();
 }
