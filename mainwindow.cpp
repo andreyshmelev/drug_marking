@@ -14,6 +14,9 @@
 #include "QtPrintSupport/qprinter.h"
 #include "QtPrintSupport/QPrinter"
 #include "QtPrintSupport/QPrintDialog"
+#include <QGlobal.h>
+#include <QTime>
+
 #define testitemscount 0
 
 int aaa = 222;
@@ -123,7 +126,6 @@ void MainWindow::SQLInit()
 {
     sqlDB = new SQL("ненужная строка");
     drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
-
     //    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg("insertfromQt",QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
     sqlDB->makesqlreq(QString("insert into process911 values (\"qt53\",\"qt53\",\"qt33\",\"44\",\"55\");") );
     // подтягиваем параметры компании
@@ -287,7 +289,7 @@ MainWindow::MainWindow(QWidget *parent) :
     RandomStringSenderToVideoJetTimer->start();
 
     ScannerLiniaEmulate = new QTimer();
-    ScannerLiniaEmulate->setInterval(100/6);
+    ScannerLiniaEmulate->setInterval(1000/6); //  6 упаковок в секунду эмулируем
 
     connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::updateDMPicture);
     connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::EmulateMedicamentScan);
@@ -410,6 +412,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //ui->MedicamentsTable->horizontalHeader()->setVisible(true);
     SetLibrariesPath();
     SetStyleSheets();
+
+    // для нормального рандомайза нужно добавить этот блок
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
+
+
 }
 
 MainWindow::~MainWindow()
@@ -1480,7 +1488,7 @@ void MainWindow::updateDMPicture()
 void MainWindow::EmulateMedicamentScan()
 {
 
-    QString SNNN = generateSN(10);
+    QString SNNN = generateSN(11);
     ScannedMedicament = new medicament(getGuiDrugsName(),getGuiGTIN(),SNNN,getGuiBatchNumber(),getGuiExpery(),getGuiGTIN()+SNNN,getGuiTNVED());
     emit SendMedicamentSignal(ScannedMedicament);
 }
