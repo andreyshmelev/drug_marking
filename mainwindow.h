@@ -178,7 +178,7 @@ private:
 private:
 
     SQL  * sqlDB;
-    QTimer * journalTimer;
+    QTimer * ScannerLiniaEmulate;
     QTimer * datetimeTimer;
     QTimer * DMCodeUpdateTimeoutTimer;
     QTimer *RandomStringSenderToVideoJetTimer;
@@ -274,7 +274,7 @@ private slots:
     void updateReadedDMCode();
     void ParseHandScannerData( QString stringtoparse);
     void updateDMPicture();
-    void updateDMcode();
+    void EmulateMedicamentScan();
     void Toggle313Process( void );
     void updateAgregationGUI();
     void AddMedicamentToTable(medicament * m);

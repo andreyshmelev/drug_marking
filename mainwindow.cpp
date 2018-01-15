@@ -286,11 +286,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
-    journalTimer = new QTimer();
-    journalTimer->setInterval(1000);
+    ScannerLiniaEmulate = new QTimer();
+    ScannerLiniaEmulate->setInterval(100/6);
 
-    connect(journalTimer, &QTimer::timeout, this, &MainWindow::updateDMPicture);
-    connect(journalTimer, &QTimer::timeout, this, &MainWindow::updateDMcode);
+    connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::updateDMPicture);
+    connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::EmulateMedicamentScan);
 
     datetimeTimer = new QTimer();
     datetimeTimer->setInterval(1000);
@@ -374,7 +374,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(setStackedPage(int)));
 
-    journalTimer->start();
+    ScannerLiniaEmulate->start();
     datetimeTimer->start();
 
     scene = new QGraphicsScene();
@@ -1308,8 +1308,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         return;
     }
 
-
-
     if (stringforparse == agregationQRCode)
     {
         emit agregationQRCodeScanned();
@@ -1434,7 +1432,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     //    }
 
 
-
     // кончаем разбирать Срок Годности
 
     // начинаем разбирать Партию
@@ -1480,9 +1477,12 @@ void MainWindow::updateDMPicture()
 
 }
 
-void MainWindow::updateDMcode()
+void MainWindow::EmulateMedicamentScan()
 {
-    //    ui->DMcodeValue->setText(GenerateDMcode());
+
+    QString SNNN = generateSN(10);
+    ScannedMedicament = new medicament(getGuiDrugsName(),getGuiGTIN(),SNNN,getGuiBatchNumber(),getGuiExpery(),getGuiGTIN()+SNNN,getGuiTNVED());
+    emit SendMedicamentSignal(ScannedMedicament);
 }
 
 void MainWindow::Start313Process(bool set)
