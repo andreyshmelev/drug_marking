@@ -91,6 +91,15 @@ public:
     bool IsDateProper(QString stringtotest);
     void SQLInit();
 
+    bool getAutoupakovka() const;
+    void setAutoupakovka(bool value);
+
+    bool getAutoagregation() const;
+    void setAutoagregation(bool value);
+
+    bool getAutoprogramagregation() const;
+    void setAutoprogramagregation(bool value);
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -128,6 +137,10 @@ private:
     QString getGuiDrugsName();
     QString getGuiDose();
     QDateTime getGuiExperyDate();
+
+    bool autoupakovka;
+    bool autoagregation;
+    bool autoprogramagregation;
 
     void updateQRImage();
     void updateQRLabels();
@@ -302,6 +315,14 @@ private slots:
     void on_StartSerializationButton_clicked();
 
     void on_StatistFindButton_clicked();
+
+    void on_SerializAutoUpakovkaCheckBox_toggled(bool checked);
+
+
+
+    void on_SerializAutoAgregationCheckBox_toggled(bool checked);
+
+    void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
 
 signals:
 

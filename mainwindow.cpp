@@ -161,6 +161,18 @@ void MainWindow::SetStyleSheets()
     }
 
 
+
+    QList<QCheckBox *> checkboxeslist = this->findChildren<QCheckBox *>();
+    foreach(QCheckBox *l, checkboxeslist)
+    {
+        qDebug() <<l->objectName() ;
+
+        //        l->setText(QString::number(i++));
+        l->setStyleSheet("QCheckBox::indicator {width: 20px;height: 20px;}");
+    }
+
+
+
     QList<QPushButton *> but = this->findChildren<QPushButton *>();
 
     QString styleMainButtons = "QPushButton\
@@ -378,8 +390,8 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
-    ui->packagePicture->setScene(scene);
-    ui->packagePicture->show();
+    //    ui->packagePicture->setScene(scene);
+    //    ui->packagePicture->show();
 
     updateAgregationGUI();
     setStackedPage(2);
@@ -391,10 +403,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
 
-    // adding TCP Client
+    //adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
-    //    ui->MedicamentsTable->horizontalHeader()->setVisible(true);
+
+    //ui->MedicamentsTable->horizontalHeader()->setVisible(true);
     SetLibrariesPath();
     SetStyleSheets();
 }
@@ -474,6 +487,50 @@ QDateTime MainWindow::getGuiExperyDate()
 {
 
     return ui->expirationdate->dateTime();
+}
+
+bool MainWindow::getAutoprogramagregation() const
+{
+    return autoprogramagregation;
+}
+
+void MainWindow::setAutoprogramagregation(bool value)
+{
+    autoprogramagregation = value;
+
+    if (autoprogramagregation || autoagregation)
+        ui->AgregationGroupBox->setEnabled(false);
+    else
+        ui->AgregationGroupBox->setEnabled(true);
+}
+
+bool MainWindow::getAutoagregation() const
+{
+    return autoagregation;
+}
+
+void MainWindow::setAutoagregation(bool value)
+{
+    autoagregation = value;
+
+
+
+    if (autoprogramagregation || autoagregation)
+        ui->AgregationGroupBox->setEnabled(false);
+    else
+        ui->AgregationGroupBox->setEnabled(true);
+}
+
+bool MainWindow::getAutoupakovka() const
+{
+    return autoupakovka;
+}
+
+void MainWindow::setAutoupakovka(bool value)
+{
+    autoupakovka = value;
+
+    ui->AutoUpakovkaGroupBox->setEnabled(!autoupakovka);
 }
 
 QString MainWindow::getGuiTNVED()
@@ -1416,10 +1473,10 @@ void MainWindow::updateDMPicture()
     int val = GenerateNumber(3, 1);
     imageObject->load(QDir::currentPath() + "/DM" + QString::number(val) + ".JPG");
     image = QPixmap::fromImage(*imageObject);
-    ui->packagePicture->setScene(scene);
+    //    ui->packagePicture->setScene(scene);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
-    ui->packagePicture->show();
+    //    ui->packagePicture->show();
 
 }
 
@@ -2224,37 +2281,46 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
 void MainWindow::StartSerialization()
 {
 
-    ui->CompaniesCombobox->setEnabled(false);
-    ui->DrugsComboBox->setEnabled(false);
-    ui->conditions->setEnabled(false);
-    ui->GTINVal->setEnabled(false);
-    ui->TNVEDVal->setEnabled(false);
-    ui->expirationdate->setEnabled(false);
-    ui->batchnumberText->setEnabled(false);
-    ui->batchvalue->setEnabled(false);
+    //    ui->CompaniesCombobox->setEnabled(false);
+    //    ui->DrugsComboBox->setEnabled(false);
+    //    ui->conditions->setEnabled(false);
+    //    ui->GTINVal->setEnabled(false);
+    //    ui->TNVEDVal->setEnabled(false);
+    //    ui->expirationdate->setEnabled(false);
+    //    ui->batchnumberText->setEnabled(false);
+    //    ui->batchvalue->setEnabled(false);
+
+    ui->MedicamentOptionsGroup->setEnabled(false);
 
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(true);
     addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
+
+    ui->groupBox_2->setEnabled(false);
 }
 
 void MainWindow::StopSerialization()
 {
-    ui->CompaniesCombobox->setEnabled(true);
-    ui->DrugsComboBox->setEnabled(true);
-    ui->conditions->setEnabled(true);
-    ui->GTINVal->setEnabled(true);
-    ui->TNVEDVal->setEnabled(true);
-    ui->expirationdate->setEnabled(true);
-    ui->batchnumberText->setEnabled(true);
-    ui->batchvalue->setEnabled(true);
+    //    ui->CompaniesCombobox->setEnabled(true);
+    //    ui->DrugsComboBox->setEnabled(true);
+    //    ui->conditions->setEnabled(true);
+    //    ui->GTINVal->setEnabled(true);
+    //    ui->TNVEDVal->setEnabled(true);
+    //    ui->expirationdate->setEnabled(true);
+    //    ui->batchnumberText->setEnabled(true);
+    //    ui->batchvalue->setEnabled(true);
+
+    ui->MedicamentOptionsGroup->setEnabled(true);
+
     ui->StartSerializationButton->setEnabled(true);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(false);
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
+
+    ui->groupBox_2->setEnabled(true);
 }
 
 void MainWindow::PauseSerialization()
@@ -2294,4 +2360,32 @@ void MainWindow::on_StatistFindButton_clicked()
     //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
     //    qDebug() << "SUM" << ssss ;
     GetStatisticsFromDB();
+}
+
+void MainWindow::on_SerializAutoUpakovkaCheckBox_toggled(bool checked)
+{
+    setAutoupakovka(checked);
+
+}
+
+
+void MainWindow::on_SerializAutoAgregationCheckBox_toggled(bool checked)
+{
+    if(checked)
+    {
+        setAutoprogramagregation(false);
+        ui->SerializAutoAgregationProgramCheckBox->setChecked(false);
+    }
+    setAutoagregation(checked);
+}
+
+void MainWindow::on_SerializAutoAgregationProgramCheckBox_toggled(bool checked)
+{
+    if(checked)
+    {
+        setAutoagregation(false);
+        ui->SerializAutoAgregationCheckBox->setChecked(false);
+    }
+
+    setAutoprogramagregation(checked);
 }
