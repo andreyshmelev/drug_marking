@@ -1497,25 +1497,25 @@ void MainWindow::EmulateAutomaticMedicamentScan()
 
     if(getAutoupakovka())
     {
+        summ++;
         AddMedicamentToDBTable(ScannedMedicament,"process311");
         QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
 //        QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311",reqstring,"COUNT(1)");
-        QString summ = ssss.at(0);
-        ui->OKlabelValue->setText(summ);
+//        QString summ = ssss.at(0);
+        ui->OKlabelValue->setText(QString::number(summ) );
 
-        int s = ui->batchvalue->value() - summ.toInt();
+        int s = ui->batchvalue->value() - summ;
         ui->remainLabelValue->setText(QString::number(s));
 
         if (s<=0 ) // если напечатали 500 пачек
         {
-
+            summ = 0 ;
             QString newbatch = generateSN(5);
             ui->batchnumberText->clear();
             ui->batchnumberText->appendPlainText(newbatch);
             ui->BatchLabelValue->setText(newbatch);
             //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
             QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
-//            qDebug () << req<< "req";
             sqlDB->makesqlreq(req);
         }
     }
