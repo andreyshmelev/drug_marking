@@ -22,7 +22,7 @@
 int aaa = 222;
 int bbb = 789;
 
-int summ;
+int summint;
 
 QElapsedTimer MainWindow::SQLInsertSpeedTest()
 {
@@ -292,7 +292,7 @@ MainWindow::MainWindow(QWidget *parent) :
     RandomStringSenderToVideoJetTimer->start();
 
     ScannerLiniaEmulate = new QTimer();
-    ScannerLiniaEmulate->setInterval(1); //  1000/6 упаковок в секунду эмулируем
+    ScannerLiniaEmulate->setInterval(1000/6); //  1000/6 упаковок в секунду эмулируем
 
     //connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::updateDMPicture);
     connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::EmulateAutomaticMedicamentScan);
@@ -419,6 +419,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // для нормального рандомайза нужно добавить этот блок qsrand
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
+
+    StopSerialization();
+
 }
 
 MainWindow::~MainWindow()
@@ -1013,7 +1016,9 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     QString where1 = QString ( "drugs_name = '%1' " ).arg(MedList.at(0)->medicament_name);
     QString dose = sqlDB->sel("Dose", "drugs", where1,"Dose").at(0);
     QString conditions = sqlDB->sel("conditions", "drugs", where1,"conditions").at(0);
+    QString quantity = sqlDB->sel("quantity", "drugs", where1,"quantity").at(0);
     QString address = "623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а";
+
 
     EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),conditions,"0000",SSCCCode128 );
 
@@ -1488,38 +1493,8 @@ void MainWindow::updateDMPicture()
 
 void MainWindow::EmulateAutomaticMedicamentScan()
 {
-
     QString SNNN = generateSN(11);
     ScannedMedicament = new medicament(getGuiDrugsName(),getGuiGTIN(),SNNN,getGuiBatchValue(),getGuiExpery(),getGuiGTIN()+SNNN,getGuiTNVED());
-    QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
-
-    //AddStatisticsToDB("311",ScannedMedicament,QDateTime::currentDateTime(),1,"" );
-
-    if(getAutoupakovka())
-    {
-        summ++;
-        AddMedicamentToDBTable(ScannedMedicament,"process311");
-        QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
-//        QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311",reqstring,"COUNT(1)");
-//        QString summ = ssss.at(0);
-        ui->OKlabelValue->setText(QString::number(summ) );
-
-        int s = ui->batchvalue->value() - summ;
-        ui->remainLabelValue->setText(QString::number(s));
-
-        if (s<=0 ) // если напечатали 500 пачек
-        {
-            summ = 0 ;
-            QString newbatch = generateSN(5);
-            ui->batchnumberText->clear();
-            ui->batchnumberText->appendPlainText(newbatch);
-            ui->BatchLabelValue->setText(newbatch);
-            //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
-            QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
-            sqlDB->makesqlreq(req);
-        }
-    }
-
     emit SendMedicamentSignal(ScannedMedicament);
     //ScannedMedicament->deleteLater();
 }
@@ -1949,74 +1924,48 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     QString tnved = sqlDB->sel("tnved", "drugs", where,"tnved").at(0);
     QString dose = sqlDB->sel("Dose", "drugs", where,"Dose").at(0);
     QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
+    QString quantity = sqlDB->sel("quantity", "drugs", where,"quantity").at(0);
 
     ui->GTINVal->setText(gtin);
     ui->TNVEDVal->setText(tnved);
     ui->DoseVal->setText(dose);
     ui->conditions->clear();
     ui->conditions->appendPlainText(conditions);
+    ui->quantityvalue->setText(quantity);
 }
 
 void MainWindow::GetMedicament(medicament *med)
 {
-    //updateWidgetGui(ScannedMedicament->GTIN, ScannedMedicament->SerialNumber, ScannedMedicament->TNVED, ScannedMedicament->ExperyDate, ScannedMedicament->BatchNumber);
-    //    if (getAgregation())
-    //    {
-    //        // проверяем если пачка с таким же номером партии и серийником была просканирована недавно
-    //        foreach ( medicament * listmed , MedicamentsList)
-    //        {
-    //            if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
-    //            {
-    //                qDebug() << "такой медикамент уже есть";
-    //                ui->errorLabel->setText("Медикамент уже просканирован");
-    //                return;
-    //            }
+    QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
 
-    //            if ( (med->GTIN != listmed->GTIN ) )
-    //            {
-    //                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
-    //                ui->errorLabel->setText("неверный GTIN");
-    //            }
+    //AddStatisticsToDB("311",ScannedMedicament,QDateTime::currentDateTime(),1,"" );
 
-    //            if ( (med->ExperyDate != listmed->ExperyDate ) )
-    //            {
-    //                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
-    //                ui->errorLabel->setText("неверная Дата");
+    if(getAutoupakovka())
+    {
+//        summint++;
+        AddMedicamentToDBTable(ScannedMedicament,"process313");
+        QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
 
-    //            }
+        QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process313",reqstring,"COUNT(1)");
+        QString summ = ssss.at(0);
 
-    //            if ( (med->BatchNumber != listmed->BatchNumber ) )
-    //            {
-    //                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
-    //                ui->errorLabel->setText("неверная партия");
-    //            }
+        ui->OKlabelValue->setText(summ);
 
-    //            if ( (med->TNVED != listmed->TNVED ) )
-    //            {
-    //                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
-    //                ui->errorLabel->setText("неверная ТНВЭД");
-    //            }
+        int s = ui->batchvalue->value() - summ.toUInt();
 
-    //            if (( (med->GTIN != listmed->GTIN ) ) ||( (med->ExperyDate != listmed->ExperyDate ) )|| ( (med->BatchNumber != listmed->BatchNumber ) ) || ( (med->TNVED != listmed->TNVED ) ))
-    //            {
-    //                return;
-    //            }
-    //        }
+        ui->remainLabelValue->setText(QString::number(s));
 
-    //        if (CheckMedicamentinDB(med))
-    //        {
-    //            qDebug() << "такой медикамент уже есть в базе данных";
-    //            ui->errorLabel->setText("Медикамент есть в БД");
-    //            return;
-    //        }
-
-    //        MedicamentsList.append(med);
-    //        AddMedicamentToTable(med);
-    //        AddMedicamentToDBTable(med, "process313");
-
-    //        ui->errorLabel->clear();
-    //        ui->countMedicamentValue->setText(QString::number(MedicamentsList.length()));
-    //    }
+//        if (s<=0 ) // если напечатали сколько надо пачек
+//        {
+//            QString newbatch = generateSN(5);
+//            ui->batchnumberText->clear();
+//            ui->batchnumberText->appendPlainText(newbatch);
+//            ui->BatchLabelValue->setText(newbatch);
+//            //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
+//            QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
+//            sqlDB->makesqlreq(req);
+//        }
+    }
 }
 
 void MainWindow::on_move_order_Button_clicked()
