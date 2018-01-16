@@ -22,6 +22,8 @@
 int aaa = 222;
 int bbb = 789;
 
+int summ;
+
 QElapsedTimer MainWindow::SQLInsertSpeedTest()
 {
     QString req;
@@ -159,7 +161,8 @@ void MainWindow::SetStyleSheets()
         //     qDebug() <<l-> ;
 
         //        l->setText(QString::number(i++));
-        l->setStyleSheet("    border-style: outset;border-width:0px;border-radius: 10px;border-color: beige;");
+        //        l->setStyleSheet("    border-style: outset;border-width:0px;border-radius: 10px;border-color: beige;");
+        l->setStyleSheet("QLabel {background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #547FA8, stop: 0.1 #215689, stop: 0.49 #215689, stop: 0.5 #215689, stop: 1 #547FA8);border-style: outset;border-width: 1px;border-radius: 4px;                   border-color: beige;                   padding: 6px;               }");
     }
 
 
@@ -289,10 +292,10 @@ MainWindow::MainWindow(QWidget *parent) :
     RandomStringSenderToVideoJetTimer->start();
 
     ScannerLiniaEmulate = new QTimer();
-    ScannerLiniaEmulate->setInterval(1000/6); //  6 упаковок в секунду эмулируем
+    ScannerLiniaEmulate->setInterval(1); //  1000/6 упаковок в секунду эмулируем
 
-    connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::updateDMPicture);
-    connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::EmulateMedicamentScan);
+    //connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::updateDMPicture);
+    connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::EmulateAutomaticMedicamentScan);
 
     datetimeTimer = new QTimer();
     datetimeTimer->setInterval(1000);
@@ -413,11 +416,9 @@ MainWindow::MainWindow(QWidget *parent) :
     SetLibrariesPath();
     SetStyleSheets();
 
-    // для нормального рандомайза нужно добавить этот блок
+    // для нормального рандомайза нужно добавить этот блок qsrand
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-
-
 }
 
 MainWindow::~MainWindow()
@@ -1485,12 +1486,42 @@ void MainWindow::updateDMPicture()
 
 }
 
-void MainWindow::EmulateMedicamentScan()
+void MainWindow::EmulateAutomaticMedicamentScan()
 {
 
     QString SNNN = generateSN(11);
-    ScannedMedicament = new medicament(getGuiDrugsName(),getGuiGTIN(),SNNN,getGuiBatchNumber(),getGuiExpery(),getGuiGTIN()+SNNN,getGuiTNVED());
+    ScannedMedicament = new medicament(getGuiDrugsName(),getGuiGTIN(),SNNN,getGuiBatchValue(),getGuiExpery(),getGuiGTIN()+SNNN,getGuiTNVED());
+    QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
+
+    //AddStatisticsToDB("311",ScannedMedicament,QDateTime::currentDateTime(),1,"" );
+
+    if(getAutoupakovka())
+    {
+        AddMedicamentToDBTable(ScannedMedicament,"process311");
+        QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
+//        QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311",reqstring,"COUNT(1)");
+        QString summ = ssss.at(0);
+        ui->OKlabelValue->setText(summ);
+
+        int s = ui->batchvalue->value() - summ.toInt();
+        ui->remainLabelValue->setText(QString::number(s));
+
+        if (s<=0 ) // если напечатали 500 пачек
+        {
+
+            QString newbatch = generateSN(5);
+            ui->batchnumberText->clear();
+            ui->batchnumberText->appendPlainText(newbatch);
+            ui->BatchLabelValue->setText(newbatch);
+            //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
+            QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
+//            qDebug () << req<< "req";
+            sqlDB->makesqlreq(req);
+        }
+    }
+
     emit SendMedicamentSignal(ScannedMedicament);
+    //ScannedMedicament->deleteLater();
 }
 
 void MainWindow::Start313Process(bool set)
@@ -2033,6 +2064,9 @@ void MainWindow::on_pushButton_2_clicked()
 
     ui->LPLabelName->setText(getGuiDrugsName());
     ui->LPDose->setText(getGuiDose());
+    ui->remainLabelValue->setText(getGuiBatchNumber());
+
+    ui->BatchLabelValue->setText(getGuiBatchValue());
 }
 
 void MainWindow::on_agregationStartButton_clicked()
@@ -2274,7 +2308,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::AddMedicamentToDBTable(medicament *m, QString tablename)
 {
-    QString req = QString("insert into %1 values (\"%2\",\"%3\",\"%4\",%5);").arg(tablename, m->GTIN + m->SerialNumber,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"null");
+    QString req = QString("insert into %1 values (\"%2\",\"%3\",\"%4\",%5,\"%6\");").arg(tablename, m->GTIN + m->SerialNumber,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"null", m->BatchNumber);
     sqlDB->makesqlreq(req);
 }
 
@@ -2297,6 +2331,7 @@ void MainWindow::StartSerialization()
     //    ui->expirationdate->setEnabled(false);
     //    ui->batchnumberText->setEnabled(false);
     //    ui->batchvalue->setEnabled(false);
+    ScannerLiniaEmulate->start();
 
     ui->MedicamentOptionsGroup->setEnabled(false);
 
@@ -2320,6 +2355,8 @@ void MainWindow::StopSerialization()
     //    ui->batchnumberText->setEnabled(true);
     //    ui->batchvalue->setEnabled(true);
 
+    ScannerLiniaEmulate->stop();
+
     ui->MedicamentOptionsGroup->setEnabled(true);
 
     ui->StartSerializationButton->setEnabled(true);
@@ -2333,6 +2370,7 @@ void MainWindow::StopSerialization()
 
 void MainWindow::PauseSerialization()
 {
+    ScannerLiniaEmulate->stop();
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(true);
@@ -2342,6 +2380,7 @@ void MainWindow::PauseSerialization()
 
 void MainWindow::ContinueSerialization()
 {
+    ScannerLiniaEmulate->start();
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);

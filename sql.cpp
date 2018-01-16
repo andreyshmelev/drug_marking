@@ -107,7 +107,7 @@ QStringList SQL::getsumm(QString select, QString from, QString where, QString re
         execc += " WHERE " + where;
     }
 
-    qDebug() << execc;
+//    qDebug() << execc;
     if (!query.exec(execc)) {
         //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();
@@ -118,7 +118,7 @@ QStringList SQL::getsumm(QString select, QString from, QString where, QString re
     QSqlRecord SQLrec     = query.record();
     QStringList    strName;
 
-    qDebug() << "query.record()" << query.record() ;
+//    qDebug() << "query.record()" << query.record() ;
 
     while (query.next()) {
         strName.append( query.value(SQLrec.indexOf(rec)).toString() );

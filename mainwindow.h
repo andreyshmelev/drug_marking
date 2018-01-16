@@ -274,7 +274,7 @@ private slots:
     void updateReadedDMCode();
     void ParseHandScannerData( QString stringtoparse);
     void updateDMPicture();
-    void EmulateMedicamentScan();
+    void EmulateAutomaticMedicamentScan();
     void Toggle313Process( void );
     void updateAgregationGUI();
     void AddMedicamentToTable(medicament * m);
