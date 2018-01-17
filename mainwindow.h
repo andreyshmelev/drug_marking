@@ -100,6 +100,35 @@ public:
     bool getAutoprogramagregation() const;
     void setAutoprogramagregation(bool value);
 
+    QString getSerializationGTIN() const;
+    void setSerializationGTIN(const QString &value);
+
+    QString getSerializationSN() const;
+    void setSerializationSN(const QString &value);
+
+    QString getSerializationBatchName() const;
+    void setSerializationBatchName(const QString &value);
+
+    QString getSerializationExpery() const;
+    void setSerializationExpery(const QString &value);
+
+    QString getSerializationDrugName() const;
+    void setSerializationDrugName(const QString &value);
+
+    QString getSerializationDose() const;
+    void setSerializationDose(const QString &value);
+
+    QString getSerializationTNVED() const;
+    void setSerializationTNVED(const QString &value);
+
+    void GUIMainWindowUpdate();
+
+    QString getSerializationQuantity() const;
+    void setSerializationQuantity(const QString &value);
+
+    QString getSerializationBatchValue() const;
+    void setSerializationBatchValue(const QString &value);
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -162,6 +191,9 @@ private:
 
     QList<medicament *> MedicamentsList;
     QList<medicament *> MedicamentsListFromDB;
+    QList<medicament *> MedicamentsProgramAgregation;
+
+
     QList<manufacturer *> CompaniesListFromDB;
 
     QStringList drugs;
@@ -246,15 +278,15 @@ private:
 
     // параметры сериализации
 
-    QString SerializationGTINString;
-    QString SerializationSNstring;
-    QString SerializationBatchstring;
-    QString SerializationEXPstring;
-    QString SerializationPreparatstring;
-    QString SerializationDoseString;
-    QString SerializationTNVEDstring;
-
-
+    QString SerializationGTIN;
+    QString SerializationSN;
+    QString SerializationBatchName;
+    QString SerializationBatchValue;
+    QString SerializationExpery;
+    QString SerializationDrugName;
+    QString SerializationDose;
+    QString SerializationTNVED;
+    QString SerializationQuantity;
 
 
     static QString GetISODate();

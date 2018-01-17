@@ -1520,6 +1520,96 @@ void MainWindow::Start313Process(bool set)
     emit agregationstatusToggled();
 }
 
+QString MainWindow::getSerializationBatchValue() const
+{
+    return SerializationBatchValue;
+}
+
+void MainWindow::setSerializationBatchValue(const QString &value)
+{
+    SerializationBatchValue = value;
+}
+
+QString MainWindow::getSerializationQuantity() const
+{
+    return SerializationQuantity;
+}
+
+void MainWindow::setSerializationQuantity(const QString &value)
+{
+    SerializationQuantity = value;
+}
+
+QString MainWindow::getSerializationTNVED() const
+{
+    return SerializationTNVED;
+}
+
+void MainWindow::setSerializationTNVED(const QString &value)
+{
+    SerializationTNVED = value;
+}
+
+QString MainWindow::getSerializationDose() const
+{
+    return SerializationDose;
+}
+
+void MainWindow::setSerializationDose(const QString &value)
+{
+    SerializationDose = value;
+}
+
+QString MainWindow::getSerializationDrugName() const
+{
+    return SerializationDrugName;
+}
+
+void MainWindow::setSerializationDrugName(const QString &value)
+{
+    SerializationDrugName = value;
+}
+
+QString MainWindow::getSerializationExpery() const
+{
+    return SerializationExpery;
+}
+
+void MainWindow::setSerializationExpery(const QString &value)
+{
+    SerializationExpery = value;
+}
+
+QString MainWindow::getSerializationBatchName() const
+{
+    return SerializationBatchName;
+}
+
+void MainWindow::setSerializationBatchName(const QString &value)
+{
+    SerializationBatchName = value;
+}
+
+QString MainWindow::getSerializationSN() const
+{
+    return SerializationSN;
+}
+
+void MainWindow::setSerializationSN(const QString &value)
+{
+    SerializationSN = value;
+}
+
+QString MainWindow::getSerializationGTIN() const
+{
+    return SerializationGTIN;
+}
+
+void MainWindow::setSerializationGTIN(const QString &value)
+{
+    SerializationGTIN = value;
+}
+
 
 manufacturer *MainWindow::getcompany() const
 {
@@ -1940,9 +2030,10 @@ void MainWindow::GetMedicament(medicament *med)
 
     //AddStatisticsToDB("311",ScannedMedicament,QDateTime::currentDateTime(),1,"" );
 
+    // если автоматическая упаковка
     if(getAutoupakovka())
     {
-//        summint++;
+
         AddMedicamentToDBTable(ScannedMedicament,"process311noxml");
         QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
 
@@ -1955,16 +2046,24 @@ void MainWindow::GetMedicament(medicament *med)
 
         ui->remainLabelValue->setText(QString::number(s));
 
-//        if (s<=0 ) // если напечатали сколько надо пачек
-//        {
-//            QString newbatch = generateSN(5);
-//            ui->batchnumberText->clear();
-//            ui->batchnumberText->appendPlainText(newbatch);
-//            ui->BatchLabelValue->setText(newbatch);
-//            //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
-//            QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
-//            sqlDB->makesqlreq(req);
-//        }
+        //        if (s<=0 ) // если напечатали сколько надо пачек
+        //        {
+        //            QString newbatch = generateSN(5);
+        //            ui->batchnumberText->clear();
+        //            ui->batchnumberText->appendPlainText(newbatch);
+        //            ui->BatchLabelValue->setText(newbatch);
+        //            //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
+        //            QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
+        //            sqlDB->makesqlreq(req);
+        //        }
+    }
+
+    // если программная агрегация
+    if(getAutoprogramagregation())
+    {
+        MedicamentsProgramAgregation.append(med);
+
+        //        if (MedicamentsProgramAgregation.length() == )
     }
 }
 
@@ -2003,19 +2102,48 @@ void MainWindow::SendRandomToVideoJet()
     SendCommandToVideoJet(a);
 }
 
+void MainWindow::GUIMainWindowUpdate()
+{
+    ui->ExperyValueHi->setText(getSerializationExpery());
+    ui->BatchValueHi->setText(getSerializationBatchName() + "/" + getSerializationBatchValue());
+    ui->BatchLabelValue->setText(getSerializationBatchName());
+    ui->LPDose->setText(getSerializationDose());
+
+    ui->LPLabelName->setText(getSerializationDrugName());
+    ui->LPDose->setText(getSerializationDose());
+    ui->remainLabelValue->setText(getSerializationBatchName());
+    ui->BatchLabelValue->setText(getSerializationBatchValue());
+    ui->QuantityValueHi->setText(getSerializationQuantity());
+}
+
 void MainWindow::on_pushButton_2_clicked()
 {
     SendParamsToVideoJet();
     //    SerializationGTINString = getGuiGTIN();
     //    SerializationEXPstring = getGuiExperyDate().toString("dd.MM.yyyy");
-    SerializationPreparatstring = getGuiDrugsName();
-    SerializationDoseString = getGuiDose();
+    QString drugsname = ui->DrugsComboBox->currentText();
+    QString where = QString ( "drugs_name = '%1' " ).arg(drugsname);
+    QString gtin = sqlDB->sel("gtin", "drugs", where,"gtin").at(0);
+    QString tnved = sqlDB->sel("tnved", "drugs", where,"tnved").at(0);
+    QString dose = sqlDB->sel("Dose", "drugs", where,"Dose").at(0);
+    QString experydate = ui->expirationdate->dateTime().toString("yyyy-MM-dd");
+    QString batchname = ui->batchnumberText->toPlainText();
+    QString batchvalue = QString::number(ui->batchvalue->value());
+    QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
+    QString quantity = sqlDB->sel("quantity", "drugs", where,"quantity").at(0);
 
-    ui->LPLabelName->setText(getGuiDrugsName());
-    ui->LPDose->setText(getGuiDose());
-    ui->remainLabelValue->setText(getGuiBatchNumber());
+    setSerializationDrugName(drugsname);
+    setSerializationDose(dose);
+    setSerializationGTIN(gtin);
+    setSerializationTNVED(tnved);
+    setSerializationExpery(experydate);
+    setSerializationBatchName(batchname);
+    setSerializationBatchValue(batchvalue);
+    setSerializationQuantity(quantity);
 
-    ui->BatchLabelValue->setText(getGuiBatchValue());
+
+
+    GUIMainWindowUpdate();
 }
 
 void MainWindow::on_agregationStartButton_clicked()
@@ -2382,6 +2510,5 @@ void MainWindow::on_SerializAutoAgregationProgramCheckBox_toggled(bool checked)
         setAutoagregation(false);
         ui->SerializAutoAgregationCheckBox->setChecked(false);
     }
-
     setAutoprogramagregation(checked);
 }
