@@ -1943,10 +1943,10 @@ void MainWindow::GetMedicament(medicament *med)
     if(getAutoupakovka())
     {
 //        summint++;
-        AddMedicamentToDBTable(ScannedMedicament,"process313");
+        AddMedicamentToDBTable(ScannedMedicament,"process311noxml");
         QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
 
-        QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process313",reqstring,"COUNT(1)");
+        QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
         QString summ = ssss.at(0);
 
         ui->OKlabelValue->setText(summ);
