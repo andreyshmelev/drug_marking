@@ -77,8 +77,8 @@ public:
 
     const QString SSCCGS1Prefix = "4649728";
 
-    manufacturer *getcompany() const;
-    void setcompany(manufacturer *value);
+    manufacturer *getSerializationCompanySender() const;
+    void SetSerializationCompanySender(manufacturer *value);
 
 
     eticetka * EticetkaBFZ;
@@ -129,6 +129,12 @@ public:
     QString getSerializationBatchValue() const;
     void setSerializationBatchValue(const QString &value);
 
+    int getSerializationOrderType() const;
+    void setSerializationOrderType(int value);
+
+    manufacturer *getSerializationCompanyOwner() const;
+    void setSerializationCompanyOwner(manufacturer *value);
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -153,6 +159,8 @@ public slots:
     void StopSerialization();
     void PauseSerialization();
     void ContinueSerialization();
+
+        void GetCompaniesDBList(QList<manufacturer *> man);
 
 private:
     QString getGuiGTIN();
@@ -186,7 +194,9 @@ private:
 
 
     const quint8 maxserialnumberlenght = 7;
-    manufacturer * Organizacia;
+    manufacturer * SerializationCompanySender;
+    manufacturer * SerializationCompanyOwner;
+    int SerializationOrderType;
     medicament * ScannedMedicament;
 
     QList<medicament *> MedicamentsList;
@@ -332,7 +342,7 @@ private slots:
 
     void serverWrite(QString str);
     void on_DrugsComboBox_currentIndexChanged(int index);
-    void GetMedicament (medicament * m);
+    void GetMedicamentAutoSerialization (medicament * m);
     void on_move_order_Button_clicked();
     void on_releabeling_Button_clicked();
     void on_unit_pack_Button_clicked();
@@ -355,6 +365,10 @@ private slots:
     void on_SerializAutoAgregationCheckBox_toggled(bool checked);
 
     void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
+
+    void on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1);
+
+
 
 signals:
 
@@ -395,6 +409,7 @@ private:
 
     void SetLibrariesPath();
     void SetStyleSheets();
+    QDateTime getoperationDate();
 };
 
 #endif // MAINWINDOW_H

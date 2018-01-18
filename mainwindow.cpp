@@ -323,12 +323,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
     connect(this, &MainWindow::SendMedicamentSignal, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
+    connect(this, SIGNAL(SendCompaniesDBList(QList<manufacturer*>)), this, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
     connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
 
     // сигналы и слоты для 312 бизнес процесса
     connect(this, &MainWindow::Start312Process, ui->ExtractWidget, &UnitExtractWidget::StartRegistrationProcess ) ;
     connect(this, &MainWindow::Stop312Process, ui->ExtractWidget, &UnitExtractWidget::StopRegistrationProcess ) ;
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicamentAutoSerialization(medicament*))) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted, this, &MainWindow::CreateXML312Doc) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
@@ -341,7 +342,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::register_product_emission_QR_Scanned, this, &MainWindow::RegisterProductEmissionPageOpen) ;
     connect(this, &MainWindow::register_control_samples_QR_Scanned, this, &MainWindow::RegisterControlSamplesPageOpen) ;
     connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
-    connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicament) ;
+    connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicamentAutoSerialization) ;
 
     //    // сигналы и слоты для 415 бизнес процесса
 
@@ -401,7 +402,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateAgregationGUI();
     setStackedPage(2);
     SQLInit();
-    Organizacia = CompaniesListFromDB.at(1);
+    SerializationCompanySender = CompaniesListFromDB.at(1);
 
     ui->CompaniesCombobox->clear();
     ui->DrugsComboBox->clear();
@@ -1074,7 +1075,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
-    manufacturer *organization = getcompany();
+    manufacturer *organization = getSerializationCompanySender();
 
     //  если пустой список то и генерировать то нечего
     if (MedList.length() == 0)
@@ -1246,10 +1247,10 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-    QString filename = "311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    QString filepath = QDir::currentPath()   + "/311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy") + ").xml";
+    QString filename = "311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy") + ").xml";
 
-    qDebug() <<filepath;
+    addMessageToJournal(filename, Qt::black, Qt::white);
 
     QFile file(filepath);
 
@@ -1264,9 +1265,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
         stream<< document.toString();
         file.close();
     }
-
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
-
 }
 
 void MainWindow::StartAgregation()
@@ -1511,13 +1510,34 @@ void MainWindow::Start313Process(bool set)
     {
         setRunningBuisenessProcess(false);
         setLanguageswitcher(false);
-        CreateXML313Doc(Organizacia,MedicamentsList);
+        CreateXML313Doc(SerializationCompanySender,MedicamentsList);
         inputDataStringFromScaner.clear();
     }
 
     MedicamentsList.clear();
     agregation = set;
     emit agregationstatusToggled();
+}
+
+manufacturer *MainWindow::getSerializationCompanyOwner() const
+{
+    return SerializationCompanyOwner;
+}
+
+void MainWindow::setSerializationCompanyOwner(manufacturer *value)
+{
+    SerializationCompanyOwner = value;
+}
+
+int MainWindow::getSerializationOrderType() const
+{
+    int SerializationOrderType = ui->OrderTypeCombo->currentIndex();
+    return SerializationOrderType;
+}
+
+void MainWindow::setSerializationOrderType(int value)
+{
+    SerializationOrderType = value;
 }
 
 QString MainWindow::getSerializationBatchValue() const
@@ -1610,15 +1630,14 @@ void MainWindow::setSerializationGTIN(const QString &value)
     SerializationGTIN = value;
 }
 
-
-manufacturer *MainWindow::getcompany() const
+manufacturer *MainWindow::getSerializationCompanySender() const
 {
-    return Organizacia;
+    return SerializationCompanySender;
 }
 
-void MainWindow::setcompany(manufacturer *value)
+void MainWindow::SetSerializationCompanySender(manufacturer *value)
 {
-    Organizacia = value;
+    SerializationCompanySender = value;
 }
 
 void MainWindow::Toggle313Process()
@@ -2024,26 +2043,24 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     ui->quantityvalue->setText(quantity);
 }
 
-void MainWindow::GetMedicament(medicament *med)
+void MainWindow::GetMedicamentAutoSerialization(medicament *med)
 {
-    QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
+    QDateTime time  = getoperationDate();
 
-    //AddStatisticsToDB("311",ScannedMedicament,QDateTime::currentDateTime(),1,"" );
 
     // если автоматическая упаковка
     if(getAutoupakovka())
     {
 
+        // если автоупаковка то сразу добавляем препарат в таблицу process311noxml
         AddMedicamentToDBTable(ScannedMedicament,"process311noxml");
+        //Проверяем сколько реально упаковок добавлено в базу данных
         QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
-
         QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
+
         QString summ = ssss.at(0);
-
         ui->OKlabelValue->setText(summ);
-
         int s = ui->batchvalue->value() - summ.toUInt();
-
         ui->remainLabelValue->setText(QString::number(s));
 
         //        if (s<=0 ) // если напечатали сколько надо пачек
@@ -2063,7 +2080,16 @@ void MainWindow::GetMedicament(medicament *med)
     {
         MedicamentsProgramAgregation.append(med);
 
-        //        if (MedicamentsProgramAgregation.length() == )
+        if ( (MedicamentsProgramAgregation.length() % getSerializationQuantity().toUInt()  == 0 ) && (MedicamentsProgramAgregation.length()>0) )
+        {
+            CreateXML311Doc(MedicamentsProgramAgregation,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),getoperationDate());
+
+//            addMessageToJournal("сформирован 311 файл", Qt::black, Qt::white);
+//            addMessageToJournal("сформирован 312 файл", Qt::black, Qt::white);
+
+            MedicamentsProgramAgregation.clear();
+        }
+
     }
 }
 
@@ -2108,8 +2134,7 @@ void MainWindow::GUIMainWindowUpdate()
     ui->BatchValueHi->setText(getSerializationBatchName() + "/" + getSerializationBatchValue());
     ui->BatchLabelValue->setText(getSerializationBatchName());
     ui->LPDose->setText(getSerializationDose());
-
-    ui->LPLabelName->setText(getSerializationDrugName());
+    ui->LPLabelName->setText(getSerializationDrugName() + "/" + getSerializationCompanySender()->get_organisation_name());
     ui->LPDose->setText(getSerializationDose());
     ui->remainLabelValue->setText(getSerializationBatchName());
     ui->BatchLabelValue->setText(getSerializationBatchValue());
@@ -2132,6 +2157,8 @@ void MainWindow::on_pushButton_2_clicked()
     QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
     QString quantity = sqlDB->sel("quantity", "drugs", where,"quantity").at(0);
 
+
+
     setSerializationDrugName(drugsname);
     setSerializationDose(dose);
     setSerializationGTIN(gtin);
@@ -2140,6 +2167,8 @@ void MainWindow::on_pushButton_2_clicked()
     setSerializationBatchName(batchname);
     setSerializationBatchValue(batchvalue);
     setSerializationQuantity(quantity);
+    SetSerializationCompanySender(CompaniesListFromDB.at(ui->senderID->currentIndex()));
+    setSerializationCompanyOwner(CompaniesListFromDB.at(ui->ownerID->currentIndex()));
 
 
 
@@ -2489,7 +2518,7 @@ void MainWindow::on_StatistFindButton_clicked()
 void MainWindow::on_SerializAutoUpakovkaCheckBox_toggled(bool checked)
 {
     setAutoupakovka(checked);
-
+    ui->autoserializationoptions->setEnabled(checked);
 }
 
 
@@ -2508,7 +2537,36 @@ void MainWindow::on_SerializAutoAgregationProgramCheckBox_toggled(bool checked)
     if(checked)
     {
         setAutoagregation(false);
+        setAutoupakovka(true);
+        ui->SerializAutoUpakovkaCheckBox->setChecked(true);
         ui->SerializAutoAgregationCheckBox->setChecked(false);
     }
     setAutoprogramagregation(checked);
+}
+
+void MainWindow::on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1)
+{
+}
+
+
+void MainWindow::GetCompaniesDBList(QList<manufacturer*> man)
+{
+    QStringList a ;
+
+    foreach (manufacturer * d , man) {
+//        manufacturesList.append(d);
+        a.append(d->get_organisation_name());
+    }
+
+    ui->senderID->addItems(a);
+    ui->ownerID->addItems(a);
+}
+
+
+
+QDateTime MainWindow::getoperationDate()
+{
+    QDateTime operation_date = ui->operationDate->dateTime();
+
+    return operation_date;
 }

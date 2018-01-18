@@ -3,18 +3,13 @@
 
 SQL::SQL()
 {
-
     baseConnection();
 }
 
 SQL::SQL(QString path)
 {
-    //    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    //    db.setDatabaseName(path);
-
-    //    QString hostname = "LOCALHOST\\MySQL57";
     QString dbname = "mark";
-    QString hostname = "192.168.1.37"; // 192.168.1.37
+    QString hostname = "127.0.0.1";  // <<-"localhost"; //"192.168.1.62";
     int port = 3306;
 
     QString user = "markirovka";
