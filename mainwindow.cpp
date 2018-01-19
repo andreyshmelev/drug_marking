@@ -10,6 +10,7 @@
 #include "QDesktopServices"
 #include "manufacturer.h"
 #include "basetypes.h"
+#include "serializationline.h"
 #include "sql.h"
 #include "QtPrintSupport/qprinter.h"
 #include "QtPrintSupport/QPrinter"
@@ -329,7 +330,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // сигналы и слоты для 312 бизнес процесса
     connect(this, &MainWindow::Start312Process, ui->ExtractWidget, &UnitExtractWidget::StartRegistrationProcess ) ;
     connect(this, &MainWindow::Stop312Process, ui->ExtractWidget, &UnitExtractWidget::StopRegistrationProcess ) ;
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicamentAutoSerialization(medicament*))) ;
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicamentSerialization(medicament*))) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted, this, &MainWindow::CreateXML312Doc) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
@@ -342,7 +343,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::register_product_emission_QR_Scanned, this, &MainWindow::RegisterProductEmissionPageOpen) ;
     connect(this, &MainWindow::register_control_samples_QR_Scanned, this, &MainWindow::RegisterControlSamplesPageOpen) ;
     connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
-    connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicamentAutoSerialization) ;
+    connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicamentSerialization) ;
 
     //    // сигналы и слоты для 415 бизнес процесса
 
@@ -422,6 +423,8 @@ MainWindow::MainWindow(QWidget *parent) :
     qsrand((uint)time.msec());
 
     StopSerialization();
+
+    SerLine1 = new SerializationLine("127.0.0.1", 1237,300,6);
 
 }
 
@@ -689,6 +692,15 @@ QString MainWindow::GetISODate()
     return ISOdate;
 }
 
+QDateTime MainWindow::GetISODateTime()
+{
+    QDateTime ISOdate;
+    // формат <operation_date>2017-10-07T15:00:00+05:00</operation_date>
+    ISOdate = QDateTime::currentDateTime().toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc());
+    return ISOdate;
+}
+
+
 QString MainWindow::GetDOCDate()
 {
     QString DOCdate;
@@ -697,7 +709,7 @@ QString MainWindow::GetDOCDate()
     return DOCdate;
 }
 
-void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList)
+void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList, QDateTime operation_date)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
@@ -732,7 +744,8 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
 
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
 
-    operationdatetext.setNodeValue( GetISODate());
+    operationdatetext.setNodeValue(operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate) );
+
     operationdateelement.appendChild(operationdatetext);
 
     // добавили operation_date
@@ -771,12 +784,10 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
     doc_date_element.appendChild(doc_date_text);
 
     // добавили doc_num
-
     // добавляем signs (для первичной агрегации это GTINs
 
     QDomElement signs_element  = document.createElement("signs");
     reg_prod_emis_elem.appendChild(signs_element);
-
 
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
@@ -796,7 +807,8 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/313-register_product_emission (" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P313_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
 
     qDebug() <<filepath;
 
@@ -813,6 +825,8 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
         stream<< document.toString();
         file.close();
     }
+
+    addMessageToJournal(filename, Qt::black, Qt::white);
 }
 
 void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companysender, QDateTime operation_date, QString DocNum, QDate DocDate, int turnovertype, int source, int contracttype , QString Price, QString Vat)
@@ -1247,10 +1261,9 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy") + ").xml";
-    QString filename = "311-register_end_packing(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy") + ").xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P311_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
 
     QFile file(filepath);
 
@@ -1265,6 +1278,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
         stream<< document.toString();
         file.close();
     }
+    addMessageToJournal(filename, Qt::black, Qt::white);
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1510,7 +1524,7 @@ void MainWindow::Start313Process(bool set)
     {
         setRunningBuisenessProcess(false);
         setLanguageswitcher(false);
-        CreateXML313Doc(SerializationCompanySender,MedicamentsList);
+        CreateXML313Doc(SerializationCompanySender,MedicamentsList,GetISODateTime());
         inputDataStringFromScaner.clear();
     }
 
@@ -2043,53 +2057,71 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     ui->quantityvalue->setText(quantity);
 }
 
-void MainWindow::GetMedicamentAutoSerialization(medicament *med)
+void MainWindow::GetMedicamentSerialization(medicament *med)
 {
-    QDateTime time  = getoperationDate();
-
-
     // если автоматическая упаковка
     if(getAutoupakovka())
     {
-
         // если автоупаковка то сразу добавляем препарат в таблицу process311noxml
         AddMedicamentToDBTable(ScannedMedicament,"process311noxml");
+        MedicamentsSerialization.append(med);
+
         //Проверяем сколько реально упаковок добавлено в базу данных
         QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
         QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
 
-        QString summ = ssss.at(0);
-        ui->OKlabelValue->setText(summ);
-        int s = ui->batchvalue->value() - summ.toUInt();
-        ui->remainLabelValue->setText(QString::number(s));
+        QString summa_pachek_v_partii = ssss.at(0);
+        ui->OKlabelValue->setText(summa_pachek_v_partii);
+        int ostalos_pachek_upakovat = ui->batchvalue->value() - summa_pachek_v_partii.toUInt();
+        ui->remainLabelValue->setText(QString::number(ostalos_pachek_upakovat));
 
-        //        if (s<=0 ) // если напечатали сколько надо пачек
-        //        {
-        //            QString newbatch = generateSN(5);
-        //            ui->batchnumberText->clear();
-        //            ui->batchnumberText->appendPlainText(newbatch);
-        //            ui->BatchLabelValue->setText(newbatch);
-        //            //INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES ('B0301', NOW());
-        //            QString req = QString("INSERT INTO batch (BATCH_UID, BATCH_REGDATE) VALUES (\"%1\",\"%2\");").arg(newbatch, QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"));
-        //            sqlDB->makesqlreq(req);
-        //        }
-    }
 
-    // если программная агрегация
-    if(getAutoprogramagregation())
-    {
-        MedicamentsProgramAgregation.append(med);
+        int ostalos_zapolnit_v_korobe = MedicamentsSerialization.length() % getSerializationQuantity().toUInt()  ;
+        int proizveli_pachek = MedicamentsSerialization.length();
 
-        if ( (MedicamentsProgramAgregation.length() % getSerializationQuantity().toUInt()  == 0 ) && (MedicamentsProgramAgregation.length()>0) )
+        if ( ( ( ostalos_zapolnit_v_korobe  == 0 ) && ( proizveli_pachek > 0 ) ) || (ostalos_pachek_upakovat <= 0 ) )
         {
-            CreateXML311Doc(MedicamentsProgramAgregation,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),getoperationDate());
+            qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
+            QDateTime date311  = GetISODateTime();
+            CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
 
-//            addMessageToJournal("сформирован 311 файл", Qt::black, Qt::white);
-//            addMessageToJournal("сформирован 312 файл", Qt::black, Qt::white);
+            QDateTime date313  = GetISODateTime().addSecs(1);
+            CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313.addSecs(10));
 
-            MedicamentsProgramAgregation.clear();
+            // если программная агрегация
+            if(getAutoprogramagregation())
+            {
+                QDateTime date911 = date313.addSecs(1);
+                CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
+            }
+
+            MedicamentsSerialization.clear();
         }
 
+        if ((ostalos_pachek_upakovat <= 0 ))
+        {
+            StopSerialization();
+
+            QMessageBox msgBox;
+            msgBox.setText(QString("Партия %1 завершена").arg(getSerializationBatchName()));
+//            msgBox.setInformativeText("Партия завершена");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.setStyleSheet("QMessageBox{background-color: rgb(103,158,210);color: white;}QPushButton \
+            {\
+            background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+                border-style: outset;\
+                border-width: 2px;\
+                border-radius: 10px;\
+                border-color: beige;\
+                font: bold 14px; color: white;\
+                padding: 6px;\
+            }\
+");
+            int ret = msgBox.exec();
+            addMessageToJournal(QString("Партия %1 завершена").arg(getSerializationBatchName()),Qt::green,Qt::transparent);
+            return;
+        }
     }
 }
 
@@ -2428,26 +2460,29 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
 
 void MainWindow::StartSerialization()
 {
-
-    //    ui->CompaniesCombobox->setEnabled(false);
-    //    ui->DrugsComboBox->setEnabled(false);
-    //    ui->conditions->setEnabled(false);
-    //    ui->GTINVal->setEnabled(false);
-    //    ui->TNVEDVal->setEnabled(false);
-    //    ui->expirationdate->setEnabled(false);
-    //    ui->batchnumberText->setEnabled(false);
-    //    ui->batchvalue->setEnabled(false);
+    addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
     ScannerLiniaEmulate->start();
-
     ui->MedicamentOptionsGroup->setEnabled(false);
-
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(true);
-    addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
-
     ui->groupBox_2->setEnabled(false);
+
+
+    //Проверяем сколько реально упаковок добавлено в базу данных
+    QString reqstring = QString("batch like '%1';").arg(getSerializationBatchName());
+    QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
+
+    QString summa_pachek_v_partii = ssss.at(0);
+    int ostalos_pachek_upakovat = getSerializationBatchValue().toInt() - summa_pachek_v_partii.toUInt();
+
+    if(ostalos_pachek_upakovat<=0)
+    {
+        QString me = QString("Партия %1 завершена").arg(getSerializationBatchName());
+        addMessageToJournal(me,Qt::green,Qt::transparent);
+        StopSerialization();
+    }
 }
 
 void MainWindow::StopSerialization()
@@ -2461,17 +2496,30 @@ void MainWindow::StopSerialization()
     //    ui->batchnumberText->setEnabled(true);
     //    ui->batchvalue->setEnabled(true);
 
+    addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
     ScannerLiniaEmulate->stop();
-
     ui->MedicamentOptionsGroup->setEnabled(true);
-
     ui->StartSerializationButton->setEnabled(true);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(false);
-    addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
-
     ui->groupBox_2->setEnabled(true);
+
+//    qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
+    QDateTime date311  = GetISODateTime();
+    CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
+
+    QDateTime date313  = GetISODateTime().addSecs(1);
+    CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313.addSecs(10));
+
+    // если программная агрегация
+    if(getAutoprogramagregation())
+    {
+        QDateTime date911 = date313.addSecs(1);
+        CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
+    }
+
+    MedicamentsSerialization.clear();
 }
 
 void MainWindow::PauseSerialization()

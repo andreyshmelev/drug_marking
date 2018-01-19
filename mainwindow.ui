@@ -1145,7 +1145,7 @@ border-radius: 10px;</string>
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -1281,19 +1281,6 @@ border-radius: 10px;</string>
                   <property name="spacing">
                    <number>0</number>
                   </property>
-                  <item row="1" column="1">
-                   <spacer name="horizontalSpacer">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>13</width>
-                      <height>27</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
                   <item row="1" column="0">
                    <widget class="QLabel" name="owner">
                     <property name="font">
@@ -1309,6 +1296,19 @@ border-radius: 10px;</string>
                      <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>13</width>
+                      <height>27</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                   <item row="3" column="2">
                    <widget class="QComboBox" name="OrderTypeCombo">
@@ -1330,22 +1330,6 @@ border-radius: 10px;</string>
                     </item>
                    </widget>
                   </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="dataotgruzki">
-                    <property name="font">
-                     <font>
-                      <family>Times New Roman</family>
-                      <pointsize>11</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Дата упаковки</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="turntype">
                     <property name="font">
@@ -1363,8 +1347,34 @@ border-radius: 10px;</string>
                     </property>
                    </widget>
                   </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="otpravit">
+                    <property name="font">
+                     <font>
+                      <family>Times New Roman</family>
+                      <pointsize>11</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Отправитель</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="1" column="2">
                    <widget class="QComboBox" name="ownerID">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QComboBox" name="senderID">
                     <property name="minimumSize">
                      <size>
                       <width>0</width>
@@ -1419,18 +1429,8 @@ border-radius: 10px;</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="0" column="2">
-                   <widget class="QComboBox" name="senderID">
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="otpravit">
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="dataotgruzki">
                     <property name="font">
                      <font>
                       <family>Times New Roman</family>
@@ -1438,7 +1438,7 @@ border-radius: 10px;</string>
                      </font>
                     </property>
                     <property name="text">
-                     <string>Отправитель</string>
+                     <string>Дата упаковки</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>

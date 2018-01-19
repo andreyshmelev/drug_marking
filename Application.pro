@@ -45,7 +45,8 @@ SOURCES += \
     code128.cpp \
     code128item.cpp \
     Widgets/Widget313/widget313.cpp \
-    Widgets/Widget313/widget313.cpp
+    Widgets/Widget313/widget313.cpp \
+    serializationline.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -63,7 +64,8 @@ HEADERS += \
     code128.h \
     code128item.h \
     Widgets/Widget313/widget313.h \
-    Widgets/Widget313/widget313.h
+    Widgets/Widget313/widget313.h \
+    serializationline.h
 
 FORMS += \
         mainwindow.ui \

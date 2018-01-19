@@ -24,6 +24,7 @@
 #include "medicament.h"
 #include "basetypes.h"
 #include "sql.h"
+#include "serializationline.h"
 
 namespace Ui {
 class MainWindow;
@@ -135,11 +136,12 @@ public:
     manufacturer *getSerializationCompanyOwner() const;
     void setSerializationCompanyOwner(manufacturer *value);
 
+    QDateTime GetISODateTime();
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
     void CreateXML312Doc(QList<medicament *> MedList , quint8 controlsamplestype);
-    void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList);
+    void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList, QDateTime operation_date);
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
     void CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer * companysender, QDateTime operation_date);
     void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
@@ -201,7 +203,7 @@ private:
 
     QList<medicament *> MedicamentsList;
     QList<medicament *> MedicamentsListFromDB;
-    QList<medicament *> MedicamentsProgramAgregation;
+    QList<medicament *> MedicamentsSerialization;
 
 
     QList<manufacturer *> CompaniesListFromDB;
@@ -342,7 +344,7 @@ private slots:
 
     void serverWrite(QString str);
     void on_DrugsComboBox_currentIndexChanged(int index);
-    void GetMedicamentAutoSerialization (medicament * m);
+    void GetMedicamentSerialization (medicament * m);
     void on_move_order_Button_clicked();
     void on_releabeling_Button_clicked();
     void on_unit_pack_Button_clicked();
@@ -350,25 +352,12 @@ private slots:
     void on_agregationStartButton_clicked();
     void on_batchnumberText_textChanged();
     void on_pushButton_clicked();
-
-
-
-
     void on_StartSerializationButton_clicked();
-
     void on_StatistFindButton_clicked();
-
     void on_SerializAutoUpakovkaCheckBox_toggled(bool checked);
-
-
-
     void on_SerializAutoAgregationCheckBox_toggled(bool checked);
-
     void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
-
     void on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1);
-
-
 
 signals:
 
@@ -396,6 +385,7 @@ signals:
 
 private:
     QTcpSocket *Socket ;
+    SerializationLine *SerLine1;
     QByteArray QstringToQbytearray(QString str);
     QElapsedTimer SQLInsertSpeedTest();
     QElapsedTimer SQLSelectSpeedTest();
