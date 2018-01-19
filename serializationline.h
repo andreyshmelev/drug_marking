@@ -25,7 +25,6 @@ public:
     quint16 getCountinminute() const;
     void setCountinminute(const quint16 &value);
 
-
     QTcpSocket *Socket ;
 
 signals:

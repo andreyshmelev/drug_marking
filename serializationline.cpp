@@ -19,6 +19,16 @@ SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint1
 
 
     connectTcp(getTCPAddress(),getTCPPort());
+
+    QJsonObject main;
+    QJsonArray Parametrs;
+
+    QJsonObject jObject;
+    Parametrs.append(jObject);
+
+    main["jObject"] = jObject;
+
+    qDebug() << main << " main";
 }
 
 QString SerializationLine::getTCPAddress() const
@@ -67,5 +77,5 @@ void SerializationLine::connectTcp(QString address, quint16 port)
     Socket->connectToHost(address, port);
     Socket->waitForConnected(3000);
 
-     qDebug() << address << port;
+    qDebug() << address << port;
 }
