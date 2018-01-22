@@ -421,11 +421,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // для нормального рандомайза нужно добавить этот блок qsrand
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-
     StopSerialization();
 
-    SerLine1 = new SerializationLine("127.0.0.1", 1237,300,6);
-
+    SerializationLine1 = new SerializationLine("127.0.0.1", 8080,300,6);
 }
 
 MainWindow::~MainWindow()
@@ -2146,7 +2144,6 @@ void MainWindow::SendParamsToVideoJet()
     QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
     QString randstr = generateSN(11);
     QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
-    qDebug() << a ;
     SendCommandToVideoJet(a);
 }
 
@@ -2189,8 +2186,6 @@ void MainWindow::on_pushButton_2_clicked()
     QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
     QString quantity = sqlDB->sel("quantity", "drugs", where,"quantity").at(0);
 
-
-
     setSerializationDrugName(drugsname);
     setSerializationDose(dose);
     setSerializationGTIN(gtin);
@@ -2201,8 +2196,6 @@ void MainWindow::on_pushButton_2_clicked()
     setSerializationQuantity(quantity);
     SetSerializationCompanySender(CompaniesListFromDB.at(ui->senderID->currentIndex()));
     setSerializationCompanyOwner(CompaniesListFromDB.at(ui->ownerID->currentIndex()));
-
-
 
     GUIMainWindowUpdate();
 }
@@ -2244,7 +2237,6 @@ eticetka::eticetka()
     AddressItem->setRotation(-90);
     AddressItem->setFont(QFont("Helvetica", 20 , QFont::Bold));
     all_etiketka.addItem(AddressItem);
-
 
     PreparatItem = new QGraphicsTextItem("Лефлуномид");
     PreparatItem->setPos(140,800);
@@ -2617,4 +2609,21 @@ QDateTime MainWindow::getoperationDate()
     QDateTime operation_date = ui->operationDate->dateTime();
 
     return operation_date;
+}
+
+void MainWindow::on_optionsButton_clicked()
+{
+    setStackedPage(12);
+}
+
+void MainWindow::on_SetSerializationOptionsButton_clicked()
+{
+
+    SerializationLine1 = new SerializationLine("127.0.0.1", 8080,ui->SPEEDValue->value(),ui->countinminuteValue->value());
+
+
+    ui->SerialTime->setText( QDateTime::currentDateTime().toString("hh:mm::ss:zzz") );
+
+//    SerializationLine1->setSpeedmmsec(ui->SPEEDValue->value());
+//    SerializationLine1->setCountinminute(ui->countinminuteValue->value());
 }

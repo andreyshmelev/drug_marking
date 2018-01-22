@@ -25,6 +25,8 @@ public:
     quint16 getCountinminute() const;
     void setCountinminute(const quint16 &value);
 
+    void  SetFizikalOptions(quint16 linespeed, quint16 countinminute);
+
     QTcpSocket *Socket ;
 
 signals:
@@ -39,7 +41,8 @@ QString TCPAddress;
 quint16 port;
 quint16 speedmmsec;
 quint16 countinminute;
-
+void SendTcpData(QString data);
+void SendTcpData(QByteArray data);
 };
 
 #endif // SERIALIZATIONLINE_H

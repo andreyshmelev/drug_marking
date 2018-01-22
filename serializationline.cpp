@@ -16,19 +16,30 @@ SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint1
     setTCPPort(TCPport);
     setSpeedmmsec(linespeed);
     setCountinminute(countinminute);
-
-
     connectTcp(getTCPAddress(),getTCPPort());
 
-    QJsonObject main;
+    SetFizikalOptions(linespeed, countinminute);
+}
+
+void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinminute)
+{
+    QJsonObject mainJsonObject;
     QJsonArray Parametrs;
-
     QJsonObject jObject;
-    Parametrs.append(jObject);
+    QJsonObject jLineSpeed;
+    QJsonObject jCountMinute;
 
-    main["jObject"] = jObject;
+    Parametrs.append(jLineSpeed);
+    Parametrs.append(jCountMinute);
 
-    qDebug() << main << " main";
+    mainJsonObject["jLineSpeed"] = countinminute;
+    mainJsonObject["jCountMinute"] = linespeed;
+
+    QJsonDocument Doc(mainJsonObject);
+    QByteArray ba = Doc.toJson();
+
+    Socket->write(ba);
+    qDebug() << ba;
 }
 
 QString SerializationLine::getTCPAddress() const
@@ -75,7 +86,17 @@ void SerializationLine::connectTcp(QString address, quint16 port)
 {
     Socket = new QTcpSocket(this);
     Socket->connectToHost(address, port);
-    Socket->waitForConnected(3000);
+    Socket->waitForConnected(100);
 
     qDebug() << address << port;
+}
+
+void SerializationLine::SendTcpData(QString data)
+{
+
+}
+
+void SerializationLine::SendTcpData(QByteArray data)
+{
+
 }

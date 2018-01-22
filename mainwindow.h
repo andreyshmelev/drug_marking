@@ -359,6 +359,10 @@ private slots:
     void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
     void on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1);
 
+    void on_optionsButton_clicked();
+
+    void on_SetSerializationOptionsButton_clicked();
+
 signals:
 
     void agregationstatusToggled();
@@ -385,7 +389,7 @@ signals:
 
 private:
     QTcpSocket *Socket ;
-    SerializationLine *SerLine1;
+    SerializationLine *SerializationLine1;
     QByteArray QstringToQbytearray(QString str);
     QElapsedTimer SQLInsertSpeedTest();
     QElapsedTimer SQLSelectSpeedTest();
