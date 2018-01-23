@@ -33,6 +33,7 @@ signals:
 
 public slots:
 
+    void serverRead();
 private slots:
     void connectTcp(QString address, quint16 port);
 private:

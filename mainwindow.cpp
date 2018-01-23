@@ -423,7 +423,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qsrand((uint)time.msec());
     StopSerialization();
 
-    SerializationLine1 = new SerializationLine("127.0.0.1", 8080,300,6);
+//    SerializationLine1 = new SerializationLine("192.168.1.64", 8080,300,6);
 }
 
 MainWindow::~MainWindow()
@@ -2153,7 +2153,6 @@ void MainWindow::SendRandomToVideoJet()
     QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
     QString randstr = generateSN(11);
     QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
-    qDebug() << a ;
     SendCommandToVideoJet(a);
 }
 
@@ -2618,12 +2617,8 @@ void MainWindow::on_optionsButton_clicked()
 
 void MainWindow::on_SetSerializationOptionsButton_clicked()
 {
-
-    SerializationLine1 = new SerializationLine("127.0.0.1", 8080,ui->SPEEDValue->value(),ui->countinminuteValue->value());
-
-
+    SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value());
     ui->SerialTime->setText( QDateTime::currentDateTime().toString("hh:mm::ss:zzz") );
-
-//    SerializationLine1->setSpeedmmsec(ui->SPEEDValue->value());
-//    SerializationLine1->setCountinminute(ui->countinminuteValue->value());
+    //    SerializationLine1->setSpeedmmsec(ui->SPEEDValue->value());
+    //    SerializationLine1->setCountinminute(ui->countinminuteValue->value());
 }

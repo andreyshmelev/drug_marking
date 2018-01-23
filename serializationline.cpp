@@ -6,11 +6,14 @@
 
 SerializationLine::SerializationLine(QObject *parent) : QObject(parent)
 {
-
 }
 
 SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint16 linespeed, quint16 countinminute)
 {
+        Socket = new QTcpSocket(this);
+
+        // коннекшн если готов читать
+        connect(Socket,SIGNAL(readyRead()),this,SLOT(serverRead()));
 
     setTCPAddress(TCPAddress);
     setTCPPort(TCPport);
@@ -84,10 +87,9 @@ void SerializationLine::setCountinminute(const quint16 &value)
 
 void SerializationLine::connectTcp(QString address, quint16 port)
 {
-    Socket = new QTcpSocket(this);
+
     Socket->connectToHost(address, port);
     Socket->waitForConnected(100);
-
     qDebug() << address << port;
 }
 
@@ -99,4 +101,22 @@ void SerializationLine::SendTcpData(QString data)
 void SerializationLine::SendTcpData(QByteArray data)
 {
 
+}
+
+void SerializationLine::serverRead()
+{
+    QString ClientDataRead;
+    QByteArray ba;
+    QJsonObject mainJsonObject;
+
+    //если есть что читать из ТСР, то читаем все байты
+    while(Socket->bytesAvailable()>0)
+    {
+        ba = Socket->readAll();
+        //Складываем их в общий байтмассив
+        // ba.append(ba);
+        //ClientDataRead = QTextCodec::codecForMib(106)->toUnicode(ba);
+        qDebug() <<  ba;
+    }
+    return;
 }
