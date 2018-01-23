@@ -31,7 +31,9 @@ public:
     QTcpSocket *Socket ;
 
 signals:
-void ResponseRecieved(QString IPAddress,quint16 IPPort, QString Message);
+    void ResponseRecieved(QString IPAddress,quint16 IPPort, QString Message);
+
+    void DrugRecieved(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved);
 
 public slots:
 
@@ -40,12 +42,12 @@ private slots:
     void connectTcp(QString address, quint16 port);
 private:
 
-QString TCPAddress;
-quint16 port;
-quint16 speedmmsec;
-quint16 countinminute;
-void SendTcpData(QString data);
-void SendTcpData(QByteArray data);
+    QString TCPAddress;
+    quint16 port;
+    quint16 speedmmsec;
+    quint16 countinminute;
+    void SendTcpData(QString data);
+    void SendTcpData(QByteArray data);
 };
 
 #endif // SERIALIZATIONLINE_H

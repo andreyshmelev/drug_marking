@@ -156,7 +156,7 @@ void SerializationLine::serverRead()
         //Складываем их в общий байтмассив
         // ba.append(ba);
         //ClientDataRead = QTextCodec::codecForMib(106)->toUnicode(ba);
-        qDebug() <<  ba;
+        qDebug() <<"serverRead"<<  ba;
     }
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
@@ -170,9 +170,26 @@ void SerializationLine::serverRead()
         emit ResponseRecieved(getTCPAddress(), getTCPPort(),response);
 
         qDebug() << response;
-        qDebug() << getTCPAddress();
-        qDebug() << getTCPPort();
+//        qDebug() << getTCPAddress();
+//        qDebug() << getTCPPort();
     }
+
+    QString jBatchName =  jsonObject["jBatchName"].toString();
+    QString jExperyDate =  jsonObject["jExperyDate"].toString();
+    QString jGTIN =  jsonObject["jGTIN"].toString();
+    QString jSerialNumber =  jsonObject["jSerialNumber"].toString();
+    QString jTnved =  jsonObject["jTnved"].toString();
+
+    if (!jBatchName.isEmpty())
+        if (!jExperyDate.isEmpty())
+            if (!jGTIN.isEmpty())
+                if (!jSerialNumber.isEmpty())
+                    if (!jTnved.isEmpty())
+    {
+        emit DrugRecieved(jBatchName,jExperyDate,jGTIN,jSerialNumber,jTnved);
+        qDebug() << response;
+    }
+
 
     return;
 }

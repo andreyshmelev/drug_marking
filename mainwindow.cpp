@@ -472,6 +472,8 @@ QString MainWindow::generateSN(int lenght)
     QString newSN = randomString;
     return newSN;
 }
+
+
 QString MainWindow::generateCode128(int lenght)
 {
     //    const QString possibleCharacters("0123456789");
@@ -2613,6 +2615,19 @@ void MainWindow::on_optionsButton_clicked()
 void MainWindow::on_SetSerializationOptionsButton_clicked()
 {
     ui->SerialTime->setText( QDateTime::currentDateTime().toString("hh:mm::ss:zzz") );
+
     SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value() , getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
     connect(SerializationLine1, SIGNAL(ResponseRecieved(QString,quint16,QString)), this, SLOT(ResponseFromLineRecieved(QString,quint16,QString)));
+
+    connect(SerializationLine1, SIGNAL(DrugRecieved(QString,QString,QString,QString,QString)), this, SLOT(DrugRecievedFromEmulator(QString,QString,QString,QString,QString)));
+
+}
+
+void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
+{
+    qDebug() << "вот? " << BatchName << ExperyDate <<  GTIN <<  SerialNumber <<   Tnved;
+
+        QString sgtin = SerialNumber + GTIN;
+        medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
+        emit SendMedicamentSignal(t);
 }

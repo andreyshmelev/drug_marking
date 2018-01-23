@@ -166,6 +166,7 @@ public slots:
         void GetCompaniesDBList(QList<manufacturer *> man);
 
         void ResponseFromLineRecieved(QString address, quint16 port, QString message);
+        void DrugRecievedFromEmulator(QString BatchName, QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved);
 private:
     QString getGuiGTIN();
     QString getSN();
