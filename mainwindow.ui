@@ -4510,10 +4510,43 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
             <x>20</x>
             <y>230</y>
             <width>431</width>
-            <height>103</height>
+            <height>134</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_31">
+           <item row="2" column="0">
+            <widget class="QPlainTextEdit" name="IPAddress">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="plainText">
+              <string>192.168.1.64</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="TCPPort">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="value">
+              <number>8080</number>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="SerialTime">
              <property name="sizePolicy">
@@ -4533,19 +4566,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QPlainTextEdit" name="IPAddress">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="plainText">
-              <string>192.168.1.64</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="TCPPort">
+            <widget class="QLabel" name="SerialTimeRecieve">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -4554,14 +4575,11 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
              </property>
              <property name="font">
               <font>
-               <pointsize>12</pointsize>
+               <pointsize>14</pointsize>
               </font>
              </property>
-             <property name="maximum">
-              <number>10000</number>
-             </property>
-             <property name="value">
-              <number>8080</number>
+             <property name="text">
+              <string>Time</string>
              </property>
             </widget>
            </item>

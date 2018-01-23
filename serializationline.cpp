@@ -19,6 +19,9 @@ SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint1
     setTCPPort(TCPport);
     setSpeedmmsec(linespeed);
     setCountinminute(countinminute);
+
+
+
     connectTcp(getTCPAddress(),getTCPPort());
 
     SetFizikalOptions(linespeed, countinminute);
@@ -28,7 +31,6 @@ void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinmin
 {
     QJsonObject mainJsonObject;
     QJsonArray Parametrs;
-    QJsonObject jObject;
     QJsonObject jLineSpeed;
     QJsonObject jCountMinute;
 
@@ -37,6 +39,32 @@ void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinmin
 
     mainJsonObject["jLineSpeed"] = countinminute;
     mainJsonObject["jCountMinute"] = linespeed;
+
+    QJsonDocument Doc(mainJsonObject);
+    QByteArray ba = Doc.toJson();
+
+    Socket->write(ba);
+    qDebug() << ba;
+}
+
+void SerializationLine::SetMedicamentOptions(QString preparatname, QString gtin, QString experyDate, QString batchName)
+{
+    QJsonObject mainJsonObject;
+    QJsonArray Parametrs;
+    QJsonObject jPreparatName;
+    QJsonObject jGTIN;
+    QJsonObject jExperyDate;
+    QJsonObject jBatchName;
+
+    Parametrs.append(jPreparatName);
+    Parametrs.append(jGTIN);
+    Parametrs.append(jExperyDate);
+    Parametrs.append(jBatchName);
+
+    mainJsonObject["jPreparatName"] = preparatname;
+    mainJsonObject["jGTIN"] = gtin;
+    mainJsonObject["jExperyDate"] = experyDate;
+    mainJsonObject["jBatchName"] = batchName;
 
     QJsonDocument Doc(mainJsonObject);
     QByteArray ba = Doc.toJson();
@@ -105,9 +133,7 @@ void SerializationLine::SendTcpData(QByteArray data)
 
 void SerializationLine::serverRead()
 {
-    QString ClientDataRead;
     QByteArray ba;
-    QJsonObject mainJsonObject;
 
     //если есть что читать из ТСР, то читаем все байты
     while(Socket->bytesAvailable()>0)
@@ -118,5 +144,21 @@ void SerializationLine::serverRead()
         //ClientDataRead = QTextCodec::codecForMib(106)->toUnicode(ba);
         qDebug() <<  ba;
     }
+
+    QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+    QJsonObject jsonObject = loadDoc.object();
+
+    QString response =  jsonObject["Response"].toString();
+
+
+    if (!response.isEmpty())
+    {
+        emit ResponseRecieved(getTCPAddress(), getTCPPort(),response);
+
+        qDebug() << response;
+        qDebug() << getTCPAddress();
+        qDebug() << getTCPPort();
+    }
+
     return;
 }

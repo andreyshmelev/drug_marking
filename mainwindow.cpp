@@ -423,12 +423,20 @@ MainWindow::MainWindow(QWidget *parent) :
     qsrand((uint)time.msec());
     StopSerialization();
 
-//    SerializationLine1 = new SerializationLine("192.168.1.64", 8080,300,6);
+//    SerializationLine1 = new SerializationLine();
+
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::ResponseFromLineRecieved(QString address,quint16 port,QString message)
+{
+    QString date =  QDateTime::currentDateTime().toString("hh:mm::ss:zzz");
+    ui->SerialTimeRecieve->setText( date  + " : " + message );
 }
 
 int MainWindow::GenerateNumber(int High, int Low)
@@ -2364,7 +2372,6 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     all_etiketka.addItem(mainrect);
 
     QPixmap pixmap("C:/Work/Application/BFZLogo.jpg");
-    //    QPixmap pixmap("C://Work/Application//BFZLogo.bmp");
 
     logo = new QGraphicsPixmapItem(pixmap);
     logo ->setPos(15,1275);
@@ -2377,7 +2384,6 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     kolichestvouoakovok->setRotation(-90);
     kolichestvouoakovok->setFont(QFont("Helvetica", 25 , QFont::Bold));
     all_etiketka.addItem(kolichestvouoakovok);
-
 
     GTIN = new QGraphicsTextItem("GTIN: " + gtinText);
     GTIN ->setPos(400 + vertikotstup,1275);
@@ -2478,15 +2484,6 @@ void MainWindow::StartSerialization()
 
 void MainWindow::StopSerialization()
 {
-    //    ui->CompaniesCombobox->setEnabled(true);
-    //    ui->DrugsComboBox->setEnabled(true);
-    //    ui->conditions->setEnabled(true);
-    //    ui->GTINVal->setEnabled(true);
-    //    ui->TNVEDVal->setEnabled(true);
-    //    ui->expirationdate->setEnabled(true);
-    //    ui->batchnumberText->setEnabled(true);
-    //    ui->batchvalue->setEnabled(true);
-
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
     ScannerLiniaEmulate->stop();
     ui->MedicamentOptionsGroup->setEnabled(true);
@@ -2601,8 +2598,6 @@ void MainWindow::GetCompaniesDBList(QList<manufacturer*> man)
     ui->ownerID->addItems(a);
 }
 
-
-
 QDateTime MainWindow::getoperationDate()
 {
     QDateTime operation_date = ui->operationDate->dateTime();
@@ -2617,8 +2612,17 @@ void MainWindow::on_optionsButton_clicked()
 
 void MainWindow::on_SetSerializationOptionsButton_clicked()
 {
-    SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value());
     ui->SerialTime->setText( QDateTime::currentDateTime().toString("hh:mm::ss:zzz") );
-    //    SerializationLine1->setSpeedmmsec(ui->SPEEDValue->value());
-    //    SerializationLine1->setCountinminute(ui->countinminuteValue->value());
+
+    SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value());
+    connect(SerializationLine1, SIGNAL(ResponseRecieved(QString,quint16,QString)), this, SLOT(ResponseFromLineRecieved(QString,quint16,QString)));
+
+
+    SerializationLine1->SetMedicamentOptions(getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
+
+
+//    SerializationLine1->setTCPAddress(ui->IPAddress->toPlainText());
+//    SerializationLine1->setTCPPort( ui->TCPPort->value() );
+//    SerializationLine1->setSpeedmmsec(ui->SPEEDValue->value());
+//    SerializationLine1->setCountinminute(ui->countinminuteValue->value());
 }

@@ -137,6 +137,7 @@ public:
     void setSerializationCompanyOwner(manufacturer *value);
 
     QDateTime GetISODateTime();
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -164,6 +165,7 @@ public slots:
 
         void GetCompaniesDBList(QList<manufacturer *> man);
 
+        void ResponseFromLineRecieved(QString address, quint16 port, QString message);
 private:
     QString getGuiGTIN();
     QString getSN();

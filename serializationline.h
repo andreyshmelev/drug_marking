@@ -26,10 +26,12 @@ public:
     void setCountinminute(const quint16 &value);
 
     void  SetFizikalOptions(quint16 linespeed, quint16 countinminute);
+    void  SetMedicamentOptions(QString preparatname, QString gtin, QString experyDate, QString batchName);
 
     QTcpSocket *Socket ;
 
 signals:
+void ResponseRecieved(QString IPAddress,quint16 IPPort, QString Message);
 
 public slots:
 
