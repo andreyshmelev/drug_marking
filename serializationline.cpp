@@ -8,7 +8,7 @@ SerializationLine::SerializationLine(QObject *parent) : QObject(parent)
 {
 }
 
-SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint16 linespeed, quint16 countinminute)
+SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint16 linespeed, quint16 countinminute ,  QString preparatname, QString gtin, QString experyDate, QString batchName)
 {
         Socket = new QTcpSocket(this);
 
@@ -24,19 +24,33 @@ SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint1
 
     connectTcp(getTCPAddress(),getTCPPort());
 
-    SetFizikalOptions(linespeed, countinminute);
+    SetFizikalOptions( linespeed,  countinminute,  preparatname,  gtin,  experyDate,  batchName);
 }
 
-void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinminute)
+void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinminute, QString preparatname, QString gtin, QString experyDate, QString batchName)
 {
     QJsonObject mainJsonObject;
     QJsonArray Parametrs;
     QJsonObject jLineSpeed;
     QJsonObject jCountMinute;
 
+    QJsonObject jPreparatName;
+    QJsonObject jGTIN;
+    QJsonObject jExperyDate;
+    QJsonObject jBatchName;
+
+    Parametrs.append(jPreparatName);
+    Parametrs.append(jGTIN);
+    Parametrs.append(jExperyDate);
+    Parametrs.append(jBatchName);
     Parametrs.append(jLineSpeed);
     Parametrs.append(jCountMinute);
 
+
+    mainJsonObject["jPreparatName"] = preparatname;
+    mainJsonObject["jGTIN"] = gtin;
+    mainJsonObject["jExperyDate"] = experyDate;
+    mainJsonObject["jBatchName"] = batchName;
     mainJsonObject["jLineSpeed"] = countinminute;
     mainJsonObject["jCountMinute"] = linespeed;
 

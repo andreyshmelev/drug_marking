@@ -11,7 +11,7 @@ class SerializationLine : public QObject
 public:
     explicit SerializationLine(QObject *parent = 0);
 
-    SerializationLine(QString TCPAddress,quint16 TCPport,quint16 linespeed, quint16 countinminute);
+    SerializationLine(QString TCPAddress,quint16 TCPport,quint16 linespeed, quint16 countinminute ,  QString preparatname, QString gtin, QString experyDate, QString batchName);
 
     QString getTCPAddress() const;
     void setTCPAddress(const QString &value);
@@ -25,7 +25,7 @@ public:
     quint16 getCountinminute() const;
     void setCountinminute(const quint16 &value);
 
-    void  SetFizikalOptions(quint16 linespeed, quint16 countinminute);
+    void  SetFizikalOptions(quint16 linespeed, quint16 countinminute, QString preparatname, QString gtin, QString experyDate, QString batchName);
     void  SetMedicamentOptions(QString preparatname, QString gtin, QString experyDate, QString batchName);
 
     QTcpSocket *Socket ;

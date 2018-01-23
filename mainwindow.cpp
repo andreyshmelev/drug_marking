@@ -2614,15 +2614,10 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
 {
     ui->SerialTime->setText( QDateTime::currentDateTime().toString("hh:mm::ss:zzz") );
 
-    SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value());
+    SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value() , getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
     connect(SerializationLine1, SIGNAL(ResponseRecieved(QString,quint16,QString)), this, SLOT(ResponseFromLineRecieved(QString,quint16,QString)));
 
 
-    SerializationLine1->SetMedicamentOptions(getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
+//    SerializationLine1->SetMedicamentOptions(getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
 
-
-//    SerializationLine1->setTCPAddress(ui->IPAddress->toPlainText());
-//    SerializationLine1->setTCPPort( ui->TCPPort->value() );
-//    SerializationLine1->setSpeedmmsec(ui->SPEEDValue->value());
-//    SerializationLine1->setCountinminute(ui->countinminuteValue->value());
 }
