@@ -292,12 +292,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
-    ScannerLiniaEmulate = new QTimer();
-    ScannerLiniaEmulate->setInterval(1000/6); //  1000/6 упаковок в секунду эмулируем
-
-    //connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::updateDMPicture);
-    connect(ScannerLiniaEmulate, &QTimer::timeout, this, &MainWindow::EmulateAutomaticMedicamentScan);
-
     datetimeTimer = new QTimer();
     datetimeTimer->setInterval(1000);
     connect(datetimeTimer, SIGNAL(timeout()), this, SLOT(updateTimeDate()));
@@ -381,7 +375,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(setStackedPage(int)));
 
-    ScannerLiniaEmulate->start();
     datetimeTimer->start();
 
     scene = new QGraphicsScene();
@@ -423,7 +416,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qsrand((uint)time.msec());
     StopSerialization();
 
-//    SerializationLine1 = new SerializationLine();
+    //    SerializationLine1 = new SerializationLine();
 
 
 }
@@ -1541,6 +1534,36 @@ void MainWindow::Start313Process(bool set)
     emit agregationstatusToggled();
 }
 
+bool MainWindow::getBSerializationPaused() const
+{
+    return bSerializationPaused;
+}
+
+void MainWindow::setBSerializationPaused(bool value)
+{
+    bSerializationPaused = value;
+}
+
+bool MainWindow::getBSerializationStopped() const
+{
+    return bSerializationStopped;
+}
+
+void MainWindow::setBSerializationStopped(bool value)
+{
+    bSerializationStopped = value;
+}
+
+bool MainWindow::getBSerializationStarted() const
+{
+    return bSerializationStarted;
+}
+
+void MainWindow::setBSerializationStarted(bool value)
+{
+    bSerializationStarted = value;
+}
+
 manufacturer *MainWindow::getSerializationCompanyOwner() const
 {
     return SerializationCompanyOwner;
@@ -2067,15 +2090,19 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
 
 void MainWindow::GetMedicamentSerialization(medicament *med)
 {
-    // если автоматическая упаковка
-    if(getAutoupakovka())
+
+    qDebug() << "GetMedicamentSerialization" << med->medicament_name << med->SerialNumber;
+
+    // если автоматическая упаковка и не пауза и запущено и не остановлено.
+
+    if(getAutoupakovka() && ( ! getBSerializationPaused() ) && ( getBSerializationStarted() )&& ( ! getBSerializationStopped()) )
     {
         // если автоупаковка то сразу добавляем препарат в таблицу process311noxml
-        AddMedicamentToDBTable(ScannedMedicament,"process311noxml");
+        AddMedicamentToDBTable(med,"process311noxml");
         MedicamentsSerialization.append(med);
 
         //Проверяем сколько реально упаковок добавлено в базу данных
-        QString reqstring = QString("batch like '%1';").arg(ScannedMedicament->BatchNumber);
+        QString reqstring = QString("batch like '%1';").arg(med->BatchNumber);
         QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
 
         QString summa_pachek_v_partii = ssss.at(0);
@@ -2112,22 +2139,22 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
 
             QMessageBox msgBox;
             msgBox.setText(QString("Партия %1 завершена").arg(getSerializationBatchName()));
-//            msgBox.setInformativeText("Партия завершена");
+            //            msgBox.setInformativeText("Партия завершена");
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.setStyleSheet("QMessageBox{background-color: rgb(103,158,210);color: white;}QPushButton \
             {\
-            background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
-                border-style: outset;\
-                border-width: 2px;\
-                border-radius: 10px;\
-                border-color: beige;\
-                font: bold 14px; color: white;\
-                padding: 6px;\
-            }\
-");
-            int ret = msgBox.exec();
-            addMessageToJournal(QString("Партия %1 завершена").arg(getSerializationBatchName()),Qt::green,Qt::transparent);
+                                     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+                                     border-style: outset;\
+                                     border-width: 2px;\
+                                     border-radius: 10px;\
+                                     border-color: beige;\
+                                     font: bold 14px; color: white;\
+                                     padding: 6px;\
+                                 }\
+                                 ");
+                                 int ret = msgBox.exec();
+                    addMessageToJournal(QString("Партия %1 завершена").arg(getSerializationBatchName()),Qt::green,Qt::transparent);
             return;
         }
     }
@@ -2302,7 +2329,6 @@ eticetka::eticetka()
     srokgodnosti ->setFont(QFont("Helvetica", 25 , QFont::Bold));
     all_etiketka.addItem(srokgodnosti);
 
-
     usloviahranenia = new QGraphicsTextItem("Хранить и транспортировать \nпри температуре от 15 до 30 C°");
     usloviahranenia ->setPos(400 + vertikotstup*5,1275);
     usloviahranenia ->setRotation(-90);
@@ -2314,9 +2340,6 @@ eticetka::eticetka()
     SSCCCode ->setRotation(-90);
     SSCCCode ->setFont(QFont("Helvetica", 25 , QFont::Bold));
     all_etiketka.addItem(SSCCCode);
-
-
-
     all_etiketka.update();
 }
 
@@ -2459,15 +2482,19 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
 
 void MainWindow::StartSerialization()
 {
+
+    setBSerializationStarted(true);
+    setBSerializationStopped(false);
+    setBSerializationPaused(false);
+
+
     addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
-    ScannerLiniaEmulate->start();
     ui->MedicamentOptionsGroup->setEnabled(false);
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(true);
     ui->groupBox_2->setEnabled(false);
-
 
     //Проверяем сколько реально упаковок добавлено в базу данных
     QString reqstring = QString("batch like '%1';").arg(getSerializationBatchName());
@@ -2486,8 +2513,13 @@ void MainWindow::StartSerialization()
 
 void MainWindow::StopSerialization()
 {
+
+    setBSerializationStarted(false);
+    setBSerializationStopped(true);
+    setBSerializationPaused(false);
+
+
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
-    ScannerLiniaEmulate->stop();
     ui->MedicamentOptionsGroup->setEnabled(true);
     ui->StartSerializationButton->setEnabled(true);
     ui->PauseSerializationButton->setEnabled(false);
@@ -2495,7 +2527,7 @@ void MainWindow::StopSerialization()
     ui->StopSerializationButton->setEnabled(false);
     ui->groupBox_2->setEnabled(true);
 
-//    qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
+    //    qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
     QDateTime date311  = GetISODateTime();
     CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
 
@@ -2508,13 +2540,13 @@ void MainWindow::StopSerialization()
         QDateTime date911 = date313.addSecs(1);
         CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
     }
-
     MedicamentsSerialization.clear();
 }
 
 void MainWindow::PauseSerialization()
 {
-    ScannerLiniaEmulate->stop();
+    setBSerializationPaused(true);
+
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(true);
@@ -2524,7 +2556,10 @@ void MainWindow::PauseSerialization()
 
 void MainWindow::ContinueSerialization()
 {
-    ScannerLiniaEmulate->start();
+    setBSerializationStarted(false);
+    setBSerializationStopped(true);
+    setBSerializationPaused(false);
+
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);
@@ -2532,12 +2567,11 @@ void MainWindow::ContinueSerialization()
     addMessageToJournal("Продолж.сериализации",Qt::green,Qt::white);
 }
 
-void MainWindow::on_StartSerializationButton_clicked()
-{
-}
 
 void MainWindow::on_StatistFindButton_clicked()
 {
+
+
     QString statbisnesprocess = ui->StatistBPcomboBox->currentText();
     QString statmedicament = ui->StatistMedicamentComboBox->currentText();
     QString statbatch = ui->StatistBatchComboBox->currentText();
@@ -2558,7 +2592,6 @@ void MainWindow::on_SerializAutoUpakovkaCheckBox_toggled(bool checked)
     setAutoupakovka(checked);
     ui->autoserializationoptions->setEnabled(checked);
 }
-
 
 void MainWindow::on_SerializAutoAgregationCheckBox_toggled(bool checked)
 {
@@ -2586,16 +2619,13 @@ void MainWindow::on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1)
 {
 }
 
-
 void MainWindow::GetCompaniesDBList(QList<manufacturer*> man)
 {
     QStringList a ;
-
     foreach (manufacturer * d , man) {
-//        manufacturesList.append(d);
+        //        manufacturesList.append(d);
         a.append(d->get_organisation_name());
     }
-
     ui->senderID->addItems(a);
     ui->ownerID->addItems(a);
 }
@@ -2603,7 +2633,6 @@ void MainWindow::GetCompaniesDBList(QList<manufacturer*> man)
 QDateTime MainWindow::getoperationDate()
 {
     QDateTime operation_date = ui->operationDate->dateTime();
-
     return operation_date;
 }
 
@@ -2615,19 +2644,15 @@ void MainWindow::on_optionsButton_clicked()
 void MainWindow::on_SetSerializationOptionsButton_clicked()
 {
     ui->SerialTime->setText( QDateTime::currentDateTime().toString("hh:mm::ss:zzz") );
-
     SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value() , getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
     connect(SerializationLine1, SIGNAL(ResponseRecieved(QString,quint16,QString)), this, SLOT(ResponseFromLineRecieved(QString,quint16,QString)));
-
     connect(SerializationLine1, SIGNAL(DrugRecieved(QString,QString,QString,QString,QString)), this, SLOT(DrugRecievedFromEmulator(QString,QString,QString,QString,QString)));
-
 }
 
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
     qDebug() << "вот? " << BatchName << ExperyDate <<  GTIN <<  SerialNumber <<   Tnved;
-
-        QString sgtin = SerialNumber + GTIN;
-        medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
-        emit SendMedicamentSignal(t);
+    QString sgtin = SerialNumber + GTIN;
+    medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
+    emit SendMedicamentSignal(t);
 }

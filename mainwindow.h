@@ -138,6 +138,15 @@ public:
 
     QDateTime GetISODateTime();
 
+    bool getBSerializationStarted() const;
+    void setBSerializationStarted(bool value);
+
+    bool getBSerializationStopped() const;
+    void setBSerializationStopped(bool value);
+
+    bool getBSerializationPaused() const;
+    void setBSerializationPaused(bool value);
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -290,7 +299,6 @@ private:
     QString expstring;
     QString tnvedstring;
 
-
     // параметры сериализации
 
     QString SerializationGTIN;
@@ -303,6 +311,9 @@ private:
     QString SerializationTNVED;
     QString SerializationQuantity;
 
+    bool bSerializationStarted;
+    bool bSerializationStopped;
+    bool bSerializationPaused;
 
     static QString GetISODate();
     static QString GetDOCDate();
@@ -312,9 +323,7 @@ private:
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
 
-
 private slots:
-
 
     void addMessageToJournal(QString message, QColor textcolor,QColor backcolor);
     void updateTimeDate();
@@ -337,14 +346,10 @@ private slots:
     void productOptionsPageOpen();
     void agregationOptionsPageOpen();
     void statisticsPageOpen();
-
-
     void on_register_product_emission_Button_clicked();
     void on_register_control_samples_Button_clicked();
     void on_register_end_packing_Button_clicked();
-
     void connectTcp(QString address, int port);
-
     void serverWrite(QString str);
     void on_DrugsComboBox_currentIndexChanged(int index);
     void GetMedicamentSerialization (medicament * m);
@@ -355,7 +360,6 @@ private slots:
     void on_agregationStartButton_clicked();
     void on_batchnumberText_textChanged();
     void on_pushButton_clicked();
-    void on_StartSerializationButton_clicked();
     void on_StatistFindButton_clicked();
     void on_SerializAutoUpakovkaCheckBox_toggled(bool checked);
     void on_SerializAutoAgregationCheckBox_toggled(bool checked);

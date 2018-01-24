@@ -180,6 +180,10 @@ void SerializationLine::serverRead()
     QString jSerialNumber =  jsonObject["jSerialNumber"].toString();
     QString jTnved =  jsonObject["jTnved"].toString();
 
+
+
+
+
     if (!jBatchName.isEmpty())
         if (!jExperyDate.isEmpty())
             if (!jGTIN.isEmpty())
@@ -187,7 +191,8 @@ void SerializationLine::serverRead()
                     if (!jTnved.isEmpty())
     {
         emit DrugRecieved(jBatchName,jExperyDate,jGTIN,jSerialNumber,jTnved);
-        qDebug() << response;
+
+        qDebug() << jBatchName << "jBatchName" << jExperyDate << "jExperyDate"  << jGTIN << "jGTIN" << jSerialNumber << "jSerialNumber" << jTnved<< "jTnved";
     }
 
 
