@@ -1700,73 +1700,8 @@ void MainWindow::Toggle313Process()
 
 void MainWindow::updateAgregationGUI()
 {
-    //    if (getAgregation() == true)
-    //    {
-    //        ui->agregationStartButton->setText("Закончить регистрацию");
-    //        ui->GTINTextAgregation->setEnabled(true);
-    //        ui->batchnumberTextAgregation->setEnabled(true);
-    //        ui->expirationdateAgregation->setEnabled(true);
-    //        ui->TNVEDValueAgregation->setEnabled(true);
-    //        ui->ScannedCode->setEnabled(true);
-    //        ui->serialNumberAgregationValue->setEnabled(true);
 
-    //        pixmapqr->load(QDir::currentPath() + "/stopapp.jpg");
-    //        ui->qrstartstop->setPixmap(*pixmapqr);
-    //    }
-    //    else
-    //    {
-    //        ui->agregationStartButton->setText("Начать регистрацию");
-    //        ui->GTINTextAgregation->setEnabled(false);
-    //        ui->batchnumberTextAgregation->setEnabled(false);
-    //        ui->expirationdateAgregation->setEnabled(false);
-    //        ui->TNVEDValueAgregation->setEnabled(false);
-    //        ui->ScannedCode->setEnabled(false);
-    //        ui->serialNumberAgregationValue->setEnabled(false);
-
-    //        pixmapqr->load(QDir::currentPath() + "/startapp.jpg");
-    //        ui->qrstartstop->setPixmap(*pixmapqr);
-    //        ui->qrstartstop->show();
-    //        ui->qrstartstop->setScaledContents(1);
-
-    //        ui->MedicamentsTable->clearContents();
-    //        ui->MedicamentsTable->setRowCount(0);
-    //        ui->qrstartstop->show();
-    //        ui->qrstartstop->setScaledContents(1);
-    //    }
-
-    //    if (inputDataStringFromScaner.isEmpty())
-    //        ui->ScannedCode->clear();
-
-    //    if ( (inputDataStringFromScaner!= Start313ProcessQRString) && (inputDataStringFromScaner!= Stop313ProcessQRString) )
-    //    {
-    //        ui->ScannedCode->setText(inputDataStringFromScaner);
-    //    }
-
-    //    ui->GTINTextAgregation->setText(gtinstring);
-    //    ui->serialNumberAgregationValue->setText(SNstring);
-    //    ui->batchnumberTextAgregation->setText(batchstring);
-    //    ui->expirationdateAgregation->setText(expstring);
-    //    ui->TNVEDValueAgregation->setText(tnvedstring);
 }
-
-void MainWindow::AddMedicamentToTable(medicament * m)
-{
-    //    if (getAgregation() )
-    //    {
-    //        ui->MedicamentsTable->insertRow(0);
-
-    //        ui->MedicamentsTable->setItem(0, 0, new QTableWidgetItem(m->medicament_name));
-    //        ui->MedicamentsTable->setItem(0, 1, new QTableWidgetItem(m->GTIN));
-    //        ui->MedicamentsTable->setItem(0, 2, new QTableWidgetItem(m->BatchNumber));
-    //        ui->MedicamentsTable->setItem(0, 3, new QTableWidgetItem(m->SerialNumber));
-    //        ui->MedicamentsTable->setItem(0, 4, new QTableWidgetItem(m->TNVED));
-    //        ui->MedicamentsTable->setItem(0, 5, new QTableWidgetItem(m->ExperyDate));
-    //        ui->MedicamentsTable->scrollToTop();
-    //        ui->MedicamentsTable->horizontalHeader()->setVisible(true);
-    //    }
-}
-
-
 
 bool MainWindow::CheckMedicamentinDB(medicament *m)
 {
@@ -1776,7 +1711,6 @@ bool MainWindow::CheckMedicamentinDB(medicament *m)
     {
 
     }
-
     return false;
 }
 
@@ -2089,14 +2023,30 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
 }
 
 void MainWindow::GetMedicamentSerialization(medicament *med)
-{
-
-    qDebug() << "GetMedicamentSerialization" << med->medicament_name << med->SerialNumber;
-
+{  
     // если автоматическая упаковка и не пауза и запущено и не остановлено.
 
     if(getAutoupakovka() && ( ! getBSerializationPaused() ) && ( getBSerializationStarted() )&& ( ! getBSerializationStopped()) )
     {
+        // проверяем что пачки не бракованые
+        if  (   med->GTIN!=getSerializationGTIN() ||
+                med->BatchNumber!=getSerializationBatchName() ||
+                med->TNVED!=getSerializationTNVED() ||
+                med->ExperyDate!=getSerializationExpery() )
+        {
+            quint16 brakcount  = ui->NOKlabelValue->text().toUInt();
+
+            ui->NOKlabelValue->setText(QString::number(++brakcount));
+
+            qDebug() <<  med->GTIN << getSerializationGTIN() ;
+            qDebug() <<  med->BatchNumber << getSerializationBatchName();
+            qDebug() <<  med->TNVED << getSerializationTNVED();
+            qDebug() <<  med->ExperyDate << getSerializationExpery() ;
+
+            return;
+        }
+
+
         // если автоупаковка то сразу добавляем препарат в таблицу process311noxml
         AddMedicamentToDBTable(med,"process311noxml");
         MedicamentsSerialization.append(med);
@@ -2106,13 +2056,15 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
         QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
 
         QString summa_pachek_v_partii = ssss.at(0);
-        ui->OKlabelValue->setText(summa_pachek_v_partii);
         int ostalos_pachek_upakovat = ui->batchvalue->value() - summa_pachek_v_partii.toUInt();
+        int ostalos_zapolnit_v_korobe = MedicamentsSerialization.length() % getSerializationQuantity().toUInt()  ;
+        int proizveli_pachek = MedicamentsSerialization.length();
+
+
+        ui->OKlabelValue->setText(summa_pachek_v_partii);
         ui->remainLabelValue->setText(QString::number(ostalos_pachek_upakovat));
 
 
-        int ostalos_zapolnit_v_korobe = MedicamentsSerialization.length() % getSerializationQuantity().toUInt()  ;
-        int proizveli_pachek = MedicamentsSerialization.length();
 
         if ( ( ( ostalos_zapolnit_v_korobe  == 0 ) && ( proizveli_pachek > 0 ) ) || (ostalos_pachek_upakovat <= 0 ) )
         {
@@ -2556,8 +2508,6 @@ void MainWindow::PauseSerialization()
 
 void MainWindow::ContinueSerialization()
 {
-    setBSerializationStarted(false);
-    setBSerializationStopped(true);
     setBSerializationPaused(false);
 
     ui->StartSerializationButton->setEnabled(false);
@@ -2651,7 +2601,7 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
 
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
-    qDebug() << "вот? " << BatchName << ExperyDate <<  GTIN <<  SerialNumber <<   Tnved;
+//    qDebug() << "вот? " << BatchName << ExperyDate <<  GTIN <<  SerialNumber <<   Tnved;
     QString sgtin = SerialNumber + GTIN;
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
     emit SendMedicamentSignal(t);

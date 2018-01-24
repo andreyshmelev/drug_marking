@@ -325,6 +325,8 @@ protected:
 
 private slots:
 
+    QString GenerateDMcode();
+
     void addMessageToJournal(QString message, QColor textcolor,QColor backcolor);
     void updateTimeDate();
     void updateReadedDMCode();
@@ -333,10 +335,8 @@ private slots:
     void EmulateAutomaticMedicamentScan();
     void Toggle313Process( void );
     void updateAgregationGUI();
-    void AddMedicamentToTable(medicament * m);
     bool CheckMedicamentinDB(medicament * m);
     void setStackedPage(int newindex);
-    QString GenerateDMcode();
 
     void RegisterProductEmissionPageOpen();
     void RegisterControlSamplesPageOpen();
@@ -346,13 +346,13 @@ private slots:
     void productOptionsPageOpen();
     void agregationOptionsPageOpen();
     void statisticsPageOpen();
+    void connectTcp(QString address, int port);
+    void serverWrite(QString str);
+    void GetMedicamentSerialization (medicament * m);
     void on_register_product_emission_Button_clicked();
     void on_register_control_samples_Button_clicked();
     void on_register_end_packing_Button_clicked();
-    void connectTcp(QString address, int port);
-    void serverWrite(QString str);
     void on_DrugsComboBox_currentIndexChanged(int index);
-    void GetMedicamentSerialization (medicament * m);
     void on_move_order_Button_clicked();
     void on_releabeling_Button_clicked();
     void on_unit_pack_Button_clicked();
@@ -365,10 +365,8 @@ private slots:
     void on_SerializAutoAgregationCheckBox_toggled(bool checked);
     void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
     void on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1);
-
-    void on_optionsButton_clicked();
-
     void on_SetSerializationOptionsButton_clicked();
+    void on_optionsButton_clicked();
 
 signals:
 
