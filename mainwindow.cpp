@@ -1036,7 +1036,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     QString address = "623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а";
 
 
-    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),ExperyDate.toString("dd.MM.yyyy"),conditions,"0000",SSCCCode128 );
+    EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),MedList.at(0)->ExperyDate,conditions,"0000",SSCCCode128 );
 
     if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
         return;
@@ -1065,10 +1065,11 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     // добавили signs
 
     //    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-    QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+//    QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
-    qDebug() <<filepath;
 
+    QString filename = MedList.at(0)->BatchNumber+"_P911_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -2072,13 +2073,15 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
             QDateTime date311  = GetISODateTime();
             CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
 
-            QDateTime date313  = GetISODateTime().addSecs(1);
-            CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313.addSecs(10));
+
+
+            QDateTime date313  = GetISODateTime().addSecs(5);
+            CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313);
 
             // если программная агрегация
             if(getAutoprogramagregation())
             {
-                QDateTime date911 = date313.addSecs(1);
+                QDateTime date911 = date313.addSecs(5);
                 CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
             }
 
