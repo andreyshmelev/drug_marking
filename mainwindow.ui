@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>8</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -4302,7 +4302,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
         <widget class="QWidget" name="RegisterProductEmissionPage313">
          <layout class="QGridLayout" name="gridLayout_22">
           <item row="0" column="0">
-           <widget class="widget313" name="widget" native="true"/>
+           <widget class="QWidget" name="widget" native="true"/>
           </item>
          </layout>
         </widget>
@@ -4411,7 +4411,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 линию сериализаци</string>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>20</x>
@@ -4504,7 +4504,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>20</x>
@@ -4624,12 +4624,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
    <class>RelabelingWidget811</class>
    <extends>QWidget</extends>
    <header>Widgets/RelabelingWidget811/relabelingwidget811.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>widget313</class>
-   <extends>QWidget</extends>
-   <header>Widgets/Widget313/widget313.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
