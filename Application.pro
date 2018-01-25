@@ -45,7 +45,8 @@ SOURCES += \
     Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.cpp \
     code128.cpp \
     code128item.cpp \
-    serializationline.cpp
+    serializationline.cpp \
+    Widgets/RegisterProductWidget313/registerproductwidget313.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -62,7 +63,8 @@ HEADERS += \
     Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.h \
     code128.h \
     code128item.h \
-    serializationline.h
+    serializationline.h \
+    Widgets/RegisterProductWidget313/registerproductwidget313.h
 
 FORMS += \
         mainwindow.ui \
@@ -70,4 +72,5 @@ FORMS += \
     Widgets/MoveOrderWidget415/moveorder415.ui \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
     Widgets/UnitPackWidget911/unitpackwidget911.ui \
-    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui \
+    Widgets/RegisterProductWidget313/registerproductwidget313.ui
