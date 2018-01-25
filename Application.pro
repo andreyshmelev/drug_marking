@@ -29,6 +29,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
@@ -73,6 +74,4 @@ FORMS += \
     Widgets/MoveOrderWidget415/moveorder415.ui \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
     Widgets/UnitPackWidget911/unitpackwidget911.ui \
-    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui \
-    Widgets/Widget313/widget313.ui \
-    Widgets/Widget313/widget313.ui
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui
