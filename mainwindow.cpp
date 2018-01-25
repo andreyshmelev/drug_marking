@@ -2602,3 +2602,8 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
     emit SendMedicamentSignal(t);
 }
+
+void MainWindow::on_keyboardButton_clicked()
+{
+    bool ok = QProcess::startDetached("onboard");
+}

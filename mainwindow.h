@@ -375,6 +375,8 @@ private slots:
     void on_SetSerializationOptionsButton_clicked();
     void on_optionsButton_clicked();
 
+    void on_keyboardButton_clicked();
+
 signals:
 
     void agregationstatusToggled();
