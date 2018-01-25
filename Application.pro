@@ -74,4 +74,5 @@ FORMS += \
     Widgets/MoveOrderWidget415/moveorder415.ui \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
     Widgets/UnitPackWidget911/unitpackwidget911.ui \
-    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui
+    Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui \
+    Widgets/Widget313/widget313.ui
