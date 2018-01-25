@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>800</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1280</width>
-    <height>800</height>
+    <height>900</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>8</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -2689,16 +2689,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="register_end_packing_Label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="text">
@@ -2764,16 +2770,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  </item>
                  <item row="1" column="1">
                   <widget class="QLabel" name="register_control_samples_Label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="text">
@@ -2839,16 +2851,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  </item>
                  <item row="2" column="1">
                   <widget class="QLabel" name="register_product_emission_QRLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="text">
@@ -2861,6 +2879,12 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
               </item>
               <item row="1" column="0" colspan="2">
                <widget class="QGroupBox" name="AgregationGroupBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="title">
                  <string>Агрегация</string>
                 </property>
@@ -2922,16 +2946,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="unit_pack_QRLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>60</width>
-                     <height>60</height>
+                     <width>75</width>
+                     <height>65</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3062,16 +3092,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
               </item>
               <item row="3" column="1">
                <widget class="QLabel" name="releabeling_QRLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>60</width>
-                  <height>60</height>
+                  <width>75</width>
+                  <height>65</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>60</width>
-                  <height>60</height>
+                  <width>75</width>
+                  <height>65</height>
                  </size>
                 </property>
                 <property name="text">
@@ -3081,16 +3117,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
               </item>
               <item row="2" column="1">
                <widget class="QLabel" name="move_order_QRLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>60</width>
-                  <height>60</height>
+                  <width>75</width>
+                  <height>65</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>60</width>
-                  <height>60</height>
+                  <width>75</width>
+                  <height>65</height>
                  </size>
                 </property>
                 <property name="text">

@@ -1864,14 +1864,17 @@ void MainWindow::updateQRLabels()
     bool bExtent = true;
     int maskIndex = -1;
 
-    QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2.2,  versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,2.2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2,  versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->unit_pack_QRLabel, unit_pack_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->move_order_QRLabel, move_order_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->releabeling_QRLabel, releabeling_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
 
-    QRCodeToQLabelConverter(ui->printControlLabel, printControlQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->programOptionsLabel, programOptionsQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->agregationLabel, agregationQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->statisticsLabel, statisticsQRCode,2.2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->printControlLabel, printControlQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->programOptionsLabel, programOptionsQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->agregationLabel, agregationQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->statisticsLabel, statisticsQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
 
 }
 

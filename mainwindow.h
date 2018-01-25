@@ -260,6 +260,11 @@ private:
     const QString register_product_emission_QR_string = "497157";
     const QString register_control_samples_QR_string = "709109";
     const QString register_end_packing_QR_string = "914088";
+    const QString unit_pack_QR_string = "960559";
+    const QString move_order_QR_string = "233002";
+    const QString releabeling_QR_string = "530848";
+
+
 
     const QString printControlQRCode = "306656";
     const QString programOptionsQRCode = "783146";
