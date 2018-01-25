@@ -325,6 +325,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::Start312Process, ui->ExtractWidget, &UnitExtractWidget::StartRegistrationProcess ) ;
     connect(this, &MainWindow::Stop312Process, ui->ExtractWidget, &UnitExtractWidget::StopRegistrationProcess ) ;
     connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicamentSerialization(medicament*))) ;
+
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted, this, &MainWindow::CreateXML312Doc) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
@@ -390,8 +391,6 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
-    //    ui->packagePicture->setScene(scene);
-    //    ui->packagePicture->show();
 
     updateAgregationGUI();
     setStackedPage(2);
@@ -407,7 +406,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
 
-    //ui->MedicamentsTable->horizontalHeader()->setVisible(true);
     SetLibrariesPath();
     SetStyleSheets();
 
@@ -2023,10 +2021,32 @@ void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
     ui->quantityvalue->setText(quantity);
 }
 
+void MainWindow::ShowMessageBox(QString message)
+{
+    QMessageBox msgBox;
+    msgBox.setText(message);
+    //            msgBox.setInformativeText("Партия завершена");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setStyleSheet("QMessageBox{background-color: rgb(103,158,210);color: white;}QPushButton \
+    {\
+                             background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
+                             border-style: outset;\
+                             border-width: 2px;\
+                             border-radius: 10px;\
+                             border-color: beige;\
+                             font: bold 14px; color: white;\
+                             padding: 6px;\
+                         }\
+                         ");
+                         int ret = msgBox.exec();
+            addMessageToJournal(QString("Партия %1 завершена").arg(getSerializationBatchName()),Qt::green,Qt::transparent);
+}
+
+//слот приема данных о просканированной пачке извне
 void MainWindow::GetMedicamentSerialization(medicament *med)
 {  
     // если автоматическая упаковка и не пауза и запущено и не остановлено.
-
     if(getAutoupakovka() && ( ! getBSerializationPaused() ) && ( getBSerializationStarted() )&& ( ! getBSerializationStopped()) )
     {
         // проверяем что пачки не бракованые
@@ -2036,17 +2056,10 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
                 med->ExperyDate!=getSerializationExpery() )
         {
             quint16 brakcount  = ui->NOKlabelValue->text().toUInt();
-
             ui->NOKlabelValue->setText(QString::number(++brakcount));
-
-            qDebug() <<  med->GTIN << getSerializationGTIN() ;
-            qDebug() <<  med->BatchNumber << getSerializationBatchName();
-            qDebug() <<  med->TNVED << getSerializationTNVED();
-            qDebug() <<  med->ExperyDate << getSerializationExpery() ;
 
             return;
         }
-
 
         // если автоупаковка то сразу добавляем препарат в таблицу process311noxml
         AddMedicamentToDBTable(med,"process311noxml");
@@ -2055,25 +2068,20 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
         //Проверяем сколько реально упаковок добавлено в базу данных
         QString reqstring = QString("batch like '%1';").arg(med->BatchNumber);
         QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
-
         QString summa_pachek_v_partii = ssss.at(0);
-        int ostalos_pachek_upakovat = ui->batchvalue->value() - summa_pachek_v_partii.toUInt();
+
+        int ostalos_pachek_upakovat = getSerializationBatchValue().toInt() - summa_pachek_v_partii.toUInt();
         int ostalos_zapolnit_v_korobe = MedicamentsSerialization.length() % getSerializationQuantity().toUInt()  ;
         int proizveli_pachek = MedicamentsSerialization.length();
 
-
         ui->OKlabelValue->setText(summa_pachek_v_partii);
         ui->remainLabelValue->setText(QString::number(ostalos_pachek_upakovat));
-
-
 
         if ( ( ( ostalos_zapolnit_v_korobe  == 0 ) && ( proizveli_pachek > 0 ) ) || (ostalos_pachek_upakovat <= 0 ) )
         {
             qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
             QDateTime date311  = GetISODateTime();
             CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
-
-
 
             QDateTime date313  = GetISODateTime().addSecs(5);
             CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313);
@@ -2091,25 +2099,8 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
         if ((ostalos_pachek_upakovat <= 0 ))
         {
             StopSerialization();
-
-            QMessageBox msgBox;
-            msgBox.setText(QString("Партия %1 завершена").arg(getSerializationBatchName()));
-            //            msgBox.setInformativeText("Партия завершена");
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.setStyleSheet("QMessageBox{background-color: rgb(103,158,210);color: white;}QPushButton \
-            {\
-                                     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);\
-                                     border-style: outset;\
-                                     border-width: 2px;\
-                                     border-radius: 10px;\
-                                     border-color: beige;\
-                                     font: bold 14px; color: white;\
-                                     padding: 6px;\
-                                 }\
-                                 ");
-                                 int ret = msgBox.exec();
-                    addMessageToJournal(QString("Партия %1 завершена").arg(getSerializationBatchName()),Qt::green,Qt::transparent);
+            QString message = QString("Партия %1 завершена").arg(getSerializationBatchName()) ;
+            ShowMessageBox(message);
             return;
         }
     }

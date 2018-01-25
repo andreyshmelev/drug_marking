@@ -147,6 +147,8 @@ public:
     bool getBSerializationPaused() const;
     void setBSerializationPaused(bool value);
 
+    void ShowMessageBox(QString message);
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
