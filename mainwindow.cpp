@@ -15,7 +15,6 @@
 #include "QtPrintSupport/qprinter.h"
 #include "QtPrintSupport/QPrinter"
 #include "QtPrintSupport/QPrintDialog"
-#include <QGlobal.h>
 #include <QTime>
 
 #define testitemscount 0
