@@ -2516,8 +2516,6 @@ void MainWindow::ContinueSerialization()
 
 void MainWindow::on_StatistFindButton_clicked()
 {
-
-
     QString statbisnesprocess = ui->StatistBPcomboBox->currentText();
     QString statmedicament = ui->StatistMedicamentComboBox->currentText();
     QString statbatch = ui->StatistBatchComboBox->currentText();
@@ -2561,10 +2559,6 @@ void MainWindow::on_SerializAutoAgregationProgramCheckBox_toggled(bool checked)
     setAutoprogramagregation(checked);
 }
 
-void MainWindow::on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1)
-{
-}
-
 void MainWindow::GetCompaniesDBList(QList<manufacturer*> man)
 {
     QStringList a ;
@@ -2597,7 +2591,6 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
 
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
-//    qDebug() << "вот? " << BatchName << ExperyDate <<  GTIN <<  SerialNumber <<   Tnved;
     QString sgtin = SerialNumber + GTIN;
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
     emit SendMedicamentSignal(t);

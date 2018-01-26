@@ -9,7 +9,7 @@ SQL::SQL()
 SQL::SQL(QString path)
 {
     QString dbname = "mark";
-    QString hostname = "127.0.0.1";  // <<-"localhost"; //"192.168.1.62";
+    QString hostname = "192.168.1.62";  // <<-"localhost"; //"192.168.1.62";127.0.0.1
     int port = 3306;
 
     QString user = "markirovka";
@@ -72,10 +72,6 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
         //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();
     }
-    //    else
-    //    {
-    //        //        qDebug() << "Exec success";
-    //    }
 
     //Reading of the data
     QSqlRecord SQLrec     = query.record();

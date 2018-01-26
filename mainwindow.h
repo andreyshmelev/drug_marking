@@ -371,7 +371,6 @@ private slots:
     void on_SerializAutoUpakovkaCheckBox_toggled(bool checked);
     void on_SerializAutoAgregationCheckBox_toggled(bool checked);
     void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
-    void on_SerializAutoUpakovkaCheckBox_stateChanged(int arg1);
     void on_SetSerializationOptionsButton_clicked();
     void on_optionsButton_clicked();
 

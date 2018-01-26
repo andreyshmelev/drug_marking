@@ -10,20 +10,17 @@ SerializationLine::SerializationLine(QObject *parent) : QObject(parent)
 
 SerializationLine::SerializationLine(QString TCPAddress, quint16 TCPport, quint16 linespeed, quint16 countinminute ,  QString preparatname, QString gtin, QString experyDate, QString batchName)
 {
-        Socket = new QTcpSocket(this);
+    Socket = new QTcpSocket(this);
 
-        // коннекшн если готов читать
-        connect(Socket,SIGNAL(readyRead()),this,SLOT(serverRead()));
+    // коннекшн если готов читать
+    connect(Socket,SIGNAL(readyRead()),this,SLOT(serverRead()));
 
     setTCPAddress(TCPAddress);
     setTCPPort(TCPport);
     setSpeedmmsec(linespeed);
     setCountinminute(countinminute);
 
-
-
     connectTcp(getTCPAddress(),getTCPPort());
-
     SetFizikalOptions( linespeed,  countinminute,  preparatname,  gtin,  experyDate,  batchName);
 }
 
@@ -45,7 +42,6 @@ void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinmin
     Parametrs.append(jBatchName);
     Parametrs.append(jLineSpeed);
     Parametrs.append(jCountMinute);
-
 
     mainJsonObject["jPreparatName"] = preparatname;
     mainJsonObject["jGTIN"] = gtin;
@@ -170,8 +166,8 @@ void SerializationLine::serverRead()
         emit ResponseRecieved(getTCPAddress(), getTCPPort(),response);
 
         qDebug() << response;
-//        qDebug() << getTCPAddress();
-//        qDebug() << getTCPPort();
+        //        qDebug() << getTCPAddress();
+        //        qDebug() << getTCPPort();
     }
 
     QString jBatchName =  jsonObject["jBatchName"].toString();
@@ -181,20 +177,15 @@ void SerializationLine::serverRead()
     QString jTnved =  jsonObject["jTnved"].toString();
 
 
-
-
-
     if (!jBatchName.isEmpty())
         if (!jExperyDate.isEmpty())
             if (!jGTIN.isEmpty())
                 if (!jSerialNumber.isEmpty())
                     if (!jTnved.isEmpty())
-    {
-        emit DrugRecieved(jBatchName,jExperyDate,jGTIN,jSerialNumber,jTnved);
+                    {
+                        emit DrugRecieved(jBatchName,jExperyDate,jGTIN,jSerialNumber,jTnved);
 
-        qDebug() << jBatchName << "jBatchName" << jExperyDate << "jExperyDate"  << jGTIN << "jGTIN" << jSerialNumber << "jSerialNumber" << jTnved<< "jTnved";
-    }
-
-
+                        qDebug() << jBatchName << "jBatchName" << jExperyDate << "jExperyDate"  << jGTIN << "jGTIN" << jSerialNumber << "jSerialNumber" << jTnved<< "jTnved";
+                    }
     return;
 }
