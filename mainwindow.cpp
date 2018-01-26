@@ -2314,16 +2314,19 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
 
     all_etiketka.clear();
     all_etiketka.addItem( m_Barcode);
+
     OrgText = new QGraphicsTextItem(OrgTextstring);
     OrgText->setPos(60,900);
     OrgText->setRotation(-90);
     OrgText->setFont(QFont("Ubuntu", 25, QFont::Bold ));
+    OrgText->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(OrgText);
 
     AddressItem = new QGraphicsTextItem(Addresstext);
     AddressItem->setPos(100,1000);
     AddressItem->setRotation(-90);
     AddressItem->setFont(QFont("Ubuntu", 20 , QFont::Bold));
+    AddressItem->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(AddressItem);
 
 
@@ -2331,12 +2334,14 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     PreparatItem->setPos(140,800);
     PreparatItem->setRotation(-90);
     PreparatItem->setFont(QFont("Ubuntu", 60 , QFont::Bold));
+    PreparatItem->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(PreparatItem);
 
     Dose = new QGraphicsTextItem(Dosetext);
     Dose->setPos(230,700);
     Dose->setRotation(-90);
     Dose->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    Dose->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(Dose);
 
     mainrect = new QGraphicsRectItem(0,0,850,1270);
@@ -2356,30 +2361,35 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     kolichestvouoakovok->setPos(300,1275);
     kolichestvouoakovok->setRotation(-90);
     kolichestvouoakovok->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    kolichestvouoakovok->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(kolichestvouoakovok);
 
     GTIN = new QGraphicsTextItem("GTIN: " + gtinText);
     GTIN ->setPos(400 + vertikotstup,1275);
     GTIN ->setRotation(-90);
     GTIN ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    GTIN ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(GTIN );
 
     Seria = new QGraphicsTextItem("Серия: " + SeriaText);
     Seria ->setPos(400 + vertikotstup*2,1275);
     Seria ->setRotation(-90);
     Seria ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    Seria ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(Seria );
 
     dataproizvodstva = new QGraphicsTextItem("Дата производства: " + dataproizvodstvaText);
     dataproizvodstva ->setPos(400 + vertikotstup*3,1275);
     dataproizvodstva ->setRotation(-90);
     dataproizvodstva ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    dataproizvodstva ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(dataproizvodstva );
 
     srokgodnosti = new QGraphicsTextItem("Срок годности: " + SrokgodnostiText);
     srokgodnosti ->setPos(400 + vertikotstup*4,1275);
     srokgodnosti ->setRotation(-90);
     srokgodnosti ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    srokgodnosti ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(srokgodnosti);
 
 
@@ -2387,12 +2397,14 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     usloviahranenia ->setPos(400 + vertikotstup*5,1275);
     usloviahranenia ->setRotation(-90);
     usloviahranenia ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    usloviahranenia ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(usloviahranenia);
 
     SSCCCode = new QGraphicsTextItem(ssccString);
     SSCCCode ->setPos(810,570);
     SSCCCode ->setRotation(-90);
     SSCCCode ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
+    SSCCCode ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(SSCCCode);
 
     all_etiketka.update();
