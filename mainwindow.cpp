@@ -666,13 +666,7 @@ void MainWindow::updateReadedDMCode()
     if (inputDataStringFromScaner!="")
     {
 
-        qDebug() <<inputDataStringFromScaner << "Before";
-
-
-
         inputDataStringFromScaner.replace("002#"," ");
-
-
         if (getLanguageswitcher() == true)
         {
             // Просто меняем раскладку если у нас агрегация.
@@ -691,7 +685,6 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("Х","[");
             inputDataStringFromScaner.replace("Ъ","]");
 
-
             inputDataStringFromScaner.replace("Ф","A");
             inputDataStringFromScaner.replace("Ы","S");
             inputDataStringFromScaner.replace("В","D");
@@ -704,8 +697,6 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("Ж",";");
             inputDataStringFromScaner.replace("Э","'");
 
-
-
             inputDataStringFromScaner.replace("Я","Z");
             inputDataStringFromScaner.replace("Ч","X");
             inputDataStringFromScaner.replace("С","C");
@@ -716,7 +707,6 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("Б",",");
             inputDataStringFromScaner.replace("Ю",".");
             inputDataStringFromScaner.replace(".","/");
-
 
             // если зажался шифт в Англ. раскладке
             inputDataStringFromScaner.replace("!","1");
@@ -729,7 +719,6 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("*","8");
             inputDataStringFromScaner.replace("(","9");
             inputDataStringFromScaner.replace(")","0");
-
 
             // если зажался шифт в Русской раскладке
             inputDataStringFromScaner.replace("!","1");
@@ -744,14 +733,9 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace(")","0");
         }
 
-        qDebug() <<inputDataStringFromScaner << "After";
-
         ParseHandScannerData(inputDataStringFromScaner);
-
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
-
-
     }
 }
 
@@ -891,24 +875,19 @@ void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *
 
     QString filename = MedList.at(0)->BatchNumber+"_P313_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
-
-    qDebug() <<filepath;
-
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Failed to open";
         return;
     }
-    else
-    {
-        QTextStream stream(&file);
-        stream<< document.toString();
-        file.close();
-    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
 
     addMessageToJournal(filename, Qt::black, Qt::white);
+    AddStatisticsToDB("313",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
 void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *companyreciver, manufacturer *companysender, QDateTime operation_date, QString DocNum, QDate DocDate, int turnovertype, int source, int contracttype , QString Price, QString Vat)
@@ -988,25 +967,21 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/415-move_order(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-
-    qDebug() <<filepath;
-
+    QString filename = MedList.at(0)->BatchNumber+"_P415_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        //        qDebug() << "Failed to open";
         return;
     }
-    else
-    {
-        QTextStream stream(&file);
-        stream<< document.toString();
-        file.close();
-    }
 
-    QDesktopServices::openUrl(filepath);  // раскомментить если мы хотим чтобы по окончании агрегации открывался XML файл
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+
+    addMessageToJournal(filename, Qt::black, Qt::white);
+    AddStatisticsToDB("415",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
 void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer *company_subject, QDateTime operation_date)
@@ -1034,8 +1009,6 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     //добавляем subject_id
     addXMLTextNode(relabeling_elem,  company_subject->get_subject_id() , "subject_id", document);
     //добавили subject_id
-
-
 
     // добавляем operation_date
     // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
@@ -1065,23 +1038,21 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
 
     //добавили signs
 
-    QString filepath ="C:/Work/Generated XML/811-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-
-    qDebug() <<filepath;
-
+    QString filename = MedListNew.at(0)->BatchNumber+"_P811_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath() + "/" + filename ;
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Failed to open";
         return;
     }
-    else
-    {
-        QTextStream stream(&file);
-        stream<< document.toString();
-        file.close();
-    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+
+    addMessageToJournal(filename, Qt::black, Qt::white);
+    AddStatisticsToDB("811",MedListNew.at(0),QDateTime::currentDateTime(), MedListNew.length(),filename);
 }
 
 void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date)
@@ -1090,7 +1061,9 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     setLanguageswitcher(false);
 
     if (MedList.length() <=0)
+    {
         return ;
+    }
 
     QDomDocument document;
     QDomElement root = document.createElement("documents");
@@ -1116,11 +1089,12 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     QString quantity = sqlDB->sel("quantity", "drugs", where1,"quantity").at(0);
     QString address = "623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а";
 
-
     EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),MedList.at(0)->ExperyDate,conditions,"0000",SSCCCode128 );
 
     if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
+    {
         return;
+    }
 
     // добавляем subject_id
     addXMLTextNode(unit_pack_elem,  SSCCCode128 , "sscc", document);
@@ -1130,7 +1104,6 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     addXMLTextNode(unit_pack_elem,  GetISODate(), "operation_date", document);
     // добавили operation_date
-
 
     QDomElement signs_element  = document.createElement("signs");
     unit_pack_elem.appendChild(signs_element);
@@ -1145,25 +1118,21 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     }
     // добавили signs
 
-    //    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-    //    QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-
-
     QString filename = MedList.at(0)->BatchNumber+"_P911_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Failed to open";
         return;
     }
-    else
-    {
-        QTextStream stream(&file);
-        stream<< document.toString();
-        file.close();
-    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+
+    addMessageToJournal(filename, Qt::black, Qt::white);
+    AddStatisticsToDB("911",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsamplestype)
@@ -1248,23 +1217,21 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
 
     // добавили signs
 
-    QString filepath = QDir::currentPath()   + "/312-register_control_samples (" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-
-    qDebug() <<filepath;
+    QString filename = MedList.at(0)->BatchNumber+"_P312_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Failed to open";
         return;
     }
-    else
-    {
-        QTextStream stream(&file);
-        stream<< document.toString();
-        file.close();
-    }
 
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+
+    addMessageToJournal(filename, Qt::black, Qt::white);
+    AddStatisticsToDB("312",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
 void MainWindow::addXMLTextNode(QDomElement reg_end_pack_elem, QString nodevalue, QString nodename, QDomDocument document)
@@ -1352,15 +1319,13 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Failed to open";
         return;
     }
-    else
-    {
-        QTextStream stream(&file);
-        stream<< document.toString();
-        file.close();
-    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+
     addMessageToJournal(filename, Qt::black, Qt::white);
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }

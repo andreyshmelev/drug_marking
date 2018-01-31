@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -2636,7 +2636,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>40</height>
+                     <height>50</height>
                     </size>
                    </property>
                    <property name="maximumSize">
@@ -2717,7 +2717,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>30</height>
+                     <height>50</height>
                     </size>
                    </property>
                    <property name="maximumSize">
@@ -2798,7 +2798,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>30</height>
+                     <height>50</height>
                     </size>
                    </property>
                    <property name="maximumSize">
@@ -2894,7 +2894,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>30</height>
+                     <height>50</height>
                     </size>
                    </property>
                    <property name="maximumSize">
@@ -2980,7 +2980,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>30</height>
+                  <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -3039,7 +3039,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>40</height>
+                  <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
