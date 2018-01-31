@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>12</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -4476,39 +4476,39 @@ QComboBox::drop-down
          </widget>
         </widget>
         <widget class="QWidget" name="RegisterExtractPage312">
-         <layout class="QGridLayout" name="gridLayout_16">
+         <layout class="QFormLayout" name="formLayout">
           <item row="0" column="0">
            <widget class="UnitExtractWidget" name="ExtractWidget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="RegisterEndPackingPage311">
-         <layout class="QGridLayout" name="gridLayout_21">
+         <layout class="QFormLayout" name="formLayout_2">
           <item row="0" column="0">
            <widget class="RegisterEndPackingWidget311" name="RegisterEndPackingPage311Widget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="RegisterProductEmissionPage313">
-         <layout class="QGridLayout" name="gridLayout_22">
+         <layout class="QFormLayout" name="formLayout_3">
           <item row="0" column="0">
            <widget class="RegisterProductWidget313" name="registerproductwidget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="MoveOrderPage415">
-         <layout class="QGridLayout" name="gridLayout_23">
+         <layout class="QFormLayout" name="formLayout_4">
           <item row="0" column="0">
            <widget class="MoveOrder415" name="MoveOrderWidget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="RelabelingPage811">
-         <layout class="QGridLayout" name="gridLayout_24">
+         <layout class="QFormLayout" name="formLayout_5">
           <item row="0" column="0">
            <widget class="RelabelingWidget811" name="RelabelingWidget" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -4516,7 +4516,7 @@ QComboBox::drop-down
             <property name="minimumSize">
              <size>
               <width>760</width>
-              <height>440</height>
+              <height>430</height>
              </size>
             </property>
            </widget>
@@ -4524,44 +4524,196 @@ QComboBox::drop-down
          </layout>
         </widget>
         <widget class="QWidget" name="UnitPackPage911">
-         <layout class="QGridLayout" name="gridLayout_25">
+         <layout class="QFormLayout" name="formLayout_6">
           <item row="0" column="0">
            <widget class="UnitPackWidget911" name="UnitPackPageWidget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="LineOptions">
-         <widget class="QPushButton" name="SetSerializationOptionsButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>420</y>
-            <width>230</width>
-            <height>60</height>
-           </rect>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>80</width>
-            <height>60</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>230</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>-1</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton 
+         <layout class="QGridLayout" name="gridLayout_16">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_15">
+            <item row="0" column="0">
+             <widget class="QLabel" name="SPEEDlabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>СКОРОСТЬ ЛИНИИ мм/мин</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="countinminuteLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Частота уп./мин</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="SPEEDValue">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>10000</number>
+              </property>
+              <property name="value">
+               <number>325</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="countinminuteValue">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>400</number>
+              </property>
+              <property name="value">
+               <number>4</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <layout class="QGridLayout" name="gridLayout_31">
+            <item row="2" column="0">
+             <widget class="QPlainTextEdit" name="IPAddress">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="plainText">
+               <string>192.168.1.64</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="TCPPort">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>10000</number>
+              </property>
+              <property name="value">
+               <number>8080</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="SerialTimeRecieve">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Time</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="SerialTime">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Time</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="SetSerializationOptionsButton">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>-1</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton 
 {
 background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
 
@@ -4595,186 +4747,14 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     font: bold 14px; color: white;
     padding: 6px;
 }</string>
-          </property>
-          <property name="text">
-           <string>Передать данные в
+            </property>
+            <property name="text">
+             <string>Передать данные в
 линию сериализаци</string>
-          </property>
-         </widget>
-         <widget class="QWidget" name="layoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>40</y>
-            <width>421</width>
-            <height>151</height>
-           </rect>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_15">
-           <item row="0" column="0">
-            <widget class="QLabel" name="SPEEDlabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>14</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>СКОРОСТЬ ЛИНИИ мм/мин</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="countinminuteLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>14</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Частота уп./мин</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="SPEEDValue">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>10000</number>
-             </property>
-             <property name="value">
-              <number>325</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="countinminuteValue">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="maximum">
-              <number>400</number>
-             </property>
-             <property name="value">
-              <number>4</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="layoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>230</y>
-            <width>431</width>
-            <height>134</height>
-           </rect>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_31">
-           <item row="2" column="0">
-            <widget class="QPlainTextEdit" name="IPAddress">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="plainText">
-              <string>192.168.1.64</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QSpinBox" name="TCPPort">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="maximum">
-              <number>10000</number>
-             </property>
-             <property name="value">
-              <number>8080</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="SerialTimeRecieve">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>14</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="SerialTime">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>14</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
