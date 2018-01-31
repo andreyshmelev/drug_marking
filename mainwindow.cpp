@@ -668,14 +668,90 @@ void MainWindow::updateReadedDMCode()
 
         qDebug() <<inputDataStringFromScaner << "Before";
 
+
+
         inputDataStringFromScaner.replace("002#"," ");
-        inputDataStringFromScaner.replace("#","3");
+
+
+        if (getLanguageswitcher() == true)
+        {
+            // Просто меняем раскладку если у нас агрегация.
+            // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
+
+            inputDataStringFromScaner.replace("Й","Q");
+            inputDataStringFromScaner.replace("Ц","W");
+            inputDataStringFromScaner.replace("У","E");
+            inputDataStringFromScaner.replace("К","R");
+            inputDataStringFromScaner.replace("Е","T");
+            inputDataStringFromScaner.replace("Н","Y");
+            inputDataStringFromScaner.replace("Г","U");
+            inputDataStringFromScaner.replace("Ш","I");
+            inputDataStringFromScaner.replace("Щ","O");
+            inputDataStringFromScaner.replace("З","P");
+            inputDataStringFromScaner.replace("Х","[");
+            inputDataStringFromScaner.replace("Ъ","]");
+
+
+            inputDataStringFromScaner.replace("Ф","A");
+            inputDataStringFromScaner.replace("Ы","S");
+            inputDataStringFromScaner.replace("В","D");
+            inputDataStringFromScaner.replace("А","F");
+            inputDataStringFromScaner.replace("П","G");
+            inputDataStringFromScaner.replace("Р","H");
+            inputDataStringFromScaner.replace("О","J");
+            inputDataStringFromScaner.replace("Л","K");
+            inputDataStringFromScaner.replace("Д","L");
+            inputDataStringFromScaner.replace("Ж",";");
+            inputDataStringFromScaner.replace("Э","'");
+
+
+
+            inputDataStringFromScaner.replace("Я","Z");
+            inputDataStringFromScaner.replace("Ч","X");
+            inputDataStringFromScaner.replace("С","C");
+            inputDataStringFromScaner.replace("М","V");
+            inputDataStringFromScaner.replace("И","B");
+            inputDataStringFromScaner.replace("Т","N");
+            inputDataStringFromScaner.replace("Ь","M");
+            inputDataStringFromScaner.replace("Б",",");
+            inputDataStringFromScaner.replace("Ю",".");
+            inputDataStringFromScaner.replace(".","/");
+
+
+            // если зажался шифт в Англ. раскладке
+            inputDataStringFromScaner.replace("!","1");
+            inputDataStringFromScaner.replace("@","2");
+            inputDataStringFromScaner.replace("#","3");
+            inputDataStringFromScaner.replace("$","4");
+            inputDataStringFromScaner.replace("%","5");
+            inputDataStringFromScaner.replace("^","6");
+            inputDataStringFromScaner.replace("&","7");
+            inputDataStringFromScaner.replace("*","8");
+            inputDataStringFromScaner.replace("(","9");
+            inputDataStringFromScaner.replace(")","0");
+
+
+            // если зажался шифт в Русской раскладке
+            inputDataStringFromScaner.replace("!","1");
+            inputDataStringFromScaner.replace("\"","2");
+            inputDataStringFromScaner.replace("№","3");
+            inputDataStringFromScaner.replace(";","4");
+            inputDataStringFromScaner.replace("%","5");
+            inputDataStringFromScaner.replace(":","6");
+            inputDataStringFromScaner.replace("?","7");
+            inputDataStringFromScaner.replace("*","8");
+            inputDataStringFromScaner.replace("(","9");
+            inputDataStringFromScaner.replace(")","0");
+        }
+
+        qDebug() <<inputDataStringFromScaner << "After";
+
         ParseHandScannerData(inputDataStringFromScaner);
+
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
 
 
-        qDebug() <<inputDataStringFromScaner << "After";
     }
 }
 
@@ -1892,72 +1968,6 @@ void MainWindow::addSymbolToInputString(QString str)
 
     //  qDebug() << "start timeout timer";
     QString wastext = inputDataStringFromScaner;
-
-    if (getLanguageswitcher() == true)
-    {
-        // Просто меняем раскладку если у нас агрегация.
-        // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
-
-        if (str == "Й") { str = "Q" ; }
-        if (str == "Ц") { str = "W" ; }
-        if (str == "У") { str = "E" ; }
-        if (str == "К") { str = "R" ; }
-        if (str == "Е") { str = "T" ; }
-        if (str == "Н") { str = "Y" ; }
-        if (str == "Г") { str = "U" ; }
-        if (str == "Ш") { str = "I" ; }
-        if (str == "Щ") { str = "O" ; }
-        if (str == "З") { str = "P" ; }
-        if (str == "Х") { str = "[" ; }
-        if (str == "Ъ") { str = "]" ; }
-
-        if (str == "Ф") { str = "A" ; }
-        if (str == "Ы") { str = "S" ; }
-        if (str == "В") { str = "D" ; }
-        if (str == "А") { str = "F" ; }
-        if (str == "П") { str = "G" ; }
-        if (str == "Р") { str = "H" ; }
-        if (str == "О") { str = "J" ; }
-        if (str == "Л") { str = "K" ; }
-        if (str == "Д") { str = "L" ; }
-        if (str == "Ж") { str = ";" ; }
-        if (str == "Э") { str = "'" ; }
-
-        if (str == "Я") { str = "Z" ; }
-        if (str == "Ч") { str = "X" ; }
-        if (str == "С") { str = "C" ; }
-        if (str == "М") { str = "V" ; }
-        if (str == "И") { str = "B" ; }
-        if (str == "Т") { str = "N" ; }
-        if (str == "Ь") { str = "M" ; }
-        if (str == "Б") { str = "," ; }
-        if (str == "Ю") { str = "." ; }
-        if (str == ".") { str = "/" ; }
-
-        // если зажался шифт в Англ. раскладке
-        if (str == "!") { str = "1" ; }
-        if (str == "@") { str = "2" ; }
-//        if (str == "#") { str = "3" ; }
-        if (str == "$") { str = "4" ; }
-        if (str == "%") { str = "5" ; }
-        if (str == "^") { str = "6" ; }
-        if (str == "&") { str = "7" ; }
-        if (str == "*") { str = "8" ; }
-        if (str == "(") { str = "9" ; }
-        if (str == ")") { str = "0" ; }
-
-        // если зажался шифт в Русской раскладке
-        if (str == "!") { str = "1" ; }
-        if (str == "\"") { str = "2" ; }
-        if (str == "№") { str = "3" ; }
-        if (str == ";") { str = "4" ; }
-        if (str == "%") { str = "5" ; }
-        if (str == ":") { str = "6" ; }
-        if (str == "?") { str = "7" ; }
-        if (str == "*") { str = "8" ; }
-        if (str == "(") { str = "9" ; }
-        if (str == ")") { str = "0" ; }
-    }
 
     wastext.append(str);
     inputDataStringFromScaner = wastext;
