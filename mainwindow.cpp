@@ -1062,7 +1062,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     // добавили signs
 
     //    QString filepath = QDir::currentPath()   + "/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
-//    QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
+    //    QString filepath ="C:/Work/Generated XML/911-unit_pack(" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm dd-MM-yyyy") + ").xml";
 
 
     QString filename = MedList.at(0)->BatchNumber+"_P911_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
@@ -1890,41 +1890,47 @@ void MainWindow::addSymbolToInputString(QString str)
         // Просто меняем раскладку если у нас агрегация.
         // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
 
-        if (str == "Й") { str = "Q" ; } else
-            if (str == "Ц") { str = "W" ; } else
-                if (str == "У") { str = "E" ; } else
-                    if (str == "К") { str = "R" ; } else
-                        if (str == "Е") { str = "T" ; } else
-                            if (str == "Н") { str = "Y" ; } else
-                                if (str == "Г") { str = "U" ; } else
-                                    if (str == "Ш") { str = "I" ; } else
-                                        if (str == "Щ") { str = "O" ; } else
-                                            if (str == "З") { str = "P" ; } else
-                                                if (str == "Х") { str = "[" ; } else
-                                                    if (str == "Ъ") { str = "]" ; } else
+        if (str == "Й") { str = "Q" ; }
+        if (str == "Ц") { str = "W" ; }
+        if (str == "У") { str = "E" ; }
+        if (str == "К") { str = "R" ; }
+        if (str == "Е") { str = "T" ; }
+        if (str == "Н") { str = "Y" ; }
+        if (str == "Г") { str = "U" ; }
+        if (str == "Ш") { str = "I" ; }
+        if (str == "Щ") { str = "O" ; }
+        if (str == "З") { str = "P" ; }
+        if (str == "Х") { str = "[" ; }
+        if (str == "Ъ") { str = "]" ; }
 
-                                                        if (str == "Ф") { str = "A" ; } else
-                                                            if (str == "Ы") { str = "S" ; } else
-                                                                if (str == "В") { str = "D" ; } else
-                                                                    if (str == "А") { str = "F" ; } else
-                                                                        if (str == "П") { str = "G" ; } else
-                                                                            if (str == "Р") { str = "H" ; } else
-                                                                                if (str == "О") { str = "J" ; } else
-                                                                                    if (str == "Л") { str = "K" ; } else
-                                                                                        if (str == "Д") { str = "L" ; } else
-                                                                                            if (str == "Ж") { str = ";" ; } else
-                                                                                                if (str == "Э") { str = "'" ; } else
+        if (str == "Ф") { str = "A" ; }
+        if (str == "Ы") { str = "S" ; }
+        if (str == "В") { str = "D" ; }
+        if (str == "А") { str = "F" ; }
+        if (str == "П") { str = "G" ; }
+        if (str == "Р") { str = "H" ; }
+        if (str == "О") { str = "J" ; }
+        if (str == "Л") { str = "K" ; }
+        if (str == "Д") { str = "L" ; }
+        if (str == "Ж") { str = ";" ; }
+        if (str == "Э") { str = "'" ; }
 
-                                                                                                    if (str == "Я") { str = "Z" ; } else
-                                                                                                        if (str == "Ч") { str = "X" ; } else
-                                                                                                            if (str == "С") { str = "C" ; } else
-                                                                                                                if (str == "М") { str = "V" ; } else
-                                                                                                                    if (str == "И") { str = "B" ; } else
-                                                                                                                        if (str == "Т") { str = "N" ; } else
-                                                                                                                            if (str == "Ь") { str = "M" ; } else
-                                                                                                                                if (str == "Б") { str = "," ; } else
-                                                                                                                                    if (str == "Ю") { str = "." ; } else
-                                                                                                                                        if (str == ".") { str = "/" ; }
+        if (str == "Я") { str = "Z" ; }
+        if (str == "Ч") { str = "X" ; }
+        if (str == "С") { str = "C" ; }
+        if (str == "М") { str = "V" ; }
+        if (str == "И") { str = "B" ; }
+        if (str == "Т") { str = "N" ; }
+        if (str == "Ь") { str = "M" ; }
+        if (str == "Б") { str = "," ; }
+        if (str == "Ю") { str = "." ; }
+        if (str == ".") { str = "/" ; }
+
+
+        if (str == "!") { str = "1" ; }
+        if (str == "№") { str = "3" ; }
+        if (str == "(") { str = "9" ; }
+        if (str == ")") { str = "0" ; }
 
     }
 
@@ -2047,7 +2053,7 @@ void MainWindow::ShowMessageBox(QString message)
 
 //слот приема данных о просканированной пачке извне
 void MainWindow::GetMedicamentSerialization(medicament *med)
-{  
+{
     // если автоматическая упаковка и не пауза и запущено и не остановлено.
     if(getAutoupakovka() && ( ! getBSerializationPaused() ) && ( getBSerializationStarted() )&& ( ! getBSerializationStopped()) )
     {
