@@ -665,9 +665,17 @@ void MainWindow::updateReadedDMCode()
 {
     if (inputDataStringFromScaner!="")
     {
+
+        qDebug() <<inputDataStringFromScaner << "Before";
+
+        inputDataStringFromScaner.replace("002#"," ");
+        inputDataStringFromScaner.replace("#","3");
         ParseHandScannerData(inputDataStringFromScaner);
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
+
+
+        qDebug() <<inputDataStringFromScaner << "After";
     }
 }
 
