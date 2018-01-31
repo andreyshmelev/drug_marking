@@ -1926,12 +1926,29 @@ void MainWindow::addSymbolToInputString(QString str)
         if (str == "Ю") { str = "." ; }
         if (str == ".") { str = "/" ; }
 
-
+        // если зажался шифт в Англ. раскладке
         if (str == "!") { str = "1" ; }
-        if (str == "№") { str = "3" ; }
+        if (str == "@") { str = "2" ; }
+        if (str == "#") { str = "3" ; }
+        if (str == "$") { str = "4" ; }
+        if (str == "%") { str = "5" ; }
+        if (str == "^") { str = "6" ; }
+        if (str == "&") { str = "7" ; }
+        if (str == "*") { str = "8" ; }
         if (str == "(") { str = "9" ; }
         if (str == ")") { str = "0" ; }
 
+        // если зажался шифт в Русской раскладке
+        if (str == "!") { str = "1" ; }
+        if (str == "\"") { str = "2" ; }
+        if (str == "№") { str = "3" ; }
+        if (str == ";") { str = "4" ; }
+        if (str == "%") { str = "5" ; }
+        if (str == ":") { str = "6" ; }
+        if (str == "?") { str = "7" ; }
+        if (str == "*") { str = "8" ; }
+        if (str == "(") { str = "9" ; }
+        if (str == ")") { str = "0" ; }
     }
 
     wastext.append(str);
