@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>12</number>
+         <number>9</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -4476,28 +4476,28 @@ QComboBox::drop-down
          </widget>
         </widget>
         <widget class="QWidget" name="RegisterExtractPage312">
-         <layout class="QFormLayout" name="formLayout">
+         <layout class="QGridLayout" name="gridLayout_21">
           <item row="0" column="0">
            <widget class="UnitExtractWidget" name="ExtractWidget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="RegisterEndPackingPage311">
-         <layout class="QFormLayout" name="formLayout_2">
+         <layout class="QGridLayout" name="gridLayout_22">
           <item row="0" column="0">
            <widget class="RegisterEndPackingWidget311" name="RegisterEndPackingPage311Widget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="RegisterProductEmissionPage313">
-         <layout class="QFormLayout" name="formLayout_3">
+         <layout class="QGridLayout" name="gridLayout_23">
           <item row="0" column="0">
            <widget class="RegisterProductWidget313" name="registerproductwidget" native="true"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="MoveOrderPage415">
-         <layout class="QFormLayout" name="formLayout_4">
+         <layout class="QGridLayout" name="gridLayout_24">
           <item row="0" column="0">
            <widget class="MoveOrder415" name="MoveOrderWidget" native="true"/>
           </item>
