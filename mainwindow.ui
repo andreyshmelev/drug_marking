@@ -4491,7 +4491,20 @@ QComboBox::drop-down
          </property>
          <layout class="QGridLayout" name="gridLayout_22">
           <item row="0" column="0">
-           <widget class="RegisterEndPackingWidget311" name="RegisterEndPackingPage311Widget" native="true"/>
+           <widget class="RegisterEndPackingWidget311" name="RegisterEndPackingPage311Widget" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">    border-style: outset;
+    border-width:1px;
+    border-radius: 10px;
+    border-color: beige;</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
