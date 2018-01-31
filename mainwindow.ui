@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>9</number>
+         <number>7</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -4504,7 +4504,7 @@ QComboBox::drop-down
          </layout>
         </widget>
         <widget class="QWidget" name="RelabelingPage811">
-         <layout class="QFormLayout" name="formLayout_5">
+         <layout class="QGridLayout" name="gridLayout_25">
           <item row="0" column="0">
            <widget class="RelabelingWidget811" name="RelabelingWidget" native="true">
             <property name="sizePolicy">
@@ -4524,7 +4524,7 @@ QComboBox::drop-down
          </layout>
         </widget>
         <widget class="QWidget" name="UnitPackPage911">
-         <layout class="QFormLayout" name="formLayout_6">
+         <layout class="QGridLayout" name="gridLayout_35">
           <item row="0" column="0">
            <widget class="UnitPackWidget911" name="UnitPackPageWidget" native="true"/>
           </item>
