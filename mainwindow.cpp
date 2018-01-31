@@ -1890,65 +1890,65 @@ void MainWindow::addSymbolToInputString(QString str)
         // Просто меняем раскладку если у нас агрегация.
         // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
 
-        if (str == "Й") { str = "Q" ; }
-        if (str == "Ц") { str = "W" ; }
-        if (str == "У") { str = "E" ; }
-        if (str == "К") { str = "R" ; }
-        if (str == "Е") { str = "T" ; }
-        if (str == "Н") { str = "Y" ; }
-        if (str == "Г") { str = "U" ; }
-        if (str == "Ш") { str = "I" ; }
-        if (str == "Щ") { str = "O" ; }
-        if (str == "З") { str = "P" ; }
-        if (str == "Х") { str = "[" ; }
-        if (str == "Ъ") { str = "]" ; }
+//        if (str == "Й") { str = "Q" ; }
+//        if (str == "Ц") { str = "W" ; }
+//        if (str == "У") { str = "E" ; }
+//        if (str == "К") { str = "R" ; }
+//        if (str == "Е") { str = "T" ; }
+//        if (str == "Н") { str = "Y" ; }
+//        if (str == "Г") { str = "U" ; }
+//        if (str == "Ш") { str = "I" ; }
+//        if (str == "Щ") { str = "O" ; }
+//        if (str == "З") { str = "P" ; }
+//        if (str == "Х") { str = "[" ; }
+//        if (str == "Ъ") { str = "]" ; }
 
-        if (str == "Ф") { str = "A" ; }
-        if (str == "Ы") { str = "S" ; }
-        if (str == "В") { str = "D" ; }
-        if (str == "А") { str = "F" ; }
-        if (str == "П") { str = "G" ; }
-        if (str == "Р") { str = "H" ; }
-        if (str == "О") { str = "J" ; }
-        if (str == "Л") { str = "K" ; }
-        if (str == "Д") { str = "L" ; }
-        if (str == "Ж") { str = ";" ; }
-        if (str == "Э") { str = "'" ; }
+//        if (str == "Ф") { str = "A" ; }
+//        if (str == "Ы") { str = "S" ; }
+//        if (str == "В") { str = "D" ; }
+//        if (str == "А") { str = "F" ; }
+//        if (str == "П") { str = "G" ; }
+//        if (str == "Р") { str = "H" ; }
+//        if (str == "О") { str = "J" ; }
+//        if (str == "Л") { str = "K" ; }
+//        if (str == "Д") { str = "L" ; }
+//        if (str == "Ж") { str = ";" ; }
+//        if (str == "Э") { str = "'" ; }
 
-        if (str == "Я") { str = "Z" ; }
-        if (str == "Ч") { str = "X" ; }
-        if (str == "С") { str = "C" ; }
-        if (str == "М") { str = "V" ; }
-        if (str == "И") { str = "B" ; }
-        if (str == "Т") { str = "N" ; }
-        if (str == "Ь") { str = "M" ; }
-        if (str == "Б") { str = "," ; }
-        if (str == "Ю") { str = "." ; }
-        if (str == ".") { str = "/" ; }
+//        if (str == "Я") { str = "Z" ; }
+//        if (str == "Ч") { str = "X" ; }
+//        if (str == "С") { str = "C" ; }
+//        if (str == "М") { str = "V" ; }
+//        if (str == "И") { str = "B" ; }
+//        if (str == "Т") { str = "N" ; }
+//        if (str == "Ь") { str = "M" ; }
+//        if (str == "Б") { str = "," ; }
+//        if (str == "Ю") { str = "." ; }
+//        if (str == ".") { str = "/" ; }
 
-        // если зажался шифт в Англ. раскладке
-        if (str == "!") { str = "1" ; }
-        if (str == "@") { str = "2" ; }
-        if (str == "#") { str = "3" ; }
-        if (str == "$") { str = "4" ; }
-        if (str == "%") { str = "5" ; }
-        if (str == "^") { str = "6" ; }
-        if (str == "&") { str = "7" ; }
-        if (str == "*") { str = "8" ; }
-        if (str == "(") { str = "9" ; }
-        if (str == ")") { str = "0" ; }
+//        // если зажался шифт в Англ. раскладке
+//        if (str == "!") { str = "1" ; }
+//        if (str == "@") { str = "2" ; }
+////        if (str == "#") { str = "3" ; }
+//        if (str == "$") { str = "4" ; }
+//        if (str == "%") { str = "5" ; }
+//        if (str == "^") { str = "6" ; }
+//        if (str == "&") { str = "7" ; }
+//        if (str == "*") { str = "8" ; }
+//        if (str == "(") { str = "9" ; }
+//        if (str == ")") { str = "0" ; }
 
-        // если зажался шифт в Русской раскладке
-        if (str == "!") { str = "1" ; }
-        if (str == "\"") { str = "2" ; }
-        if (str == "№") { str = "3" ; }
-        if (str == ";") { str = "4" ; }
-        if (str == "%") { str = "5" ; }
-        if (str == ":") { str = "6" ; }
-        if (str == "?") { str = "7" ; }
-        if (str == "*") { str = "8" ; }
-        if (str == "(") { str = "9" ; }
-        if (str == ")") { str = "0" ; }
+//        // если зажался шифт в Русской раскладке
+//        if (str == "!") { str = "1" ; }
+//        if (str == "\"") { str = "2" ; }
+//        if (str == "№") { str = "3" ; }
+//        if (str == ";") { str = "4" ; }
+//        if (str == "%") { str = "5" ; }
+//        if (str == ":") { str = "6" ; }
+//        if (str == "?") { str = "7" ; }
+//        if (str == "*") { str = "8" ; }
+//        if (str == "(") { str = "9" ; }
+//        if (str == ")") { str = "0" ; }
     }
 
     wastext.append(str);
