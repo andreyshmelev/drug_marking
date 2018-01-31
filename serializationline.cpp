@@ -43,18 +43,18 @@ void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinmin
     Parametrs.append(jLineSpeed);
     Parametrs.append(jCountMinute);
 
-    mainJsonObject["jPreparatName"] = preparatname;
     mainJsonObject["jGTIN"] = gtin;
-    mainJsonObject["jExperyDate"] = experyDate;
     mainJsonObject["jBatchName"] = batchName;
     mainJsonObject["jLineSpeed"] = countinminute;
+    mainJsonObject["jPreparatName"] = preparatname;
+    mainJsonObject["jExperyDate"] = experyDate;
     mainJsonObject["jCountMinute"] = linespeed;
 
     QJsonDocument Doc(mainJsonObject);
     QByteArray ba = Doc.toJson();
 
+    qDebug() << ba.simplified();
     Socket->write(ba);
-    qDebug() << ba;
 }
 
 void SerializationLine::SetMedicamentOptions(QString preparatname, QString gtin, QString experyDate, QString batchName)
@@ -150,7 +150,7 @@ void SerializationLine::serverRead()
     {
         ba = Socket->readAll();
         //Складываем их в общий байтмассив
-        // ba.append(ba);
+
         //ClientDataRead = QTextCodec::codecForMib(106)->toUnicode(ba);
         qDebug() <<"serverRead"<<  ba;
     }
@@ -164,10 +164,7 @@ void SerializationLine::serverRead()
     if (!response.isEmpty())
     {
         emit ResponseRecieved(getTCPAddress(), getTCPPort(),response);
-
         qDebug() << response;
-        //        qDebug() << getTCPAddress();
-        //        qDebug() << getTCPPort();
     }
 
     QString jBatchName =  jsonObject["jBatchName"].toString();
@@ -184,7 +181,6 @@ void SerializationLine::serverRead()
                     if (!jTnved.isEmpty())
                     {
                         emit DrugRecieved(jBatchName,jExperyDate,jGTIN,jSerialNumber,jTnved);
-
                         qDebug() << jBatchName << "jBatchName" << jExperyDate << "jExperyDate"  << jGTIN << "jGTIN" << jSerialNumber << "jSerialNumber" << jTnved<< "jTnved";
                     }
     return;

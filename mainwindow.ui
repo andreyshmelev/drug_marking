@@ -4216,6 +4216,9 @@ QSpinBox::down-button { width: 32px; }
 QComboBox::drop-down 
 { width: 32px; }</string>
               </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="1" column="1">
@@ -4243,6 +4246,9 @@ QComboBox::drop-down
 QSpinBox::down-button { width: 32px; }
 QComboBox::drop-down 
 { width: 32px; }</string>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -4272,6 +4278,9 @@ QSpinBox::down-button { width: 32px; }
 QComboBox::drop-down 
 { width: 32px; }</string>
               </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="1" column="3">
@@ -4299,6 +4308,9 @@ QComboBox::drop-down
 QSpinBox::down-button { width: 32px; }
 QComboBox::drop-down 
 { width: 32px; }</string>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
