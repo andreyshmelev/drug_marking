@@ -323,21 +323,19 @@ MainWindow::MainWindow(QWidget *parent) :
     // сигналы и слоты для 312 бизнес процесса
     connect(this, &MainWindow::Start312Process, ui->ExtractWidget, &UnitExtractWidget::StartRegistrationProcess ) ;
     connect(this, &MainWindow::Stop312Process, ui->ExtractWidget, &UnitExtractWidget::StopRegistrationProcess ) ;
-    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicamentSerialization(medicament*))) ;
-
+    connect(this, SIGNAL(SendMedicamentSignal(medicament*)), ui->ExtractWidget, SLOT(GetMedicament(medicament*))) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted, this, &MainWindow::CreateXML312Doc) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
 
     // сигналы и слоты для 313 бизнес процесса, пока он в форме mainwindow, позже нужно будет создать отдельный виджет
-    //    connect(ui->agregationStartButton, &QAbstractButton::pressed, this, &MainWindow::Toggle313Process) ;
-    connect(this, &MainWindow::agregationstatusToggled, this, &MainWindow::updateAgregationGUI) ;
-    connect(this, &MainWindow::ParcingEnded, this, &MainWindow::updateAgregationGUI) ;
-    connect(this, &MainWindow::register_product_emission_QR_Scanned, this, &MainWindow::RegisterProductEmissionPageOpen) ;
-    connect(this, &MainWindow::register_control_samples_QR_Scanned, this, &MainWindow::RegisterControlSamplesPageOpen) ;
-    connect(this, &MainWindow::register_end_packing_QR_Scanned, this, &MainWindow::RegisterEndPackingPageOpen) ;
-    connect(this, &MainWindow::SendMedicamentSignal,this , &MainWindow::GetMedicamentSerialization) ;
+    connect(ui->registerproductwidget, &RegisterProductWidget313::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
+    connect(ui->registerproductwidget, &RegisterProductWidget313::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
+    connect(this, &MainWindow::SendMedicamentSignal, ui->registerproductwidget, &RegisterProductWidget313::GetMedicament) ;
+    connect(this, &MainWindow::SendCompaniesDBList, ui->registerproductwidget, &RegisterProductWidget313::GetCompaniesDBList) ;
+    connect(this, SIGNAL(registerproductwidget(QList<manufacturer*>)), this, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
+    connect(ui->registerproductwidget, SIGNAL(RegistrationCompleted(QList<medicament*>,QDateTime)), this, SLOT(CreateXML313Doc(QList<medicament*>,QDateTime)));
 
     //    // сигналы и слоты для 415 бизнес процесса
 
@@ -761,7 +759,6 @@ QString MainWindow::GetISODate()
 QDateTime MainWindow::GetISODateTime()
 {
     QDateTime ISOdate;
-    // формат <operation_date>2017-10-07T15:00:00+05:00</operation_date>
     ISOdate = QDateTime::currentDateTime().toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc());
     return ISOdate;
 }
@@ -775,10 +772,12 @@ QString MainWindow::GetDOCDate()
     return DOCdate;
 }
 
-void MainWindow::CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList, QDateTime operation_date)
+void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operation_date)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
+
+    manufacturer *organization = getSerializationCompanySender();
 
     //  если пустой список то и генерировать то нечего
     if (MedList.length() == 0)
@@ -1572,7 +1571,7 @@ void MainWindow::Start313Process(bool set)
     {
         setRunningBuisenessProcess(false);
         setLanguageswitcher(false);
-        CreateXML313Doc(SerializationCompanySender,MedicamentsList,GetISODateTime());
+        CreateXML313Doc(MedicamentsList,GetISODateTime());
         inputDataStringFromScaner.clear();
     }
 
@@ -2092,7 +2091,7 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
             CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
 
             QDateTime date313  = GetISODateTime().addSecs(5);
-            CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313);
+            CreateXML313Doc(MedicamentsSerialization,date313);
 
             // если программная агрегация
             if(getAutoprogramagregation())
@@ -2448,11 +2447,9 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
 
 void MainWindow::StartSerialization()
 {
-
     setBSerializationStarted(true);
     setBSerializationStopped(false);
     setBSerializationPaused(false);
-
 
     addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
     ui->MedicamentOptionsGroup->setEnabled(false);
@@ -2479,11 +2476,9 @@ void MainWindow::StartSerialization()
 
 void MainWindow::StopSerialization()
 {
-
     setBSerializationStarted(false);
     setBSerializationStopped(true);
     setBSerializationPaused(false);
-
 
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
     ui->MedicamentOptionsGroup->setEnabled(true);
@@ -2493,12 +2488,11 @@ void MainWindow::StopSerialization()
     ui->StopSerializationButton->setEnabled(false);
     ui->groupBox_2->setEnabled(true);
 
-    //    qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
     QDateTime date311  = GetISODateTime();
     CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
 
     QDateTime date313  = GetISODateTime().addSecs(1);
-    CreateXML313Doc(getSerializationCompanySender(),MedicamentsSerialization,date313.addSecs(10));
+    CreateXML313Doc(MedicamentsSerialization,date313.addSecs(10));
 
     // если программная агрегация
     if(getAutoprogramagregation())
@@ -2530,7 +2524,6 @@ void MainWindow::ContinueSerialization()
     ui->StopSerializationButton->setEnabled(true);
     addMessageToJournal("Продолж.сериализации",Qt::green,Qt::white);
 }
-
 
 void MainWindow::on_StatistFindButton_clicked()
 {

@@ -153,7 +153,7 @@ public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
     void CreateXML312Doc(QList<medicament *> MedList , quint8 controlsamplestype);
-    void CreateXML313Doc(manufacturer * organization, QList<medicament *> MedList, QDateTime operation_date);
+    void CreateXML313Doc(QList<medicament *> MedList, QDateTime operation_date);
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
     void CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer * companysender, QDateTime operation_date);
     void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
@@ -174,11 +174,12 @@ public slots:
     void PauseSerialization();
     void ContinueSerialization();
 
-        void GetCompaniesDBList(QList<manufacturer *> man);
+    void GetCompaniesDBList(QList<manufacturer *> man);
+    void ResponseFromLineRecieved(QString address, quint16 port, QString message);
+    void DrugRecievedFromEmulator(QString BatchName, QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved);
 
-        void ResponseFromLineRecieved(QString address, quint16 port, QString message);
-        void DrugRecievedFromEmulator(QString BatchName, QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved);
 private:
+
     QString getGuiGTIN();
     QString getSN();
     QString generateSN(int lenght);
@@ -204,22 +205,18 @@ private:
     CQR_Encode qrEncode;
     bool successfulEncoding;
     int encodeImageSize;
-    QPoint lastPos;
     bool getAgregation(void);
     void Start313Process(bool set);
-
 
     const quint8 maxserialnumberlenght = 7;
     manufacturer * SerializationCompanySender;
     manufacturer * SerializationCompanyOwner;
-    int SerializationOrderType;
     medicament * ScannedMedicament;
+    int SerializationOrderType;
 
     QList<medicament *> MedicamentsList;
     QList<medicament *> MedicamentsListFromDB;
     QList<medicament *> MedicamentsSerialization;
-
-
     QList<manufacturer *> CompaniesListFromDB;
 
     QStringList drugs;
@@ -264,8 +261,6 @@ private:
     const QString move_order_QR_string = "233002";
     const QString releabeling_QR_string = "530848";
 
-
-
     const QString printControlQRCode = "306656";
     const QString programOptionsQRCode = "783146";
     const QString agregationQRCode = "793817";
@@ -275,8 +270,15 @@ private:
     const QString Stop311ProcessQRString  = "641195";
     const QString Start312ProcessQRString = "909628";
     const QString Stop312ProcessQRString  = "272080";
-    const QString Start313ProcessQRString = "5021";
-    const QString Stop313ProcessQRString = "8619";
+    const QString Start313ProcessQRString = "085987";
+    const QString Stop313ProcessQRString = "883940";
+
+    const QString Start415ProcessQRString = "497222";
+    const QString Stop415ProcessQRString  = "831533";
+    const QString Start811ProcessQRString = "091653";
+    const QString Stop811ProcessQRString = "831770";
+    const QString Start911ProcessQRString = "970500";
+    const QString Stop911ProcessQRString = "473786";
 
     const QString GTINid = "01";
     const QString SNid = "21";
@@ -373,7 +375,6 @@ private slots:
     void on_SerializAutoAgregationProgramCheckBox_toggled(bool checked);
     void on_SetSerializationOptionsButton_clicked();
     void on_optionsButton_clicked();
-
     void on_keyboardButton_clicked();
 
 signals:
