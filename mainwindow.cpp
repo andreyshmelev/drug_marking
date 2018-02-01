@@ -1348,21 +1348,47 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
 
     if (stringforparse == register_product_emission_QR_string)
     {
-        emit register_product_emission_QR_Scanned();
+        RegisterProductEmissionPageOpen();
         return;
     }
 
     if (stringforparse == register_control_samples_QR_string)
     {
-        emit register_control_samples_QR_Scanned();
+        RegisterControlSamplesPageOpen();
         return;
     }
 
     if (stringforparse == register_end_packing_QR_string)
     {
-        emit register_end_packing_QR_Scanned();
+            RegisterEndPackingPageOpen();
         return;
     }
+
+
+    if (stringforparse == unit_pack_QR_string)
+    {
+        UnitPackPageOpen();
+        return;
+    }
+
+    if (stringforparse == move_order_QR_string)
+    {
+        MoveOrderPageOpen();
+        return;
+    }
+
+
+    if (stringforparse == releabeling_QR_string)
+    {
+        ReleabilingPageOpen();
+        return;
+    }
+
+
+
+
+
+
 
     if (stringforparse == printControlQRCode)
     {
@@ -2113,19 +2139,34 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
     }
 }
 
-void MainWindow::on_move_order_Button_clicked()
+void MainWindow::MoveOrderPageOpen()
 {
     setStackedPage(9);
 }
 
-void MainWindow::on_releabeling_Button_clicked()
+void MainWindow::on_move_order_Button_clicked()
+{
+    MoveOrderPageOpen();
+}
+
+void MainWindow::ReleabilingPageOpen()
 {
     setStackedPage(10);
 }
 
-void MainWindow::on_unit_pack_Button_clicked()
+void MainWindow::on_releabeling_Button_clicked()
+{
+    ReleabilingPageOpen();
+}
+
+void MainWindow::UnitPackPageOpen()
 {
     setStackedPage(11);
+}
+
+void MainWindow::on_unit_pack_Button_clicked()
+{
+    UnitPackPageOpen();
 }
 
 void MainWindow::SendParamsToVideoJet()
@@ -2610,4 +2651,9 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
 void MainWindow::on_keyboardButton_clicked()
 {
     bool ok = QProcess::startDetached("onboard");
+}
+
+void MainWindow::on_journalList_itemDoubleClicked(QListWidgetItem *item)
+{
+
 }

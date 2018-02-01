@@ -149,6 +149,8 @@ public:
 
     void ShowMessageBox(QString message);
 
+    void ReleabilingPageOpen();
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -377,6 +379,8 @@ private slots:
     void on_optionsButton_clicked();
     void on_keyboardButton_clicked();
 
+    void on_journalList_itemDoubleClicked(QListWidgetItem *item);
+
 signals:
 
     void agregationstatusToggled();
@@ -418,6 +422,8 @@ private:
     void SetLibrariesPath();
     void SetStyleSheets();
     QDateTime getoperationDate();
+    void UnitPackPageOpen();
+    void MoveOrderPageOpen();
 };
 
 #endif // MAINWINDOW_H
