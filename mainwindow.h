@@ -288,7 +288,7 @@ private:
     const QString Experyid = "17";
     const QString TNVEDid = "240";
 
-    const QString GSSymbol = " ";
+    const QString GSSymbol = "002#";
     const QString Emptystring = "";
     const QString VideoJetFileName = "BFZTest3";
 

@@ -659,7 +659,9 @@ void MainWindow::updateReadedDMCode()
     if (inputDataStringFromScaner!="")
     {
 
-        inputDataStringFromScaner.replace("002#"," ");
+        qDebug() << inputDataStringFromScaner;
+
+//        inputDataStringFromScaner.replace("002#"," ");
         if (getLanguageswitcher() == true)
         {
             // Просто меняем раскладку если у нас агрегация.
@@ -1346,6 +1348,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
 {
     // сначала проверяем ня соответствие QR кодам
     qDebug() << stringforparse;
+
 
     if (stringforparse == register_product_emission_QR_string)
     {
@@ -2183,15 +2186,7 @@ void MainWindow::SendRandomToVideoJet()
 {
     if(getBSerializationStarted())
     {
-
-//        yyyy-MM-dd
-
-//        QString date_string_on_db = "20/12/2015";
         QDate Date = QDate::fromString(getSerializationExpery(),"yyyy-MM-dd");
-
-
-
-
         QString printerdate = Date.toString("yyMMdd") ;
         QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
         QString randstr = generateSN(13);
