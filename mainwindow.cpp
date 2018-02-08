@@ -1839,7 +1839,7 @@ void MainWindow::SendCommandToVideoJet(QString a)
 {
     serverWrite(a);
     a ="\r"; // посылаем знак завершения посылки.
-    serverWrite(a);
+//    serverWrite(a);
 }
 
 void MainWindow::updateQRImage()
@@ -2025,7 +2025,7 @@ void MainWindow::serverWrite(QString str)
     if ( Socket->waitForConnected () )
     {
         Socket->write( QstringToQbytearray(str) ); // пишем
-        Socket->waitForBytesWritten(1000); // ожидаем запись
+        Socket->waitForBytesWritten(1000 ); // ожидаем запись
     }
 }
 
@@ -2181,12 +2181,26 @@ void MainWindow::SendParamsToVideoJet()
 
 void MainWindow::SendRandomToVideoJet()
 {
-    QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
-    QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
-    QString randstr = generateSN(11);
-//    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
-    QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"111\", \"SNVAL\": \"3333\", \"BATCHVAL\": \"44444\", \"DATEVAL\": \"100819\", \"TNVEDVAL\": \"3004\"}}");
-    SendCommandToVideoJet(a);
+    if(getBSerializationStarted())
+    {
+
+//        yyyy-MM-dd
+
+//        QString date_string_on_db = "20/12/2015";
+        QDate Date = QDate::fromString(getSerializationExpery(),"yyyy-MM-dd");
+
+
+
+
+        QString printerdate = Date.toString("yyMMdd") ;
+        QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
+        QString randstr = generateSN(13);
+        //    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
+        QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"%1\", \"SNVAL\": \"%2\", \"BATCHVAL\": \"%3\", \"DATEVAL\": \"%4\", \"TNVEDVAL\": \"%5\"}}").arg(getSerializationGTIN() , randstr,getSerializationBatchName(),printerdate,getSerializationTNVED());
+        SendCommandToVideoJet(a);
+
+        qDebug() << a;
+    }
 }
 
 void MainWindow::GUIMainWindowUpdate()
@@ -2515,6 +2529,12 @@ void MainWindow::StartSerialization()
         addMessageToJournal(me,Qt::green,Qt::transparent);
         StopSerialization();
     }
+
+
+    QString a = QString("{\"command\":\"startprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\", \"startpage\":1,\"endpage\":0, \"templatename\":\"DM10\"}");
+
+    SendCommandToVideoJet(a);
+
 }
 
 void MainWindow::StopSerialization()
@@ -2545,6 +2565,11 @@ void MainWindow::StopSerialization()
         CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
     }
     MedicamentsSerialization.clear();
+
+
+    QString a = QString("{\"command\":\"stopprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\"}");
+    SendCommandToVideoJet(a);
+
 }
 
 void MainWindow::PauseSerialization()
