@@ -661,7 +661,9 @@ void MainWindow::updateReadedDMCode()
 
         qDebug() << inputDataStringFromScaner;
 
-//        inputDataStringFromScaner.replace("002#"," ");
+        QString sss = "002#9";
+
+        inputDataStringFromScaner.replace(sss," ");
         if (getLanguageswitcher() == true)
         {
             // Просто меняем раскладку если у нас агрегация.
@@ -1960,7 +1962,8 @@ void MainWindow::addSymbolToInputString(QString str)
 {
     DMCodeUpdateTimeoutTimer->start();
 
-    //  qDebug() << "start timeout timer";
+
+    qDebug() << str;
     QString wastext = inputDataStringFromScaner;
 
     wastext.append(str);
@@ -1984,7 +1987,7 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 
         QKeyEvent* key = static_cast<QKeyEvent*>(event);
         int key1 = key->key();
-        if ( (key->key()==Qt::Key_Enter) || (key->key()==Qt::Key_Return)|| (key->key()==Qt::Key_Shift) ) {
+        if ( (key1==Qt::Key_Enter) || (key1==Qt::Key_Return)|| (key1==Qt::Key_Shift) || key1 == 0 ) {
             //Enter or return was pressed
         } else {
             keyString = QString( QChar(key1) );
@@ -2561,10 +2564,8 @@ void MainWindow::StopSerialization()
     }
     MedicamentsSerialization.clear();
 
-
     QString a = QString("{\"command\":\"stopprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\"}");
     SendCommandToVideoJet(a);
-
 }
 
 void MainWindow::PauseSerialization()
@@ -2638,7 +2639,6 @@ void MainWindow::GetCompaniesDBList(QList<manufacturer*> man)
 {
     QStringList a ;
     foreach (manufacturer * d , man) {
-        //        manufacturesList.append(d);
         a.append(d->get_organisation_name());
     }
     ui->senderID->addItems(a);

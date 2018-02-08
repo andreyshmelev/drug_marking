@@ -288,14 +288,14 @@ private:
     const QString Experyid = "17";
     const QString TNVEDid = "240";
 
-    const QString GSSymbol = "002#";
+    const QString GSSymbol = " ";
     const QString Emptystring = "";
     const QString VideoJetFileName = "BFZTest3";
 
-    const QString SNRegularexpression = "21\\w{12,14}" + GSSymbol; // строка начинается  с 21, имеет длину 14 и заказчивается символом 0029
-    const QString TNVEDRegularexpression = "240\\w{4}" + GSSymbol;
-    const QString ExpRegularexpression = "17\\w{6}" ;
-    const QString BatchRegularexpression = "10\\w{1,20}" + GSSymbol ;
+    const QString SNRegularexpression = "21\\w{13}" ; // строка начинается  с 21, имеет длину 13 и начинается символом разделителя
+    const QString TNVEDRegularexpression =  GSSymbol + "240\\w{4}" ;
+    const QString ExpRegularexpression = GSSymbol +  "17\\w{6}" ;
+    const QString BatchRegularexpression = GSSymbol + "10\\w{1,20}";
     const QString NotFoundString = "Not found";
 
     const uint Gtinlenght = 14;
