@@ -286,7 +286,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->installEventFilter(this);
 
     RandomStringSenderToVideoJetTimer = new QTimer();
-    RandomStringSenderToVideoJetTimer->setInterval(1000*45); // каждые сорок пять секунд посылаем новую произвольную строку
+    RandomStringSenderToVideoJetTimer->setInterval(300); // каждые сорок пять секунд посылаем новую произвольную строку
     //    RandomStringSenderToVideoJetTimer->setInterval(1000); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
@@ -570,12 +570,9 @@ bool MainWindow::getAgregation()
     return agregation;
 }
 
-
 void MainWindow::addMessageToJournal(QString message, QColor textcolor,QColor backcolor)
 {
-
     QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
-
     QListWidgetItem * item = new QListWidgetItem ();
     item->setTextColor( textcolor);
     item->setBackgroundColor(backcolor);
@@ -591,10 +588,8 @@ void MainWindow::updateTimeDate()
 
 void MainWindow::AddHandScannerLOG()
 {
-
     QElapsedTimer timer;
     timer.start();
-
     QString req = QString("INSERT INTO \"scannerlog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
     qDebug() << req << "req";
     sqlDB->makesqlreq(req );
@@ -774,6 +769,7 @@ QString MainWindow::GetDOCDate()
 
 void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operation_date)
 {
+    qDebug() << "CreateXML313Doc" ;
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
@@ -834,7 +830,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     reg_prod_emis_elem.appendChild(doc_num_element);
 
     QDomText doc_num_text  = document.createTextNode("doc_num");
-    doc_num_text.setNodeValue("  ds1");
+    doc_num_text.setNodeValue("ds1");
     doc_num_element.appendChild(doc_num_text);
 
     // добавили doc_num
@@ -864,7 +860,6 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     for (int var = 0; var < MedList.length(); ++var) {
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
-
         sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
         sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
@@ -878,6 +873,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
 
@@ -885,7 +881,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл:" + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("313",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -972,6 +968,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
 
@@ -979,7 +976,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("415",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1043,6 +1040,7 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
 
@@ -1050,7 +1048,7 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("811",MedListNew.at(0),QDateTime::currentDateTime(), MedListNew.length(),filename);
 }
 
@@ -1123,6 +1121,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
 
@@ -1130,7 +1129,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("911",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1222,6 +1221,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
 
@@ -1229,7 +1229,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("312",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1318,6 +1318,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
 
@@ -1325,7 +1326,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal(filename, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1360,7 +1361,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
 
     if (stringforparse == register_end_packing_QR_string)
     {
-            RegisterEndPackingPageOpen();
+        RegisterEndPackingPageOpen();
         return;
     }
 
@@ -2183,7 +2184,8 @@ void MainWindow::SendRandomToVideoJet()
     QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
     QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
     QString randstr = generateSN(11);
-    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
+//    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
+    QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"111\", \"SNVAL\": \"3333\", \"BATCHVAL\": \"44444\", \"DATEVAL\": \"100819\", \"TNVEDVAL\": \"3004\"}}");
     SendCommandToVideoJet(a);
 }
 
@@ -2522,6 +2524,7 @@ void MainWindow::StopSerialization()
     setBSerializationPaused(false);
 
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
+
     ui->MedicamentOptionsGroup->setEnabled(true);
     ui->StartSerializationButton->setEnabled(true);
     ui->PauseSerializationButton->setEnabled(false);
@@ -2651,9 +2654,4 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
 void MainWindow::on_keyboardButton_clicked()
 {
     bool ok = QProcess::startDetached("onboard");
-}
-
-void MainWindow::on_journalList_itemDoubleClicked(QListWidgetItem *item)
-{
-
 }

@@ -73,8 +73,8 @@ public:
     //        const QString TCPaddress = "127.0.0.1";
     //       const int TCPPort = 1234;
 
-    const QString TCPaddress = "192.168.12.11";
-    const int TCPPort = 3007;
+    const QString TCPaddress = "192.168.1.180";
+    const int TCPPort = 2030;
 
     const QString SSCCGS1Prefix = "4649728";
 
@@ -378,8 +378,6 @@ private slots:
     void on_SetSerializationOptionsButton_clicked();
     void on_optionsButton_clicked();
     void on_keyboardButton_clicked();
-
-    void on_journalList_itemDoubleClicked(QListWidgetItem *item);
 
 signals:
 
