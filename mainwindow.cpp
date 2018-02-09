@@ -1510,7 +1510,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     // начинаем разбирать ТНВЭД
 
     tnvedstring = GetRegularString(stringforparse, TNVEDRegularexpression);
-    tnvedstring.remove(0,3);
+    tnvedstring.remove(0,4);
     tnvedstring.replace(GSSymbol,Emptystring);
 
     if(tnvedstring == NULL)
@@ -1524,7 +1524,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     // начинаем разбирать Срок Годности
 
     expstring = GetRegularString(stringforparse, ExpRegularexpression);
-    expstring.remove(0,2);
+    expstring.remove(0,3);
     expstring.replace(GSSymbol,Emptystring);
     if(expstring == NULL)
     {
@@ -1543,7 +1543,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     // начинаем разбирать Партию
 
     batchstring = GetRegularString(stringforparse, BatchRegularexpression);
-    batchstring.remove(0,2);
+    batchstring.remove(0,3);
     batchstring.replace(GSSymbol,Emptystring);
 
     if (batchstring == NULL)
