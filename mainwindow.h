@@ -290,7 +290,6 @@ private:
 
     const QString GSSymbol = " ";
     const QString Emptystring = "";
-    const QString VideoJetFileName = "BFZTest3";
 
     const QString SNRegularexpression = "21\\w{13}" ; // строка начинается  с 21, имеет длину 13 и начинается символом разделителя
     const QString TNVEDRegularexpression =  GSSymbol + "240\\w{4}" ;
@@ -348,11 +347,9 @@ private slots:
     void updateAgregationGUI();
     bool CheckMedicamentinDB(medicament * m);
     void setStackedPage(int newindex);
-
     void RegisterProductEmissionPageOpen();
     void RegisterControlSamplesPageOpen();
     void RegisterEndPackingPageOpen();
-
     void PrintControlPageOpen();
     void productOptionsPageOpen();
     void agregationOptionsPageOpen();
@@ -392,7 +389,6 @@ signals:
     void programOptionsQRCodeScanned();
     void agregationQRCodeScanned();
     void statisticsQRCodeScanned();
-
 
 signals:
     // для виджетов
