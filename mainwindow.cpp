@@ -143,25 +143,11 @@ void MainWindow::SetLibrariesPath()
 void MainWindow::SetStyleSheets()
 {
 
-    //    ui->printControlButton->setStyleSheet("QPushButton {"
-    //                                          "color: blue;"
-    //                                          "background-color: rgb(255, 255, 127);"
-    //                                          "}"
-    //                                          "QPushButton:pressed {"
-    //                                          "  color: red;"
-    //                                          "}"
-    //                                          );
-    //    qDebug() << ui->printControlButton->styleSheet();
-
     QList<QLabel *> list = this->findChildren<QLabel *>();
 
     int i = 0 ;
     foreach(QLabel *l, list)
     {
-        //     qDebug() <<l-> ;
-
-        //        l->setText(QString::number(i++));
-        //        l->setStyleSheet("    border-style: outset;border-width:0px;border-radius: 10px;border-color: beige;");
         l->setStyleSheet("QLabel {background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #547FA8, stop: 0.1 #215689, stop: 0.49 #215689, stop: 0.5 #215689, stop: 1 #547FA8);border-style: outset;border-width: 1px;border-radius: 4px;                   border-color: beige;                   padding: 6px;               }");
     }
 
@@ -172,7 +158,6 @@ void MainWindow::SetStyleSheets()
     {
         qDebug() <<l->objectName() ;
 
-        //        l->setText(QString::number(i++));
         l->setStyleSheet("QCheckBox::indicator {width: 20px;height: 20px;}");
     }
 
@@ -279,14 +264,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->organizationLabel->show();
 
     pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
-    //    ui->qrstartstop->setPixmap(*pixmapqr);
-    //    ui->qrstartstop->show();
-    //    ui->qrstartstop->setScaledContents(1);
 
     this->installEventFilter(this);
 
     RandomStringSenderToVideoJetTimer = new QTimer();
-    RandomStringSenderToVideoJetTimer->setInterval(300); // каждые сорок пять секунд посылаем новую произвольную строку
+    RandomStringSenderToVideoJetTimer->setInterval(350); // каждые сорок пять секунд посылаем новую произвольную строку
     //    RandomStringSenderToVideoJetTimer->setInterval(1000); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
@@ -413,6 +395,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //    SerializationLine1 = new SerializationLine();
 
+    ui->batchnumberText->setPlainText(generateSN(6));
 
 }
 
