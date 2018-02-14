@@ -9,14 +9,11 @@ SQL::SQL()
 SQL::SQL(QString path)
 {
     QString dbname = "mark";
-    QString hostname = "192.168.1.62";  // <<-"localhost"; //"192.168.1.62";127.0.0.1
+    QString hostname = "192.168.1.63";  // <<-"localhost"; //"192.168.1.62";127.0.0.1
     int port = 3306;
 
     QString user = "markirovka";
     QString password = "WD8NHWq3T0zT";
-
-    //    QString user = "root";
-    //    QString password = "12345";
 
     qDebug() << QSqlDatabase::drivers();
 
@@ -30,7 +27,7 @@ SQL::SQL(QString path)
     db.setPort(port);
     if (!db.open(user, password)) {
         err = db.lastError();
-        qDebug() << "NOT opened!";
+//        qDebug() << "NOT opened!";
     }
     else
     {
@@ -67,7 +64,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
         execc += " WHERE " + where;
     }
 
-    qDebug() << execc;
+//    qDebug() << execc;
     if (!query.exec(execc)) {
         //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();

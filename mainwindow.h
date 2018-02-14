@@ -413,6 +413,7 @@ private:
     QByteArray QstringToQbytearray(QString str);
     QElapsedTimer SQLInsertSpeedTest();
     QElapsedTimer SQLSelectSpeedTest();
+    QDateTime getoperationDate();
     void SendCommandToVideoJet(QString a);
     void AddHandScannerLOG();
     bool languageswitcher;
@@ -423,7 +424,6 @@ private:
 
     void SetLibrariesPath();
     void SetStyleSheets();
-    QDateTime getoperationDate();
     void UnitPackPageOpen();
     void MoveOrderPageOpen();
 };

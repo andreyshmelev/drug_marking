@@ -18,6 +18,7 @@
 #include <QTime>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QUrl>
 
 #define testitemscount 0
 
@@ -398,14 +399,28 @@ MainWindow::MainWindow(QWidget *parent) :
     //    SerializationLine1 = new SerializationLine();
 
     ui->batchnumberText->setPlainText(generateSN(6));
-
-
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(replyFinished(QNetworkReply*)));
+            this, SLOT(replyfinished(QNetworkReply*)));
 
-    manager->get(QNetworkRequest(QUrl("http://qt-project.org")));
+    QUrl url( "dev-api.markirovka.nalog.ru" );
+    QNetworkRequest request( url );
+    QString auth = QString( "POST /api/v1/auth/ HTTP/1.1" ) ;
+    request.setRawHeader( "Authorization", "Basic " + auth.toLatin1().toBase64() );
+    request.setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
 
+    QNetworkRequest request3(QUrl("dev-api.markirovka.nalog.ru")); //our server with php-script
+    QString bound="margin"; //name of the boundary
+    //according to rfc 1867 we need to put this string here:
+    QByteArray data = ("--margin\r\n");
+    data.append("Content-Disposition: form-data; name=\"hash\"\r\n\r\n");
+
+    request3.setRawHeader("Content-Type","multipart/form-data; boundary=margin");
+    request3.setRawHeader("Content-Length", QString::number(data.length()).toUtf8());
+    //connect(manager, SIGNAL(finished(QNetworkReply*)), SLOT(sendingFinished(QNetworkReply*)));
+    QNetworkReply *reply = manager->post(request3,data);
+//    connect(reply, SIGNAL(uploadProgress(qint64,qint64)), SLOT(downloadProgress(qint64,qint64)));
+//    connect(reply, SIGNAL(finished()), SLOT(sendingFinished()));
 }
 
 MainWindow::~MainWindow()
@@ -2188,7 +2203,7 @@ void MainWindow::SendRandomToVideoJet()
         QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"%1\", \"SNVAL\": \"%2\", \"BATCHVAL\": \"%3\", \"DATEVAL\": \"%4\", \"TNVEDVAL\": \"%5\", \"GTINTEXT\": \"%6\", \"SNTEXT\": \"%7\", \"BATCHTEXT\": \"%8\", \"DATETEXT\": \"%9\"}}").arg(getSerializationGTIN() , randstr,getSerializationBatchName(),printerdate,getSerializationTNVED(),getSerializationGTIN() ,randstr,getSerializationBatchName(),humandate);
         SendCommandToVideoJet(a);
 
-//        qDebug() << a;
+        //        qDebug() << a;
     }
 }
 
@@ -2615,7 +2630,7 @@ void MainWindow::on_StatistFindButton_clicked()
     qDebug() << "startdates" << startdates.first() ;
     qDebug() << "stopdates" << stopdates.last() ;
 
-//    QDate StartDate = QDate::fromString(startdates.first(),"yyyy-MM-ddThh:mm:ss");
+    //    QDate StartDate = QDate::fromString(startdates.first(),"yyyy-MM-ddThh:mm:ss");
     QDateTime StartDate = QDateTime::fromString(startdates.first(),Qt::ISODate);
     QDateTime StopDate =  QDateTime::fromString(stopdates.last(),Qt::ISODate);
 
@@ -2690,13 +2705,10 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
 
 void MainWindow::replyfinished(QNetworkReply *reply)
 {
-int i;
-QByteArray bytes = reply->readAll(); // bytes
-qDebug("reply received");
-
-for(i=0;i<=bytes.size();i++)
-qDebug() << bytes.at(i);
-
+    int i;
+    QByteArray bytes = reply->readAll(); // bytes
+    qDebug("reply received");
+    qDebug() << reply->errorString();
 }
 
 
