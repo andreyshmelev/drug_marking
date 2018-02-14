@@ -16,6 +16,8 @@
 #include "QtPrintSupport/QPrinter"
 #include "QtPrintSupport/QPrintDialog"
 #include <QTime>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 #define testitemscount 0
 
@@ -391,11 +393,18 @@ MainWindow::MainWindow(QWidget *parent) :
     // для нормального рандомайза нужно добавить этот блок qsrand
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-    StopSerialization();
+    //    StopSerialization();
 
     //    SerializationLine1 = new SerializationLine();
 
     ui->batchnumberText->setPlainText(generateSN(6));
+
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(replyFinished(QNetworkReply*)));
+
+    manager->get(QNetworkRequest(QUrl("http://qt-project.org")));
 
 }
 
@@ -1825,9 +1834,10 @@ void MainWindow::setStackedPage(int newindex)
 
 void MainWindow::SendCommandToVideoJet(QString a)
 {
+    return;
     serverWrite(a);
     a ="\r"; // посылаем знак завершения посылки.
-//    serverWrite(a);
+    //    serverWrite(a);
 }
 
 void MainWindow::updateQRImage()
@@ -2164,8 +2174,6 @@ void MainWindow::SendParamsToVideoJet()
     QString printerdate = getGuiExperyDate().toString("yyMMdd") ;
     QString humandate = getGuiExperyDate().toString("dd.MM.yyyy") ;
     QString randstr = generateSN(11);
-//    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
-//    SendCommandToVideoJet(a);
 }
 
 void MainWindow::SendRandomToVideoJet()
@@ -2180,7 +2188,7 @@ void MainWindow::SendRandomToVideoJet()
         QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"%1\", \"SNVAL\": \"%2\", \"BATCHVAL\": \"%3\", \"DATEVAL\": \"%4\", \"TNVEDVAL\": \"%5\", \"GTINTEXT\": \"%6\", \"SNTEXT\": \"%7\", \"BATCHTEXT\": \"%8\", \"DATETEXT\": \"%9\"}}").arg(getSerializationGTIN() , randstr,getSerializationBatchName(),printerdate,getSerializationTNVED(),getSerializationGTIN() ,randstr,getSerializationBatchName(),humandate);
         SendCommandToVideoJet(a);
 
-        qDebug() << a;
+//        qDebug() << a;
     }
 }
 
@@ -2483,6 +2491,16 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
     qDebug() << "AddStatisticsToDB " << req;
 }
 
+
+void MainWindow::AddStatisticsToDB(QString bisnessprocessname,QString GTIN,QString medicament_name,QString BatchNumber, QDateTime datetime, int count,QString XMLFileName)
+{
+    QString tablename = "`mark`.`statistics`" ;
+    QString req = QString("INSERT INTO %1 (`BProcess`, `GTIN`, `LPName`, `batch`, `date`, `count`, `xmlfilename`) VALUES (\"%2\",\"%3\",\"%4\",\"%5\",'%6','%7',\"%8\");").arg(tablename, bisnessprocessname, GTIN, medicament_name, BatchNumber,datetime.toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"),QString::number(count), XMLFileName);
+    sqlDB->makesqlreq(req);
+    qDebug() << "AddStatisticsToDB " << req;
+}
+
+
 void MainWindow::StartSerialization()
 {
     setBSerializationStarted(true);
@@ -2511,11 +2529,10 @@ void MainWindow::StartSerialization()
         StopSerialization();
     }
 
-
     QString a = QString("{\"command\":\"startprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\", \"startpage\":1,\"endpage\":0, \"templatename\":\"DM10works\"}");
-
     SendCommandToVideoJet(a);
 
+    AddStatisticsToDB("start",getSerializationGTIN(), getSerializationDrugName(),getSerializationBatchName(),QDateTime::currentDateTime(), 0,"");
 }
 
 void MainWindow::StopSerialization()
@@ -2549,6 +2566,10 @@ void MainWindow::StopSerialization()
 
     QString a = QString("{\"command\":\"stopprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\"}");
     SendCommandToVideoJet(a);
+
+
+    AddStatisticsToDB("stop",getSerializationGTIN(), getSerializationDrugName(),getSerializationBatchName(),QDateTime::currentDateTime(), 0,"");
+
 }
 
 void MainWindow::PauseSerialization()
@@ -2584,7 +2605,26 @@ void MainWindow::on_StatistFindButton_clicked()
     QString reqstring = QString("batch like '%1' and BProcess like '%2' and LPName like '%3' and date BETWEEN '%4' and '%5'  and GTIN like '%6';").arg(statbatch,statbisnesprocess,statmedicament,datefrom,dateto,statGtin);
     QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics",reqstring,"Total");
     QString summ = ssss.at(0);
+
+
+    QStringList startdates = sqlDB->sel("date", "statistics", QString("batch like '%1' and BProcess = 'start'").arg(statbatch),"date");
+    QStringList stopdates = sqlDB->sel("date", "statistics",  QString("batch like '%1' and BProcess = 'stop'").arg(statbatch),"date");
     ui->FoundLabel->setText("Найдено: " + summ);
+
+
+    qDebug() << "startdates" << startdates.first() ;
+    qDebug() << "stopdates" << stopdates.last() ;
+
+//    QDate StartDate = QDate::fromString(startdates.first(),"yyyy-MM-ddThh:mm:ss");
+    QDateTime StartDate = QDateTime::fromString(startdates.first(),Qt::ISODate);
+    QDateTime StopDate =  QDateTime::fromString(stopdates.last(),Qt::ISODate);
+
+    qDebug() << "StartDate" << StartDate;
+    qDebug() << "StopDate" << StopDate ;
+
+    ui->StartTimeStatisticsLabel->setText( QString("время начала ") + StartDate.toString("yyyy-MM-dd hh:mm:ss"));
+    ui->StopTimeStatisticsLabel->setText(QString("время окончания ") +  StopDate.toString("yyyy-MM-dd hh:mm:ss"));
+
     //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
     //    qDebug() << "SUM" << ssss ;
     GetStatisticsFromDB();
@@ -2647,6 +2687,19 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
     connect(SerializationLine1, SIGNAL(DrugRecieved(QString,QString,QString,QString,QString)), this, SLOT(DrugRecievedFromEmulator(QString,QString,QString,QString,QString)));
 }
 
+
+void MainWindow::replyfinished(QNetworkReply *reply)
+{
+int i;
+QByteArray bytes = reply->readAll(); // bytes
+qDebug("reply received");
+
+for(i=0;i<=bytes.size();i++)
+qDebug() << bytes.at(i);
+
+}
+
+
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
     QString sgtin = SerialNumber + GTIN;
@@ -2658,3 +2711,5 @@ void MainWindow::on_keyboardButton_clicked()
 {
     bool ok = QProcess::startDetached("onboard");
 }
+
+

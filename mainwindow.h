@@ -18,6 +18,9 @@
 #include <QtSql>
 #include <QTcpSocket>
 #include <QGraphicsScene>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
 #include "code128item.h"
 #include "QRCodeGenerator.h"
 #include "manufacturer.h"
@@ -25,6 +28,7 @@
 #include "basetypes.h"
 #include "sql.h"
 #include "serializationline.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -168,6 +172,7 @@ public slots:
     bool PrintBIGEtiketka(eticetka * et);
     void AddMedicamentToDBTable(medicament *m, QString tablename);
     void AddStatisticsToDB(QString bisnessprocessname, medicament *m, QDateTime datetime, int count,QString XMLFileName);
+    void AddStatisticsToDB(QString bisnessprocessname, QString GTIN, QString medicament_name, QString BatchNumber, QDateTime datetime, int count, QString XMLFileName);
 
     //слоты сериализации
 
@@ -180,6 +185,8 @@ public slots:
     void ResponseFromLineRecieved(QString address, quint16 port, QString message);
     void DrugRecievedFromEmulator(QString BatchName, QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved);
 
+
+    void replyfinished(QNetworkReply *reply);
 private:
 
     QString getGuiGTIN();
@@ -214,6 +221,7 @@ private:
     manufacturer * SerializationCompanySender;
     manufacturer * SerializationCompanyOwner;
     medicament * ScannedMedicament;
+
     int SerializationOrderType;
 
     QList<medicament *> MedicamentsList;

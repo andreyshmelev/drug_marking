@@ -1145,7 +1145,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -3963,7 +3963,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="FoundLabel_5">
+             <widget class="QLabel" name="StopTimeStatisticsLabel">
               <property name="maximumSize">
                <size>
                 <width>500</width>
@@ -4007,7 +4007,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="FoundLabel_6">
+             <widget class="QLabel" name="StartTimeStatisticsLabel">
               <property name="maximumSize">
                <size>
                 <width>500</width>
@@ -4029,7 +4029,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLabel" name="FoundLabel_4">
+             <widget class="QLabel" name="AverageEffeciencyStatisticsLabel">
               <property name="maximumSize">
                <size>
                 <width>500</width>
