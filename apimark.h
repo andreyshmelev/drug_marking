@@ -17,6 +17,9 @@ public:
     QString getCode() const;
     void setCode(const QString &value);
 
+    QString getToken() const;
+    void setToken(const QString &value);
+
 signals:
 
 private:

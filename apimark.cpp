@@ -33,8 +33,19 @@ QString APIMARK::getCode() const
 
 void APIMARK::setCode(const QString &value)
 {
-    qDebug() << "token now is" << value;
+    qDebug() << "code now is" << value;
     code = value;
+}
+
+QString APIMARK::getToken() const
+{
+    return token;
+}
+
+void APIMARK::setToken(const QString &value)
+{
+    qDebug() << "token now is" << value;
+    token = value;
 }
 
 void APIMARK::replyfinished(QNetworkReply *reply)
@@ -53,9 +64,14 @@ void APIMARK::replyfinished(QNetworkReply *reply)
     QJsonDocument loadDoc(QJsonDocument::fromJson(bytes));
     QJsonObject jsonObject = loadDoc.object();
     QString code =  jsonObject["code"].toString();
+    QString token =  jsonObject["token"].toString();
 
     if (!code.isEmpty()){
         setCode(code);
+    }
+
+    if (!token.isEmpty()){
+        setToken(token);
     }
 
 
@@ -194,6 +210,5 @@ void APIMARK::AskToken(QString code)
     QNetworkReply *reply = manager->post(requestauthorization,data);
 
     qDebug() << "AskToken";
-
 }
 

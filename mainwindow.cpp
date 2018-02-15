@@ -2678,7 +2678,9 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
     connect(SerializationLine1, SIGNAL(DrugRecieved(QString,QString,QString,QString,QString)), this, SLOT(DrugRecievedFromEmulator(QString,QString,QString,QString,QString)));
 
     apiclient->AskToken(apiclient->getCode());
-//    apiclient->GetDocumentsList(apiclient->getToken(), "asd");
+
+
+
 }
 
 
@@ -2705,10 +2707,13 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
 
 void MainWindow::on_keyboardButton_clicked()
 {
+    apiclient->GetCurrentUser(apiclient->getToken());
+
     bool ok = QProcess::startDetached("onboard");
 }
 
 void MainWindow::on_AuthButton_clicked()
 {
+
     qDebug() << apiclient->GetCodeAuth() ;
 }
