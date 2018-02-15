@@ -16,6 +16,9 @@ public:
 
 signals:
 
+private:
+    QNetworkAccessManager *manager ;
+
 public slots:
     void replyfinished(QNetworkReply *reply);
 };

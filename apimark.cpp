@@ -4,10 +4,14 @@
 #include <QNetworkReply>
 #include <QUrl>
 
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 APIMARK::APIMARK(QObject *parent) : QObject(parent)
 {
-    QNetworkAccessManager *manager ;
+
 
     manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
@@ -36,4 +40,16 @@ void APIMARK::replyfinished(QNetworkReply *reply)
     if (reply->errorString() != "Unknown error"){
         qDebug() << "API REQUEST ERROR "<< reply->errorString();
     }
+
+    // read and parse reply
+
+
+    QJsonDocument loadDoc(QJsonDocument::fromJson(bytes));
+    QJsonObject jsonObject = loadDoc.object();
+    QString code =  jsonObject["code"].toString();
+
+    if (!code.isEmpty()){
+        qDebug() << "code" << code;
+    }
+
 }
