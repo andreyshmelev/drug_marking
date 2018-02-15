@@ -2706,3 +2706,9 @@ void MainWindow::on_keyboardButton_clicked()
 }
 
 
+
+void MainWindow::on_AuthButton_clicked()
+{
+    qDebug() << apiclient->GetCodeAuth() ;
+
+}

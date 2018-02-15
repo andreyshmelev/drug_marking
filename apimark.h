@@ -19,8 +19,11 @@ signals:
 private:
     QNetworkAccessManager *manager ;
 
+    QNetworkRequest requestauthorization;
+
 public slots:
     void replyfinished(QNetworkReply *reply);
+    QString GetCodeAuth();
 };
 
 #endif // APIMARK_H

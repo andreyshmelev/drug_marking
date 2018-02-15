@@ -385,6 +385,8 @@ private slots:
     void on_optionsButton_clicked();
     void on_keyboardButton_clicked();
 
+    void on_AuthButton_clicked();
+
 signals:
 
     void agregationstatusToggled();
