@@ -49,7 +49,8 @@ SOURCES += \
     code128.cpp \
     code128item.cpp \
     serializationline.cpp \
-    Widgets/RegisterProductWidget313/registerproductwidget313.cpp
+    Widgets/RegisterProductWidget313/registerproductwidget313.cpp \
+    apimark.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -67,7 +68,8 @@ HEADERS += \
     code128.h \
     code128item.h \
     serializationline.h \
-    Widgets/RegisterProductWidget313/registerproductwidget313.h
+    Widgets/RegisterProductWidget313/registerproductwidget313.h \
+    apimark.h
 
 FORMS += \
         mainwindow.ui \

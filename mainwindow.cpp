@@ -394,32 +394,25 @@ MainWindow::MainWindow(QWidget *parent) :
     // для нормального рандомайза нужно добавить этот блок qsrand
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-    //    StopSerialization();
 
-    //    SerializationLine1 = new SerializationLine();
+    StopSerialization();
 
     ui->batchnumberText->setPlainText(generateSN(6));
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager *manager ;
+
+    manager = new QNetworkAccessManager(this);
+    QNetworkRequest requestauthorization;
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyfinished(QNetworkReply*)));
 
-    QUrl url( "dev-api.markirovka.nalog.ru" );
-    QNetworkRequest request( url );
-    QString auth = QString( "POST /api/v1/auth/ HTTP/1.1" ) ;
-    request.setRawHeader( "Authorization", "Basic " + auth.toLatin1().toBase64() );
-    request.setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
+    QByteArray data = ("{\"client_id\": \"ef77a1f8-e374-451d-9da9-7c3519d0d143\",\"client_secret\": \"c4bf1684-eb4e-4119-bed7-b28fc3beb68b\",\"user_id\": \"test_non_resident\",\"auth_type\": \"PASSWORD\"}");
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/auth"); // авторизируемся туточки
 
-    QString bound="margin"; //name of the boundary
-    //according to rfc 1867 we need to put this string here:
+    requestauthorization.setUrl(serviceURL);
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
 
-    QByteArray data = ("{\"client_id\": \"ef77a1f8-e374-451d-9da9-7c3519d0d143\",\"client_secret\": \"c4bf1684-eb4e-4119-bed7-b28fc3beb68b\",\"user_id\": \"401425968749462818672954964831426197036787062\",\"auth_type\": \"PASSWORD\"}");
-
-    QNetworkRequest request3; //our server with php-script
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/auth"); // на это сервер че-то отвечает
-    request3.setUrl(serviceURL);
-    request3.setRawHeader("Content-Type","application/json");
-    request3.setRawHeader("Cache-Control","no-cache");
-    QNetworkReply *reply = manager->post(request3,data);
+    QNetworkReply *reply = manager->post(requestauthorization,data);
 }
 
 MainWindow::~MainWindow()
@@ -2705,13 +2698,12 @@ void MainWindow::replyfinished(QNetworkReply *reply)
     int i;
     QByteArray bytes = reply->readAll(); // bytes
 
-//    QString DataAsString = QTextCodec::codecForMib(1013)->toUnicode(bytes);
+    QString stringreply = QString::fromUtf8(bytes);
+    qDebug() << "Server reply "<< stringreply;
 
-    QString s = QString::fromUtf8(bytes);
-
-
-    qDebug() << "bytes "<< s;
-    qDebug() << "reply "<< reply->errorString();
+    if (reply->errorString() != "Unknown error"){
+        qDebug() << "API REQUEST ERROR "<< reply->errorString();
+    }
 }
 
 
