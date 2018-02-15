@@ -53,7 +53,7 @@ void  SerializationLine::SetFizikalOptions(quint16 linespeed, quint16 countinmin
     QJsonDocument Doc(mainJsonObject);
     QByteArray ba = Doc.toJson();
 
-    qDebug() << ba.simplified();
+//    qDebug() << ba.simplified();
     Socket->write(ba);
 }
 
@@ -80,7 +80,7 @@ void SerializationLine::SetMedicamentOptions(QString preparatname, QString gtin,
     QByteArray ba = Doc.toJson();
 
     Socket->write(ba);
-    qDebug() << ba;
+//    qDebug() << ba;
 }
 
 QString SerializationLine::getTCPAddress() const
@@ -128,7 +128,7 @@ void SerializationLine::connectTcp(QString address, quint16 port)
 
     Socket->connectToHost(address, port);
     Socket->waitForConnected(100);
-    qDebug() << address << port;
+//    qDebug() << address << port;
 }
 
 void SerializationLine::SendTcpData(QString data)
@@ -152,7 +152,7 @@ void SerializationLine::serverRead()
         //Складываем их в общий байтмассив
 
         //ClientDataRead = QTextCodec::codecForMib(106)->toUnicode(ba);
-        qDebug() <<"serverRead"<<  ba;
+//        qDebug() <<"serverRead"<<  ba;
     }
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
@@ -164,7 +164,7 @@ void SerializationLine::serverRead()
     if (!response.isEmpty())
     {
         emit ResponseRecieved(getTCPAddress(), getTCPPort(),response);
-        qDebug() << response;
+//        qDebug() << response;
     }
 
     QString jBatchName =  jsonObject["jBatchName"].toString();
@@ -181,7 +181,7 @@ void SerializationLine::serverRead()
                     if (!jTnved.isEmpty())
                     {
                         emit DrugRecieved(jBatchName,jExperyDate,jGTIN,jSerialNumber,jTnved);
-                        qDebug() << jBatchName << "jBatchName" << jExperyDate << "jExperyDate"  << jGTIN << "jGTIN" << jSerialNumber << "jSerialNumber" << jTnved<< "jTnved";
+//                        qDebug() << jBatchName << "jBatchName" << jExperyDate << "jExperyDate"  << jGTIN << "jGTIN" << jSerialNumber << "jSerialNumber" << jTnved<< "jTnved";
                     }
     return;
 }

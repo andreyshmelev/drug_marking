@@ -2676,6 +2676,9 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
     SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value() , getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
     connect(SerializationLine1, SIGNAL(ResponseRecieved(QString,quint16,QString)), this, SLOT(ResponseFromLineRecieved(QString,quint16,QString)));
     connect(SerializationLine1, SIGNAL(DrugRecieved(QString,QString,QString,QString,QString)), this, SLOT(DrugRecievedFromEmulator(QString,QString,QString,QString,QString)));
+
+    apiclient->AskToken(apiclient->getCode());
+//    apiclient->GetDocumentsList(apiclient->getToken(), "asd");
 }
 
 
@@ -2705,10 +2708,7 @@ void MainWindow::on_keyboardButton_clicked()
     bool ok = QProcess::startDetached("onboard");
 }
 
-
-
 void MainWindow::on_AuthButton_clicked()
 {
     qDebug() << apiclient->GetCodeAuth() ;
-
 }
