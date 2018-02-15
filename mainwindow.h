@@ -28,6 +28,7 @@
 #include "basetypes.h"
 #include "sql.h"
 #include "serializationline.h"
+#include "apimark.h"
 
 
 namespace Ui {
@@ -258,8 +259,8 @@ private:
     QSignalMapper * signalMapper;
     QString keyString;
     QString inputDataStringFromScaner;
-
     QPixmap * pixmapqr;
+    APIMARK * apiclient;
     bool agregation;
 
     // сгенерированные QR коды

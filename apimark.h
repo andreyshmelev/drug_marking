@@ -3,6 +3,11 @@
 
 #include <QObject>
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QUrl>
+
+
 class APIMARK : public QObject
 {
     Q_OBJECT
@@ -12,6 +17,7 @@ public:
 signals:
 
 public slots:
+    void replyfinished(QNetworkReply *reply);
 };
 
 #endif // APIMARK_H
