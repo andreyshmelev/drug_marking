@@ -399,7 +399,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->batchnumberText->setPlainText(generateSN(6));
 
-//    apiclient = new APIMARK();
+    apiclient = new APIMARK();
 
 
 //    QNetworkAccessManager *manager ;
@@ -615,7 +615,6 @@ bool MainWindow::getLanguageswitcher() const
 void MainWindow::setLanguageswitcher(bool value)
 {
     languageswitcher = value;
-    qDebug() << "languageswitcher =" << value;
 }
 
 void MainWindow::Getmessage(QString m)
