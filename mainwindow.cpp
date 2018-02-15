@@ -409,18 +409,27 @@ MainWindow::MainWindow(QWidget *parent) :
     request.setRawHeader( "Authorization", "Basic " + auth.toLatin1().toBase64() );
     request.setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
 
-    QNetworkRequest request3(QUrl("dev-api.markirovka.nalog.ru")); //our server with php-script
     QString bound="margin"; //name of the boundary
     //according to rfc 1867 we need to put this string here:
-    QByteArray data = ("--margin\r\n");
-    data.append("Content-Disposition: form-data; name=\"hash\"\r\n\r\n");
 
-    request3.setRawHeader("Content-Type","multipart/form-data; boundary=margin");
-    request3.setRawHeader("Content-Length", QString::number(data.length()).toUtf8());
-    //connect(manager, SIGNAL(finished(QNetworkReply*)), SLOT(sendingFinished(QNetworkReply*)));
+    QByteArray data = ("{\"client_id\": \"ef77a1f8-e374-451d-9da9-7c3519d0d143\",\"client_secret\": \"c4bf1684-eb4e-4119-bed7-b28fc3beb68b\",\"user_id\": \"401425968749462818672954964831426197036787062\",\"auth_type\": \"PASSWORD\"}");
+
+    QNetworkRequest request3; //our server with php-script
+//    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/auth"); // на это сервер че-то отвечает
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/auth"); // на это сервер че-то отвечает
+    request3.setUrl(serviceURL);
+    request3.setRawHeader("Content-Type","application/json");
+    request3.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->post(request3,data);
-//    connect(reply, SIGNAL(uploadProgress(qint64,qint64)), SLOT(downloadProgress(qint64,qint64)));
-//    connect(reply, SIGNAL(finished()), SLOT(sendingFinished()));
+
+    //    request3.setRawHeader("Authorization","token 68f30b78-16b5-4422-8ae5-fd0cab4ceb07");
+    //    request3.setRawHeader("Postman-Token","82c8a467-aa6d-3d5f-27e5-092a8c8a8140");
+    //    request3.setRawHeader("client_secret","c4bf1684-eb4e-4119-bed7-b28fc3beb68b");
+    //    request3.setRawHeader("client_id","ef77a1f8-e374-451d-9da9-7c3519d0d143");
+    //    request3.setRawHeader("user_id","test_non_resident");
+    //    request3.setRawHeader("auth_type","PASSWORD");
+    //    QByteArray data = ("{\"filter\": { \"doc_status\": \"PROCESSED_DOCUMENT\", \"start_date\": \"2018-01-01 01:01:01\", \"end_date\":\"2018-02-09 02:02:02\" }, \"start_from\": 0, \"count\": 100}");
+    //connect(manager, SIGNAL(finished(QNetworkReply*)), SLOT(sendingFinished(QNetworkReply*)));
 }
 
 MainWindow::~MainWindow()
@@ -453,7 +462,6 @@ QString MainWindow::getSN()
 QString MainWindow::generateSN(int lenght)
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");  // abcdefghijklmnopqrstuvwxyz
-
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
 
     QString randomString;
@@ -504,7 +512,6 @@ QString MainWindow::getGuiExpery()
 
 QDateTime MainWindow::getGuiExperyDate()
 {
-
     return ui->expirationdate->dateTime();
 }
 
