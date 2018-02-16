@@ -157,6 +157,8 @@ public:
     void ReleabilingPageOpen();
 
     void ISMArkPageOpen();
+    void ClearApiLog();
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);

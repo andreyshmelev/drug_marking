@@ -417,10 +417,15 @@ void MainWindow::ResponseFromLineRecieved(QString address,quint16 port,QString m
 {
     QString date =  QDateTime::currentDateTime().toString("hh:mm::ss:zzz");
     ui->SerialTimeRecieve->setText( date  + " : " + message );
+
+
 }
 
 void MainWindow::ADDApiLOG(QString Logstring)
 {
+
+    ClearApiLog();
+
     ui->APILOG->appendPlainText(ui->APILOG->toPlainText() + "\n" + Logstring);
 }
 
@@ -2710,6 +2715,8 @@ void MainWindow::replyfinished(QNetworkReply *reply)
 
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
+     qDebug() << "DrugRecievedFromEmulator" ;
+
     QString sgtin = SerialNumber + GTIN;
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
     emit SendMedicamentSignal(t);
@@ -2718,6 +2725,11 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
 void MainWindow::on_keyboardButton_clicked()
 {
     bool ok = QProcess::startDetached("onboard");
+}
+
+void MainWindow::ClearApiLog()
+{
+    ui->APILOG->clear();
 }
 
 void MainWindow::on_AuthButton_clicked()

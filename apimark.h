@@ -36,6 +36,9 @@ public slots:
     void GetCurrentUser(QString code);
     void Logout(QString code);
     void AskToken(QString code);
+private slots:
+    QString generateRandomString(int lenght);
+    QString generateGUIDString();
 };
 
 #endif // APIMARK_H

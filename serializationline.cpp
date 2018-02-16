@@ -164,7 +164,7 @@ void SerializationLine::serverRead()
     if (!response.isEmpty())
     {
         emit ResponseRecieved(getTCPAddress(), getTCPPort(),response);
-//        qDebug() << response;
+        qDebug() <<"SerializationLineresponse" <<  response ;
     }
 
     QString jBatchName =  jsonObject["jBatchName"].toString();

@@ -58,21 +58,36 @@ void APIMARK::replyfinished(QNetworkReply *reply)
         emit message("API REQUEST ERROR " + reply->errorString() + ", "  + stringreply);
     }
 
+
     // read and parse reply
     QJsonDocument loadDoc(QJsonDocument::fromJson(bytes));
     QJsonObject jsonObject = loadDoc.object();
     QString code =  jsonObject["code"].toString();
     QString token =  jsonObject["token"].toString();
+    QString user =  jsonObject["user"].toString();
 
     if (!code.isEmpty()){
         setCode(code);
-        emit message("code: " + code);
+        emit message("Код: " + code);
+        return;
+
     }
 
     if (!token.isEmpty()){
         setToken(token);
-        emit message("token: " + token);
+        emit message("Токен: " + token);
+
+        return;
     }
+
+
+    if (!user.isEmpty()){
+        emit message("Пользователь: " + user);
+
+        return;
+    }
+
+    emit message(stringreply);
 }
 
 
@@ -137,6 +152,7 @@ void APIMARK::GetDocumentsList(QString token, QString filename)
     QNetworkReply *reply = manager->post(requestauthorization,data);
 }
 
+
 void APIMARK::GetCurrentUser(QString token)
 {
 //    manager = new QNetworkAccessManager(this);
@@ -151,7 +167,7 @@ void APIMARK::GetCurrentUser(QString token)
     QByteArray data0 ;
     data0.clear();
 
-//    qDebug() << "GetCurrentUser tokenbyte "<< tokenbyte;
+    qDebug() << "GetCurrentUser tokenbyte "<< tokenbyte;
 
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
@@ -208,6 +224,35 @@ void APIMARK::AskToken(QString code)
     requestauthorization.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->post(requestauthorization,data);
 
-    qDebug() << "AskToken";
+    qDebug() << "generateGUIDString: " << generateGUIDString();
+}
+
+
+QString APIMARK::generateRandomString(int lenght)
+{
+    const QString possibleCharacters("abcdefghijklnmopqrstuvwcyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");  // abcdefghijklmnopqrstuvwxyz
+    const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
+
+    QString randomString;
+    for(int i=0; i<randomStringLength; ++i)
+    {
+        int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+
+    QString newrandomstring = randomString;
+
+    return newrandomstring;
+}
+
+QString APIMARK::generateGUIDString()
+{
+
+
+
+    QString GIDString = generateRandomString(8)+"-" + generateRandomString(4)+"-" + generateRandomString(4)+"-" + generateRandomString(4)+"-" + generateRandomString(8);
+
+    return GIDString;
 }
 
