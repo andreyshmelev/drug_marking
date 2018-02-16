@@ -50,14 +50,12 @@ void APIMARK::setToken(const QString &value)
 
 void APIMARK::replyfinished(QNetworkReply *reply)
 {
-    int i;
     QByteArray bytes = reply->readAll(); // bytes
-
     QString stringreply = QString::fromUtf8(bytes);
-    qDebug() << "Server reply "<< stringreply;
 
     if (reply->errorString() != "Unknown error"){
         qDebug() << "API REQUEST ERROR "<< reply->errorString();
+        emit message("API REQUEST ERROR " + reply->errorString() + ", "  + stringreply);
     }
 
     // read and parse reply
@@ -68,13 +66,13 @@ void APIMARK::replyfinished(QNetworkReply *reply)
 
     if (!code.isEmpty()){
         setCode(code);
+        emit message("code: " + code);
     }
 
     if (!token.isEmpty()){
         setToken(token);
+        emit message("token: " + token);
     }
-
-
 }
 
 
@@ -91,6 +89,7 @@ QString APIMARK::GetCodeAuth()
     QNetworkReply *reply = manager->post(requestauthorization,data);
 
 
+//    while
 
     QByteArray bytes = reply->readAll(); // bytes
 
@@ -130,7 +129,7 @@ void APIMARK::GetDocumentsList(QString token, QString filename)
     tokenbyte.append(QString("token %1").arg(token));
 
 
-    qDebug() << "SendDocument tokenbyte "<< tokenbyte;
+//    qDebug() << "SendDocument tokenbyte "<< tokenbyte;
 
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
@@ -152,7 +151,7 @@ void APIMARK::GetCurrentUser(QString token)
     QByteArray data0 ;
     data0.clear();
 
-    qDebug() << "GetCurrentUser tokenbyte "<< tokenbyte;
+//    qDebug() << "GetCurrentUser tokenbyte "<< tokenbyte;
 
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);

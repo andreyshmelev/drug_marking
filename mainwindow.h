@@ -156,6 +156,7 @@ public:
 
     void ReleabilingPageOpen();
 
+    void ISMArkPageOpen();
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -188,6 +189,7 @@ public slots:
 
 
     void replyfinished(QNetworkReply *reply);
+    void ADDApiLOG(QString Logstring);
 private:
 
     QString getGuiGTIN();
@@ -386,6 +388,11 @@ private slots:
     void on_keyboardButton_clicked();
 
     void on_AuthButton_clicked();
+
+    void on_sendISMarkButton_clicked();
+
+
+    void on_AuthButton_2_clicked();
 
 signals:
 

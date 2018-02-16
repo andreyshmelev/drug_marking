@@ -21,6 +21,7 @@ public:
     void setToken(const QString &value);
 
 signals:
+    void message(QString mes);
 
 private:
     QNetworkAccessManager *manager ;

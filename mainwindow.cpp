@@ -400,6 +400,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->batchnumberText->setPlainText(generateSN(6));
 
     apiclient = new APIMARK();
+
+    connect(apiclient, SIGNAL(message(QString)),this, SLOT(ADDApiLOG(QString)));
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -411,6 +417,11 @@ void MainWindow::ResponseFromLineRecieved(QString address,quint16 port,QString m
 {
     QString date =  QDateTime::currentDateTime().toString("hh:mm::ss:zzz");
     ui->SerialTimeRecieve->setText( date  + " : " + message );
+}
+
+void MainWindow::ADDApiLOG(QString Logstring)
+{
+    ui->APILOG->appendPlainText(ui->APILOG->toPlainText() + "\n" + Logstring);
 }
 
 int MainWindow::GenerateNumber(int High, int Low)
@@ -1817,10 +1828,15 @@ void MainWindow::statisticsPageOpen()
     setStackedPage(3);
 }
 
+
+void MainWindow::ISMArkPageOpen()
+{
+    setStackedPage(13);
+}
+
 void MainWindow::setStackedPage(int newindex)
 {
     ui->stackedWidget->setCurrentIndex(newindex);
-    qDebug() << newindex;
 }
 
 void MainWindow::SendCommandToVideoJet(QString a)
@@ -2676,11 +2692,6 @@ void MainWindow::on_SetSerializationOptionsButton_clicked()
     SerializationLine1 = new SerializationLine(ui->IPAddress->toPlainText(), ui->TCPPort->value(),ui->countinminuteValue->value(),ui->SPEEDValue->value() , getSerializationDrugName(),getSerializationGTIN(),getSerializationExpery(),getSerializationBatchName() );
     connect(SerializationLine1, SIGNAL(ResponseRecieved(QString,quint16,QString)), this, SLOT(ResponseFromLineRecieved(QString,quint16,QString)));
     connect(SerializationLine1, SIGNAL(DrugRecieved(QString,QString,QString,QString,QString)), this, SLOT(DrugRecievedFromEmulator(QString,QString,QString,QString,QString)));
-
-    apiclient->AskToken(apiclient->getCode());
-
-
-
 }
 
 
@@ -2688,7 +2699,6 @@ void MainWindow::replyfinished(QNetworkReply *reply)
 {
     int i;
     QByteArray bytes = reply->readAll(); // bytes
-
     QString stringreply = QString::fromUtf8(bytes);
     qDebug() << "Server reply "<< stringreply;
 
@@ -2707,13 +2717,23 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
 
 void MainWindow::on_keyboardButton_clicked()
 {
-    apiclient->GetCurrentUser(apiclient->getToken());
-
     bool ok = QProcess::startDetached("onboard");
 }
 
 void MainWindow::on_AuthButton_clicked()
 {
+    apiclient->AskToken(apiclient->getCode());
 
-    qDebug() << apiclient->GetCodeAuth() ;
+//
+}
+
+void MainWindow::on_sendISMarkButton_clicked()
+{
+    ISMArkPageOpen();
+}
+
+void MainWindow::on_AuthButton_2_clicked()
+{
+    apiclient->GetCurrentUser(apiclient->getToken());
+
 }
