@@ -2780,5 +2780,10 @@ void MainWindow::on_getFileListApiButton_2_clicked()
 
 void MainWindow::on_downloadFileApiButton_clicked()
 {
-    apiclient->DownloadDocumentByID(ui->DocumentIDForDownload->toPlainText());
+    apiclient->GetDownloadLinkDocumentByID(ui->DocumentIDForDownload->toPlainText());
+}
+
+void MainWindow::on_downloadFileApiButton_2_clicked()
+{
+    apiclient->DownloadDocumentByLink(apiclient->getFileDownloadLink(),ui->DocumentPathForDownload->toPlainText());
 }

@@ -407,6 +407,8 @@ private slots:
 
     void on_downloadFileApiButton_clicked();
 
+    void on_downloadFileApiButton_2_clicked();
+
 signals:
 
     void agregationstatusToggled();

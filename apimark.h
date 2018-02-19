@@ -20,6 +20,11 @@ public:
     QString getToken() const;
     void setToken(const QString &value);
 
+    QString getFileDownloadLink() const;
+    void setFileDownloadLink(const QString &value);
+
+
+
 signals:
     void message(QString mes);
 
@@ -28,6 +33,7 @@ private:
 
     QString code;
     QString token;
+    QString FileDownloadLink;
 
 public slots:
     void replyfinished(QNetworkReply *reply);
@@ -40,7 +46,8 @@ public slots:
     void RegisterNonResidentUser(QString token);
     void RegisterResidentUser(QString token);
     void GetIncomeDocumentsList();
-    void DownloadDocumentByID(QString docID);
+    void GetDownloadLinkDocumentByID(QString docID);
+    void DownloadDocumentByLink(QString link, QString filename);
 private slots:
     QString generateRandomStringForGUID(int lenght);
     QString generateGUIDString();
