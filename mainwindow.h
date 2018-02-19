@@ -393,8 +393,19 @@ private slots:
 
     void on_sendISMarkButton_clicked();
 
+    void on_sendFileApiButton_clicked();
 
-    void on_AuthButton_2_clicked();
+    void on_AuthAPIButton_clicked();
+
+    void on_getCurrentUserAPIButton_clicked();
+
+    void on_sendFileApiButton_2_clicked();
+
+    void on_getFileListApiButton_clicked();
+
+    void on_getFileListApiButton_2_clicked();
+
+    void on_downloadFileApiButton_clicked();
 
 signals:
 

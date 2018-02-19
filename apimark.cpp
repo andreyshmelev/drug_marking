@@ -80,7 +80,6 @@ void APIMARK::replyfinished(QNetworkReply *reply)
         return;
     }
 
-
     if (!user.isEmpty()){
         emit message("Пользователь: " + user);
 
@@ -104,7 +103,7 @@ QString APIMARK::GetCodeAuth()
     QNetworkReply *reply = manager->post(requestauthorization,data);
 
 
-//    while
+    //    while
 
     QByteArray bytes = reply->readAll(); // bytes
 
@@ -129,22 +128,19 @@ QString APIMARK::GetCodeAuth()
     return "z";
 }
 
-void APIMARK::GetDocumentsList(QString token, QString filename)
+void APIMARK::GetOutcomeDocumentsList(QString token)
 {
-
-//    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
-//    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
-
-    QByteArray data = ("{\"filter\": {\"doc_status\": \"PROCESSED_DOCUMENT\"},\"start_from\": 0,\"count\": 100}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/outcome"); // отправка файла XML
+//    QByteArray data = ("{\"filter\": { \"document_id\":\"6ec4a53b-0ea1-4eb5-8df8-b94e19a38b09\"},\"start_from\": 0,\"count\": 1000}");
+    QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/outcome");
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
     tokenbyte.append(QString("token %1").arg(token));
 
 
-//    qDebug() << "SendDocument tokenbyte "<< tokenbyte;
+    //    qDebug() << "SendDocument tokenbyte "<< tokenbyte;
 
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
@@ -152,13 +148,29 @@ void APIMARK::GetDocumentsList(QString token, QString filename)
     QNetworkReply *reply = manager->post(requestauthorization,data);
 }
 
+void APIMARK::GetIncomeDocumentsList()
+{
+    QNetworkRequest requestauthorization;
+
+    QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/income");
+
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+    tokenbyte.append(QString("token %1").arg(getToken()));
+
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+    QNetworkReply *reply = manager->post(requestauthorization,data);
+}
 
 void APIMARK::GetCurrentUser(QString token)
 {
-//    manager = new QNetworkAccessManager(this);
+    //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
 
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/users/current"); // отправка файла XML
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/users/current");
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -178,7 +190,7 @@ void APIMARK::GetCurrentUser(QString token)
 
 void APIMARK::Logout(QString token)
 {
-//    manager = new QNetworkAccessManager(this);
+    //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
 
     QByteArray data = ("{\"filter\": {\"doc_status\": \"PROCESSED_DOCUMENT\"},\"start_from\": 0,\"count\": 100}");
@@ -203,10 +215,9 @@ void APIMARK::Logout(QString token)
 
 void APIMARK::AskToken(QString code)
 {
-
-//    manager = new QNetworkAccessManager(this);
+    //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
-//    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
+    //    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
 
     QString stringdata = QString("{\"code\": \"%1\",\"password\" : \"password\"}").arg(code);
     QByteArray data ;
@@ -217,20 +228,15 @@ void APIMARK::AskToken(QString code)
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/token"); // отправка файла XML
 
     requestauthorization.setUrl(serviceURL);
-
-
     requestauthorization.setRawHeader("Content-Type","application/json");
-
     requestauthorization.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->post(requestauthorization,data);
-
-    qDebug() << "generateGUIDString: " << generateGUIDString();
 }
 
 
-QString APIMARK::generateRandomString(int lenght)
+QString APIMARK::generateRandomStringForGUID(int lenght)
 {
-    const QString possibleCharacters("abcdefghijklnmopqrstuvwcyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");  // abcdefghijklmnopqrstuvwxyz
+    const QString possibleCharacters("abcdef0123456789");  // abcdefghijklmnopqrstuvwxyz
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
 
     QString randomString;
@@ -242,17 +248,117 @@ QString APIMARK::generateRandomString(int lenght)
     }
 
     QString newrandomstring = randomString;
-
     return newrandomstring;
 }
 
+
 QString APIMARK::generateGUIDString()
 {
-
-
-
-    QString GIDString = generateRandomString(8)+"-" + generateRandomString(4)+"-" + generateRandomString(4)+"-" + generateRandomString(4)+"-" + generateRandomString(8);
-
+    QString GIDString = generateRandomStringForGUID(8)+"-" + generateRandomStringForGUID(4)+"-" + generateRandomStringForGUID(4)+"-" + generateRandomStringForGUID(4)+"-" + generateRandomStringForGUID(12);
     return GIDString;
 }
 
+
+void APIMARK::Sendfile(QString token, QString filename)
+{
+    QNetworkRequest requestauthorization;
+
+    ////////
+
+    QFile file(filename);
+    file.open(QFile::ReadOnly | QFile::Text);
+    QTextStream in(&file);
+    QString filecontent = in.readAll();
+    QByteArray bytecontentinRFC2045;
+    bytecontentinRFC2045.append(filecontent);
+    QString stringcontentinRFC2045;
+    stringcontentinRFC2045.append( bytecontentinRFC2045.toBase64() );
+    QByteArray byteCodeRFC2045;
+    byteCodeRFC2045.append(getCode());
+
+    QString CodeIn2045 = byteCodeRFC2045.toBase64();
+
+    ////////
+
+    QJsonObject mainJsonObject;
+
+    mainJsonObject["doc_type"] = 311;
+    mainJsonObject["document"] = stringcontentinRFC2045;
+    mainJsonObject["sign"] = "";
+    mainJsonObject["request_id"] = generateGUIDString();
+
+    QJsonDocument Doc(mainJsonObject);
+    QByteArray ba = Doc.toJson();
+
+    ////////
+
+    QByteArray data = ba.simplified();
+
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/send"); // отправка файла XML
+
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+
+    tokenbyte.append(QString("token %1").arg(token));
+
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+    QNetworkReply *reply = manager->post(requestauthorization,data);
+}
+
+
+void APIMARK::RegisterNonResidentUser(QString token)
+{
+    //    manager = new QNetworkAccessManager(this);
+    QNetworkRequest requestauthorization;
+    //    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
+
+    QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",\"username\" : \"korvas\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
+
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_nonresident"); // отправка файла XML
+
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+    tokenbyte.append(QString("token %1").arg(token));
+
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+
+    QNetworkReply *reply = manager->post(requestauthorization,data);
+}
+
+void APIMARK::RegisterResidentUser(QString token)
+{
+    QNetworkRequest requestauthorization;
+
+    QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",  \"public_cert\" : \"\"   ,\"username\" : \"korvas2\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
+    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_resident"); // отправка файла XML
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+    tokenbyte.append(QString("token %1").arg(token));
+
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+    QNetworkReply *reply = manager->post(requestauthorization,data);
+}
+
+void APIMARK::DownloadDocumentByID(QString docID)
+{
+    QNetworkRequest requestauthorization;
+
+    QByteArray data = ("{\"group_name\" : \"Тестовая группа для ООО Пилюльки\",\"rights\" : [\"DOWNLOAD_DOCUMENT\"]}");
+    QString URLstr = QString("http://dev-api.markirovka.nalog.ru/api/v1/documents/download/%1").arg(docID);
+
+    QUrl serviceURL(URLstr);
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+    tokenbyte.append(QString("token %1").arg(getToken()));
+
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+    QNetworkReply *reply = manager->get(requestauthorization);
+}

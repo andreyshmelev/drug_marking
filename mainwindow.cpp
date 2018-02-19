@@ -322,6 +322,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(registerproductwidget(QList<manufacturer*>)), this, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
     connect(ui->registerproductwidget, SIGNAL(RegistrationCompleted(QList<medicament*>,QDateTime)), this, SLOT(CreateXML313Doc(QList<medicament*>,QDateTime)));
 
+
+    connect(this, &MainWindow::SendMedicamentSignal, this, &MainWindow::GetMedicamentSerialization) ;
+
     //    // сигналы и слоты для 415 бизнес процесса
 
     //    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
@@ -424,7 +427,7 @@ void MainWindow::ResponseFromLineRecieved(QString address,quint16 port,QString m
 void MainWindow::ADDApiLOG(QString Logstring)
 {
 
-    ClearApiLog();
+    //    ClearApiLog();
 
     ui->APILOG->appendPlainText(ui->APILOG->toPlainText() + "\n" + Logstring);
 }
@@ -2715,7 +2718,8 @@ void MainWindow::replyfinished(QNetworkReply *reply)
 
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
-     qDebug() << "DrugRecievedFromEmulator" ;
+
+    //     qDebug() << "DrugRecievedFromEmulator" ;
 
     QString sgtin = SerialNumber + GTIN;
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
@@ -2734,9 +2738,6 @@ void MainWindow::ClearApiLog()
 
 void MainWindow::on_AuthButton_clicked()
 {
-    apiclient->AskToken(apiclient->getCode());
-
-//
 }
 
 void MainWindow::on_sendISMarkButton_clicked()
@@ -2744,8 +2745,40 @@ void MainWindow::on_sendISMarkButton_clicked()
     ISMArkPageOpen();
 }
 
-void MainWindow::on_AuthButton_2_clicked()
+void MainWindow::on_sendFileApiButton_clicked()
+{
+
+    apiclient->Sendfile(apiclient->getToken(), ui->FileNameForSendAPI->toPlainText());
+}
+
+void MainWindow::on_AuthAPIButton_clicked()
+{
+    apiclient->AskToken(apiclient->getCode());
+}
+
+void MainWindow::on_getCurrentUserAPIButton_clicked()
 {
     apiclient->GetCurrentUser(apiclient->getToken());
+}
 
+void MainWindow::on_sendFileApiButton_2_clicked()
+{
+    apiclient->RegisterNonResidentUser(apiclient->getToken());
+}
+
+void MainWindow::on_getFileListApiButton_clicked()
+{
+    ui->APILOG->clear();
+    apiclient->GetOutcomeDocumentsList( apiclient->getToken() );
+}
+
+void MainWindow::on_getFileListApiButton_2_clicked()
+{
+    ui->APILOG->clear();
+    apiclient->GetIncomeDocumentsList();
+}
+
+void MainWindow::on_downloadFileApiButton_clicked()
+{
+    apiclient->DownloadDocumentByID(ui->DocumentIDForDownload->toPlainText());
 }

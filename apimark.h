@@ -32,12 +32,17 @@ private:
 public slots:
     void replyfinished(QNetworkReply *reply);
     QString GetCodeAuth();
-    void GetDocumentsList(QString code, QString filename);
+    void GetOutcomeDocumentsList(QString token);
     void GetCurrentUser(QString code);
     void Logout(QString code);
     void AskToken(QString code);
+    void Sendfile(QString token, QString filename);
+    void RegisterNonResidentUser(QString token);
+    void RegisterResidentUser(QString token);
+    void GetIncomeDocumentsList();
+    void DownloadDocumentByID(QString docID);
 private slots:
-    QString generateRandomString(int lenght);
+    QString generateRandomStringForGUID(int lenght);
     QString generateGUIDString();
 };
 
