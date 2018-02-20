@@ -5107,7 +5107,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>166666</height>
                   </size>
                  </property>
                  <property name="plainText">
@@ -5183,7 +5183,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="plainText">
@@ -5457,7 +5457,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="plainText">
@@ -5541,6 +5541,69 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                   <string>получить список
 прав</string>
                  </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QComboBox" name="DocTypecomboBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>80</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QSpinBox::up-button { width: 32px; }
+QSpinBox::down-button { width: 32px; }
+QComboBox::drop-down 
+{ width: 32px; }</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>311</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>312</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>313</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>415</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>911</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>912</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>

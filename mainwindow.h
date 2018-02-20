@@ -378,9 +378,7 @@ private slots:
     void on_releabeling_Button_clicked();
     void on_unit_pack_Button_clicked();
     void on_pushButton_2_clicked();
-    void on_agregationStartButton_clicked();
     void on_batchnumberText_textChanged();
-    void on_pushButton_clicked();
     void on_StatistFindButton_clicked();
     void on_SerializAutoUpakovkaCheckBox_toggled(bool checked);
     void on_SerializAutoAgregationCheckBox_toggled(bool checked);
@@ -388,27 +386,15 @@ private slots:
     void on_SetSerializationOptionsButton_clicked();
     void on_optionsButton_clicked();
     void on_keyboardButton_clicked();
-
-    void on_AuthButton_clicked();
-
     void on_sendISMarkButton_clicked();
-
     void on_sendFileApiButton_clicked();
-
     void on_AuthAPIButton_clicked();
-
     void on_getCurrentUserAPIButton_clicked();
-
     void on_sendFileApiButton_2_clicked();
-
     void on_getFileListApiButton_clicked();
-
     void on_getFileListApiButton_2_clicked();
-
     void on_downloadFileApiButton_clicked();
-
     void on_downloadFileApiButton_2_clicked();
-
     void on_getRulesButton_clicked();
 
 signals:

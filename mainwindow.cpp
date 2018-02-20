@@ -20,11 +20,8 @@
 #include <QNetworkReply>
 #include <QUrl>
 
-#define testitemscount 0
-
 int aaa = 222;
 int bbb = 789;
-
 int summint;
 
 QElapsedTimer MainWindow::SQLInsertSpeedTest()
@@ -45,7 +42,6 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
     timer.start();
     //    QStringList sellist = sqlDB->sel("company", "company", "","company");
     QStringList sellist = sqlDB->sel("date", "scannerlog", "Message = 'EHa7vpPtxgzWhNCC108D6RUnZIo2AJCnKmNRhtuYMtaTAm8Shw'","date");
-
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The SQLSelectSpeedTest took" << timer.elapsed() << "milliseconds";
     return timer;
@@ -54,9 +50,7 @@ QElapsedTimer MainWindow::SQLSelectSpeedTest()
 void MainWindow::GetCompaniesDBList()
 {
     companies = sqlDB->sel("company_name", "company", "","company_name");
-
     foreach (QString s, companies) {
-
         // читаем производителя из БД
         QString fromcompany = "company";
         QString    wherecompany = "company_name = '" + s + "' ";
@@ -70,7 +64,6 @@ void MainWindow::GetCompaniesDBList()
         QString company_inn = sqlDB->sel("inn", fromcompany, wherecompany,"inn")[0];
         QString company_kpp = sqlDB->sel("kpp", fromcompany, wherecompany,"kpp")[0];
         QString company_gs1id = sqlDB->sel("gs1id", fromcompany, wherecompany,"gs1id")[0];
-
         manufacturer * c = new manufacturer (company_subject_id,companyname,company_email, company_ul, company_fl, company_inn,company_kpp,company_owner_id , company_gs1id);
         CompaniesListFromDB.append(c);
     }
@@ -82,16 +75,13 @@ void MainWindow::GetStatisticsFromDB()
     QString curtext ;
 
     statisticsbisnessprocesses = sqlDB->seldistinct("BProcess", "mark.statistics", "","BProcess");
-
     curtext = ui->StatistBPcomboBox->currentText();
-
     ui->StatistBPcomboBox->clear();
     ui->StatistBPcomboBox->addItem("%");
     ui->StatistBPcomboBox->addItems(statisticsbisnessprocesses);
     ui->StatistBPcomboBox->setCurrentText(curtext);
 
     statisticsmedicaments = sqlDB->seldistinct("LPName", "mark.statistics", "","LPName");
-
     curtext = ui->StatistMedicamentComboBox->currentText();
     ui->StatistMedicamentComboBox->clear();
     ui->StatistMedicamentComboBox->addItem("%");
@@ -99,7 +89,6 @@ void MainWindow::GetStatisticsFromDB()
     ui->StatistMedicamentComboBox->setCurrentText(curtext);
 
     statisticsbatches = sqlDB->seldistinct("batch", "mark.statistics", "","batch");
-
     curtext = ui->StatistBatchComboBox->currentText();
     ui->StatistBatchComboBox->clear();
     ui->StatistBatchComboBox->addItem("%");
@@ -107,7 +96,6 @@ void MainWindow::GetStatisticsFromDB()
     ui->StatistBatchComboBox->setCurrentText(curtext);
 
     QStringList statisticsgtin = sqlDB->seldistinct("GTIN", "mark.statistics", "","GTIN");
-
     curtext = ui->StatistGTINCombobox->currentText();
     ui->StatistGTINCombobox->clear();
     ui->StatistGTINCombobox->addItem("%");
@@ -131,8 +119,6 @@ void MainWindow::SQLInit()
 {
     sqlDB = new SQL("ненужная строка");
     drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
-    //    sqlDB->makesqlreq(QString("insert into process911 values (%1,%2,%3,%4,%5)").arg("insertfromQt",QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),"XML","SSCC"));
-    sqlDB->makesqlreq(QString("insert into process911 values (\"qt53\",\"qt53\",\"qt33\",\"44\",\"55\");") );
     // подтягиваем параметры компании
     GetCompaniesDBList();
     GetStatisticsFromDB();
@@ -159,7 +145,7 @@ void MainWindow::SetStyleSheets()
     QList<QCheckBox *> checkboxeslist = this->findChildren<QCheckBox *>();
     foreach(QCheckBox *l, checkboxeslist)
     {
-        qDebug() <<l->objectName() ;
+        //        qDebug() <<l->objectName() ;
 
         l->setStyleSheet("QCheckBox::indicator {width: 20px;height: 20px;}");
     }
@@ -319,7 +305,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->registerproductwidget, &RegisterProductWidget313::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
     connect(this, &MainWindow::SendMedicamentSignal, ui->registerproductwidget, &RegisterProductWidget313::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->registerproductwidget, &RegisterProductWidget313::GetCompaniesDBList) ;
-    connect(this, SIGNAL(registerproductwidget(QList<manufacturer*>)), this, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
     connect(ui->registerproductwidget, SIGNAL(RegistrationCompleted(QList<medicament*>,QDateTime)), this, SLOT(CreateXML313Doc(QList<medicament*>,QDateTime)));
 
 
@@ -594,9 +579,9 @@ void MainWindow::AddHandScannerLOG()
     QElapsedTimer timer;
     timer.start();
     QString req = QString("INSERT INTO \"scannerlog\" (\"date\",\"Message\") VALUES ('%1','%2')").arg(QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yyyy"),inputDataStringFromScaner); //.remove(30,10)
-    qDebug() << req << "req";
+    //    qDebug() << req << "req";
     sqlDB->makesqlreq(req );
-    qDebug() << "AddHand scannerlog took" << timer.elapsed() << "milliseconds";
+    //    qDebug() << "AddHand scannerlog took" << timer.elapsed() << "milliseconds";
 }
 
 bool MainWindow::getRunningBuisenessProcess() const
@@ -661,7 +646,7 @@ void MainWindow::updateReadedDMCode()
     if (inputDataStringFromScaner!="")
     {
 
-        qDebug() << inputDataStringFromScaner;
+        //        qDebug() << inputDataStringFromScaner;
 
         QString sss = "002#9";
 
@@ -775,7 +760,7 @@ QString MainWindow::GetDOCDate()
 
 void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operation_date)
 {
-    qDebug() << "CreateXML313Doc" ;
+    //    qDebug() << "CreateXML313Doc" ;
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
@@ -1351,7 +1336,7 @@ void MainWindow::StopAgregation()
 void MainWindow::ParseHandScannerData(QString stringforparse)
 {
     // сначала проверяем ня соответствие QR кодам
-    qDebug() << stringforparse;
+    //    qDebug() << stringforparse;
 
 
     if (stringforparse == register_product_emission_QR_string)
@@ -1971,7 +1956,7 @@ void MainWindow::addSymbolToInputString(QString str)
     DMCodeUpdateTimeoutTimer->start();
 
 
-    qDebug() << str;
+    //    qDebug() << str;
     QString wastext = inputDataStringFromScaner;
 
     wastext.append(str);
@@ -2052,7 +2037,7 @@ QByteArray MainWindow::QstringToQbytearray(QString str)
 
 void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
 {
-    qDebug() << index << "index";
+    //    qDebug() << index << "index";
 
     QString where = QString ( "drugs_name = '%1' " ).arg(ui->DrugsComboBox->itemText(index));
     QString gtin = sqlDB->sel("gtin", "drugs", where,"gtin").at(0);
@@ -2127,7 +2112,7 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
 
         if ( ( ( ostalos_zapolnit_v_korobe  == 0 ) && ( proizveli_pachek > 0 ) ) || (ostalos_pachek_upakovat <= 0 ) )
         {
-            qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
+            //            qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
             QDateTime date311  = GetISODateTime();
             CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
 
@@ -2203,7 +2188,7 @@ void MainWindow::SendRandomToVideoJet()
         QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"%1\", \"SNVAL\": \"%2\", \"BATCHVAL\": \"%3\", \"DATEVAL\": \"%4\", \"TNVEDVAL\": \"%5\", \"GTINTEXT\": \"%6\", \"SNTEXT\": \"%7\", \"BATCHTEXT\": \"%8\", \"DATETEXT\": \"%9\"}}").arg(getSerializationGTIN() , randstr,getSerializationBatchName(),printerdate,getSerializationTNVED(),getSerializationGTIN() ,randstr,getSerializationBatchName(),humandate);
         SendCommandToVideoJet(a);
 
-        //        qDebug() << a;
+        //                qDebug() << a;
     }
 }
 
@@ -2250,10 +2235,6 @@ void MainWindow::on_pushButton_2_clicked()
     GUIMainWindowUpdate();
 }
 
-void MainWindow::on_agregationStartButton_clicked()
-{
-
-}
 
 
 eticetka::eticetka()
@@ -2487,10 +2468,6 @@ void MainWindow::on_batchnumberText_textChanged()
     }
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    SQLInit();
-}
 
 void MainWindow::AddMedicamentToDBTable(medicament *m, QString tablename)
 {
@@ -2503,7 +2480,7 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname, medicament *m, QD
     QString tablename = "`mark`.`statistics`" ;
     QString req = QString("INSERT INTO %1 (`BProcess`, `GTIN`, `LPName`, `batch`, `date`, `count`, `xmlfilename`) VALUES (\"%2\",\"%3\",\"%4\",\"%5\",'%6','%7',\"%8\");").arg(tablename, bisnessprocessname,m->GTIN,m->medicament_name, m->BatchNumber,datetime.toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"),QString::number(count), XMLFileName);
     sqlDB->makesqlreq(req);
-    qDebug() << "AddStatisticsToDB " << req;
+    //    qDebug() << "AddStatisticsToDB " << req;
 }
 
 
@@ -2512,7 +2489,7 @@ void MainWindow::AddStatisticsToDB(QString bisnessprocessname,QString GTIN,QStri
     QString tablename = "`mark`.`statistics`" ;
     QString req = QString("INSERT INTO %1 (`BProcess`, `GTIN`, `LPName`, `batch`, `date`, `count`, `xmlfilename`) VALUES (\"%2\",\"%3\",\"%4\",\"%5\",'%6','%7',\"%8\");").arg(tablename, bisnessprocessname, GTIN, medicament_name, BatchNumber,datetime.toTimeSpec(Qt::LocalTime).toString("yyyy-MM-dd hh:mm:ss"),QString::number(count), XMLFileName);
     sqlDB->makesqlreq(req);
-    qDebug() << "AddStatisticsToDB " << req;
+    //    qDebug() << "AddStatisticsToDB " << req;
 }
 
 
@@ -2627,15 +2604,15 @@ void MainWindow::on_StatistFindButton_clicked()
     ui->FoundLabel->setText("Найдено: " + summ);
 
 
-    qDebug() << "startdates" << startdates.first() ;
-    qDebug() << "stopdates" << stopdates.last() ;
+    //    qDebug() << "startdates" << startdates.first() ;
+    //    qDebug() << "stopdates" << stopdates.last() ;
 
     //    QDate StartDate = QDate::fromString(startdates.first(),"yyyy-MM-ddThh:mm:ss");
     QDateTime StartDate = QDateTime::fromString(startdates.first(),Qt::ISODate);
     QDateTime StopDate =  QDateTime::fromString(stopdates.last(),Qt::ISODate);
 
-    qDebug() << "StartDate" << StartDate;
-    qDebug() << "StopDate" << StopDate ;
+    //    qDebug() << "StartDate" << StartDate;
+    //    qDebug() << "StopDate" << StopDate ;
 
     ui->StartTimeStatisticsLabel->setText( QString("время начала ") + StartDate.toString("yyyy-MM-dd hh:mm:ss"));
     ui->StopTimeStatisticsLabel->setText(QString("время окончания ") +  StopDate.toString("yyyy-MM-dd hh:mm:ss"));
@@ -2708,10 +2685,10 @@ void MainWindow::replyfinished(QNetworkReply *reply)
     int i;
     QByteArray bytes = reply->readAll(); // bytes
     QString stringreply = QString::fromUtf8(bytes);
-    qDebug() << "Server reply "<< stringreply;
+    //    qDebug() << "Server reply "<< stringreply;
 
     if (reply->errorString() != "Unknown error"){
-        qDebug() << "API REQUEST ERROR "<< reply->errorString();
+        //        qDebug() << "API REQUEST ERROR "<< reply->errorString();
     }
 }
 
@@ -2736,9 +2713,6 @@ void MainWindow::ClearApiLog()
     ui->APILOG->clear();
 }
 
-void MainWindow::on_AuthButton_clicked()
-{
-}
 
 void MainWindow::on_sendISMarkButton_clicked()
 {
@@ -2748,7 +2722,7 @@ void MainWindow::on_sendISMarkButton_clicked()
 void MainWindow::on_sendFileApiButton_clicked()
 {
 
-    apiclient->Sendfile(apiclient->getToken(), ui->FileNameForSendAPI->toPlainText());
+    apiclient->Sendfile(apiclient->getToken(), ui->FileNameForSendAPI->toPlainText(), ui->DocTypecomboBox->currentText().toInt());
 }
 
 void MainWindow::on_AuthAPIButton_clicked()

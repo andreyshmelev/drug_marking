@@ -73,7 +73,6 @@ void APIMARK::replyfinished(QNetworkReply *reply)
         setCode(code);
         emit message("Код: " + code);
         return;
-
     }
 
     if (!token.isEmpty()){
@@ -149,14 +148,11 @@ void APIMARK::GetOutcomeDocumentsList(QString token)
 void APIMARK::GetIncomeDocumentsList()
 {
     QNetworkRequest requestauthorization;
-
     QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/income");
-
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
     tokenbyte.append(QString("token %1").arg(getToken()));
-
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
@@ -203,8 +199,6 @@ void APIMARK::Logout(QString token)
     QNetworkReply *reply = manager->post(requestauthorization,data0);
 }
 
-
-
 void APIMARK::AskToken(QString code)
 {
     QNetworkRequest requestauthorization;
@@ -222,7 +216,6 @@ void APIMARK::AskToken(QString code)
     requestauthorization.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->post(requestauthorization,data);
 }
-
 
 QString APIMARK::generateRandomStringForGUID(int lenght)
 {
@@ -248,8 +241,7 @@ QString APIMARK::generateGUIDString()
     return GIDString;
 }
 
-
-void APIMARK::Sendfile(QString token, QString filename)
+void APIMARK::Sendfile(QString token, QString filename, int doctype)
 {
     QNetworkRequest requestauthorization;
     ////////
@@ -263,18 +255,15 @@ void APIMARK::Sendfile(QString token, QString filename)
     stringcontentinRFC2045.append( bytecontentinRFC2045.toBase64() );
     QByteArray byteCodeRFC2045;
     byteCodeRFC2045.append(getCode());
-
     QString CodeIn2045 = byteCodeRFC2045.toBase64();
 
     ////////
 
     QJsonObject mainJsonObject;
-
-    mainJsonObject["doc_type"] = 311;
+    mainJsonObject["doc_type"] = doctype;
     mainJsonObject["document"] = stringcontentinRFC2045;
     mainJsonObject["sign"] = "";
     mainJsonObject["request_id"] = generateGUIDString();
-
     QJsonDocument Doc(mainJsonObject);
     QByteArray ba = Doc.toJson();
 
@@ -372,4 +361,13 @@ void APIMARK::DownloadDocumentByLink(QString link, QString filename)
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->get(requestauthorization);
+
+    QEventLoop loop;
+    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+     if(reply)
+    {
+      qDebug() << reply->readAll();
+    }
 }

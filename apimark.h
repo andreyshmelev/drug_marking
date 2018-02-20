@@ -42,7 +42,7 @@ public slots:
     void GetCurrentUser(QString code);
     void Logout(QString code);
     void AskToken(QString code);
-    void Sendfile(QString token, QString filename);
+    void Sendfile(QString token, QString filename, int doctype);
     void RegisterNonResidentUser(QString token);
     void RegisterResidentUser(QString token);
     void GetIncomeDocumentsList();

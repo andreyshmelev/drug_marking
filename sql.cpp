@@ -11,11 +11,10 @@ SQL::SQL(QString path)
     QString dbname = "mark";
     QString hostname = "192.168.1.63";  // <<-"localhost"; //"192.168.1.62";127.0.0.1
     int port = 3306;
-
     QString user = "markirovka";
     QString password = "WD8NHWq3T0zT";
+//    qDebug() << QSqlDatabase::drivers();
 
-    qDebug() << QSqlDatabase::drivers();
 
     QString driver = "QMYSQL";
 
@@ -27,18 +26,15 @@ SQL::SQL(QString path)
     db.setPort(port);
     if (!db.open(user, password)) {
         err = db.lastError();
-//        qDebug() << "NOT opened!";
     }
     else
     {
-        qDebug() << "Base opened!";
     }
 }
 
 void SQL::baseConnection()
 {
     QString path  = "C:/Work/SQL/mydatabase";
-    //    QString path  = "C:/Work/SQL/DB";
     {
         db = QSqlDatabase::addDatabase("QSQLITE");
         db.setDatabaseName(path);
@@ -64,9 +60,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
         execc += " WHERE " + where;
     }
 
-//    qDebug() << execc;
     if (!query.exec(execc)) {
-        //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();
     }
 
@@ -79,7 +73,7 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     }
 
     if (strName.length() == 0)
-        strName.append(""); // зачем?
+        strName.append("");
 
     return strName;
 }
@@ -95,25 +89,20 @@ QStringList SQL::getsumm(QString select, QString from, QString where, QString re
         execc += " WHERE " + where;
     }
 
-//    qDebug() << execc;
     if (!query.exec(execc)) {
         //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();
     }
-// qDebug() << "No DataBase Error" ;
 
-    //Reading of the data
     QSqlRecord SQLrec     = query.record();
     QStringList    strName;
-
-//    qDebug() << "query.record()" << query.record() ;
 
     while (query.next()) {
         strName.append( query.value(SQLrec.indexOf(rec)).toString() );
     }
 
     if (strName.length() == 0)
-        strName.append(""); // зачем?
+        strName.append("");
 
     return strName;
 }
@@ -124,14 +113,12 @@ QStringList SQL::seldistinct(QString select, QString from, QString where, QStrin
     //Задаем запрос
     QString execc = "SELECT DISTINCT " + select + " FROM " + from;
 
-    qDebug() << execc;
     if (where != "")
     {
         execc += " WHERE " + where;
     }
 
     if (!query.exec(execc)) {
-        //        qDebug() << "Unable to execute query - exiting";
         qDebug() << "Last DataBase Error" << query.lastError();
     }
 
@@ -144,7 +131,7 @@ QStringList SQL::seldistinct(QString select, QString from, QString where, QStrin
     }
 
     if (strName.length() == 0)
-        strName.append(""); // зачем?
+        strName.append("");
 
     return strName;
 }
@@ -156,7 +143,6 @@ QSqlError SQL::makesqlreq(QString req)
     QString execc = req;
 
     if (!query.exec(execc)) {
-        qDebug() << "Unable to execute query - exiting2";
         qDebug() << query.lastError();
     }
     return query.lastError() ;
@@ -167,7 +153,6 @@ void SQL::upd(QString u, QString s, QString w)
     QString qstr = "UPDATE " + u + " SET " + s + " WHERE " + w;
     QSqlQuery query;
     if (!query.exec(qstr)) {
-        qDebug() << "Unable to inser operation";
-        //return 1;
+        qDebug() << "Last DataBase Error" << query.lastError();
     }
 }
