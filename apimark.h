@@ -48,6 +48,8 @@ public slots:
     void GetIncomeDocumentsList();
     void GetDownloadLinkDocumentByID(QString docID);
     void DownloadDocumentByLink(QString link, QString filename);
+    void GetRules();
+protected slots:
 private slots:
     QString generateRandomStringForGUID(int lenght);
     QString generateGUIDString();

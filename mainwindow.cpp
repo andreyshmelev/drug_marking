@@ -2787,3 +2787,9 @@ void MainWindow::on_downloadFileApiButton_2_clicked()
 {
     apiclient->DownloadDocumentByLink(apiclient->getFileDownloadLink(),ui->DocumentPathForDownload->toPlainText());
 }
+
+void MainWindow::on_getRulesButton_clicked()
+{
+    ui->APILOG->clear();
+    apiclient->GetRules();
+}

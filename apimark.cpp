@@ -310,19 +310,14 @@ void APIMARK::Sendfile(QString token, QString filename)
     ////////
 
     QByteArray data = ba.simplified();
-
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/send"); // отправка файла XML
-
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
-
     tokenbyte.append(QString("token %1").arg(token));
-
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->post(requestauthorization,data);
-        delete reply;
 }
 
 
@@ -380,24 +375,49 @@ void APIMARK::GetDownloadLinkDocumentByID(QString docID)
     QNetworkReply *reply = manager->get(requestauthorization);
 }
 
+void APIMARK::GetRules()
+{
+    QNetworkRequest requestauthorization;
+    QString URLstr = QString("http://dev-api.markirovka.nalog.ru/api/v1/rights/about");
+
+    QUrl serviceURL(URLstr);
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+    tokenbyte.append(QString("token %1").arg(getToken()));
+
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+    QNetworkReply *reply = manager->get(requestauthorization);
+}
+
 
 
 void APIMARK::DownloadDocumentByLink(QString link, QString filename)
 {
-    QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(link)));
 
-//    QEventLoop loop;
-//    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-//    loop.exec();
-//    QFile file(filename);
-//    file.open(QIODevice::WriteOnly);
-//    QTextStream out(&file);
-//    out << reply->readAll();
+    QNetworkRequest requestauthorization;
+    QString URLstr = QString(link);
 
-    // connect signals
+    QUrl serviceURL(URLstr);
+    requestauthorization.setUrl(serviceURL);
+    QByteArray tokenbyte ;
+    tokenbyte.append(QString("token %1").arg(getToken()));
 
-    qDebug() << "link "<< link;
-    qDebug() << "filename "<< filename;
+    requestauthorization.setRawHeader("Content-Type","application/json");
+    requestauthorization.setRawHeader("Authorization",tokenbyte);
+    requestauthorization.setRawHeader("Cache-Control","no-cache");
+    QNetworkReply *reply = manager->get(requestauthorization);
 
 
+//    QByteArray tokenbyte ;
+//    tokenbyte.append(QString("token %1").arg(getToken()));
+
+//    requestauthorization.setRawHeader("Content-Type","application/json");
+//    requestauthorization.setRawHeader("Authorization",tokenbyte);
+//    requestauthorization.setRawHeader("Cache-Control","no-cache");
+//    QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(link)));
+
+//    qDebug() << "link "<< link;
+//    qDebug() << "filename "<< filename;
 }
