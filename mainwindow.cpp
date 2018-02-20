@@ -405,16 +405,11 @@ void MainWindow::ResponseFromLineRecieved(QString address,quint16 port,QString m
 {
     QString date =  QDateTime::currentDateTime().toString("hh:mm::ss:zzz");
     ui->SerialTimeRecieve->setText( date  + " : " + message );
-
-
 }
 
 void MainWindow::ADDApiLOG(QString Logstring)
 {
-
-    //    ClearApiLog();
-
-    ui->APILOG->appendPlainText(ui->APILOG->toPlainText() + "\n" + Logstring);
+    ui->APILOG->appendPlainText("\n" + Logstring);
 }
 
 int MainWindow::GenerateNumber(int High, int Low)
