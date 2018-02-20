@@ -12,7 +12,7 @@ class APIMARK : public QObject
 {
     Q_OBJECT
 public:
-    explicit APIMARK(QObject *parent = nullptr);
+    explicit APIMARK(QObject *parent = 0);
 
     QString getCode() const;
     void setCode(const QString &value);
