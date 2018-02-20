@@ -20,7 +20,7 @@ APIMARK::APIMARK(QObject *parent) : QObject(parent)
     connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
 
     QByteArray data = ("{\"client_id\": \"ef77a1f8-e374-451d-9da9-7c3519d0d143\",\"client_secret\": \"c4bf1684-eb4e-4119-bed7-b28fc3beb68b\",\"user_id\": \"test_non_resident\",\"auth_type\": \"PASSWORD\"}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/auth"); // авторизируемся туточки
+    QUrl serviceURL("http://148.251.237.216/api/v1/auth"); // авторизируемся туточки
 
     requestauthorization.setUrl(serviceURL);
     requestauthorization.setRawHeader("Content-Type","application/json");
@@ -119,7 +119,7 @@ QString APIMARK::GetCodeAuth()
 {
     QNetworkRequest requestauthorization;
     QByteArray data = ("{\"client_id\": \"ef77a1f8-e374-451d-9da9-7c3519d0d143\",\"client_secret\": \"c4bf1684-eb4e-4119-bed7-b28fc3beb68b\",\"user_id\": \"test_non_resident\",\"auth_type\": \"PASSWORD\"}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/auth"); // авторизируемся туточки
+    QUrl serviceURL("http://148.251.237.216/api/v1/auth"); // авторизируемся туточки
 
     requestauthorization.setUrl(serviceURL);
     requestauthorization.setRawHeader("Content-Type","application/json");
@@ -158,7 +158,7 @@ void APIMARK::GetOutcomeDocumentsList(QString token)
     QNetworkRequest requestauthorization;
     //    QByteArray data = ("{\"filter\": { \"document_id\":\"6ec4a53b-0ea1-4eb5-8df8-b94e19a38b09\"},\"start_from\": 0,\"count\": 1000}");
     QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/outcome");
+    QUrl serviceURL("http://148.251.237.216/api/v1/documents/outcome");
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -178,7 +178,7 @@ void APIMARK::GetIncomeDocumentsList()
     QNetworkRequest requestauthorization;
 
     QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/income");
+    QUrl serviceURL("http://148.251.237.216/api/v1/documents/income");
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -195,7 +195,7 @@ void APIMARK::GetCurrentUser(QString token)
     //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
 
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/users/current");
+    QUrl serviceURL("http://148.251.237.216/api/v1/users/current");
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -219,7 +219,7 @@ void APIMARK::Logout(QString token)
     QNetworkRequest requestauthorization;
 
     QByteArray data = ("{\"filter\": {\"doc_status\": \"PROCESSED_DOCUMENT\"},\"start_from\": 0,\"count\": 100}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/logout"); // отправка файла XML
+    QUrl serviceURL("http://148.251.237.216/api/v1/logout"); // отправка файла XML
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -250,7 +250,7 @@ void APIMARK::AskToken(QString code)
     data.clear();
     data.append(stringdata);
 
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/token"); // отправка файла XML
+    QUrl serviceURL("http://148.251.237.216/api/v1/token"); // отправка файла XML
 
     requestauthorization.setUrl(serviceURL);
     requestauthorization.setRawHeader("Content-Type","application/json");
@@ -316,7 +316,7 @@ void APIMARK::Sendfile(QString token, QString filename)
     ////////
 
     QByteArray data = ba.simplified();
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/send"); // отправка файла XML
+    QUrl serviceURL("http://148.251.237.216/api/v1/documents/send"); // отправка файла XML
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
     tokenbyte.append(QString("token %1").arg(token));
@@ -335,7 +335,7 @@ void APIMARK::RegisterNonResidentUser(QString token)
 
     QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",\"username\" : \"korvas\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
 
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_nonresident"); // отправка файла XML
+    QUrl serviceURL("http://148.251.237.216/api/v1/registration/user_nonresident"); // отправка файла XML
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -352,7 +352,7 @@ void APIMARK::RegisterResidentUser(QString token)
     QNetworkRequest requestauthorization;
 
     QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",  \"public_cert\" : \"\"   ,\"username\" : \"korvas2\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
-    QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_resident"); // отправка файла XML
+    QUrl serviceURL("http://148.251.237.216/api/v1/registration/user_resident"); // отправка файла XML
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
     tokenbyte.append(QString("token %1").arg(token));
@@ -368,7 +368,7 @@ void APIMARK::GetDownloadLinkDocumentByID(QString docID)
     QNetworkRequest requestauthorization;
 
     QByteArray data = ("{\"group_name\" : \"Тестовая группа для ООО Пилюльки\",\"rights\" : [\"DOWNLOAD_DOCUMENT\"]}");
-    QString URLstr = QString("http://dev-api.markirovka.nalog.ru/api/v1/documents/download/%1").arg(docID);
+    QString URLstr = QString("http://148.251.237.216/api/v1/documents/download/%1").arg(docID);
 
     QUrl serviceURL(URLstr);
     requestauthorization.setUrl(serviceURL);
@@ -384,7 +384,7 @@ void APIMARK::GetDownloadLinkDocumentByID(QString docID)
 void APIMARK::GetRules()
 {
     QNetworkRequest requestauthorization;
-    QString URLstr = QString("http://dev-api.markirovka.nalog.ru/api/v1/rights/about");
+    QString URLstr = QString("http://148.251.237.216/api/v1/rights/about");
 
     QUrl serviceURL(URLstr);
     requestauthorization.setUrl(serviceURL);
