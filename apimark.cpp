@@ -26,7 +26,13 @@ APIMARK::APIMARK(QObject *parent) : QObject(parent)
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Cache-Control","no-cache");
 
+
+
     QNetworkReply *reply = manager->post(requestauthorization,data);
+
+
+
+    qDebug() << serviceURL;
 }
 
 QString APIMARK::getCode() const
