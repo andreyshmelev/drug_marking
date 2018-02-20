@@ -1,18 +1,16 @@
-#include "apimark.h"
-
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QUrl>
-
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QEventLoop>
 
+#include "apimark.h"
+
 APIMARK::APIMARK(QObject *parent) : QObject(parent)
 {
-
     manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
     connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
@@ -31,7 +29,6 @@ QString APIMARK::getCode() const
 
 void APIMARK::setCode(const QString &value)
 {
-    qDebug() << "code now is" << value;
     code = value;
 }
 
@@ -42,7 +39,6 @@ QString APIMARK::getToken() const
 
 void APIMARK::setToken(const QString &value)
 {
-    qDebug() << "token now is" << value;
     token = value;
 }
 
@@ -62,10 +58,8 @@ void APIMARK::replyfinished(QNetworkReply *reply)
     QString stringreply = QString::fromUtf8(bytes);
 
     if (reply->errorString() != "Unknown error"){
-        qDebug() << "API REQUEST ERROR "<< reply->errorString();
         emit message("API REQUEST ERROR " + reply->errorString() + ", "  + stringreply);
     }
-
 
     // read and parse reply
     QJsonDocument loadDoc(QJsonDocument::fromJson(bytes));
@@ -93,7 +87,6 @@ void APIMARK::replyfinished(QNetworkReply *reply)
         return;
     }
 
-
     if (!filelink.isEmpty()){
         emit message("Ссылка на скачивание: " + filelink);
         setFileDownloadLink(filelink);
@@ -115,12 +108,7 @@ QString APIMARK::GetCodeAuth()
     requestauthorization.setRawHeader("Cache-Control","no-cache");
 
     QNetworkReply *reply = manager->post(requestauthorization,data);
-
-
-    //    while
-
     QByteArray bytes = reply->readAll(); // bytes
-
     QString stringreply = QString::fromUtf8(bytes);
     qDebug() << "Server reply "<< stringreply;
 
@@ -145,16 +133,12 @@ QString APIMARK::GetCodeAuth()
 void APIMARK::GetOutcomeDocumentsList(QString token)
 {
     QNetworkRequest requestauthorization;
-    //    QByteArray data = ("{\"filter\": { \"document_id\":\"6ec4a53b-0ea1-4eb5-8df8-b94e19a38b09\"},\"start_from\": 0,\"count\": 1000}");
     QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/outcome");
 
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
     tokenbyte.append(QString("token %1").arg(token));
-
-
-    //    qDebug() << "SendDocument tokenbyte "<< tokenbyte;
 
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
@@ -192,9 +176,6 @@ void APIMARK::GetCurrentUser(QString token)
 
     QByteArray data0 ;
     data0.clear();
-
-    qDebug() << "GetCurrentUser tokenbyte "<< tokenbyte;
-
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
@@ -204,7 +185,6 @@ void APIMARK::GetCurrentUser(QString token)
 
 void APIMARK::Logout(QString token)
 {
-    //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
 
     QByteArray data = ("{\"filter\": {\"doc_status\": \"PROCESSED_DOCUMENT\"},\"start_from\": 0,\"count\": 100}");
@@ -217,8 +197,6 @@ void APIMARK::Logout(QString token)
     QByteArray data0 ;
     data0.clear();
 
-    qDebug() << "GetCurrentUser tokenbyte "<< tokenbyte;
-
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
@@ -229,9 +207,7 @@ void APIMARK::Logout(QString token)
 
 void APIMARK::AskToken(QString code)
 {
-    //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
-    //    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
 
     QString stringdata = QString("{\"code\": \"%1\",\"password\" : \"password\"}").arg(code);
     QByteArray data ;
@@ -318,12 +294,8 @@ void APIMARK::Sendfile(QString token, QString filename)
 
 void APIMARK::RegisterNonResidentUser(QString token)
 {
-    //    manager = new QNetworkAccessManager(this);
     QNetworkRequest requestauthorization;
-    //    connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyfinished(QNetworkReply*)));
-
     QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",\"username\" : \"korvas\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
-
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_nonresident"); // отправка файла XML
 
     requestauthorization.setUrl(serviceURL);
@@ -386,11 +358,8 @@ void APIMARK::GetRules()
     QNetworkReply *reply = manager->get(requestauthorization);
 }
 
-
-
 void APIMARK::DownloadDocumentByLink(QString link, QString filename)
 {
-
     QNetworkRequest requestauthorization;
     QString URLstr = QString(link);
 
@@ -403,16 +372,4 @@ void APIMARK::DownloadDocumentByLink(QString link, QString filename)
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
     QNetworkReply *reply = manager->get(requestauthorization);
-
-
-//    QByteArray tokenbyte ;
-//    tokenbyte.append(QString("token %1").arg(getToken()));
-
-//    requestauthorization.setRawHeader("Content-Type","application/json");
-//    requestauthorization.setRawHeader("Authorization",tokenbyte);
-//    requestauthorization.setRawHeader("Cache-Control","no-cache");
-//    QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(link)));
-
-//    qDebug() << "link "<< link;
-//    qDebug() << "filename "<< filename;
 }
