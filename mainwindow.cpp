@@ -1829,7 +1829,6 @@ void MainWindow::setStackedPage(int newindex)
 
 void MainWindow::SendCommandToVideoJet(QString a)
 {
-    return;
     serverWrite(a);
     a ="\r"; // посылаем знак завершения посылки.
     //    serverWrite(a);
