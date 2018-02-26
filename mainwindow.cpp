@@ -767,7 +767,9 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     QDomDocument document;
     QDomElement root = document.createElement("documents");
-    document.appendChild(root);
+
+    //    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+    //    root.setAttribute("version","1.18");
 
     QDomElement reg_prod_emis_elem  = document.createElement("register_product_emission");
     reg_prod_emis_elem.setAttribute("action_id", "313");
@@ -783,7 +785,6 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     subjectIDelement.appendChild(subjectIDtext);
 
     // добавили subject_id
-
     // добавляем operation_date
 
     QDomElement operationdateelement  = document.createElement("operation_date");
@@ -797,9 +798,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     // добавили operation_date
 
-
     // добавляем confirm_doc
-
     QDomElement confirm_doc_lement  = document.createElement("confirm_doc");
     reg_prod_emis_elem.appendChild(confirm_doc_lement);
 
@@ -846,7 +845,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     for (int var = 0; var < MedList.length(); ++var) {
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
-        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
+        sgtin_text  = document.createTextNode("sgtintext");
         sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
     }
@@ -1240,6 +1239,10 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
+
+    root.setAttribute("version","1.18");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+
     QDomElement reg_end_pack_elem  = document.createElement("register_end_packing");
     reg_end_pack_elem.setAttribute("action_id", "311");
     root.appendChild(reg_end_pack_elem);
@@ -1261,7 +1264,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     if (ordertype == 2)
     {
         // добавляем owner_id
-        //        addXMLTextNode(reg_end_pack_elem, owner->get_owner_id(), "owner_id", document);
+        // addXMLTextNode(reg_end_pack_elem, owner->get_owner_id(), "owner_id", document);
         addXMLTextNode(reg_end_pack_elem, owner->get_subject_id(),"owner_id", document);
         // добавили owner_id
     }
@@ -1299,7 +1302,6 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     QString filename = MedList.at(0)->BatchNumber+"_P311_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
 
-
     QFile file(filepath);
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -1333,7 +1335,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     // сначала проверяем ня соответствие QR кодам
     //    qDebug() << stringforparse;
 
-
     if (stringforparse == register_product_emission_QR_string)
     {
         RegisterProductEmissionPageOpen();
@@ -1351,7 +1352,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         RegisterEndPackingPageOpen();
         return;
     }
-
 
     if (stringforparse == unit_pack_QR_string)
     {
@@ -1371,11 +1371,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         ReleabilingPageOpen();
         return;
     }
-
-
-
-
-
 
 
     if (stringforparse == printControlQRCode)
@@ -1830,8 +1825,7 @@ void MainWindow::setStackedPage(int newindex)
 void MainWindow::SendCommandToVideoJet(QString a)
 {
     serverWrite(a);
-    a ="\r"; // посылаем знак завершения посылки.
-    //    serverWrite(a);
+    qDebug() << a;
 }
 
 void MainWindow::updateQRImage()
@@ -2692,7 +2686,7 @@ void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, 
 
     //     qDebug() << "DrugRecievedFromEmulator" ;
 
-    QString sgtin = SerialNumber + GTIN;
+    QString sgtin =  GTIN + SerialNumber;
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
     emit SendMedicamentSignal(t);
 }
