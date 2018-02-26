@@ -755,7 +755,6 @@ QString MainWindow::GetDOCDate()
 
 void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operation_date)
 {
-    //    qDebug() << "CreateXML313Doc" ;
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
@@ -767,15 +766,15 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     QDomDocument document;
     QDomElement root = document.createElement("documents");
-
-    //    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-    //    root.setAttribute("version","1.18");
+    document.appendChild(root);
 
     QDomElement reg_prod_emis_elem  = document.createElement("register_product_emission");
     reg_prod_emis_elem.setAttribute("action_id", "313");
     root.appendChild(reg_prod_emis_elem);
 
-    // добавляем subject_id
+
+    root.setAttribute("version","1.18");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     QDomElement subjectIDelement  = document.createElement("subject_id");
     reg_prod_emis_elem.appendChild(subjectIDelement);
@@ -785,6 +784,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     subjectIDelement.appendChild(subjectIDtext);
 
     // добавили subject_id
+
     // добавляем operation_date
 
     QDomElement operationdateelement  = document.createElement("operation_date");
@@ -798,7 +798,9 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     // добавили operation_date
 
+
     // добавляем confirm_doc
+
     QDomElement confirm_doc_lement  = document.createElement("confirm_doc");
     reg_prod_emis_elem.appendChild(confirm_doc_lement);
 
@@ -845,7 +847,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     for (int var = 0; var < MedList.length(); ++var) {
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
-        sgtin_text  = document.createTextNode("sgtintext");
+        sgtin_text  = document.createTextNode("sgtintext"); // operation_date");
         sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
     }
@@ -885,6 +887,10 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     QDomElement move_order_elem  = document.createElement("move_order");
     move_order_elem.setAttribute("action_id", "415");
     root.appendChild(move_order_elem);
+
+
+    root.setAttribute("version","1.18");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     // добавляем subject_id
     addXMLTextNode(move_order_elem,  companysender->get_subject_id() , "subject_id", document);
@@ -987,6 +993,10 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     relabeling_elem.setAttribute("action_id", "811");
     root.appendChild(relabeling_elem);
 
+
+    root.setAttribute("version","1.18");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+
     //добавляем subject_id
     addXMLTextNode(relabeling_elem,  company_subject->get_subject_id() , "subject_id", document);
     //добавили subject_id
@@ -1054,6 +1064,11 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     QDomElement unit_pack_elem  = document.createElement("unit_pack");
     unit_pack_elem.setAttribute("action_id", "911");
     root.appendChild(unit_pack_elem);
+
+
+    root.setAttribute("version","1.18");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+
 
     //добавляем subject_id
     addXMLTextNode(unit_pack_elem,  companysender->get_subject_id() , "subject_id", document);
@@ -1137,6 +1152,10 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
     QDomElement reg_ctrl_smples_elem  = document.createElement("register_control_samples");
     reg_ctrl_smples_elem.setAttribute("action_id", "313");
     root.appendChild(reg_ctrl_smples_elem);
+
+
+    root.setAttribute("version","1.18");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     // добавляем subject_id
 
@@ -1239,7 +1258,6 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-
     root.setAttribute("version","1.18");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
@@ -1268,7 +1286,6 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
         addXMLTextNode(reg_end_pack_elem, owner->get_subject_id(),"owner_id", document);
         // добавили owner_id
     }
-
 
     // добавляем series_number - номер производственной серии (не серийник потребит.упак. а именно партия)
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->BatchNumber, "series_number", document);
