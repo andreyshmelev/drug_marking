@@ -265,7 +265,7 @@ void APIMARK::Sendfile(QString token, QString filename, int doctype)
     mainJsonObject["sign"] = "";
     mainJsonObject["request_id"] = generateGUIDString();
 
-    qDebug() << "request_id" <<  mainJsonObject["request_id"] ;
+    qDebug() << "doc_type" <<  mainJsonObject["doc_type"] ;
 
     QJsonDocument Doc(mainJsonObject);
     QByteArray ba = Doc.toJson();

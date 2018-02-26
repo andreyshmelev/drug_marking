@@ -854,7 +854,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     // добавили signs
 
-    QString filename = MedList.at(0)->BatchNumber+"_P313_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P313_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
@@ -953,7 +953,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 
     // добавили signs
 
-    QString filename = MedList.at(0)->BatchNumber+"_P415_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P415_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
@@ -1029,7 +1029,7 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
 
     //добавили signs
 
-    QString filename = MedListNew.at(0)->BatchNumber+"_P811_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filename = MedListNew.at(0)->BatchNumber+"_P811_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath() + "/" + filename ;
     QFile file(filepath);
 
@@ -1115,7 +1115,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     }
     // добавили signs
 
-    QString filename = MedList.at(0)->BatchNumber+"_P911_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P911_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
@@ -1219,7 +1219,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
 
     // добавили signs
 
-    QString filename = MedList.at(0)->BatchNumber+"_P312_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P312_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
@@ -1251,6 +1251,11 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
+    if (ordertype!=1||ordertype!=2)
+    {
+        ordertype = 1; // если что по умолчанию ставим собственное производство
+    }
+
     if (MedList.length() <=0)
         return ;
 
@@ -1269,7 +1274,6 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     addXMLTextNode(reg_end_pack_elem,  sender->get_subject_id() , "subject_id", document);
     // добавили subject_id
 
-
     // добавляем operation_date
     addXMLTextNode(reg_end_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     // добавили operation_date
@@ -1286,6 +1290,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
         addXMLTextNode(reg_end_pack_elem, owner->get_subject_id(),"owner_id", document);
         // добавили owner_id
     }
+
 
     // добавляем series_number - номер производственной серии (не серийник потребит.упак. а именно партия)
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->BatchNumber, "series_number", document);
@@ -1316,7 +1321,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 
     // добавили signs
 
-    QString filename = MedList.at(0)->BatchNumber+"_P311_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss dd-MM-yy") + ".xml";
+    QString filename = MedList.at(0)->BatchNumber+"_P311_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
 
     QFile file(filepath);
