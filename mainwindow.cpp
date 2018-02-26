@@ -2608,28 +2608,24 @@ void MainWindow::on_StatistFindButton_clicked()
     QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics",reqstring,"Total");
     QString summ = ssss.at(0);
 
-
     QStringList startdates = sqlDB->sel("date", "statistics", QString("batch like '%1' and BProcess = 'start'").arg(statbatch),"date");
     QStringList stopdates = sqlDB->sel("date", "statistics",  QString("batch like '%1' and BProcess = 'stop'").arg(statbatch),"date");
-    ui->FoundLabel->setText("Найдено: " + summ);
+    ui->FoundLabel->setText("Найдено: " + summ + " записей");
 
-
-    //    qDebug() << "startdates" << startdates.first() ;
-    //    qDebug() << "stopdates" << stopdates.last() ;
-
-    //    QDate StartDate = QDate::fromString(startdates.first(),"yyyy-MM-ddThh:mm:ss");
     QDateTime StartDate = QDateTime::fromString(startdates.first(),Qt::ISODate);
     QDateTime StopDate =  QDateTime::fromString(stopdates.last(),Qt::ISODate);
-
-    //    qDebug() << "StartDate" << StartDate;
-    //    qDebug() << "StopDate" << StopDate ;
 
     ui->StartTimeStatisticsLabel->setText( QString("время начала ") + StartDate.toString("yyyy-MM-dd hh:mm:ss"));
     ui->StopTimeStatisticsLabel->setText(QString("время окончания ") +  StopDate.toString("yyyy-MM-dd hh:mm:ss"));
 
-    //SELECT SUM(count) AS Total FROM mark.statistics where batch like "A12345" and GTIN like '%';
-    //    qDebug() << "SUM" << ssss ;
+    quint16 secondsDiff = StartDate.secsTo(StopDate);
+
+    float avg = summ.toFloat() / secondsDiff * 60;
+
+    ui->AverageEffeciencyStatisticsLabel->setText(QString("Средняя производительность:%1 уп/мин").arg(avg));
+
     GetStatisticsFromDB();
+
 }
 
 void MainWindow::on_SerializAutoUpakovkaCheckBox_toggled(bool checked)
@@ -2776,4 +2772,20 @@ void MainWindow::on_getRulesButton_clicked()
 {
     ui->APILOG->clear();
     apiclient->GetRules();
+}
+
+void MainWindow::on_StatistFindButton_2_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Export PDF", QString(), "*.pdf");
+        if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
+
+        QPrinter printer(QPrinter::PrinterResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setPaperSize(QPrinter::A4);
+        printer.setOutputFileName(fileName);
+
+        QTextDocument doc;
+        doc.setHtml("<h1>Hello, World!</h1>\n<p>Lorem ipsum dolor sit amet, consectitur adipisci elit.</p>");
+        doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number
+        doc.print(&printer);
 }

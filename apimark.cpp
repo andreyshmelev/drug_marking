@@ -283,7 +283,6 @@ void APIMARK::Sendfile(QString token, QString filename, int doctype)
     QNetworkReply *reply = manager->post(requestauthorization,data);
 }
 
-
 void APIMARK::RegisterNonResidentUser(QString token)
 {
     QNetworkRequest requestauthorization;

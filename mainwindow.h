@@ -397,6 +397,8 @@ private slots:
     void on_downloadFileApiButton_2_clicked();
     void on_getRulesButton_clicked();
 
+    void on_StatistFindButton_2_clicked();
+
 signals:
 
     void agregationstatusToggled();
