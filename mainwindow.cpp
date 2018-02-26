@@ -2784,31 +2784,29 @@ void MainWindow::MakeStatisticsPDFReport()
     printer.setPaperSize(QPrinter::A4);
     printer.setOutputFileName(fileName);
 
-    //    QTextDocument doc;
-    //    doc.setHtml("<h1>Hello, World!</h1>\n<p>Lorem ipsum dolor sit amet, consectitur adipisci elit.</p>");
-    //    doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number
-    //    doc.print(&printer);
-
-
     QTextDocument doc;
-    doc.setHtml(QString("<h1 style=\"color: #5e9ca0; text-align: center;\">Отчет по статистике</h1>\
-            <h2 style=\"color: #2e6c80; text-align: center;\">за период:</h2>\
-            <h2 style=\"color: #2e6c80; text-align: center;\">%1 - %2</h2>\
-            <p><strong>Бизнес - процесс: <span style=\"color: #ff0000;\">%3</span></strong></p>\
-            <p><strong>Препарат: <span style=\"color: #ff0000;\">%4</span></strong></p>\
-            <p><strong>Партия:&nbsp;<span style=\"color: #ff0000;\">%5</span></strong></p>\
-            <p><strong>GTIN:&nbsp;<span style=\"color: #ff0000;\">%6</span></strong></p>\
-            <p><strong>Дата начала сериализации:&nbsp;<span style=\"color: #ff0000;\">%7</span></strong></p>\
-            <p><strong>Дата окончания сериализации:&nbsp;<span style=\"color: #ff0000;\">%8</span></strong></p>\
-            <p><strong>Средняя производительность:&nbsp;<span style=\"color: #ff0000;\">%9</span></strong></p>").
-            arg(ui->StatistDateTimeFromEdit->text(), ui->StatistDateTimeToEdit->text(),
-                ui->StatistBPcomboBox->currentText(),ui->StatistMedicamentComboBox->currentText(),
-                ui->StatistBatchComboBox->currentText(), ui->StatistGTINCombobox->currentText(),
-                ui->StartTimeStatisticsLabel->text(),ui->StopTimeStatisticsLabel->text(), ui->AverageEffeciencyStatisticsLabel->text()));
+
+    QString a = (QString("<h1 style=\"color: #5e9ca0; text-align: center;\">Отчет по статистике</h1>\
+                <h2 style=\"color: #2e6c80; text-align: center;\">за период:</h2>\
+                <h2 style=\"color: #2e6c80; text-align: center;\">%1 - %2</h2>\
+                <p><strong>Бизнес - процесс: <span style=\"color: #ff0000;\">%3</span></strong></p>\
+                <p><strong>Препарат: <span style=\"color: #ff0000;\">%4</span></strong></p>\
+                <p><strong>Партия:&nbsp;<span style=\"color: #ff0000;\">%5</span></strong></p>\
+                <p><strong>GTIN:&nbsp;<span style=\"color: #ff0000;\">%6</span></strong></p>\
+                <p><strong>&nbsp;<span style=\"color: #ff0000;\">%7</span></strong></p>\
+                <p><strong>&nbsp;<span style=\"color: #ff0000;\">%8</span></strong></p>\
+                <p><strong>&nbsp;<span style=\"color: #ff0000;\">%9</span></strong></p>").
+                arg(ui->StatistDateTimeFromEdit->text(), ui->StatistDateTimeToEdit->text(),
+                    ui->StatistBPcomboBox->currentText(),ui->StatistMedicamentComboBox->currentText(),
+                    ui->StatistBatchComboBox->currentText(), ui->StatistGTINCombobox->currentText(),
+                    ui->StartTimeStatisticsLabel->text(),ui->StopTimeStatisticsLabel->text(), ui->AverageEffeciencyStatisticsLabel->text()));
+
+    a.append(QString("<p><span style=\"color: #ff0000;\"><strong>%1</strong></span></p>").arg(ui->FoundLabel->text()) );
+
+    doc.setHtml(a);
+
     doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number
     doc.print(&printer);
-
-
 }
 
 void MainWindow::on_StatistFindButton_2_clicked()
