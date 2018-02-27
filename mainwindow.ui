@@ -4489,6 +4489,36 @@ QComboBox::drop-down
                 <pointsize>12</pointsize>
                </font>
               </property>
+              <property name="dateTime">
+               <datetime>
+                <hour>23</hour>
+                <minute>59</minute>
+                <second>59</second>
+                <year>2021</year>
+                <month>12</month>
+                <day>31</day>
+               </datetime>
+              </property>
+              <property name="maximumDateTime">
+               <datetime>
+                <hour>23</hour>
+                <minute>59</minute>
+                <second>59</second>
+                <year>2099</year>
+                <month>12</month>
+                <day>31</day>
+               </datetime>
+              </property>
+              <property name="minimumDateTime">
+               <datetime>
+                <hour>0</hour>
+                <minute>0</minute>
+                <second>0</second>
+                <year>1992</year>
+                <month>9</month>
+                <day>14</day>
+               </datetime>
+              </property>
               <property name="displayFormat">
                <string>yyyy-MM-dd hh:mm:ss</string>
               </property>
