@@ -411,6 +411,12 @@ private slots:
 
     void on_unit_append_Button_clicked();
 
+    void on_multi_pack_Button_clicked();
+
+    void on_recall_Button_clicked();
+
+    void on_refusal_sender_Button_clicked();
+
 signals:
 
     void agregationstatusToggled();

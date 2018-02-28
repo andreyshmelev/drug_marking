@@ -250,7 +250,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug() << QDir::currentPath() ;
 
-
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
@@ -260,7 +259,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     RandomStringSenderToVideoJetTimer = new QTimer();
     RandomStringSenderToVideoJetTimer->setInterval(350); // каждые сорок пять секунд посылаем новую произвольную строку
-    //    RandomStringSenderToVideoJetTimer->setInterval(1000); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
 
@@ -2839,4 +2837,19 @@ void MainWindow::on_unit_extract_Button_clicked()
 void MainWindow::on_unit_append_Button_clicked()
 {
     setStackedPage(16);
+}
+
+void MainWindow::on_multi_pack_Button_clicked()
+{
+    setStackedPage(17);
+}
+
+void MainWindow::on_recall_Button_clicked()
+{
+    setStackedPage(18);
+}
+
+void MainWindow::on_refusal_sender_Button_clicked()
+{
+     setStackedPage(19);
 }

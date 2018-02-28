@@ -1215,7 +1215,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>17</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -3260,7 +3260,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
               <item row="4" column="0">
                <widget class="QPushButton" name="recall_Button">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -3319,7 +3319,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
               <item row="5" column="0">
                <widget class="QPushButton" name="refusal_sender_Button">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -3370,16 +3370,15 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Отзыв ЛП– Отправителем
-переданного Получателю
-Товара  (251)</string>
+                 <string>Отзыв отправителем
+переданного товара (251)</string>
                 </property>
                </widget>
               </item>
               <item row="3" column="0">
                <widget class="QPushButton" name="multi_pack_Button">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -5742,7 +5741,10 @@ QComboBox::drop-down
              </size>
             </property>
             <property name="text">
-             <string> включения элементов в транспортную упаковку (914)</string>
+             <string> Включения элементов в транспортную упаковку (914)</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -5751,24 +5753,68 @@ QComboBox::drop-down
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="page">
-         <widget class="QLabel" name="label_6">
+        <widget class="QWidget" name="UnitMultipackPage915">
+         <layout class="QGridLayout" name="gridLayout_43">
+          <item row="0" column="0">
+           <widget class="QLabel" name="UnitMultipackPage915_2">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Упаковка во множество транспортных тар (915)</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="MultiPackWidget915" name="UnitMultipackPageWidget" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="RecallPage250">
+         <widget class="QLabel" name="RecallLabel">
           <property name="geometry">
            <rect>
-            <x>150</x>
+            <x>140</x>
             <y>10</y>
-            <width>501</width>
-            <height>30</height>
+            <width>581</width>
+            <height>40</height>
            </rect>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>30</height>
+            <height>40</height>
            </size>
           </property>
           <property name="text">
-           <string>операции упаковки во множество транспортных тар</string>
+           <string>Отзыв/отмена ранее совершенной операции (250)</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="RefusalSenderPage251">
+         <widget class="QLabel" name="RefusalSenderLabel">
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>20</y>
+            <width>481</width>
+            <height>40</height>
+           </rect>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Отзыв отправителем переданного товара (251)</string>
           </property>
          </widget>
         </widget>
@@ -5834,6 +5880,12 @@ QComboBox::drop-down
    <class>UnitExtractWidget913</class>
    <extends>QWidget</extends>
    <header>Widgets/UnitExtractWidget913/unitextractwidget913.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MultiPackWidget915</class>
+   <extends>QWidget</extends>
+   <header>Widgets/MultiPackWidget915/multipackwidget915.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
