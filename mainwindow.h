@@ -161,6 +161,10 @@ public:
 
     void MakeStatisticsPDFReport();
 
+    void UnitUnpackPageOpen();
+
+    void UnitExtractPageOpen();
+
 public slots:
 
     void CreateXML311Doc(QList<medicament *> MedList, manufacturer * sender, manufacturer * owner,  int ordertype , QDateTime operation_date);
@@ -400,6 +404,12 @@ private slots:
     void on_getRulesButton_clicked();
 
     void on_StatistFindButton_2_clicked();
+
+    void on_unit_unpack_Button_clicked();
+
+    void on_unit_extract_Button_clicked();
+
+    void on_unit_append_Button_clicked();
 
 signals:
 

@@ -48,7 +48,11 @@ SOURCES += \
     code128item.cpp \
     serializationline.cpp \
     Widgets/RegisterProductWidget313/registerproductwidget313.cpp \
-    apimark.cpp
+    apimark.cpp \
+    Widgets/UnitUnpackWidget912/unitunpackwidget912.cpp \
+    Widgets/UnitExtractWidget913/unitextractwidget913.cpp \
+    Widgets/UnitAppendWidget914/unitappendwidget914.cpp \
+    Widgets/MultiPackWidget915/multipackwidget915.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -67,7 +71,11 @@ HEADERS += \
     code128item.h \
     serializationline.h \
     Widgets/RegisterProductWidget313/registerproductwidget313.h \
-    apimark.h
+    apimark.h \
+    Widgets/UnitUnpackWidget912/unitunpackwidget912.h \
+    Widgets/UnitExtractWidget913/unitextractwidget913.h \
+    Widgets/UnitAppendWidget914/unitappendwidget914.h \
+    Widgets/MultiPackWidget915/multipackwidget915.h
 
 FORMS += \
         mainwindow.ui \
@@ -76,4 +84,8 @@ FORMS += \
     Widgets/RelabelingWidget811/relabelingwidget811.ui \
     Widgets/UnitPackWidget911/unitpackwidget911.ui \
     Widgets/RegisterEndPackingWidget311/registerendpackingwidget311.ui \
-    Widgets/RegisterProductWidget313/registerproductwidget313.ui
+    Widgets/RegisterProductWidget313/registerproductwidget313.ui \
+    Widgets/UnitUnpackWidget912/unitunpackwidget912.ui \
+    Widgets/UnitExtractWidget913/unitextractwidget913.ui \
+    Widgets/UnitAppendWidget914/unitappendwidget914.ui \
+    Widgets/MultiPackWidget915/multipackwidget915.ui

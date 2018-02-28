@@ -248,10 +248,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateQRLabels();
 
+    qDebug() << QDir::currentPath() ;
+
+
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
-
     pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
 
     this->installEventFilter(this);
@@ -2812,4 +2814,29 @@ void MainWindow::MakeStatisticsPDFReport()
 void MainWindow::on_StatistFindButton_2_clicked()
 {
     MakeStatisticsPDFReport();
+}
+
+void MainWindow::UnitUnpackPageOpen()
+{
+    setStackedPage(14);
+}
+
+void MainWindow::on_unit_unpack_Button_clicked()
+{
+    UnitUnpackPageOpen();
+}
+
+void MainWindow::UnitExtractPageOpen()
+{
+    setStackedPage(15);
+}
+
+void MainWindow::on_unit_extract_Button_clicked()
+{
+    UnitExtractPageOpen();
+}
+
+void MainWindow::on_unit_append_Button_clicked()
+{
+    setStackedPage(16);
 }
