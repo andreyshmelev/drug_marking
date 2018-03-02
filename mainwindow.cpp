@@ -2853,3 +2853,8 @@ void MainWindow::on_refusal_sender_Button_clicked()
 {
      setStackedPage(19);
 }
+
+void MainWindow::on_refusal_receiver_Button_clicked()
+{
+    setStackedPage(20);
+}

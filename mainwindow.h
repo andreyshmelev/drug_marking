@@ -417,6 +417,8 @@ private slots:
 
     void on_refusal_sender_Button_clicked();
 
+    void on_refusal_receiver_Button_clicked();
+
 signals:
 
     void agregationstatusToggled();

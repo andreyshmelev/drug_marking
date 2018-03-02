@@ -3669,9 +3669,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Перемещение ЛП между
- адресами мест осуществления
-деятельности (431)</string>
+                 <string>Перемещение ЛП
+между адресами (435)</string>
                 </property>
                </widget>
               </item>
@@ -3794,7 +3793,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
               <item row="0" column="0">
                <widget class="QPushButton" name="refusal_receiver_Button">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -5796,6 +5795,16 @@ QComboBox::drop-down
            <string>Отзыв/отмена ранее совершенной операции (250)</string>
           </property>
          </widget>
+         <widget class="QWidget" name="UnitMultipackPageWidget_2" native="true">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>90</y>
+            <width>451</width>
+            <height>271</height>
+           </rect>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="RefusalSenderPage251">
          <widget class="QLabel" name="RefusalSenderLabel">
@@ -5804,7 +5813,7 @@ QComboBox::drop-down
             <x>260</x>
             <y>20</y>
             <width>481</width>
-            <height>40</height>
+            <height>31</height>
            </rect>
           </property>
           <property name="maximumSize">
@@ -5815,6 +5824,21 @@ QComboBox::drop-down
           </property>
           <property name="text">
            <string>Отзыв отправителем переданного товара (251)</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="RefusalRecieverPaget252">
+         <widget class="QLabel" name="RefusalRecieverLabel">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>811</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Отказ получателя от приёмки товара (252)</string>
           </property>
          </widget>
         </widget>

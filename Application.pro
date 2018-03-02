@@ -52,7 +52,8 @@ SOURCES += \
     Widgets/UnitUnpackWidget912/unitunpackwidget912.cpp \
     Widgets/UnitExtractWidget913/unitextractwidget913.cpp \
     Widgets/UnitAppendWidget914/unitappendwidget914.cpp \
-    Widgets/MultiPackWidget915/multipackwidget915.cpp
+    Widgets/MultiPackWidget915/multipackwidget915.cpp \
+    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -75,7 +76,8 @@ HEADERS += \
     Widgets/UnitUnpackWidget912/unitunpackwidget912.h \
     Widgets/UnitExtractWidget913/unitextractwidget913.h \
     Widgets/UnitAppendWidget914/unitappendwidget914.h \
-    Widgets/MultiPackWidget915/multipackwidget915.h
+    Widgets/MultiPackWidget915/multipackwidget915.h \
+    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.h
 
 FORMS += \
         mainwindow.ui \
@@ -88,4 +90,5 @@ FORMS += \
     Widgets/UnitUnpackWidget912/unitunpackwidget912.ui \
     Widgets/UnitExtractWidget913/unitextractwidget913.ui \
     Widgets/UnitAppendWidget914/unitappendwidget914.ui \
-    Widgets/MultiPackWidget915/multipackwidget915.ui
+    Widgets/MultiPackWidget915/multipackwidget915.ui \
+    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.ui
