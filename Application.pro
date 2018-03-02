@@ -53,7 +53,13 @@ SOURCES += \
     Widgets/UnitExtractWidget913/unitextractwidget913.cpp \
     Widgets/UnitAppendWidget914/unitappendwidget914.cpp \
     Widgets/MultiPackWidget915/multipackwidget915.cpp \
-    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.cpp
+    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.cpp \
+    Widgets/RecallWidget250/recallwidget250.cpp \
+    Widgets/RefusalSenderWidget251/refusalsenderwidget251.cpp \
+    Widgets/MovePlaceWidget431/moveplacewidget431.cpp \
+    Widgets/MoveDestructionWidget541/movedestructionwidget541.cpp \
+    Widgets/DestructionWidget542/destructionwidget542.cpp \
+    Widgets/WithdrawalWidget552/withdrawalwidget552.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -77,7 +83,13 @@ HEADERS += \
     Widgets/UnitExtractWidget913/unitextractwidget913.h \
     Widgets/UnitAppendWidget914/unitappendwidget914.h \
     Widgets/MultiPackWidget915/multipackwidget915.h \
-    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.h
+    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.h \
+    Widgets/RecallWidget250/recallwidget250.h \
+    Widgets/RefusalSenderWidget251/refusalsenderwidget251.h \
+    Widgets/MovePlaceWidget431/moveplacewidget431.h \
+    Widgets/MoveDestructionWidget541/movedestructionwidget541.h \
+    Widgets/DestructionWidget542/destructionwidget542.h \
+    Widgets/WithdrawalWidget552/withdrawalwidget552.h
 
 FORMS += \
         mainwindow.ui \
@@ -91,4 +103,10 @@ FORMS += \
     Widgets/UnitExtractWidget913/unitextractwidget913.ui \
     Widgets/UnitAppendWidget914/unitappendwidget914.ui \
     Widgets/MultiPackWidget915/multipackwidget915.ui \
-    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.ui
+    Widgets/RefusalRecieverWidget252/refusalrecieverwidget252.ui \
+    Widgets/RecallWidget250/recallwidget250.ui \
+    Widgets/RefusalSenderWidget251/refusalsenderwidget251.ui \
+    Widgets/MovePlaceWidget431/moveplacewidget431.ui \
+    Widgets/MoveDestructionWidget541/movedestructionwidget541.ui \
+    Widgets/DestructionWidget542/destructionwidget542.ui \
+    Widgets/WithdrawalWidget552/withdrawalwidget552.ui
