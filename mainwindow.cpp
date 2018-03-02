@@ -2787,19 +2787,19 @@ void MainWindow::MakeStatisticsPDFReport()
     QTextDocument doc;
 
     QString a = (QString("<h1 style=\"color: #5e9ca0; text-align: center;\">Отчет по статистике</h1>\
-                <h2 style=\"color: #2e6c80; text-align: center;\">за период:</h2>\
-                <h2 style=\"color: #2e6c80; text-align: center;\">%1 - %2</h2>\
-                <p><strong>Бизнес - процесс: <span style=\"color: #ff0000;\">%3</span></strong></p>\
-                <p><strong>Препарат: <span style=\"color: #ff0000;\">%4</span></strong></p>\
-                <p><strong>Партия:&nbsp;<span style=\"color: #ff0000;\">%5</span></strong></p>\
-                <p><strong>GTIN:&nbsp;<span style=\"color: #ff0000;\">%6</span></strong></p>\
-                <p><strong>&nbsp;<span style=\"color: #ff0000;\">%7</span></strong></p>\
-                <p><strong>&nbsp;<span style=\"color: #ff0000;\">%8</span></strong></p>\
-                <p><strong>&nbsp;<span style=\"color: #ff0000;\">%9</span></strong></p>").
-                arg(ui->StatistDateTimeFromEdit->text(), ui->StatistDateTimeToEdit->text(),
-                    ui->StatistBPcomboBox->currentText(),ui->StatistMedicamentComboBox->currentText(),
-                    ui->StatistBatchComboBox->currentText(), ui->StatistGTINCombobox->currentText(),
-                    ui->StartTimeStatisticsLabel->text(),ui->StopTimeStatisticsLabel->text(), ui->AverageEffeciencyStatisticsLabel->text()));
+                         <h2 style=\"color: #2e6c80; text-align: center;\">за период:</h2>\
+            <h2 style=\"color: #2e6c80; text-align: center;\">%1 - %2</h2>\
+            <p><strong>Бизнес - процесс: <span style=\"color: #ff0000;\">%3</span></strong></p>\
+            <p><strong>Препарат: <span style=\"color: #ff0000;\">%4</span></strong></p>\
+            <p><strong>Партия:&nbsp;<span style=\"color: #ff0000;\">%5</span></strong></p>\
+            <p><strong>GTIN:&nbsp;<span style=\"color: #ff0000;\">%6</span></strong></p>\
+            <p><strong>&nbsp;<span style=\"color: #ff0000;\">%7</span></strong></p>\
+            <p><strong>&nbsp;<span style=\"color: #ff0000;\">%8</span></strong></p>\
+            <p><strong>&nbsp;<span style=\"color: #ff0000;\">%9</span></strong></p>").
+            arg(ui->StatistDateTimeFromEdit->text(), ui->StatistDateTimeToEdit->text(),
+                ui->StatistBPcomboBox->currentText(),ui->StatistMedicamentComboBox->currentText(),
+                ui->StatistBatchComboBox->currentText(), ui->StatistGTINCombobox->currentText(),
+                ui->StartTimeStatisticsLabel->text(),ui->StopTimeStatisticsLabel->text(), ui->AverageEffeciencyStatisticsLabel->text()));
 
     a.append(QString("<p><span style=\"color: #ff0000;\"><strong>%1</strong></span></p>").arg(ui->FoundLabel->text()) );
 
@@ -2851,10 +2851,30 @@ void MainWindow::on_recall_Button_clicked()
 
 void MainWindow::on_refusal_sender_Button_clicked()
 {
-     setStackedPage(19);
+    setStackedPage(19);
 }
 
 void MainWindow::on_refusal_receiver_Button_clicked()
 {
     setStackedPage(20);
+}
+
+void MainWindow::on_move_place_Button_clicked()
+{
+    setStackedPage(21);
+}
+
+void MainWindow::on_move_destruction_button_clicked()
+{
+    setStackedPage(22);
+}
+
+void MainWindow::on_destruction_Button_clicked()
+{
+    setStackedPage(23);
+}
+
+void MainWindow::on_withdrawal_Button_clicked()
+{
+    setStackedPage(24);
 }

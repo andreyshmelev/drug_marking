@@ -419,6 +419,14 @@ private slots:
 
     void on_refusal_receiver_Button_clicked();
 
+    void on_move_place_Button_clicked();
+
+    void on_move_destruction_button_clicked();
+
+    void on_destruction_Button_clicked();
+
+    void on_withdrawal_Button_clicked();
+
 signals:
 
     void agregationstatusToggled();
