@@ -173,6 +173,9 @@ public slots:
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
     void CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer * companysender, QDateTime operation_date);
     void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
+    void CreateXML250Doc(manufacturer * companysender, QDateTime operation_date, QString session_ui, QString reason);
+    void CreateXML251Doc(QList<medicament *> MedList,manufacturer * companysender, manufacturer * companyreceiver, QDateTime operation_date, QString session_ui, QString reason);
+
     void StartAgregation();
     void StopAgregation();
     bool getLanguageswitcher() const;
