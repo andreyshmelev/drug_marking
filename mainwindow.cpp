@@ -773,7 +773,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
     root.appendChild(reg_prod_emis_elem);
 
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     QDomElement subjectIDelement  = document.createElement("subject_id");
@@ -889,7 +889,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     root.appendChild(move_order_elem);
 
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     // добавляем subject_id
@@ -994,7 +994,7 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     root.appendChild(relabeling_elem);
 
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     //добавляем subject_id
@@ -1066,7 +1066,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     root.appendChild(unit_pack_elem);
 
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     //добавляем subject_id
@@ -1141,7 +1141,7 @@ void MainWindow::CreateXML250Doc( manufacturer *company, QDateTime operation_dat
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     QDomElement recall  = document.createElement("recall");
@@ -1186,6 +1186,7 @@ void MainWindow::CreateXML250Doc( manufacturer *company, QDateTime operation_dat
     stream<< document.toString();
     file.close();
     addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+o
 }
 
 void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *companysender, manufacturer *companyreceiver, QDateTime operation_date, QString session_ui, QString reason)
@@ -1197,7 +1198,7 @@ void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *comp
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
     root.setAttribute("xsi:noNamespaceSchemaLocation=","documents.xsd");
     root.setAttribute("session_ui",session_ui);
@@ -1247,11 +1248,76 @@ void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *comp
     stream<< document.toString();
     file.close();
     addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+
+    AddStatisticsToDB("251",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+}
+
+void MainWindow::CreateXML252Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *company_shipper, QDateTime operation_date, QString session_ui, QString reason)
+{
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
+
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    root.setAttribute("version","1.19");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+    root.setAttribute("xsi:noNamespaceSchemaLocation=","documents.xsd");
+    root.setAttribute("session_ui",session_ui);
+
+    QDomElement refusal_receiver  = document.createElement("refusal_receiver");
+    refusal_receiver.setAttribute("action_id", "252");
+    root.appendChild(refusal_receiver);
+
+    //добавляем subject_id
+    addXMLTextNode(refusal_receiver,  companysender->get_subject_id() , "subject_id", document);
+    //добавили subject_id
+
+    // добавляем operation_date
+    // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    addXMLTextNode(refusal_receiver,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
+    // добавили operation_date
+
+    //добавляем subject_id
+    addXMLTextNode(refusal_receiver,  companyreceiver->get_subject_id() , "receiver_id", document);
+    //добавили subject_id
+
+    // добавляем reason
+    addXMLTextNode(refusal_receiver,  reason , "reason", document);
+    // добавили reason
+
+    // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
+    QDomElement order_details  = document.createElement("order_details");
+    refusal_receiver.appendChild(order_details);
+    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
+    // добавляем sgtin
+
+    for (int var = 0; var < MedList.length(); ++var) {
+        addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
+    }
+
+    QString filename =  MedList.at(0)->BatchNumber+"_P251_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+
+    AddStatisticsToDB("251",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+
 }
 
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsamplestype)
 {
-
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
 
@@ -1270,7 +1336,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
     root.appendChild(reg_ctrl_smples_elem);
 
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     // добавляем subject_id
@@ -1307,7 +1373,6 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
     control_samples_type_element.appendChild(control_samples_type_text);
 
     // добавили control_samples_type
-
 
     // добавляем signs (для первичной агрегации это GTINs
 
@@ -1379,7 +1444,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
 
-    root.setAttribute("version","1.18");
+    root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
     QDomElement reg_end_pack_elem  = document.createElement("register_end_packing");

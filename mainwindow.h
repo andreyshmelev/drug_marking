@@ -175,6 +175,7 @@ public slots:
     void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
     void CreateXML250Doc(manufacturer * companysender, QDateTime operation_date, QString session_ui, QString reason);
     void CreateXML251Doc(QList<medicament *> MedList,manufacturer * companysender, manufacturer * companyreceiver, QDateTime operation_date, QString session_ui, QString reason);
+    void CreateXML252Doc(QList<medicament *> MedList,manufacturer * company_subject, manufacturer * company_shipper, QDateTime operation_date, QString session_ui, QString reason);
 
     void StartAgregation();
     void StopAgregation();
