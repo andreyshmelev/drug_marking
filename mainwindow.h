@@ -25,6 +25,7 @@
 #include "QRCodeGenerator.h"
 #include "manufacturer.h"
 #include "medicament.h"
+#include "pack.h"
 #include "basetypes.h"
 #include "sql.h"
 #include "serializationline.h"
@@ -173,9 +174,11 @@ public slots:
     void CreateXML415Doc(QList<medicament *> MedList, manufacturer * companyreciver, manufacturer * companysender, QDateTime operation_date, QString DocNum, QDate doc_date, int turnovertype, int source, int contracttype, QString Price, QString Vat);
     void CreateXML811Doc(QList<medicament *> MedListOld, QList<medicament *> MedListNew, manufacturer * companysender, QDateTime operation_date);
     void CreateXML911Doc(QList<medicament *> MedList, manufacturer * companysender, QDateTime operation_date);
-    void CreateXML250Doc(manufacturer * companysender, QDateTime operation_date, QString session_ui, QString reason);
+    void CreateXML250Doc(QString recall_action_id, manufacturer * companysender, QDateTime operation_date, QString session_ui, QString reason);
     void CreateXML251Doc(QList<medicament *> MedList,manufacturer * companysender, manufacturer * companyreceiver, QDateTime operation_date, QString session_ui, QString reason);
     void CreateXML252Doc(QList<medicament *> MedList,manufacturer * company_subject, manufacturer * company_shipper, QDateTime operation_date, QString session_ui, QString reason);
+    void CreateXML431Doc(QList<medicament *> MedList,manufacturer * company_subject, manufacturer * company_receiver, QDateTime operation_date, QString doc_number, QString reason, QDateTime doc_date);
+    void CreateXML541Doc(QList<medicament *> MedList,manufacturer * company_subject, manufacturer * destruction_org, QDateTime operation_date, QString doc_number, QDateTime doc_date, QString act_number, QDateTime act_date, QString decision);
 
     void StartAgregation();
     void StopAgregation();

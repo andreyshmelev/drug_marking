@@ -3670,7 +3670,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                 </property>
                 <property name="text">
                  <string>Перемещение ЛП
-между адресами (435)</string>
+между адресами (431)</string>
                 </property>
                </widget>
               </item>
@@ -5855,7 +5855,7 @@ QComboBox::drop-down
              </size>
             </property>
             <property name="text">
-             <string>Перемещение ЛП между адресами (435)</string>
+             <string>Перемещение ЛП между адресами (431)</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

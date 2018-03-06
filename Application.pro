@@ -59,7 +59,8 @@ SOURCES += \
     Widgets/MovePlaceWidget431/moveplacewidget431.cpp \
     Widgets/MoveDestructionWidget541/movedestructionwidget541.cpp \
     Widgets/DestructionWidget542/destructionwidget542.cpp \
-    Widgets/WithdrawalWidget552/withdrawalwidget552.cpp
+    Widgets/WithdrawalWidget552/withdrawalwidget552.cpp \
+    pack.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -89,7 +90,8 @@ HEADERS += \
     Widgets/MovePlaceWidget431/moveplacewidget431.h \
     Widgets/MoveDestructionWidget541/movedestructionwidget541.h \
     Widgets/DestructionWidget542/destructionwidget542.h \
-    Widgets/WithdrawalWidget552/withdrawalwidget552.h
+    Widgets/WithdrawalWidget552/withdrawalwidget552.h \
+    pack.h
 
 FORMS += \
         mainwindow.ui \

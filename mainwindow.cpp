@@ -1132,7 +1132,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     AddStatisticsToDB("911",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
-void MainWindow::CreateXML250Doc( manufacturer *company, QDateTime operation_date, QString session_ui, QString reason)
+void MainWindow::CreateXML250Doc(QString recall_action_id, manufacturer *company, QDateTime operation_date, QString session_ui, QString reason)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
@@ -1148,29 +1148,11 @@ void MainWindow::CreateXML250Doc( manufacturer *company, QDateTime operation_dat
     recall.setAttribute("action_id", "250");
     root.appendChild(recall);
 
-    //добавляем subject_id
     addXMLTextNode(recall,  company->get_subject_id() , "subject_id", document);
-    //добавили subject_id
-
-    // добавляем operation_date
-    // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     addXMLTextNode(recall,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
-    // добавили operation_date
-
-    // добавляем subject_id
     addXMLTextNode(recall,  session_ui , "session_ui", document);
-    // добавили subject_id
-
-    // добавляем reason
     addXMLTextNode(recall,  reason , "reason", document);
-    // добавили reason
-
-
-
-
-    // добавляем subject_id
-    addXMLTextNode(recall,  "250" , "recall_action_id", document);
-    // добавили subject_id
+    addXMLTextNode(recall,  recall_action_id , "recall_action_id", document);
 
     QString filename = "_P250_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
@@ -1186,10 +1168,9 @@ void MainWindow::CreateXML250Doc( manufacturer *company, QDateTime operation_dat
     stream<< document.toString();
     file.close();
     addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
-o
 }
 
-void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *companysender, manufacturer *companyreceiver, QDateTime operation_date, QString session_ui, QString reason)
+void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *company_receiver, QDateTime operation_date, QString session_ui, QString reason)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
@@ -1200,35 +1181,20 @@ void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *comp
 
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-    root.setAttribute("xsi:noNamespaceSchemaLocation=","documents.xsd");
+    root.setAttribute("xsi:noNamespaceSchemaLocation","documents.xsd");
     root.setAttribute("session_ui",session_ui);
 
     QDomElement refusal_sender  = document.createElement("refusal_sender");
     refusal_sender.setAttribute("action_id", "251");
     root.appendChild(refusal_sender);
 
-    //добавляем subject_id
-    addXMLTextNode(refusal_sender,  companysender->get_subject_id() , "subject_id", document);
-    //добавили subject_id
-
-    // добавляем operation_date
-    // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    addXMLTextNode(refusal_sender,  company_subject->get_subject_id() , "subject_id", document);
     addXMLTextNode(refusal_sender,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
-    // добавили operation_date
-
-    //добавляем subject_id
-    addXMLTextNode(refusal_sender,  companyreceiver->get_subject_id() , "receiver_id", document);
-    //добавили subject_id
-
-    // добавляем reason
+    addXMLTextNode(refusal_sender,  company_receiver->get_subject_id() , "receiver_id", document);
     addXMLTextNode(refusal_sender,  reason , "reason", document);
-    // добавили reason
 
-    // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
     QDomElement order_details  = document.createElement("order_details");
     refusal_sender.appendChild(order_details);
-    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
-    // добавляем sgtin
 
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
@@ -1263,41 +1229,26 @@ void MainWindow::CreateXML252Doc(QList<medicament *> MedList, manufacturer *comp
 
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-    root.setAttribute("xsi:noNamespaceSchemaLocation=","documents.xsd");
+    root.setAttribute("xsi:noNamespaceSchemaLocation","documents.xsd");
     root.setAttribute("session_ui",session_ui);
 
     QDomElement refusal_receiver  = document.createElement("refusal_receiver");
     refusal_receiver.setAttribute("action_id", "252");
     root.appendChild(refusal_receiver);
 
-    //добавляем subject_id
-    addXMLTextNode(refusal_receiver,  companysender->get_subject_id() , "subject_id", document);
-    //добавили subject_id
-
-    // добавляем operation_date
-    // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    addXMLTextNode(refusal_receiver,  company_subject->get_subject_id() , "subject_id", document);
     addXMLTextNode(refusal_receiver,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
-    // добавили operation_date
-
-    //добавляем subject_id
-    addXMLTextNode(refusal_receiver,  companyreceiver->get_subject_id() , "receiver_id", document);
-    //добавили subject_id
-
-    // добавляем reason
+    addXMLTextNode(refusal_receiver,  company_shipper->get_subject_id() , "shipper_id", document);
     addXMLTextNode(refusal_receiver,  reason , "reason", document);
-    // добавили reason
 
-    // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
     QDomElement order_details  = document.createElement("order_details");
     refusal_receiver.appendChild(order_details);
-    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
-    // добавляем sgtin
 
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
     }
 
-    QString filename =  MedList.at(0)->BatchNumber+"_P251_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
+    QString filename =  MedList.at(0)->BatchNumber+"_P252_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
 
@@ -1311,9 +1262,110 @@ void MainWindow::CreateXML252Doc(QList<medicament *> MedList, manufacturer *comp
     stream<< document.toString();
     file.close();
     addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    AddStatisticsToDB("252",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+}
 
-    AddStatisticsToDB("251",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+void MainWindow::CreateXML431Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *company_receiver, QDateTime operation_date, QString doc_number, QString reason, QDateTime doc_date)
+{
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
 
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    root.setAttribute("version","1.19");
+    root.setAttribute("xmlns:xs","http://www.w3.org/2001/XMLSchema-instance");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+
+    QDomElement move_place  = document.createElement("move_place");
+    move_place.setAttribute("action_id", "431");
+    root.appendChild(move_place);
+
+    addXMLTextNode(move_place,  company_subject->get_subject_id() , "subject_id", document);
+    addXMLTextNode(move_place,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
+    addXMLTextNode(move_place,  company_receiver->get_subject_id() , "receiver_id", document);
+    addXMLTextNode(move_place,  doc_number , "doc_num", document);
+    addXMLTextNode(move_place,  doc_date.toString("dd.MM.yyyy") , "doc_date", document);
+
+    QDomElement order_details  = document.createElement("order_details");
+    move_place.appendChild(order_details);
+
+    for (int var = 0; var < MedList.length(); ++var) {
+        addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
+    }
+
+    QString filename =  MedList.at(0)->BatchNumber+"_P431_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    AddStatisticsToDB("431",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+}
+
+void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *destruction_org, QDateTime operation_date, QString doc_number, QDateTime doc_date, QString act_number, QDateTime act_date, QString decision)
+{
+    setRunningBuisenessProcess(false);
+    setLanguageswitcher(false);
+
+    QDomDocument document;
+    QDomElement root = document.createElement("documents");
+    document.appendChild(root);
+
+    root.setAttribute("version","1.19");
+    root.setAttribute("xmlns:xs","http://www.w3.org/2001/XMLSchema-instance");
+    root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+
+    QDomElement move_destruction  = document.createElement("move_place");
+    move_destruction.setAttribute("action_id", "541");
+    root.appendChild(move_destruction);
+
+    addXMLTextNode(move_destruction,  company_subject->get_subject_id() , "subject_id", document);
+    addXMLTextNode(move_destruction,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
+
+    QDomElement destr_org  = document.createElement("destruction_org");
+    move_destruction.appendChild(destr_org);
+
+    QDomElement destr_address  = document.createElement("addres");
+    destr_org.appendChild(destr_address);
+
+    QDomElement destr_ul  = document.createElement("ul");
+    destr_org.appendChild(destr_ul);
+
+    addXMLTextNode(move_destruction,  doc_number , "doc_num", document);
+    addXMLTextNode(move_destruction,  doc_date.toString("dd.MM.yyyy") , "doc_date", document);
+
+    QDomElement order_details  = document.createElement("order_details");
+    move_destruction.appendChild(order_details);
+
+    for (int var = 0; var < MedList.length(); ++var) {
+        addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
+    }
+
+    QString filename =  MedList.at(0)->BatchNumber+"_P541_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
+    QString filepath = QDir::currentPath()   + "/" + filename ;
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream<< document.toString();
+    file.close();
+    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    AddStatisticsToDB("541",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
 void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsamplestype)
