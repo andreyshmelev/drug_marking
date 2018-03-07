@@ -117,7 +117,9 @@ bool MainWindow::IsDateProper(QString stringtotest)
 
 void MainWindow::SQLInit()
 {
-    sqlDB = new SQL("ненужная строка");
+    sqlDB = new SQL( "mark",  "192.168.1.63",  3306,  "markirovka",  "WD8NHWq3T0zT");
+
+    connect(sqlDB, SIGNAL(databaseErrorSignal(QString)), ui->DataBaseValue, SLOT(setText(QString)));
     drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
     // подтягиваем параметры компании
     GetCompaniesDBList();
@@ -139,8 +141,6 @@ void MainWindow::SetStyleSheets()
     {
         l->setStyleSheet("QLabel {background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #547FA8, stop: 0.1 #215689, stop: 0.49 #215689, stop: 0.5 #215689, stop: 1 #547FA8);border-style: outset;border-width: 1px;border-radius: 4px;                   border-color: beige;                   padding: 6px;               }");
     }
-
-
 
     QList<QCheckBox *> checkboxeslist = this->findChildren<QCheckBox *>();
     foreach(QCheckBox *l, checkboxeslist)
@@ -338,6 +338,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ContinueSerializationButton, &QAbstractButton::pressed, this, &MainWindow::ContinueSerialization);
     connect(ui->StopSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StopSerialization);
 
+    // прочие сигналслоты
+
+
+
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
     signalMapper -> setMapping (ui->programOptionsButton, 1) ;
@@ -364,7 +368,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateAgregationGUI();
     setStackedPage(2);
+
     SQLInit();
+
+
     SerializationCompanySender = CompaniesListFromDB.at(1);
 
     ui->CompaniesCombobox->clear();
@@ -390,10 +397,6 @@ MainWindow::MainWindow(QWidget *parent) :
     apiclient = new APIMARK();
 
     connect(apiclient, SIGNAL(message(QString)),this, SLOT(ADDApiLOG(QString)));
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -1312,7 +1315,7 @@ void MainWindow::CreateXML431Doc(QList<medicament *> MedList, manufacturer *comp
     AddStatisticsToDB("431",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
-void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *destruction_org, QDateTime operation_date, QString doc_number, QDateTime doc_date, QString act_number, QDateTime act_date, QString decision)
+void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *destruction_org, QDateTime operation_date, QString doc_number, QDateTime doc_date, QString act_number, QDateTime act_date, QString decision, uint8_t destruction_type)
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
@@ -1325,7 +1328,7 @@ void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *comp
     root.setAttribute("xmlns:xs","http://www.w3.org/2001/XMLSchema-instance");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
-    QDomElement move_destruction  = document.createElement("move_place");
+    QDomElement move_destruction  = document.createElement("move_destruction");
     move_destruction.setAttribute("action_id", "541");
     root.appendChild(move_destruction);
 
@@ -1338,8 +1341,16 @@ void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *comp
     QDomElement destr_address  = document.createElement("addres");
     destr_org.appendChild(destr_address);
 
+    addXMLTextNode(destr_address, "19406454-0022-000C-00B0-000000000152", "aoguid", document);
+    addXMLTextNode(destr_address, "19606494-0022-000A-0067-000000001259", "houseguid", document);
+    addXMLTextNode(destr_address, "178", "flat", document);
+
+
     QDomElement destr_ul  = document.createElement("ul");
     destr_org.appendChild(destr_ul);
+
+    addXMLTextNode(destr_ul,destruction_org->get_inn(), "inn", document);
+    addXMLTextNode(destr_ul,destruction_org->get_kpp(), "kpp", document);
 
     addXMLTextNode(move_destruction,  doc_number , "doc_num", document);
     addXMLTextNode(move_destruction,  doc_date.toString("dd.MM.yyyy") , "doc_date", document);
@@ -1571,6 +1582,9 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 
     addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
+
+
+    CreateXML541Doc(MedList,sender,owner,QDateTime::currentDateTime(),"123docnum456",QDateTime::currentDateTime().addDays(31),"321actnum987",QDateTime::currentDateTime().addMonths(2),"because I wanna",2);
 }
 
 void MainWindow::StartAgregation()

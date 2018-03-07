@@ -86,7 +86,6 @@ void RegisterProductWidget313::StopRegistrationProcess()
 
     MedicamentsList.clear();
 
-    qDebug() << "RegistrationCompleted3";
 }
 
 void RegisterProductWidget313::GetMedicament(medicament *med)
@@ -101,33 +100,27 @@ void RegisterProductWidget313::GetMedicament(medicament *med)
         {
             if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
             {
-                qDebug() << "такой медикамент уже есть";
                 ui->errorLabel->setText("Медикамент уже просканирован");
                 return;
             }
 
             if ( (med->GTIN != listmed->GTIN ) )
             {
-                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
                 ui->errorLabel->setText("неверный GTIN");
             }
 
             if ( (med->ExperyDate != listmed->ExperyDate ) )
             {
-                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
                 ui->errorLabel->setText("неверная Дата");
-
             }
 
             if ( (med->BatchNumber != listmed->BatchNumber ) )
             {
-                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
                 ui->errorLabel->setText("неверная партия");
             }
 
             if ( (med->TNVED != listmed->TNVED ) )
             {
-                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
                 ui->errorLabel->setText("неверная ТНВЭД");
             }
 
@@ -138,7 +131,6 @@ void RegisterProductWidget313::GetMedicament(medicament *med)
         }
         if (CheckMedicamentinDB(med))
         {
-            qDebug() << "такой медикамент уже есть в базе данных";
             ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }
@@ -221,8 +213,6 @@ void RegisterProductWidget313::GetCompaniesDBList(QList<manufacturer*> man)
 
     foreach (manufacturer * d , man) {
         manufacturesList.append(d);
-
-        //        qDebug() << d->get_organisation_name() << "RegisterProductWidget313";
         a.append(d->get_organisation_name());
     }
 }

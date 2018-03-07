@@ -1,19 +1,11 @@
 #include "sql.h"
 #include "QtSql"
+#include <QObject>
 
-SQL::SQL()
-{
-    baseConnection();
-}
 
-SQL::SQL(QString path)
+
+SQL::SQL(QString dbname, QString hostname, uint16_t port, QString user, QString password)
 {
-    QString dbname = "mark";
-    QString hostname = "192.168.1.63";  // <<-"localhost"; //"192.168.1.62";127.0.0.1
-    int port = 3306;
-    QString user = "markirovka";
-    QString password = "WD8NHWq3T0zT";
-//    qDebug() << QSqlDatabase::drivers();
 
 
     QString driver = "QMYSQL";
@@ -26,10 +18,16 @@ SQL::SQL(QString path)
     db.setPort(port);
     if (!db.open(user, password)) {
         err = db.lastError();
+
+        qDebug() << "Faaaaaaaiiiiiillllllllllllllllllllllllll";
+        databaseErrorSignal("Fail");
+        return;
     }
     else
     {
+        databaseErrorSignal("Ok");
     }
+
 }
 
 void SQL::baseConnection()
@@ -42,10 +40,13 @@ void SQL::baseConnection()
         db.setHostName("localhost");
         db.setPassword("password");
         if (!db.open()) {
-            qDebug() << "Cannot open database:" << db.lastError();
+            databaseErrorSignal("Fail");
+            return;
         }
         else
-            qDebug() << "Connect sucess" ;
+        {
+            databaseErrorSignal("Ok");
+        }
     }
 }
 
@@ -61,7 +62,13 @@ QStringList SQL::sel(QString select, QString from, QString where, QString rec)
     }
 
     if (!query.exec(execc)) {
-        qDebug() << "Last DataBase Error" << query.lastError();
+        databaseErrorSignal("Fail");
+
+        return QStringList("");
+    }
+    else
+    {
+        databaseErrorSignal("Ok");
     }
 
     //Reading of the data
@@ -90,8 +97,12 @@ QStringList SQL::getsumm(QString select, QString from, QString where, QString re
     }
 
     if (!query.exec(execc)) {
-        //        qDebug() << "Unable to execute query - exiting";
-        qDebug() << "Last DataBase Error" << query.lastError();
+        databaseErrorSignal("Fail");
+        return QStringList("");
+    }
+    else
+    {
+        databaseErrorSignal("Ok");
     }
 
     QSqlRecord SQLrec     = query.record();
@@ -119,7 +130,12 @@ QStringList SQL::seldistinct(QString select, QString from, QString where, QStrin
     }
 
     if (!query.exec(execc)) {
-        qDebug() << "Last DataBase Error" << query.lastError();
+        databaseErrorSignal("Fail");
+        return QStringList("");
+    }
+    else
+    {
+        databaseErrorSignal("Ok");
     }
 
     //Reading of the data
@@ -143,8 +159,14 @@ QSqlError SQL::makesqlreq(QString req)
     QString execc = req;
 
     if (!query.exec(execc)) {
-        qDebug() << query.lastError();
+        databaseErrorSignal("Fail");
+        return "";
     }
+    else
+    {
+        databaseErrorSignal("Ok");
+    }
+
     return query.lastError() ;
 }
 
@@ -153,6 +175,11 @@ void SQL::upd(QString u, QString s, QString w)
     QString qstr = "UPDATE " + u + " SET " + s + " WHERE " + w;
     QSqlQuery query;
     if (!query.exec(qstr)) {
-        qDebug() << "Last DataBase Error" << query.lastError();
+        databaseErrorSignal("Fail");
+        return;
+    }
+    else
+    {
+        databaseErrorSignal("Ok");
     }
 }

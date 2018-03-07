@@ -47,7 +47,6 @@ bool MoveOrder415::CheckMedicamentinDB(medicament *m)
 void MoveOrder415::ToggleRegistration()
 {
 
-    qDebug() << registration ;
     if (registration != false)
         StopRegistrationProcess();
     else
@@ -221,17 +220,12 @@ void MoveOrder415::StopRegistrationProcess()
 
     MedicamentsList.clear();
 
-    qDebug() << "RegistrationCompleted";
 }
 
 void MoveOrder415::GetMedicament(medicament *med)
 {
     ScannedMedicament = med;
     updateWidgetGui(med->GTIN, med->BatchNumber, med->SerialNumber, med->TNVED, med->ExperyDate);
-
-
-
-//    registration = true;
 
     if (registration == true)
     {
@@ -240,33 +234,27 @@ void MoveOrder415::GetMedicament(medicament *med)
         {
             if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
             {
-                qDebug() << "такой медикамент уже есть";
                 ui->errorLabel->setText("Медикамент уже просканирован");
                 return;
             }
 
             if ( (med->GTIN != listmed->GTIN ) )
             {
-                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
                 ui->errorLabel->setText("неверный GTIN");
             }
 
             if ( (med->ExperyDate != listmed->ExperyDate ) )
             {
-                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
                 ui->errorLabel->setText("неверная Дата");
-
             }
 
             if ( (med->BatchNumber != listmed->BatchNumber ) )
             {
-                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
                 ui->errorLabel->setText("неверная партия");
             }
 
             if ( (med->TNVED != listmed->TNVED ) )
             {
-                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
                 ui->errorLabel->setText("неверная ТНВЭД");
             }
 
@@ -277,7 +265,6 @@ void MoveOrder415::GetMedicament(medicament *med)
         }
         if (CheckMedicamentinDB(med))
         {
-            qDebug() << "такой медикамент уже есть в базе данных";
             ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }

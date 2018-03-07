@@ -128,8 +128,6 @@ void RegisterEndPackingWidget311::StopRegistrationProcess()
     emit setScannerLanguage(false);
 
     MedicamentsList.clear();
-
-    qDebug() << "RegistrationCompleted";
 }
 
 void RegisterEndPackingWidget311::GetMedicament(medicament *med)
@@ -144,33 +142,27 @@ void RegisterEndPackingWidget311::GetMedicament(medicament *med)
         {
             if ( (med->SerialNumber == listmed->SerialNumber)&&(med->BatchNumber == listmed->BatchNumber) )
             {
-                qDebug() << "такой медикамент уже есть";
                 ui->errorLabel->setText("Медикамент уже просканирован");
                 return;
             }
 
             if ( (med->GTIN != listmed->GTIN ) )
             {
-                qDebug() << "неверный GTIN, препарат должен иметь GTIN = " + MedicamentsList.at(0)->GTIN;
                 ui->errorLabel->setText("неверный GTIN");
             }
 
             if ( (med->ExperyDate != listmed->ExperyDate ) )
             {
-                qDebug() << "неверная дата годности, верная -  " + MedicamentsList.at(0)->ExperyDate;
                 ui->errorLabel->setText("неверная Дата");
-
             }
 
             if ( (med->BatchNumber != listmed->BatchNumber ) )
             {
-                qDebug() << "неверная партия, верная -  " + MedicamentsList.at(0)->BatchNumber;
                 ui->errorLabel->setText("неверная партия");
             }
 
             if ( (med->TNVED != listmed->TNVED ) )
             {
-                qDebug() << "неверная TNVED, верная -  " + MedicamentsList.at(0)->TNVED;
                 ui->errorLabel->setText("неверная ТНВЭД");
             }
 
@@ -181,7 +173,6 @@ void RegisterEndPackingWidget311::GetMedicament(medicament *med)
         }
         if (CheckMedicamentinDB(med))
         {
-            qDebug() << "такой медикамент уже есть в базе данных";
             ui->errorLabel->setText("Медикамент есть в БД");
             return;
         }
@@ -252,11 +243,6 @@ void RegisterEndPackingWidget311::AddMedicamentToTable(medicament *m)
     ui->MedicamentsTable->scrollToTop();
 }
 
-//void RegisterEndPackingWidget311::AddMedicamentToDB(medicament *m)
-//{
-//    sqlDB = new SQL("ненужная строка");
-//    sqlDB->makesqlreq(QString("insert into process311 values (%1,%2,%3,%4)").arg(m->GTIN,QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("dd-MM-yyyy"),QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ss"),""));
-//}
 
 void RegisterEndPackingWidget311::on_RegistrationStartButton_clicked()
 {
@@ -270,8 +256,6 @@ void RegisterEndPackingWidget311::GetCompaniesDBList(QList<manufacturer*> man)
 
     foreach (manufacturer * d , man) {
         manufacturesList.append(d);
-
-        //        qDebug() << d->get_organisation_name() << "RegisterEndPackingWidget311";
         a.append(d->get_organisation_name());
     }
 

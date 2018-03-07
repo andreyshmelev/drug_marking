@@ -591,7 +591,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="printerLabel">
+            <widget class="QLabel" name="printerApplicatorLabel">
              <property name="minimumSize">
               <size>
                <width>90</width>
@@ -611,7 +611,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QLabel" name="printerLabelValue">
+            <widget class="QLabel" name="printerApplicatorValue">
              <property name="font">
               <font>
                <family>Impact</family>
@@ -624,7 +624,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="5" column="0">
-            <widget class="QLabel" name="printerLabel_2">
+            <widget class="QLabel" name="printerLineLabel">
              <property name="minimumSize">
               <size>
                <width>90</width>
@@ -644,7 +644,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="5" column="1">
-            <widget class="QLabel" name="printerLabelValue_2">
+            <widget class="QLabel" name="printerLineValue">
              <property name="font">
               <font>
                <family>Impact</family>
@@ -657,7 +657,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="6" column="0">
-            <widget class="QLabel" name="scanerLabel">
+            <widget class="QLabel" name="scanerLineLabel">
              <property name="minimumSize">
               <size>
                <width>90</width>
@@ -677,7 +677,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="6" column="1">
-            <widget class="QLabel" name="scanerLabelValue">
+            <widget class="QLabel" name="scanerLineValue">
              <property name="font">
               <font>
                <family>Impact</family>
@@ -690,7 +690,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="7" column="0">
-            <widget class="QLabel" name="scanerLabel_2">
+            <widget class="QLabel" name="scanerHandLabel">
              <property name="minimumSize">
               <size>
                <width>90</width>
@@ -710,7 +710,7 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item row="7" column="1">
-            <widget class="QLabel" name="scanerLabelValue_2">
+            <widget class="QLabel" name="scanerHandValue">
              <property name="font">
               <font>
                <family>Impact</family>
@@ -719,6 +719,39 @@ border-radius: 10px;</string>
              </property>
              <property name="text">
               <string>Ok</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="DataBaseLabel">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Impact</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>База
+данных</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLabel" name="DataBaseValue">
+             <property name="font">
+              <font>
+               <family>Impact</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
