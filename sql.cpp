@@ -152,7 +152,7 @@ QStringList SQL::seldistinct(QString select, QString from, QString where, QStrin
     return strName;
 }
 
-QSqlError SQL::makesqlreq(QString req)
+void SQL::makesqlreq(QString req)
 {
     QSqlQuery query("", db);
     //Задаем запрос
@@ -160,14 +160,12 @@ QSqlError SQL::makesqlreq(QString req)
 
     if (!query.exec(execc)) {
         databaseErrorSignal("Fail");
-        return "";
+        return;
     }
     else
     {
         databaseErrorSignal("Ok");
     }
-
-    return query.lastError() ;
 }
 
 void SQL::upd(QString u, QString s, QString w)
