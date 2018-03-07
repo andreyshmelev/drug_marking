@@ -556,6 +556,23 @@ bool MainWindow::getAgregation()
     return agregation;
 }
 
+void MainWindow::addMessageToJournal(QString message,QString attribute, QColor textcolor,QColor backcolor)
+{
+    QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
+    QListWidgetItem * item = new QListWidgetItem ();
+    item->setTextColor( textcolor);
+    item->setBackgroundColor(backcolor);
+    item->setText(ctime + message);
+
+    QVariant v;
+    v.setValue(attribute);
+    item->setData(Qt::UserRole, v);
+
+    ui->journalList->addItem(item);
+    ui->journalList->scrollToBottom();
+}
+
+
 void MainWindow::addMessageToJournal(QString message, QColor textcolor,QColor backcolor)
 {
     QString ctime  = QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh:mm:ss dd.MM.yy ");
@@ -563,6 +580,7 @@ void MainWindow::addMessageToJournal(QString message, QColor textcolor,QColor ba
     item->setTextColor( textcolor);
     item->setBackgroundColor(backcolor);
     item->setText(ctime + message);
+
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
 }
@@ -863,7 +881,7 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
+        addMessageToJournal("Не удалось создать файл:" + filepath, "", Qt::black, Qt::white);
         return;
     }
 

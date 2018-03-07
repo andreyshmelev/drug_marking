@@ -200,6 +200,7 @@ public slots:
 
     void replyfinished(QNetworkReply *reply);
     void ADDApiLOG(QString Logstring);
+    void addMessageToJournal(QString message, QColor textcolor, QColor backcolor);
 private:
 
     QString getGuiGTIN();
@@ -358,7 +359,7 @@ private slots:
 
     QString GenerateDMcode();
 
-    void addMessageToJournal(QString message, QColor textcolor,QColor backcolor);
+    void addMessageToJournal(QString message,QString attribute, QColor textcolor,QColor backcolor);
     void updateTimeDate();
     void updateReadedDMCode();
     void ParseHandScannerData( QString stringtoparse);
@@ -428,6 +429,7 @@ private slots:
     void on_destruction_Button_clicked();
 
     void on_withdrawal_Button_clicked();
+
 
 signals:
 

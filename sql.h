@@ -6,12 +6,11 @@
 
 class SQL : public QObject
 {
-
     Q_OBJECT
 
 public:
 
-    SQL(    QString dbname ,QString hostname, uint16_t port , QString user ,QString password );
+    SQL(QString dbname ,QString hostname, uint16_t port , QString user ,QString password );
     QSqlDatabase db;
 
 public slots:
@@ -26,7 +25,6 @@ public slots:
 signals:
     void databaseErrorSignal(QString);
     void databaseOk();
-
 };
 
 #endif // SQL_H
