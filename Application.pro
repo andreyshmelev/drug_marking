@@ -60,7 +60,8 @@ SOURCES += \
     Widgets/MoveDestructionWidget541/movedestructionwidget541.cpp \
     Widgets/DestructionWidget542/destructionwidget542.cpp \
     Widgets/WithdrawalWidget552/withdrawalwidget552.cpp \
-    pack.cpp
+    pack.cpp \
+    Widgets/XMLViewerWidget/xmlviewerwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -91,7 +92,9 @@ HEADERS += \
     Widgets/MoveDestructionWidget541/movedestructionwidget541.h \
     Widgets/DestructionWidget542/destructionwidget542.h \
     Widgets/WithdrawalWidget552/withdrawalwidget552.h \
-    pack.h
+    pack.h \
+    xmlviewerwidget.h \
+    Widgets/XMLViewerWidget/xmlviewerwidget.h
 
 FORMS += \
         mainwindow.ui \
@@ -111,4 +114,5 @@ FORMS += \
     Widgets/MovePlaceWidget431/moveplacewidget431.ui \
     Widgets/MoveDestructionWidget541/movedestructionwidget541.ui \
     Widgets/DestructionWidget542/destructionwidget542.ui \
-    Widgets/WithdrawalWidget552/withdrawalwidget552.ui
+    Widgets/WithdrawalWidget552/withdrawalwidget552.ui \
+    Widgets/XMLViewerWidget/xmlviewerwidget.ui

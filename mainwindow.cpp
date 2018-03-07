@@ -19,6 +19,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QUrl>
+#include "Widgets/XMLViewerWidget/xmlviewerwidget.h"
 
 int aaa = 222;
 int bbb = 789;
@@ -3158,7 +3159,11 @@ void MainWindow::on_journalList_itemClicked(QListWidgetItem *item)
     }
     else
     {
-        qDebug() << file.readAll();
-    }
+        QString text =  file.readAll();
 
+        XMLViewerWidget *Viewer = new XMLViewerWidget();
+        Viewer->Settext(text);
+
+        Viewer->show();
+    }
 }
