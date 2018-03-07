@@ -202,6 +202,8 @@ public slots:
     void replyfinished(QNetworkReply *reply);
     void ADDApiLOG(QString Logstring);
     void addMessageToJournal(QString message, QColor textcolor, QColor backcolor);
+    void deleteAllXMLWidgets();
+
 private:
 
     QString getGuiGTIN();

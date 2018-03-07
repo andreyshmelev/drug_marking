@@ -18,7 +18,6 @@ void XMLViewerWidget::Settext(QString text)
 
 XMLViewerWidget::~XMLViewerWidget()
 {
-    qDebug() <<  "Closeddddd" ;
     delete ui;
     this->deleteLater();
 }

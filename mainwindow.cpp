@@ -989,7 +989,7 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("415",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1065,7 +1065,7 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("811",MedListNew.at(0),QDateTime::currentDateTime(), MedListNew.length(),filename);
 }
 
@@ -1150,7 +1150,7 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("911",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1189,7 +1189,7 @@ void MainWindow::CreateXML250Doc(QString recall_action_id, manufacturer *company
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
 }
 
 void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *company_subject, manufacturer *company_receiver, QDateTime operation_date, QString session_ui, QString reason)
@@ -1235,7 +1235,7 @@ void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *comp
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
 
     AddStatisticsToDB("251",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
@@ -1283,7 +1283,7 @@ void MainWindow::CreateXML252Doc(QList<medicament *> MedList, manufacturer *comp
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("252",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1330,7 +1330,7 @@ void MainWindow::CreateXML431Doc(QList<medicament *> MedList, manufacturer *comp
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("431",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1394,7 +1394,7 @@ void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *comp
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("541",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1496,7 +1496,7 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("312",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -3145,6 +3145,16 @@ void MainWindow::on_withdrawal_Button_clicked()
     setStackedPage(24);
 }
 
+void MainWindow::deleteAllXMLWidgets()
+{
+    QList<XMLViewerWidget *> XMLViewerWidgetlist = this->findChildren<XMLViewerWidget *>();
+
+    foreach(XMLViewerWidget *w, XMLViewerWidgetlist)
+    {
+        w->deleteLater();
+    }
+}
+
 void MainWindow::on_journalList_itemClicked(QListWidgetItem *item)
 {
     // get back the data
@@ -3159,11 +3169,10 @@ void MainWindow::on_journalList_itemClicked(QListWidgetItem *item)
     }
     else
     {
+        deleteAllXMLWidgets();
         QString text =  file.readAll();
-
         XMLViewerWidget *Viewer = new XMLViewerWidget();
         Viewer->Settext(text);
-
         Viewer->show();
     }
 }
