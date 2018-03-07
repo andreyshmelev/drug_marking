@@ -2113,7 +2113,7 @@ void MainWindow::setStackedPage(int newindex)
 void MainWindow::SendCommandToVideoJet(QString a)
 {
     serverWrite(a);
-    qDebug() << a;
+//    qDebug() << a;
 }
 
 void MainWindow::updateQRImage()
