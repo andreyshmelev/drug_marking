@@ -1598,7 +1598,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     stream<< document.toString();
     file.close();
 
-    addMessageToJournal("Создан файл: " + filepath, Qt::black, Qt::white);
+    addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 
 
@@ -3142,4 +3142,23 @@ void MainWindow::on_destruction_Button_clicked()
 void MainWindow::on_withdrawal_Button_clicked()
 {
     setStackedPage(24);
+}
+
+void MainWindow::on_journalList_itemClicked(QListWidgetItem *item)
+{
+    // get back the data
+    QVariant v = item->data(Qt::UserRole);
+    QString filepath = v.value<QString>();
+
+    QFile file(filepath);
+
+    if ( !file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    else
+    {
+        qDebug() << file.readAll();
+    }
+
 }

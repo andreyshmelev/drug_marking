@@ -20,6 +20,7 @@
 #include <QGraphicsScene>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QListWidgetItem>
 
 #include "code128item.h"
 #include "QRCodeGenerator.h"
@@ -430,6 +431,8 @@ private slots:
 
     void on_withdrawal_Button_clicked();
 
+
+    void on_journalList_itemClicked(QListWidgetItem *item);
 
 signals:
 
