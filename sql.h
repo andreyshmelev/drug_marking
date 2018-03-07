@@ -10,7 +10,7 @@ class SQL : public QObject
 
 public:
 
-    SQL(QString dbname ,QString hostname, uint16_t port , QString user ,QString password );
+    SQL(QString dbname ,QString hostname, quint16 port , QString user ,QString password );
     QSqlDatabase db;
 
 public slots:

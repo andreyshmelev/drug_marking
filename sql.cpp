@@ -4,7 +4,7 @@
 
 
 
-SQL::SQL(QString dbname, QString hostname, uint16_t port, QString user, QString password)
+SQL::SQL(QString dbname, QString hostname, quint16 port, QString user, QString password)
 {
 
 
