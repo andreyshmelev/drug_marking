@@ -7,7 +7,7 @@ class pack : public QObject
 {
     Q_OBJECT
 public:
-    explicit pack(QObject *parent = nullptr);
+    explicit pack(QObject *parent = 0);
 
     QString getSSCC() const;
     void setSSCC(const QString &value);
