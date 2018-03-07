@@ -122,26 +122,6 @@ QCheckBox::indicator {
         </widget>
        </widget>
       </item>
-      <item row="2" column="3">
-       <widget class="QListWidget" name="journalList">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>250</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border: 1px solid gray;
-border-radius: 10px;</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0" colspan="4">
        <layout class="QGridLayout" name="gridLayout_10">
         <item row="2" column="3">
@@ -462,28 +442,6 @@ border-radius: 10px;</string>
         <layout class="QGridLayout" name="gridLayout_29">
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_14">
-           <item row="0" column="0">
-            <widget class="QLabel" name="OKlabel">
-             <property name="minimumSize">
-              <size>
-               <width>90</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Impact</family>
-               <pointsize>12</pointsize>
-               <weight>50</weight>
-               <bold>false</bold>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>OK</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="1">
             <widget class="QLabel" name="OKlabelValue">
              <property name="font">
@@ -560,22 +518,6 @@ border-radius: 10px;</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="BatchLabelValue">
-             <property name="font">
-              <font>
-               <family>Impact</family>
-               <pointsize>12</pointsize>
-               <weight>50</weight>
-               <bold>false</bold>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
            <item row="3" column="0">
             <widget class="QLabel" name="remainLabel">
              <property name="minimumSize">
@@ -598,8 +540,8 @@ border-radius: 10px;</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="remainLabelValue">
+           <item row="2" column="1">
+            <widget class="QLabel" name="BatchLabelValue">
              <property name="font">
               <font>
                <family>Impact</family>
@@ -634,6 +576,22 @@ border-radius: 10px;</string>
              <property name="text">
               <string>Принтер
 аппликатор</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="remainLabelValue">
+             <property name="font">
+              <font>
+               <family>Impact</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>0</string>
              </property>
             </widget>
            </item>
@@ -673,22 +631,6 @@ border-radius: 10px;</string>
              <property name="text">
               <string>Принтер
 линия</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLabel" name="printerLineValue">
-             <property name="font">
-              <font>
-               <family>Impact</family>
-               <pointsize>12</pointsize>
-               <weight>50</weight>
-               <bold>false</bold>
-               <kerning>true</kerning>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ok</string>
              </property>
             </widget>
            </item>
@@ -754,6 +696,22 @@ border-radius: 10px;</string>
              </property>
             </widget>
            </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="printerLineValue">
+             <property name="font">
+              <font>
+               <family>Impact</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string>Ok</string>
+             </property>
+            </widget>
+           </item>
            <item row="7" column="1">
             <widget class="QLabel" name="scanerHandValue">
              <property name="font">
@@ -767,6 +725,22 @@ border-radius: 10px;</string>
              </property>
              <property name="text">
               <string>Ok</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLabel" name="DataBaseValue">
+             <property name="font">
+              <font>
+               <family>Impact</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
@@ -793,8 +767,14 @@ border-radius: 10px;</string>
              </property>
             </widget>
            </item>
-           <item row="8" column="1">
-            <widget class="QLabel" name="DataBaseValue">
+           <item row="0" column="0">
+            <widget class="QLabel" name="OKlabel">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Impact</family>
@@ -805,7 +785,7 @@ border-radius: 10px;</string>
               </font>
              </property>
              <property name="text">
-              <string/>
+              <string>OK</string>
              </property>
             </widget>
            </item>
@@ -1861,34 +1841,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
             </item>
            </layout>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="image_label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>120</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="text">
-             <string>DM Code...</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::NoTextInteraction</set>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="productOptionsPage">
@@ -2766,6 +2718,90 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <layout class="QGridLayout" name="gridLayout">
+              <item row="4" column="1">
+               <widget class="QLabel" name="releabeling_QRLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>75</width>
+                  <height>65</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>75</width>
+                  <height>65</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>register_product_emission_Button</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="move_order_Button">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Отгрузка со склада 
+Прямой порядок (415)</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="0" colspan="2">
                <widget class="QGroupBox" name="AutoUpakovkaGroupBox">
                 <property name="title">
@@ -2823,13 +2859,119 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                    </property>
                    <property name="text">
-                    <string>Окончательная
-упаковка (311)</string>
+                    <string>Завершение
+упаковки (311)</string>
                    </property>
                   </widget>
                  </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="register_end_packing_Label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>75</width>
+                     <height>65</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>75</width>
+                     <height>65</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>register_product_emission_Button</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QPushButton" name="register_product_emission_Button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Выпуск готовой
+продукции (313)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLabel" name="register_product_emission_QRLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>75</width>
+                     <height>65</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>75</width>
+                     <height>65</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>register_product_emission_Button</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="register_control_samples_Label">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2909,211 +3051,35 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="register_control_samples_Label">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>65</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>65</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>register_product_emission_Button</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QPushButton" name="register_product_emission_Button">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>50</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>50</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton 
-{
-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
-
-
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:disabled 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:pressed 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}</string>
-                   </property>
-                   <property name="text">
-                    <string>Выпуск готовой
-продукции (313)</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLabel" name="register_product_emission_QRLabel">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>65</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>65</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>register_product_emission_Button</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
               </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QGroupBox" name="AgregationGroupBox">
+              <item row="2" column="1">
+               <widget class="QLabel" name="move_order_QRLabel">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="title">
-                 <string>Агрегация</string>
+                <property name="minimumSize">
+                 <size>
+                  <width>75</width>
+                  <height>65</height>
+                 </size>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_7">
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="unit_pack_Button">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>50</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>50</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton 
-{
-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
-
-
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:disabled 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:pressed 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}</string>
-                   </property>
-                   <property name="text">
-                    <string>Агрегация (911)</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="unit_pack_QRLabel">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>65</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>65</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>register_product_emission_Button</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <property name="maximumSize">
+                 <size>
+                  <width>75</width>
+                  <height>65</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>register_product_emission_Button</string>
+                </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="4" column="0">
                <widget class="QPushButton" name="releabeling_Button">
                 <property name="enabled">
                  <bool>true</bool>
@@ -3167,16 +3133,108 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Переупаковка и пере-
-маркировка (811)</string>
+                 <string>Переупаковка и
+перемаркировка (811)</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="move_order_Button">
-                <property name="enabled">
-                 <bool>true</bool>
+              <item row="1" column="0" colspan="2">
+               <widget class="QGroupBox" name="AgregationGroupBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
+                <property name="title">
+                 <string>Агрегирование</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="unit_pack_Button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Агрегирование (911)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="unit_pack_QRLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>75</width>
+                     <height>65</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>75</width>
+                     <height>65</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>register_product_emission_Button</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="register_product_emission_Button_3">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -3226,58 +3284,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Отгрузка со 
-склада Продавца (415)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QLabel" name="releabeling_QRLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>75</width>
-                  <height>65</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>75</width>
-                  <height>65</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>register_product_emission_Button</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLabel" name="move_order_QRLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>75</width>
-                  <height>65</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>75</width>
-                  <height>65</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>register_product_emission_Button</string>
+                 <string>Подтверждение отгрузки/
+приёмки (701)</string>
                 </property>
                </widget>
               </item>
@@ -3339,8 +3347,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Включение элементов в
-трансп. упаковку (914)</string>
+                 <string>Включение ЛП в
+групповую упаковку (914)</string>
                 </property>
                </widget>
               </item>
@@ -3398,7 +3406,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Отмена ранее зарег.
+                 <string>Отмена
 операции (250)</string>
                 </property>
                </widget>
@@ -3457,8 +3465,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Отзыв отправителем
-переданного товара (251)</string>
+                 <string>Отзыв части товара
+отправителем (251)</string>
                 </property>
                </widget>
               </item>
@@ -3575,8 +3583,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Изъятие элементов
-упаковки (913)</string>
+                 <string>Изъятие ЛП из
+групповой упаковки (913)</string>
                 </property>
                </widget>
               </item>
@@ -3634,8 +3642,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Расформир. транс-
-портной упаковки (912)</string>
+                 <string>Расформирование 
+групповой упаковки (912)</string>
                 </property>
                </widget>
               </item>
@@ -3643,8 +3651,123 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
             </item>
             <item>
              <layout class="QGridLayout" name="gridLayout_4">
-              <item row="2" column="0">
-               <widget class="QPushButton" name="move_destruction_button">
+              <item row="7" column="0">
+               <widget class="QPushButton" name="register_product_emission_Button_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Повторный ввод
+в оборот (391)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QPushButton" name="move_order_Button_3">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Отгрузка незарегистрированному 
+участнику (441)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="refusal_receiver_Button">
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
@@ -3697,67 +3820,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
 }</string>
                 </property>
                 <property name="text">
-                 <string>Передача на 
- уничтожение ЛП (541)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="move_place_Button">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton 
-{
-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
-
-
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:disabled 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:pressed 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>Перемещение ЛП
-между адресами (431)</string>
+                 <string>Отказ получателя
+от приёмки товара (252)</string>
                 </property>
                </widget>
               </item>
@@ -3819,7 +3883,125 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
+              <item row="1" column="0">
+               <widget class="QPushButton" name="move_place_Button">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Перемещение ЛП
+между внутрен. складами (431)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="move_destruction_button">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton 
+{
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
+
+
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:disabled 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}
+
+QPushButton:pressed 
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px; color: white;
+    padding: 6px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Передача на 
+ уничтожение ЛП (541)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
                <widget class="QPushButton" name="withdrawal_Button">
                 <property name="enabled">
                  <bool>true</bool>
@@ -3874,65 +4056,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
                 </property>
                 <property name="text">
                  <string>Вывод ЛП из оборота (552)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="refusal_receiver_Button">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton 
-{
-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E25303, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #E25306);
-
-
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:disabled 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(226,83,3, 70), stop:1 rgba(226,83,3, 70));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}
-
-QPushButton:pressed 
-{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0xe2,0x3c,0x03, 255), stop:1 rgba(226,83,3, 255));
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px; color: white;
-    padding: 6px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>Отказ получателя
-от приёмки товара (252)</string>
                 </property>
                </widget>
               </item>
@@ -6039,6 +6162,26 @@ QComboBox::drop-down
         </widget>
        </widget>
       </item>
+      <item row="2" column="3">
+       <widget class="QListWidget" name="journalList">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>250</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 1px solid gray;
+border-radius: 10px;</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -6163,7 +6306,6 @@ QComboBox::drop-down
   <tabstop>move_place_Button</tabstop>
   <tabstop>move_destruction_button</tabstop>
   <tabstop>destruction_Button</tabstop>
-  <tabstop>withdrawal_Button</tabstop>
   <tabstop>StartSerializationButton</tabstop>
   <tabstop>PauseSerializationButton</tabstop>
   <tabstop>ContinueSerializationButton</tabstop>

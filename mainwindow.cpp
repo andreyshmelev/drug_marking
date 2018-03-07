@@ -2127,8 +2127,8 @@ void MainWindow::updateQRImage()
     successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
     if ( !successfulEncoding )
     {
-        ui->image_label->clear();
-        ui->image_label->setText( tr("QR Code...") );
+        //ui->image_label->clear();
+        //ui->image_label->setText( tr("QR Code...") );
         return;
     }
 
@@ -2145,7 +2145,7 @@ void MainWindow::updateQRImage()
             if ( qrEncode.m_byModuleData[i][j] )
                 encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
 
-    ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
+    //ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
     setScale(3);
 }
 
@@ -2245,8 +2245,8 @@ void MainWindow::setScale(int scale)
     {
         int scale_size = encodeImageSize * scale;
 
-        const QPixmap & scale_image = ui->image_label->pixmap()->scaled( scale_size, scale_size );
-        ui->image_label->setPixmap( scale_image );
+        //const QPixmap & scale_image = //ui->image_label->pixmap()->scaled( scale_size, scale_size );
+        //ui->image_label->setPixmap( scale_image );
     }
 }
 
@@ -2270,7 +2270,6 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
     return false;
 }
 
-
 void MainWindow::on_register_product_emission_Button_clicked()
 {
     RegisterProductEmissionPageOpen();
@@ -2281,12 +2280,10 @@ void MainWindow::on_register_control_samples_Button_clicked()
     RegisterControlSamplesPageOpen();
 }
 
-
 void MainWindow::on_register_end_packing_Button_clicked()
 {
     RegisterEndPackingPageOpen();
 }
-
 
 void MainWindow::connectTcp(QString address, int port)
 {
