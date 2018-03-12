@@ -1,3 +1,4 @@
+#include "ccomboboxpopupitemdelegate.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "QDebug"
@@ -20,6 +21,7 @@
 #include <QNetworkReply>
 #include <QUrl>
 #include "Widgets/XMLViewerWidget/xmlviewerwidget.h"
+
 
 int aaa = 222;
 int bbb = 789;
@@ -90,7 +92,9 @@ void MainWindow::GetStatisticsFromDB()
     ui->StatistMedicamentComboBox->setCurrentText(curtext);
 
     statisticsbatches = sqlDB->seldistinct("batch", "mark.statistics", "","batch");
+
     curtext = ui->StatistBatchComboBox->currentText();
+
     ui->StatistBatchComboBox->clear();
     ui->StatistBatchComboBox->addItem("%");
     ui->StatistBatchComboBox->addItems(statisticsbatches);
@@ -2828,19 +2832,14 @@ void MainWindow::StopSerialization()
         CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
     }
     MedicamentsSerialization.clear();
-
     QString a = QString("{\"command\":\"stopprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\"}");
     SendCommandToVideoJet(a);
-
-
     AddStatisticsToDB("stop",getSerializationGTIN(), getSerializationDrugName(),getSerializationBatchName(),QDateTime::currentDateTime(), 0,"");
-
 }
 
 void MainWindow::PauseSerialization()
 {
     setBSerializationPaused(true);
-
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(true);
@@ -2851,7 +2850,6 @@ void MainWindow::PauseSerialization()
 void MainWindow::ContinueSerialization()
 {
     setBSerializationPaused(false);
-
     ui->StartSerializationButton->setEnabled(false);
     ui->PauseSerializationButton->setEnabled(true);
     ui->ContinueSerializationButton->setEnabled(false);

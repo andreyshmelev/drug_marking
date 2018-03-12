@@ -61,7 +61,8 @@ SOURCES += \
     Widgets/DestructionWidget542/destructionwidget542.cpp \
     Widgets/WithdrawalWidget552/withdrawalwidget552.cpp \
     pack.cpp \
-    Widgets/XMLViewerWidget/xmlviewerwidget.cpp
+    Widgets/XMLViewerWidget/xmlviewerwidget.cpp \
+    ccomboboxpopupitemdelegate.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -94,7 +95,8 @@ HEADERS += \
     Widgets/WithdrawalWidget552/withdrawalwidget552.h \
     pack.h \
     xmlviewerwidget.h \
-    Widgets/XMLViewerWidget/xmlviewerwidget.h
+    Widgets/XMLViewerWidget/xmlviewerwidget.h \
+    ccomboboxpopupitemdelegate.h
 
 FORMS += \
         mainwindow.ui \
