@@ -20,6 +20,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QUrl>
+#include <QScrollBar>
 #include "Widgets/XMLViewerWidget/xmlviewerwidget.h"
 
 
@@ -345,8 +346,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // прочие сигналслоты
 
-
-
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
     signalMapper -> setMapping (ui->programOptionsButton, 1) ;
@@ -383,6 +382,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->DrugsComboBox->clear();
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
+
+    QAbstractItemView* view = ui->DrugsComboBox->view();
+    view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
+
+
+
+    view = ui->CompaniesCombobox->view();
+    view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
+
+    view = ui->StatistBPcomboBox->view();
+    view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
+
+    view = ui->StatistMedicamentComboBox->view();
+    view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
+
+    view = ui->StatistBatchComboBox->view();
+    view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
+
+    QScrollBar *scrollbar = view->verticalScrollBar();
+//    scrollbar->setStyleSheet("QScrollBar:vertical {\
+//                             border: 2px solid grey;\
+//                             background: #32CC99;\
+//                             width: 45px;\
+//                             margin: 0px 20px 0 20px;\
+//                         }");
+
+scrollbar->setStyleSheet("QScrollBar:vertical {\
+                         ;\
+                         width: 45px;\
+                     }");
+
+    view = ui->StatistGTINCombobox->view();
+    view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
 
     //adding TCP Client
     connectTcp(TCPaddress, TCPPort);
@@ -2117,7 +2149,7 @@ void MainWindow::setStackedPage(int newindex)
 void MainWindow::SendCommandToVideoJet(QString a)
 {
     serverWrite(a);
-//    qDebug() << a;
+    //    qDebug() << a;
 }
 
 void MainWindow::updateQRImage()
