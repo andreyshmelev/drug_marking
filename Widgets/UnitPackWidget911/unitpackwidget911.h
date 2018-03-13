@@ -58,12 +58,12 @@ private slots:
 
 signals:
 
+    void RegistrationToggled();
     void AddMedicamentToDBTable(medicament * m, QString tablename); // tablename - например process311
     void PrintSSCC(QString str);
     void setScannerLanguage(bool);
     void RegistrationStarted();
     void StopRegisterControlSamples();
-    void RegistrationToggled();
     void RegistrationCompleted (QList<medicament *> MedList, manufacturer *companysender, QDateTime operation_date);
 
 private:

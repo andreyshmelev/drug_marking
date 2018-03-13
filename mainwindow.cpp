@@ -24,9 +24,6 @@
 #include "Widgets/XMLViewerWidget/xmlviewerwidget.h"
 
 
-int aaa = 222;
-int bbb = 789;
-int summint;
 
 QElapsedTimer MainWindow::SQLInsertSpeedTest()
 {
@@ -306,7 +303,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
     
-    // сигналы и слоты для 313 бизнес процесса, пока он в форме mainwindow, позже нужно будет создать отдельный виджет
+    // сигналы и слоты для 313 бизнес процесса
     connect(ui->registerproductwidget, &RegisterProductWidget313::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(ui->registerproductwidget, &RegisterProductWidget313::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
     connect(this, &MainWindow::SendMedicamentSignal, ui->registerproductwidget, &RegisterProductWidget313::GetMedicament) ;
@@ -337,6 +334,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //    connect(this, &MainWindow::SendCompaniesDBList, ui->RelabelingWidget, &RelabelingWidget811::GetCompaniesDBList);
     //    connect(ui->RelabelingWidget, &RelabelingWidget811::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
     
+    // сигналы и слоты для 912 бизнес процесса
+
+    connect(this, &MainWindow::SendPackSignal, ui->UnitUnackPageWidget, &UnitUnpackWidget912::GetPack);
+
+    connect(this, &MainWindow::SendCompaniesDBList, ui->UnitUnackPageWidget, &UnitUnpackWidget912::GetCompaniesDBList) ;
+
     // сигнал-слоты для сериализации
     
     connect(ui->StartSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StartSerialization) ;
@@ -1834,13 +1837,6 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         expstring = NotFoundString;
     }
     
-    // если прочитали неверную дату годности
-    //    if( IsDateProper(expstring) == false)
-    //    {
-    //        expstring = NotFoundString;
-    //    }
-    
-    
     // кончаем разбирать Срок Годности
     
     // начинаем разбирать Партию
@@ -2251,17 +2247,30 @@ void MainWindow::updateQRLabels()
     bool bExtent = true;
     int maskIndex = -1;
     
-    QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2,  versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->unit_pack_QRLabel, unit_pack_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->move_order_QRLabel, move_order_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->releabeling_QRLabel, releabeling_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,1,  versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->unit_pack_QRLabel, unit_pack_QR_string,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->move_order_QRLabel, move_order_QR_string,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->releabeling_QRLabel, releabeling_QR_string,1, versionIndex, levelIndex, bExtent, maskIndex);
     
-    QRCodeToQLabelConverter(ui->printControlLabel, printControlQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->programOptionsLabel, programOptionsQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->agregationLabel, agregationQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
-    QRCodeToQLabelConverter(ui->statisticsLabel, statisticsQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->printControlLabel, printControlQRCode,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->programOptionsLabel, programOptionsQRCode,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->agregationLabel, agregationQRCode,1, versionIndex, levelIndex, bExtent, maskIndex);
+    QRCodeToQLabelConverter(ui->statisticsLabel, statisticsQRCode,1, versionIndex, levelIndex, bExtent, maskIndex);
+
+
+    // навремя убрали куаркоды
+    ui->register_product_emission_QRLabel->setVisible(false);
+    ui->register_control_samples_Label->setVisible(false);
+    ui->register_end_packing_Label->setVisible(false);
+    ui->unit_pack_QRLabel->setVisible(false);
+    ui->move_order_QRLabel->setVisible(false);
+    ui->releabeling_QRLabel->setVisible(false);
+    ui->printControlLabel->setVisible(false);
+    ui->programOptionsLabel->setVisible(false);
+    ui->agregationLabel->setVisible(false);
+    ui->statisticsLabel->setVisible(false);
     
 }
 

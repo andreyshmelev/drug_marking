@@ -8,12 +8,9 @@ UnitPackWidget911::UnitPackWidget911(QWidget *parent) :
     ui(new Ui::UnitPackWidget911)
 {
     ui->setupUi(this);
-
     connect(this, SIGNAL(RegistrationToggled()), this, SLOT(updateGUI())) ;
     registration = false;
     updateGUI();
-
-
 }
 
 UnitPackWidget911::~UnitPackWidget911()
