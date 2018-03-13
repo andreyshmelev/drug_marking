@@ -1282,7 +1282,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
     border-color: beige;</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>13</number>
         </property>
         <widget class="QWidget" name="PrintControlPage">
          <layout class="QGridLayout" name="gridLayout_8">
@@ -4538,10 +4538,14 @@ QComboBox::drop-down
                <string notr="true">QSpinBox::up-button { width: 32px; }
 QSpinBox::down-button { width: 32px; }
 QComboBox::drop-down 
-{ width: 32px; }</string>
+{ width: 32px; }
+</string>
               </property>
               <property name="editable">
                <bool>true</bool>
+              </property>
+              <property name="maxVisibleItems">
+               <number>3</number>
               </property>
              </widget>
             </item>

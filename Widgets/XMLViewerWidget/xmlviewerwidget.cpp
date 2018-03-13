@@ -15,6 +15,11 @@ void XMLViewerWidget::Settext(QString text)
     ui->textBrowser->setText(text);
 }
 
+void XMLViewerWidget::SetFilePath(QString text)
+{
+    ui->FilePath->setText(text);
+}
+
 
 XMLViewerWidget::~XMLViewerWidget()
 {

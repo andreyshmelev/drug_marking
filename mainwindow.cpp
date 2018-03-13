@@ -33,7 +33,7 @@ QElapsedTimer MainWindow::SQLInsertSpeedTest()
     QString req;
     QElapsedTimer timer;
     timer.start();
-
+    
     qDebug() << "The slow operation took" << timer.elapsed()/1000<< "seconds";
     qDebug() << "The slow operation took" << timer.elapsed() << "milliseconds";
     return timer;
@@ -77,30 +77,30 @@ void MainWindow::GetCompaniesDBList()
 void MainWindow::GetStatisticsFromDB()
 {
     QString curtext ;
-
+    
     statisticsbisnessprocesses = sqlDB->seldistinct("BProcess", "mark.statistics", "","BProcess");
     curtext = ui->StatistBPcomboBox->currentText();
     ui->StatistBPcomboBox->clear();
     ui->StatistBPcomboBox->addItem("%");
     ui->StatistBPcomboBox->addItems(statisticsbisnessprocesses);
     ui->StatistBPcomboBox->setCurrentText(curtext);
-
+    
     statisticsmedicaments = sqlDB->seldistinct("LPName", "mark.statistics", "","LPName");
     curtext = ui->StatistMedicamentComboBox->currentText();
     ui->StatistMedicamentComboBox->clear();
     ui->StatistMedicamentComboBox->addItem("%");
     ui->StatistMedicamentComboBox->addItems(statisticsmedicaments);
     ui->StatistMedicamentComboBox->setCurrentText(curtext);
-
+    
     statisticsbatches = sqlDB->seldistinct("batch", "mark.statistics", "","batch");
-
+    
     curtext = ui->StatistBatchComboBox->currentText();
-
+    
     ui->StatistBatchComboBox->clear();
     ui->StatistBatchComboBox->addItem("%");
     ui->StatistBatchComboBox->addItems(statisticsbatches);
     ui->StatistBatchComboBox->setCurrentText(curtext);
-
+    
     QStringList statisticsgtin = sqlDB->seldistinct("GTIN", "mark.statistics", "","GTIN");
     curtext = ui->StatistGTINCombobox->currentText();
     ui->StatistGTINCombobox->clear();
@@ -124,7 +124,7 @@ bool MainWindow::IsDateProper(QString stringtotest)
 void MainWindow::SQLInit()
 {
     sqlDB = new SQL( "mark",  "192.168.1.63",  3306,  "markirovka",  "WD8NHWq3T0zT");
-
+    
     connect(sqlDB, SIGNAL(databaseErrorSignal(QString)), ui->DataBaseValue, SLOT(setText(QString)));
     drugs = sqlDB->sel("drugs_name", "drugs", "","drugs_name");
     // подтягиваем параметры компании
@@ -139,27 +139,27 @@ void MainWindow::SetLibrariesPath()
 
 void MainWindow::SetStyleSheets()
 {
-
+    
     QList<QLabel *> list = this->findChildren<QLabel *>();
-
+    
     int i = 0 ;
     foreach(QLabel *l, list)
     {
         l->setStyleSheet("QLabel {background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #547FA8, stop: 0.1 #215689, stop: 0.49 #215689, stop: 0.5 #215689, stop: 1 #547FA8);border-style: outset;border-width: 1px;border-radius: 4px;                   border-color: beige;                   padding: 6px;               }");
     }
-
+    
     QList<QCheckBox *> checkboxeslist = this->findChildren<QCheckBox *>();
     foreach(QCheckBox *l, checkboxeslist)
     {
         //        qDebug() <<l->objectName() ;
-
+        
         l->setStyleSheet("QCheckBox::indicator {width: 20px;height: 20px;}");
     }
-
-
-
+    
+    
+    
     QList<QPushButton *> but = this->findChildren<QPushButton *>();
-
+    
     QString styleMainButtons = "QPushButton\
     {\
             background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F19D6E, stop: 0.1 #E25303, stop: 0.49 #E25303, stop: 0.5 #E25303, stop: 1 #F19D6E);\
@@ -193,8 +193,8 @@ void MainWindow::SetStyleSheets()
             font: bold 18px; color: white;\
             padding: 6px;\
 }";
-
-
+            
+            
             ;
     QString styleRegularButtons = "QPushButton\
     {\
@@ -229,18 +229,18 @@ void MainWindow::SetStyleSheets()
             font: bold 14px; color: white;\
             padding: 6px;\
 }";
-
+            
             i = 0 ;
     foreach(QPushButton *b, but)
     {
         b->setStyleSheet(styleRegularButtons);
     }
-
+    
     ui->printControlButton->setStyleSheet(styleMainButtons);
     ui->programOptionsButton->setStyleSheet(styleMainButtons);
     ui->agregationButton->setStyleSheet(styleMainButtons);
     ui->statisticksButton->setStyleSheet(styleMainButtons);
-
+    
 }
 
 // MainWindow  constructor
@@ -249,46 +249,46 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    
     agregation = false;
-
+    
     updateQRLabels();
-
+    
     qDebug() << QDir::currentPath() ;
-
+    
     QPixmap pixmap(QDir::currentPath() + "/logo.JPG");
     ui->organizationLabel->setPixmap(pixmap);
     ui->organizationLabel->show();
     pixmapqr = new QPixmap(QDir::currentPath() + "/startapp.jpg");
-
+    
     this->installEventFilter(this);
-
+    
     RandomStringSenderToVideoJetTimer = new QTimer();
     RandomStringSenderToVideoJetTimer->setInterval(350); // каждые сорок пять секунд посылаем новую произвольную строку
     connect(RandomStringSenderToVideoJetTimer, &QTimer::timeout, this, &MainWindow::SendRandomToVideoJet);
     RandomStringSenderToVideoJetTimer->start();
-
+    
     datetimeTimer = new QTimer();
     datetimeTimer->setInterval(1000);
     connect(datetimeTimer, SIGNAL(timeout()), this, SLOT(updateTimeDate()));
-
+    
     DMCodeUpdateTimeoutTimer = new QTimer();
     DMCodeUpdateTimeoutTimer->setInterval(100); // таймер который обновлятся при каждом нажатии клавиши, при его переполнении мы идем парсить строку (все символы со сканера приняты)
     connect(DMCodeUpdateTimeoutTimer, SIGNAL(timeout()), this, SLOT(updateReadedDMCode()));
-
+    
     DMCodeUpdateTimeoutTimer->start();
     signalMapper = new QSignalMapper (this) ;
-
+    
     connect(ui->printControlButton, SIGNAL(pressed()), this, SLOT(PrintControlPageOpen())) ;
     connect(ui->programOptionsButton, SIGNAL(pressed()), this, SLOT(productOptionsPageOpen())) ;
     connect(ui->agregationButton, SIGNAL(pressed()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(ui->statisticksButton, SIGNAL(pressed()), this, SLOT(statisticsPageOpen())) ;
-
+    
     connect(this, SIGNAL(printControlQRCodeScanned()), this, SLOT(PrintControlPageOpen())) ;
     connect(this, SIGNAL(programOptionsQRCodeScanned()), this, SLOT(productOptionsPageOpen())) ;
     connect(this, SIGNAL(agregationQRCodeScanned()), this, SLOT(agregationOptionsPageOpen())) ;
     connect(this, SIGNAL(statisticsQRCodeScanned()), this, SLOT(statisticsPageOpen())) ;
-
+    
     // сигналы и слоты для 311 бизнес процесса
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
@@ -296,7 +296,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::SendCompaniesDBList, ui->RegisterEndPackingPage311Widget, &RegisterEndPackingWidget311::GetCompaniesDBList) ;
     connect(this, SIGNAL(SendCompaniesDBList(QList<manufacturer*>)), this, SLOT(GetCompaniesDBList(QList<manufacturer*>))) ;
     connect(ui->RegisterEndPackingPage311Widget, SIGNAL(RegistrationCompleted(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)), this, SLOT(CreateXML311Doc(QList<medicament*>,manufacturer*,manufacturer*,int,QDateTime)));
-
+    
     // сигналы и слоты для 312 бизнес процесса
     connect(this, &MainWindow::Start312Process, ui->ExtractWidget, &UnitExtractWidget::StartRegistrationProcess ) ;
     connect(this, &MainWindow::Stop312Process, ui->ExtractWidget, &UnitExtractWidget::StopRegistrationProcess ) ;
@@ -305,134 +305,131 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ExtractWidget, &UnitExtractWidget::RegistrationCompleted,this , &MainWindow::StopAgregation ) ;
     connect(ui->ExtractWidget, SIGNAL(RegistrationStarted()),this , SLOT(StartAgregation()) ) ;
     connect(ui->ExtractWidget, &UnitExtractWidget::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
-
+    
     // сигналы и слоты для 313 бизнес процесса, пока он в форме mainwindow, позже нужно будет создать отдельный виджет
     connect(ui->registerproductwidget, &RegisterProductWidget313::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     connect(ui->registerproductwidget, &RegisterProductWidget313::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
     connect(this, &MainWindow::SendMedicamentSignal, ui->registerproductwidget, &RegisterProductWidget313::GetMedicament) ;
     connect(this, &MainWindow::SendCompaniesDBList, ui->registerproductwidget, &RegisterProductWidget313::GetCompaniesDBList) ;
     connect(ui->registerproductwidget, SIGNAL(RegistrationCompleted(QList<medicament*>,QDateTime)), this, SLOT(CreateXML313Doc(QList<medicament*>,QDateTime)));
-
-
+    
+    
     connect(this, &MainWindow::SendMedicamentSignal, this, &MainWindow::GetMedicamentSerialization) ;
-
+    
     //    // сигналы и слоты для 415 бизнес процесса
-
+    
     //    connect(ui->MoveOrderWidget, &MoveOrder415::RegistrationCompleted, this, &MainWindow::CreateXML415Doc) ;
     //    connect(ui->MoveOrderWidget, &MoveOrder415::setScannerLanguage, this, &MainWindow::setLanguageswitcher) ;
     //    connect(this, &MainWindow::SendMedicamentSignal, ui->MoveOrderWidget, &MoveOrder415::GetMedicament) ;
     //    connect(this, &MainWindow::SendCompaniesDBList, ui->MoveOrderWidget, &MoveOrder415::GetCompaniesDBList) ;
     //    connect(ui->MoveOrderWidget, &MoveOrder415::AddMedicamentToDBTable,this , &MainWindow::AddMedicamentToDBTable );
-
+    
     // сигналы и слоты для 911 бизнес процесса
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
     connect(this, &MainWindow::SendMedicamentSignal, ui->UnitPackPageWidget, &UnitPackWidget911::GetMedicament);
     connect(this, &MainWindow::SendCompaniesDBList, ui->UnitPackPageWidget, &UnitPackWidget911::GetCompaniesDBList);
     connect(ui->UnitPackPageWidget, &UnitPackWidget911::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
-
+    
     // сигналы и слоты для 811 бизнес процесса
-
+    
     //    connect(ui->RelabelingWidget, &RelabelingWidget811::setScannerLanguage, this, &MainWindow::setLanguageswitcher);
     //    connect(this, &MainWindow::SendMedicamentSignal, ui->RelabelingWidget, &RelabelingWidget811::GetMedicament);
     //    connect(this, &MainWindow::SendCompaniesDBList, ui->RelabelingWidget, &RelabelingWidget811::GetCompaniesDBList);
     //    connect(ui->RelabelingWidget, &RelabelingWidget811::RegistrationCompleted, this, &MainWindow::CreateXML911Doc);
-
+    
     // сигнал-слоты для сериализации
-
+    
     connect(ui->StartSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StartSerialization) ;
     connect(ui->PauseSerializationButton, &QAbstractButton::pressed, this, &MainWindow::PauseSerialization);
     connect(ui->ContinueSerializationButton, &QAbstractButton::pressed, this, &MainWindow::ContinueSerialization);
     connect(ui->StopSerializationButton, &QAbstractButton::pressed, this, &MainWindow::StopSerialization);
-
+    
     // прочие сигналслоты
-
+    
     // ПРИСВАИВАЕМ КАЖДОМУ СИГНАЛУ КНОПКИ ИНДЕКС
     signalMapper -> setMapping (ui->printControlButton, 0) ;
     signalMapper -> setMapping (ui->programOptionsButton, 1) ;
     signalMapper -> setMapping (ui->agregationButton, 2) ;
     signalMapper -> setMapping (ui->statisticksButton, 3) ;
-
+    
     connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(setStackedPage(int)));
-
+    
     datetimeTimer->start();
-
+    
     scene = new QGraphicsScene();
     view = new QGraphicsView(scene);
     messages = new QStringList();
     messages->append("Брак");
     messages->append("Ок");
-
+    
     imageObject = new QImage();
     imageObject->load(QDir::currentPath() + "/DM1.JPG");
     image = QPixmap::fromImage(*imageObject);
-
+    
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
-
+    
     updateAgregationGUI();
     setStackedPage(2);
-
+    
     SQLInit();
-
-
+    
+    
     SerializationCompanySender = CompaniesListFromDB.at(1);
-
+    
     ui->CompaniesCombobox->clear();
     ui->DrugsComboBox->clear();
     ui->DrugsComboBox->addItems(drugs);
     ui->CompaniesCombobox->addItems(companies);
-
+    
     QAbstractItemView* view = ui->DrugsComboBox->view();
     view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
-
-
-
+    
+    
+    
     view = ui->CompaniesCombobox->view();
     view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
-
+    
     view = ui->StatistBPcomboBox->view();
     view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
-
+    
     view = ui->StatistMedicamentComboBox->view();
     view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
-
+    
     view = ui->StatistBatchComboBox->view();
     view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
-
+    
     QScrollBar *scrollbar = view->verticalScrollBar();
-//    scrollbar->setStyleSheet("QScrollBar:vertical {\
-//                             border: 2px solid grey;\
-//                             background: #32CC99;\
-//                             width: 45px;\
-//                             margin: 0px 20px 0 20px;\
-//                         }");
-
-scrollbar->setStyleSheet("QScrollBar:vertical {\
-                         ;\
-                         width: 45px;\
-                     }");
-
+    //    scrollbar->setStyleSheet("QScrollBar:vertical {\
+    //                             border: 2px solid grey;\
+    //                             background: #32CC99;\
+    //                             width: 45px;\
+    //                             margin: 0px 20px 0 20px;\
+    //                         }");
+    
+    scrollbar->setStyleSheet("QScrollBar:vertical {width: 60px;background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(103,158,210,255), stop:0.55 rgba(103,158,210,255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));border-color: rgb(0, 85, 255);}");
+    
     view = ui->StatistGTINCombobox->view();
     view->setItemDelegate(new CComboBoxPopupItemDelegate(this));
-
+    
     //adding TCP Client
     connectTcp(TCPaddress, TCPPort);
     StopAgregation();
-
+    
     SetLibrariesPath();
     SetStyleSheets();
-
+    
     // для нормального рандомайза нужно добавить этот блок qsrand
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-
+    
     StopSerialization();
-
+    
     ui->batchnumberText->setPlainText(generateSN(6));
-
+    
     apiclient = new APIMARK();
-
+    
     connect(apiclient, SIGNAL(message(QString)),this, SLOT(ADDApiLOG(QString)));
 }
 
@@ -472,7 +469,7 @@ QString MainWindow::generateSN(int lenght)
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");  // abcdefghijklmnopqrstuvwxyz
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
-
+    
     QString randomString;
     for(int i=0; i<randomStringLength; ++i)
     {
@@ -480,7 +477,7 @@ QString MainWindow::generateSN(int lenght)
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }
-
+    
     QString newSN = randomString;
     return newSN;
 }
@@ -491,7 +488,7 @@ QString MainWindow::generateCode128(int lenght)
     //    const QString possibleCharacters("0123456789");
     const QString possibleCharacters("01234567890123456789012345678901234567890123456789012345678901");
     const int randomStringLength = lenght; // SNlenght  assuming you want random strings of 12 characters
-
+    
     QString randomString;
     for(int i=0; i<randomStringLength; ++i)
     {
@@ -499,7 +496,7 @@ QString MainWindow::generateCode128(int lenght)
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }
-
+    
     QString newSN = randomString;
     return newSN;
 }
@@ -532,7 +529,7 @@ bool MainWindow::getAutoprogramagregation() const
 void MainWindow::setAutoprogramagregation(bool value)
 {
     autoprogramagregation = value;
-
+    
     if (autoprogramagregation || autoagregation)
         ui->AgregationGroupBox->setEnabled(false);
     else
@@ -547,9 +544,9 @@ bool MainWindow::getAutoagregation() const
 void MainWindow::setAutoagregation(bool value)
 {
     autoagregation = value;
-
-
-
+    
+    
+    
     if (autoprogramagregation || autoagregation)
         ui->AgregationGroupBox->setEnabled(false);
     else
@@ -564,7 +561,7 @@ bool MainWindow::getAutoupakovka() const
 void MainWindow::setAutoupakovka(bool value)
 {
     autoupakovka = value;
-
+    
     ui->AutoUpakovkaGroupBox->setEnabled(!autoupakovka);
 }
 
@@ -600,11 +597,11 @@ void MainWindow::addMessageToJournal(QString message,QString attribute, QColor t
     item->setTextColor( textcolor);
     item->setBackgroundColor(backcolor);
     item->setText(ctime + message);
-
+    
     QVariant v;
     v.setValue(attribute);
     item->setData(Qt::UserRole, v);
-
+    
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
 }
@@ -617,7 +614,7 @@ void MainWindow::addMessageToJournal(QString message, QColor textcolor,QColor ba
     item->setTextColor( textcolor);
     item->setBackgroundColor(backcolor);
     item->setText(ctime + message);
-
+    
     ui->journalList->addItem(item);
     ui->journalList->scrollToBottom();
 }
@@ -671,10 +668,10 @@ void MainWindow::PrintSSCCCode(QString newcode)
     m_Scene.addItem( m_Barcode );
     m_Scene.update();
     m_Barcode->update();
-
+    
     QPrinter printer;
     QSize size(30,40);
-
+    
     printer.setPageSizeMM(size);
     QPainter painter(&printer);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -685,12 +682,12 @@ bool MainWindow::PrintBIGEtiketka(eticetka * et)
 {
     QPrinter printer;
     QSize size(100,150);
-
+    
     printer.setPageSizeMM(size);
     QPainter painter(&printer);
     painter.setRenderHint(QPainter::Antialiasing);
     et->all_etiketka.render(&painter);
-
+    
     return true;
 }
 
@@ -698,17 +695,17 @@ void MainWindow::updateReadedDMCode()
 {
     if (inputDataStringFromScaner!="")
     {
-
+        
         //        qDebug() << inputDataStringFromScaner;
-
+        
         QString sss = "002#9";
-
+        
         inputDataStringFromScaner.replace(sss," ");
         if (getLanguageswitcher() == true)
         {
             // Просто меняем раскладку если у нас агрегация.
             // так как Ручной сканер работает как клавиатура, то он эмулирует нажатие клавиш, что при русской раскладке дает неверные символы
-
+            
             inputDataStringFromScaner.replace("Й","Q");
             inputDataStringFromScaner.replace("Ц","W");
             inputDataStringFromScaner.replace("У","E");
@@ -721,7 +718,7 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("З","P");
             inputDataStringFromScaner.replace("Х","[");
             inputDataStringFromScaner.replace("Ъ","]");
-
+            
             inputDataStringFromScaner.replace("Ф","A");
             inputDataStringFromScaner.replace("Ы","S");
             inputDataStringFromScaner.replace("В","D");
@@ -733,7 +730,7 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("Д","L");
             inputDataStringFromScaner.replace("Ж",";");
             inputDataStringFromScaner.replace("Э","'");
-
+            
             inputDataStringFromScaner.replace("Я","Z");
             inputDataStringFromScaner.replace("Ч","X");
             inputDataStringFromScaner.replace("С","C");
@@ -744,7 +741,7 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("Б",",");
             inputDataStringFromScaner.replace("Ю",".");
             inputDataStringFromScaner.replace(".","/");
-
+            
             // если зажался шифт в Англ. раскладке
             inputDataStringFromScaner.replace("!","1");
             inputDataStringFromScaner.replace("@","2");
@@ -756,7 +753,7 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("*","8");
             inputDataStringFromScaner.replace("(","9");
             inputDataStringFromScaner.replace(")","0");
-
+            
             // если зажался шифт в Русской раскладке
             inputDataStringFromScaner.replace("!","1");
             inputDataStringFromScaner.replace("\"","2");
@@ -769,7 +766,7 @@ void MainWindow::updateReadedDMCode()
             inputDataStringFromScaner.replace("(","9");
             inputDataStringFromScaner.replace(")","0");
         }
-
+        
         ParseHandScannerData(inputDataStringFromScaner);
         DMCodeUpdateTimeoutTimer->stop();
         inputDataStringFromScaner.clear();
@@ -815,93 +812,93 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     manufacturer *organization = getSerializationCompanySender();
-
+    
     //  если пустой список то и генерировать то нечего
     if (MedList.length() == 0)
         return;
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     QDomElement reg_prod_emis_elem  = document.createElement("register_product_emission");
     reg_prod_emis_elem.setAttribute("action_id", "313");
     root.appendChild(reg_prod_emis_elem);
-
-
+    
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     QDomElement subjectIDelement  = document.createElement("subject_id");
     reg_prod_emis_elem.appendChild(subjectIDelement);
-
+    
     QDomText subjectIDtext  = document.createTextNode("subject_id");
     subjectIDtext.setNodeValue(organization->get_subject_id());
     subjectIDelement.appendChild(subjectIDtext);
-
+    
     // добавили subject_id
-
+    
     // добавляем operation_date
-
+    
     QDomElement operationdateelement  = document.createElement("operation_date");
     reg_prod_emis_elem.appendChild(operationdateelement);
-
+    
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
-
+    
     operationdatetext.setNodeValue(operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate) );
-
+    
     operationdateelement.appendChild(operationdatetext);
-
+    
     // добавили operation_date
-
-
+    
+    
     // добавляем confirm_doc
-
+    
     QDomElement confirm_doc_lement  = document.createElement("confirm_doc");
     reg_prod_emis_elem.appendChild(confirm_doc_lement);
-
+    
     QDomText confirm_doc_text  = document.createTextNode("confirm_doc");
     confirm_doc_text.setNodeValue("1");
     confirm_doc_lement.appendChild(confirm_doc_text);
-
+    
     // добавили confirm_doc
-
-
+    
+    
     // добавляем doc_num
-
+    
     QDomElement doc_num_element  = document.createElement("doc_num");
     reg_prod_emis_elem.appendChild(doc_num_element);
-
+    
     QDomText doc_num_text  = document.createTextNode("doc_num");
     doc_num_text.setNodeValue("ds1");
     doc_num_element.appendChild(doc_num_text);
-
+    
     // добавили doc_num
-
+    
     // добавляем doc_num
-
+    
     QDomElement doc_date_element  = document.createElement("doc_date");
     reg_prod_emis_elem.appendChild(doc_date_element);
-
+    
     QDomText doc_date_text  = document.createTextNode("doc_date");
     doc_date_text.setNodeValue(GetDOCDate());
     doc_date_element.appendChild(doc_date_text);
-
+    
     // добавили doc_num
     // добавляем signs (для первичной агрегации это GTINs
-
+    
     QDomElement signs_element  = document.createElement("signs");
     reg_prod_emis_elem.appendChild(signs_element);
-
+    
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
-
+    
     QDomElement sgtin_element ;
     QDomText sgtin_text ;
     // добавили doc_num
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
@@ -909,23 +906,23 @@ void MainWindow::CreateXML313Doc( QList<medicament *> MedList, QDateTime operati
         sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
     }
-
+    
     // добавили signs
-
+    
     QString filename = MedList.at(0)->BatchNumber+"_P313_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, "", Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-
+    
     addMessageToJournal("Создан файл:" + filepath, Qt::black, Qt::white);
     AddStatisticsToDB("313",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
@@ -934,97 +931,97 @@ void MainWindow::CreateXML415Doc(QList<medicament *> MedList, manufacturer *comp
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     if (MedList.length() <=0)
         return ;
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     QDomElement move_order_elem  = document.createElement("move_order");
     move_order_elem.setAttribute("action_id", "415");
     root.appendChild(move_order_elem);
-
-
+    
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     // добавляем subject_id
     addXMLTextNode(move_order_elem,  companysender->get_subject_id() , "subject_id", document);
     // добавили subject_id
-
+    
     // добавляем receiver_id
     addXMLTextNode(move_order_elem,  companyreciver->get_subject_id() , "receiver_id", document);
     // добавили receiver_id
-
+    
     // добавляем operation_date
     addXMLTextNode(move_order_elem,  operation_date.toString((Qt::ISODate)) , "operation_date", document);
     // добавили operation_date
-
+    
     // добавляем doc_num
     addXMLTextNode(move_order_elem, DocNum , "doc_num", document);
     // добавили doc_num
-
+    
     // добавляем doc_date
     addXMLTextNode(move_order_elem, DocDate.toString("dd.MM.yyyy") , "doc_date", document);
     // добавили doc_date
-
+    
     // добавляем turnover_type
     addXMLTextNode(move_order_elem, QString::number(turnovertype) , "turnover_type", document);
     // добавили turnover_type
-
+    
     if (source!=-1) // если у нас регламентируется источник
     {
         // добавляем source
         addXMLTextNode(move_order_elem, QString::number(source) , "source", document);
         // добавили source
     }
-
+    
     // добавляем contract_type
     addXMLTextNode(move_order_elem, QString::number(contracttype), "contract_type", document);
     // добавили contract_type
-
+    
     QDomElement order_details_element  = document.createElement("order_details");
     move_order_elem.appendChild(order_details_element);
-
-
+    
+    
     //    // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     //    // добавляем sgtin
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         QDomElement union_element  = document.createElement("union");
         order_details_element.appendChild(union_element);
-
+        
         // добавляем sgtin в union
         addXMLTextNode(union_element,  MedList.at(var)->sGTIN , "sgtin", document);
         // добавили sgtin в union
-
+        
         // добавляем cost в union
         addXMLTextNode(union_element,  Price, "cost", document);
         // добавили cost в union
-
+        
         // добавляем vat_value в union
         addXMLTextNode(union_element,  Vat, "vat_value", document);
         // добавили vat_value в union
     }
-
+    
     // добавили signs
-
+    
     QString filename = MedList.at(0)->BatchNumber+"_P415_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-
+    
     addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("415",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
@@ -1033,74 +1030,74 @@ void MainWindow::CreateXML811Doc(QList<medicament *> MedListOld, QList<medicamen
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     if (MedListOld.length() <=0)
         return ;
-
+    
     if (MedListNew.length() <=0)
         return ;
-
+    
     if (MedListNew.length() != MedListOld.length())
         return ;
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     QDomElement relabeling_elem  = document.createElement("relabeling");
     relabeling_elem.setAttribute("action_id", "811");
     root.appendChild(relabeling_elem);
-
-
+    
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     //добавляем subject_id
     addXMLTextNode(relabeling_elem,  company_subject->get_subject_id() , "subject_id", document);
     //добавили subject_id
-
+    
     // добавляем operation_date
     // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     addXMLTextNode(relabeling_elem,  GetISODate(), "operation_date", document);
     // добавили operation_date
-
-
+    
+    
     QDomElement relabeling_detail_element  = document.createElement("relabeling_detail");
     relabeling_elem.appendChild(relabeling_detail_element);
-
+    
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
-
+    
     for (int var = 0; var < MedListOld.length(); ++var) {
-
+        
         QDomElement detail_element  = document.createElement("detail");
         relabeling_elem.appendChild(detail_element);
-
+        
         // добавляем new_sgtin в detail
         addXMLTextNode(detail_element,  MedListNew.at(var)->sGTIN , "new_sgtin", document);
         // добавили new_sgtin в detail
-
+        
         // добавляем old_sgtin в detail
         addXMLTextNode(detail_element,  MedListOld.at(var)->sGTIN , "old_sgtin", document);
         // добавили old_sgtin в detail
     }
-
+    
     //добавили signs
-
+    
     QString filename = MedListNew.at(0)->BatchNumber+"_P811_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath() + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-
+    
     addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("811",MedListNew.at(0),QDateTime::currentDateTime(), MedListNew.length(),filename);
 }
@@ -1109,83 +1106,83 @@ void MainWindow::CreateXML911Doc(QList<medicament *> MedList, manufacturer *comp
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     if (MedList.length() <=0)
     {
         return ;
     }
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     QDomElement unit_pack_elem  = document.createElement("unit_pack");
     unit_pack_elem.setAttribute("action_id", "911");
     root.appendChild(unit_pack_elem);
-
-
+    
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     //добавляем subject_id
     addXMLTextNode(unit_pack_elem,  companysender->get_subject_id() , "subject_id", document);
     //добавили subject_id
-
+    
     //QString SSCCCode128 ="(00) " + companysender->getGS1id() + " " +  generateCode128(8);
     QString SSCCCode128 = "00" +  companysender->getGS1id() +  generateCode128(8);
     QString CorrectedDate = "20" + MedList.at(0)->ExperyDate;
     QDate ExperyDate = QDate::fromString(CorrectedDate,"yyyyMMdd");
-
-
+    
+    
     QString where1 = QString ( "drugs_name = '%1' " ).arg(MedList.at(0)->medicament_name);
     QString dose = sqlDB->sel("Dose", "drugs", where1,"Dose").at(0);
     QString conditions = sqlDB->sel("conditions", "drugs", where1,"conditions").at(0);
     QString quantity = sqlDB->sel("quantity", "drugs", where1,"quantity").at(0);
     QString address = "623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а";
-
+    
     EticetkaBFZ = new eticetka(companysender->get_organisation_name(),dose,address,MedList.at(0)->medicament_name,MedList.length(),MedList.at(0)->GTIN,MedList.at(0)->BatchNumber,operation_date.toTimeSpec(Qt::LocalTime).toString("dd.MM.yyyy"),MedList.at(0)->ExperyDate,conditions,"0000",SSCCCode128 );
-
+    
     if ( PrintBIGEtiketka(EticetkaBFZ)!= true)
     {
         return;
     }
-
+    
     // добавляем subject_id
     addXMLTextNode(unit_pack_elem,  SSCCCode128 , "sscc", document);
     // добавили subject_id
-
+    
     // добавляем operation_date
     // addXMLTextNode(unit_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     addXMLTextNode(unit_pack_elem,  GetISODate(), "operation_date", document);
     // добавили operation_date
-
+    
     QDomElement signs_element  = document.createElement("signs");
     unit_pack_elem.appendChild(signs_element);
-
+    
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
-
+        
         addXMLTextNode(signs_element, MedList.at(var)->sGTIN, "sgtin", document);
-
+        
     }
     // добавили signs
-
+    
     QString filename = MedList.at(0)->BatchNumber+"_P911_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-
+    
     addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("911",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
@@ -1194,34 +1191,34 @@ void MainWindow::CreateXML250Doc(QString recall_action_id, manufacturer *company
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     QDomElement recall  = document.createElement("recall");
     recall.setAttribute("action_id", "250");
     root.appendChild(recall);
-
+    
     addXMLTextNode(recall,  company->get_subject_id() , "subject_id", document);
     addXMLTextNode(recall,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
     addXMLTextNode(recall,  session_ui , "session_ui", document);
     addXMLTextNode(recall,  reason , "reason", document);
     addXMLTextNode(recall,  recall_action_id , "recall_action_id", document);
-
+    
     QString filename = "_P250_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
@@ -1232,47 +1229,47 @@ void MainWindow::CreateXML251Doc(QList<medicament *> MedList, manufacturer *comp
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
     root.setAttribute("xsi:noNamespaceSchemaLocation","documents.xsd");
     root.setAttribute("session_ui",session_ui);
-
+    
     QDomElement refusal_sender  = document.createElement("refusal_sender");
     refusal_sender.setAttribute("action_id", "251");
     root.appendChild(refusal_sender);
-
+    
     addXMLTextNode(refusal_sender,  company_subject->get_subject_id() , "subject_id", document);
     addXMLTextNode(refusal_sender,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
     addXMLTextNode(refusal_sender,  company_receiver->get_subject_id() , "receiver_id", document);
     addXMLTextNode(refusal_sender,  reason , "reason", document);
-
+    
     QDomElement order_details  = document.createElement("order_details");
     refusal_sender.appendChild(order_details);
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
     }
-
+    
     QString filename =  MedList.at(0)->BatchNumber+"_P251_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
     addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
-
+    
     AddStatisticsToDB("251",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
 
@@ -1280,42 +1277,42 @@ void MainWindow::CreateXML252Doc(QList<medicament *> MedList, manufacturer *comp
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
     root.setAttribute("xsi:noNamespaceSchemaLocation","documents.xsd");
     root.setAttribute("session_ui",session_ui);
-
+    
     QDomElement refusal_receiver  = document.createElement("refusal_receiver");
     refusal_receiver.setAttribute("action_id", "252");
     root.appendChild(refusal_receiver);
-
+    
     addXMLTextNode(refusal_receiver,  company_subject->get_subject_id() , "subject_id", document);
     addXMLTextNode(refusal_receiver,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
     addXMLTextNode(refusal_receiver,  company_shipper->get_subject_id() , "shipper_id", document);
     addXMLTextNode(refusal_receiver,  reason , "reason", document);
-
+    
     QDomElement order_details  = document.createElement("order_details");
     refusal_receiver.appendChild(order_details);
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
     }
-
+    
     QString filename =  MedList.at(0)->BatchNumber+"_P252_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
@@ -1327,42 +1324,42 @@ void MainWindow::CreateXML431Doc(QList<medicament *> MedList, manufacturer *comp
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xs","http://www.w3.org/2001/XMLSchema-instance");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     QDomElement move_place  = document.createElement("move_place");
     move_place.setAttribute("action_id", "431");
     root.appendChild(move_place);
-
+    
     addXMLTextNode(move_place,  company_subject->get_subject_id() , "subject_id", document);
     addXMLTextNode(move_place,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
     addXMLTextNode(move_place,  company_receiver->get_subject_id() , "receiver_id", document);
     addXMLTextNode(move_place,  doc_number , "doc_num", document);
     addXMLTextNode(move_place,  doc_date.toString("dd.MM.yyyy") , "doc_date", document);
-
+    
     QDomElement order_details  = document.createElement("order_details");
     move_place.appendChild(order_details);
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
     }
-
+    
     QString filename =  MedList.at(0)->BatchNumber+"_P431_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
@@ -1374,59 +1371,59 @@ void MainWindow::CreateXML541Doc(QList<medicament *> MedList, manufacturer *comp
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xs","http://www.w3.org/2001/XMLSchema-instance");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     QDomElement move_destruction  = document.createElement("move_destruction");
     move_destruction.setAttribute("action_id", "541");
     root.appendChild(move_destruction);
-
+    
     addXMLTextNode(move_destruction,  company_subject->get_subject_id() , "subject_id", document);
     addXMLTextNode(move_destruction,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
-
+    
     QDomElement destr_org  = document.createElement("destruction_org");
     move_destruction.appendChild(destr_org);
-
+    
     QDomElement destr_address  = document.createElement("addres");
     destr_org.appendChild(destr_address);
-
+    
     addXMLTextNode(destr_address, "19406454-0022-000C-00B0-000000000152", "aoguid", document);
     addXMLTextNode(destr_address, "19606494-0022-000A-0067-000000001259", "houseguid", document);
     addXMLTextNode(destr_address, "178", "flat", document);
-
-
+    
+    
     QDomElement destr_ul  = document.createElement("ul");
     destr_org.appendChild(destr_ul);
-
+    
     addXMLTextNode(destr_ul,destruction_org->get_inn(), "inn", document);
     addXMLTextNode(destr_ul,destruction_org->get_kpp(), "kpp", document);
-
+    
     addXMLTextNode(move_destruction,  doc_number , "doc_num", document);
     addXMLTextNode(move_destruction,  doc_date.toString("dd.MM.yyyy") , "doc_date", document);
-
+    
     QDomElement order_details  = document.createElement("order_details");
     move_destruction.appendChild(order_details);
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(order_details, MedList.at(var)->sGTIN, "sgtin", document);
     }
-
+    
     QString filename =  MedList.at(0)->BatchNumber+"_P541_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
@@ -1438,100 +1435,100 @@ void MainWindow::CreateXML312Doc( QList<medicament *> MedList, quint8 controlsam
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     manufacturer *organization = getSerializationCompanySender();
-
+    
     //  если пустой список то и генерировать то нечего
     if (MedList.length() == 0)
         return;
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     QDomElement reg_ctrl_smples_elem  = document.createElement("register_control_samples");
     reg_ctrl_smples_elem.setAttribute("action_id", "313");
     root.appendChild(reg_ctrl_smples_elem);
-
-
+    
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     // добавляем subject_id
-
+    
     QDomElement subjectIDelement  = document.createElement("subject_id");
     reg_ctrl_smples_elem.appendChild(subjectIDelement);
-
+    
     QDomText subjectIDtext  = document.createTextNode("subject_id");
     subjectIDtext.setNodeValue(organization->get_subject_id());
     subjectIDelement.appendChild(subjectIDtext);
-
+    
     // добавили subject_id
-
+    
     // добавляем operation_date
-
+    
     QDomElement operationdateelement  = document.createElement("operation_date");
     reg_ctrl_smples_elem.appendChild(operationdateelement);
-
+    
     QDomText operationdatetext  = document.createTextNode("operation_date"); // operation_date");
-
+    
     operationdatetext.setNodeValue( GetISODate());
     operationdateelement.appendChild(operationdatetext);
-
+    
     // добавили operation_date
-
+    
     // добавляем control_samples_type
-
+    
     QDomElement control_samples_type_element  = document.createElement("control_samples_type");
     reg_ctrl_smples_elem.appendChild(control_samples_type_element);
-
+    
     QDomText control_samples_type_text  = document.createTextNode("control_samples_type");
-
+    
     control_samples_type_text.setNodeValue( QString::number(controlsamplestype) );
     control_samples_type_element.appendChild(control_samples_type_text);
-
+    
     // добавили control_samples_type
-
+    
     // добавляем signs (для первичной агрегации это GTINs
-
+    
     QDomElement signs_element  = document.createElement("signs");
     reg_ctrl_smples_elem.appendChild(signs_element);
-
-
+    
+    
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
-
+    
     QDomElement sgtin_element ;
     QDomText sgtin_text ;
-
+    
     // добавили doc_num
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
-
+        
         sgtin_element = document.createElement("sgtin");
         signs_element.appendChild(sgtin_element);
-
+        
         sgtin_text  = document.createTextNode("sgtintext");
         sgtin_text.setNodeValue(MedList.at(var)->sGTIN);
         sgtin_element.appendChild(sgtin_text);
     }
-
+    
     // добавили signs
-
+    
     QString filename = MedList.at(0)->BatchNumber+"_P312_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-
+    
     addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("312",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
 }
@@ -1549,38 +1546,38 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
 {
     setRunningBuisenessProcess(false);
     setLanguageswitcher(false);
-
+    
     if (ordertype!=1||ordertype!=2)
     {
         ordertype = 1; // если что по умолчанию ставим собственное производство
     }
-
+    
     if (MedList.length() <=0)
         return ;
-
+    
     QDomDocument document;
     QDomElement root = document.createElement("documents");
     document.appendChild(root);
-
+    
     root.setAttribute("version","1.19");
     root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-
+    
     QDomElement reg_end_pack_elem  = document.createElement("register_end_packing");
     reg_end_pack_elem.setAttribute("action_id", "311");
     root.appendChild(reg_end_pack_elem);
-
+    
     // добавляем subject_id
     addXMLTextNode(reg_end_pack_elem,  sender->get_subject_id() , "subject_id", document);
     // добавили subject_id
-
+    
     // добавляем operation_date
     addXMLTextNode(reg_end_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
     // добавили operation_date
-
+    
     // добавляем order_type
     addXMLTextNode(reg_end_pack_elem,  QString::number(ordertype) , "order_type", document);
     // добавили order_type
-
+    
     // если у нас контрактное производство то мы вводим идентификатор собственника
     if (ordertype == 2)
     {
@@ -1589,56 +1586,54 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
         addXMLTextNode(reg_end_pack_elem, owner->get_subject_id(),"owner_id", document);
         // добавили owner_id
     }
-
-
+    
     // добавляем series_number - номер производственной серии (не серийник потребит.упак. а именно партия)
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->BatchNumber, "series_number", document);
     // добавили series_number
-
-
+    
     // добавляем expiration_date - срок годности препарата
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->ExperyDate, "expiration_date", document);
     // добавили expiration_date
-
+    
     // добавляем gtin - срок годности препарата
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->GTIN, "gtin", document);
     // добавили  gtin
-
+    
     // добавляем tnved_code
     addXMLTextNode(reg_end_pack_elem, MedList.at(0)->TNVED, "tnved_code", document);
     // добавили  tnved_code
-
+    
     // добавляем signs (для первичной агрегации это sGTINs) а для вторичной это SSCC
     QDomElement signs_element  = document.createElement("signs");
     reg_end_pack_elem.appendChild(signs_element);
     // следуя документу, sgtin  - Индивидуальный серийный номер вторичной упаковки, то есть серийный номер (который генерируется)
     // добавляем sgtin
-
+    
     for (int var = 0; var < MedList.length(); ++var) {
         addXMLTextNode(signs_element, MedList.at(var)->sGTIN, "sgtin", document);
     }
-
+    
     // добавили signs
-
+    
     QString filename = MedList.at(0)->BatchNumber+"_P311_" + QDateTime::currentDateTime().toTimeSpec(Qt::LocalTime).toString("hh-mm-ssdd-MM-yy") + ".xml";
     QString filepath = QDir::currentPath()   + "/" + filename ;
-
+    
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         addMessageToJournal("Не удалось создать файл:" + filepath, Qt::black, Qt::white);
         return;
     }
-
+    
     QTextStream stream(&file);
     stream<< document.toString();
     file.close();
-
+    
     addMessageToJournal("Создан файл: " + filepath,filepath, Qt::black, Qt::white);
     AddStatisticsToDB("311",MedList.at(0),QDateTime::currentDateTime(), MedList.length(),filename);
-
-
+    
+    
     CreateXML541Doc(MedList,sender,owner,QDateTime::currentDateTime(),"123docnum456",QDateTime::currentDateTime().addDays(31),"321actnum987",QDateTime::currentDateTime().addMonths(2),"because I wanna",2);
 }
 
@@ -1656,39 +1651,45 @@ void MainWindow::StopAgregation()
 
 void MainWindow::ParseHandScannerData(QString stringforparse)
 {
-    // сначала проверяем ня соответствие QR кодам
-    //    qDebug() << stringforparse;
+    // проверка на SSCC
+    SSCCString = GetRegularString(stringforparse, SSCCRegularexpression);
+
+    if (!SSCCString.isEmpty())
+    {
+        ScannedPack = new pack(this);
+        ScannedPack->setSSCC(SSCCString);
+        emit SendPackSignal(ScannedPack);
+    }
 
     if (stringforparse == register_product_emission_QR_string)
     {
         RegisterProductEmissionPageOpen();
         return;
     }
-
+    
     if (stringforparse == register_control_samples_QR_string)
     {
         RegisterControlSamplesPageOpen();
         return;
     }
-
+    
     if (stringforparse == register_end_packing_QR_string)
     {
         RegisterEndPackingPageOpen();
         return;
     }
-
+    
     if (stringforparse == unit_pack_QR_string)
     {
         UnitPackPageOpen();
         return;
     }
-
+    
     if (stringforparse == move_order_QR_string)
     {
         MoveOrderPageOpen();
         return;
     }
-
 
     if (stringforparse == releabeling_QR_string)
     {
@@ -1696,31 +1697,30 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         return;
     }
 
-
     if (stringforparse == printControlQRCode)
     {
         emit printControlQRCodeScanned();
         return;
     }
-
+    
     if (stringforparse == programOptionsQRCode)
     {
         emit programOptionsQRCodeScanned();
         return;
     }
-
+    
     if (stringforparse == statisticsQRCode)
     {
         emit statisticsQRCodeScanned();
         return;
     }
-
+    
     if (stringforparse == agregationQRCode)
     {
         emit agregationQRCodeScanned();
         return;
     }
-
+    
     if (getRunningBuisenessProcess() == false)
     {
         if (stringforparse == Start311ProcessQRString)
@@ -1729,14 +1729,14 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
             emit Start311Process();
             return;
         }
-
+        
         if (stringforparse == Start312ProcessQRString)
         {
             StartAgregation();
             emit Start312Process();
             return;
         }
-
+        
         if (stringforparse == Start313ProcessQRString)
         {
             StartAgregation();
@@ -1745,21 +1745,21 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
             return;
         }
     }
-
+    
     if (stringforparse == Stop311ProcessQRString)
     {
         StopAgregation();
         emit Stop311Process();
         return;
     }
-
+    
     if (stringforparse == Stop312ProcessQRString)
     {
         StopAgregation();
         emit Stop312Process();
         return;
     }
-
+    
     if (stringforparse == Stop313ProcessQRString)
     {
         StopAgregation();
@@ -1767,18 +1767,18 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         emit Stop313Process();
         return;
     }
-
-
+    
+    
     // сюда перешли если нас устроил код
     // добавляем в конец строки символ завершения <GS>, точнее часть его,
     // чтобы обрабатывать поля, которые стоят в конце строки и которые не заканчиваются этим символом.
     // Но если эти поля в центре то они должны заканчиваться этим символом ( кроме даты выпуска )
-
+    
     stringforparse.append(GSSymbol);
-
+    
     // начинаем разбирать GTIN
     // он всегда должен быть в начала. остальные группы данных могут быть в любом месте, и заканчиваться символом 29, за исключением если они находятся в конце строки.
-
+    
     if (stringforparse.indexOf(GTINid) == 0)    // если начинается как нужно - с 01 то продолжаем, иначе - ошибка
     {
         gtinstring = stringforparse;
@@ -1787,43 +1787,45 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         //удаляем GTIN из общей строки
         stringforparse.remove(0,Gtinlenght + GTINid.length());
     }
-
+    
     else
     {
         gtinstring = NotFoundString;
     }
-
+    
     // кончаем разбирать GTIN
-
+    
     // начинаем разбирать серийник
-
+    
     SNstring = GetRegularString(stringforparse, SNRegularexpression);
     SNstring.remove(0,2);
     SNstring.replace(GSSymbol,Emptystring);
-
+    
     if(SNstring == NULL)
     {
         SNstring = NotFoundString;
     }
-
+    
     // заканчиваем разбирать серийник
-
+    
     // начинаем разбирать ТНВЭД
+
+
 
     tnvedstring = GetRegularString(stringforparse, TNVEDRegularexpression);
     tnvedstring.remove(0,4);
     tnvedstring.replace(GSSymbol,Emptystring);
-
+    
     if(tnvedstring == NULL)
     {
         tnvedstring = NotFoundString;
     }
-
+    
     // кончаем разбирать ТНВЭД
-
-
+    
+    
     // начинаем разбирать Срок Годности
-
+    
     expstring = GetRegularString(stringforparse, ExpRegularexpression);
     expstring.remove(0,3);
     expstring.replace(GSSymbol,Emptystring);
@@ -1831,31 +1833,31 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
     {
         expstring = NotFoundString;
     }
-
+    
     // если прочитали неверную дату годности
     //    if( IsDateProper(expstring) == false)
     //    {
     //        expstring = NotFoundString;
     //    }
-
-
+    
+    
     // кончаем разбирать Срок Годности
-
+    
     // начинаем разбирать Партию
-
+    
     batchstring = GetRegularString(stringforparse, BatchRegularexpression);
     batchstring.remove(0,3);
     batchstring.replace(GSSymbol,Emptystring);
-
+    
     if (batchstring == NULL)
     {
         batchstring = NotFoundString;
     }
-
+    
     sGTINString = gtinstring + SNstring;
-
+    
     // кончаем разбирать Партию
-
+    
     QString medicamentName;
     QString whereGtin = QString("gtin = '%1'  ").arg(gtinstring);
     medicamentName = sqlDB->sel("drugs_name", "drugs", whereGtin,"drugs_name").at(0);
@@ -1868,7 +1870,7 @@ void MainWindow::ParseHandScannerData(QString stringforparse)
         ScannedMedicament = new medicament(medicamentName,gtinstring,SNstring,batchstring,expstring,sGTINString,tnvedstring);
         emit SendMedicamentSignal(ScannedMedicament);
     }
-
+    
     emit ParcingEnded(); // испускаем сигнал что закончили парсинг строки
 }
 
@@ -1881,7 +1883,7 @@ void MainWindow::updateDMPicture()
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
     //    ui->packagePicture->show();
-
+    
 }
 
 void MainWindow::EmulateAutomaticMedicamentScan()
@@ -1907,7 +1909,7 @@ void MainWindow::Start313Process(bool set)
         CreateXML313Doc(MedicamentsList,GetISODateTime());
         inputDataStringFromScaner.clear();
     }
-
+    
     MedicamentsList.clear();
     agregation = set;
     emit agregationstatusToggled();
@@ -2068,7 +2070,7 @@ void MainWindow::Toggle313Process()
 {
     if(getAgregation() == false)
     {
-
+        
         Start313Process(true);
     }
     else
@@ -2079,16 +2081,16 @@ void MainWindow::Toggle313Process()
 
 void MainWindow::updateAgregationGUI()
 {
-
+    
 }
 
 bool MainWindow::CheckMedicamentinDB(medicament *m)
 {
     QString where = QString ( "drugs_name = '%1' " ).arg(m->SerialNumber);
-
+    
     if (sqlDB->sel("tnved", "drugs", where,"tnved").at(0) != "")
     {
-
+        
     }
     return false;
 }
@@ -2159,7 +2161,7 @@ void MainWindow::updateQRImage()
     bool bExtent = true;
     int maskIndex = -1;
     QString encodeString = generateSN(11);;
-
+    
     successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
     if ( !successfulEncoding )
     {
@@ -2167,20 +2169,20 @@ void MainWindow::updateQRImage()
         //ui->image_label->setText( tr("QR Code...") );
         return;
     }
-
+    
     int qrImageSize = qrEncode.m_nSymbleSize;
-
+    
     // Создаем двумерный образ кода
     encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
     QImage encodeImage( encodeImageSize, encodeImageSize, QImage::Format_Mono );
     encodeImage.fill( 1 );
-
+    
     // Создать двумерный образ кода
     for ( int i = 0; i < qrImageSize; i++ )
         for ( int j = 0; j < qrImageSize; j++ )
             if ( qrEncode.m_byModuleData[i][j] )
                 encodeImage.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
-
+    
     //ui->image_label->setPixmap( QPixmap::fromImage( encodeImage ) );
     setScale(3);
 }
@@ -2193,47 +2195,47 @@ QImage MainWindow::QRCodeToQLabelConverter(QLabel* labelq, QString textcode, int
         ui->register_control_samples_Label->clear();
         ui->register_control_samples_Label->setText( tr("QR Code...") );
     }
-
+    
     int qrImageSize = qrEncode.m_nSymbleSize;
-
+    
     // Создаем двумерный образ кода
-
+    
     encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
     QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
     encodeImage2.fill( 1 );
-
+    
     // Создать двумерный образ кода
     for ( int i = 0; i < qrImageSize; i++ )
         for ( int j = 0; j < qrImageSize; j++ )
             if ( qrEncode.m_byModuleData[i][j] )
                 encodeImage2.setPixel( i + QR_MARGIN, j + QR_MARGIN, 0 );
-
+    
     labelq->setPixmap( QPixmap::fromImage( encodeImage2 ) );
-
-
+    
+    
     if ( successfulEncoding )
     {
         int scale_size = encodeImageSize * scale;
-
+        
         QPixmap scale_image = labelq->pixmap()->scaled( scale_size, scale_size );
         labelq->setPixmap( scale_image );
     }
-
+    
     return encodeImage2;
 }
 
 QImage MainWindow::QRCodeToQImageConverter( QString textcode, int scale ,  int versionIndex, int levelIndex, bool bExtent, int maskIndex)
 {
     CQR_Encode qrEncode;
-
+    
     qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, textcode.toUtf8().data() );
     int qrImageSize = qrEncode.m_nSymbleSize;
     // Создаем двумерный образ кода
-
+    
     int encodeImageSize = qrImageSize + ( QR_MARGIN * 2 );
     QImage encodeImage2( encodeImageSize, encodeImageSize, QImage::Format_Mono );
     encodeImage2.fill( 1 );
-
+    
     // Создать двумерный образ кода
     for ( int i = 0; i < qrImageSize; i++ )
         for ( int j = 0; j < qrImageSize; j++ )
@@ -2248,29 +2250,29 @@ void MainWindow::updateQRLabels()
     int versionIndex = 0;
     bool bExtent = true;
     int maskIndex = -1;
-
+    
     QRCodeToQLabelConverter(ui->register_product_emission_QRLabel, register_product_emission_QR_string ,2,  versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->register_control_samples_Label, register_control_samples_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->register_end_packing_Label, register_end_packing_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->unit_pack_QRLabel, unit_pack_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->move_order_QRLabel, move_order_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->releabeling_QRLabel, releabeling_QR_string,2, versionIndex, levelIndex, bExtent, maskIndex);
-
+    
     QRCodeToQLabelConverter(ui->printControlLabel, printControlQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->programOptionsLabel, programOptionsQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->agregationLabel, agregationQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
     QRCodeToQLabelConverter(ui->statisticsLabel, statisticsQRCode,2, versionIndex, levelIndex, bExtent, maskIndex);
-
+    
 }
 
 void MainWindow::addSymbolToInputString(QString str)
 {
     DMCodeUpdateTimeoutTimer->start();
-
-
+    
+    
     //    qDebug() << str;
     QString wastext = inputDataStringFromScaner;
-
+    
     wastext.append(str);
     inputDataStringFromScaner = wastext;
 }
@@ -2280,7 +2282,7 @@ void MainWindow::setScale(int scale)
     if ( successfulEncoding )
     {
         int scale_size = encodeImageSize * scale;
-
+        
         //const QPixmap & scale_image = //ui->image_label->pixmap()->scaled( scale_size, scale_size );
         //ui->image_label->setPixmap( scale_image );
     }
@@ -2289,7 +2291,7 @@ void MainWindow::setScale(int scale)
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type()==QEvent::KeyRelease) {
-
+        
         QKeyEvent* key = static_cast<QKeyEvent*>(event);
         int key1 = key->key();
         if ( (key1==Qt::Key_Enter) || (key1==Qt::Key_Return)|| (key1==Qt::Key_Shift) || key1 == 0 ) {
@@ -2347,14 +2349,14 @@ QByteArray MainWindow::QstringToQbytearray(QString str)
 void MainWindow::on_DrugsComboBox_currentIndexChanged(int index)
 {
     //    qDebug() << index << "index";
-
+    
     QString where = QString ( "drugs_name = '%1' " ).arg(ui->DrugsComboBox->itemText(index));
     QString gtin = sqlDB->sel("gtin", "drugs", where,"gtin").at(0);
     QString tnved = sqlDB->sel("tnved", "drugs", where,"tnved").at(0);
     QString dose = sqlDB->sel("Dose", "drugs", where,"Dose").at(0);
     QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
     QString quantity = sqlDB->sel("quantity", "drugs", where,"quantity").at(0);
-
+    
     ui->GTINVal->setText(gtin);
     ui->TNVEDVal->setText(tnved);
     ui->DoseVal->setText(dose);
@@ -2399,45 +2401,45 @@ void MainWindow::GetMedicamentSerialization(medicament *med)
         {
             quint16 brakcount  = ui->NOKlabelValue->text().toUInt();
             ui->NOKlabelValue->setText(QString::number(++brakcount));
-
+            
             return;
         }
-
+        
         // если автоупаковка то сразу добавляем препарат в таблицу process311noxml
         AddMedicamentToDBTable(med,"process311noxml");
         MedicamentsSerialization.append(med);
-
+        
         //Проверяем сколько реально упаковок добавлено в базу данных
         QString reqstring = QString("batch like '%1';").arg(med->BatchNumber);
         QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
         QString summa_pachek_v_partii = ssss.at(0);
-
+        
         int ostalos_pachek_upakovat = getSerializationBatchValue().toInt() - summa_pachek_v_partii.toUInt();
         int ostalos_zapolnit_v_korobe = MedicamentsSerialization.length() % getSerializationQuantity().toUInt()  ;
         int proizveli_pachek = MedicamentsSerialization.length();
-
+        
         ui->OKlabelValue->setText(summa_pachek_v_partii);
         ui->remainLabelValue->setText(QString::number(ostalos_pachek_upakovat));
-
+        
         if ( ( ( ostalos_zapolnit_v_korobe  == 0 ) && ( proizveli_pachek > 0 ) ) || (ostalos_pachek_upakovat <= 0 ) )
         {
             //            qDebug() << ostalos_zapolnit_v_korobe  << proizveli_pachek << ostalos_pachek_upakovat ;
             QDateTime date311  = GetISODateTime();
             CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
-
+            
             QDateTime date313  = GetISODateTime().addSecs(5);
             CreateXML313Doc(MedicamentsSerialization,date313);
-
+            
             // если программная агрегация
             if(getAutoprogramagregation())
             {
                 QDateTime date911 = date313.addSecs(5);
                 CreateXML911Doc(MedicamentsSerialization,getSerializationCompanySender(),date911 );
             }
-
+            
             MedicamentsSerialization.clear();
         }
-
+        
         if ((ostalos_pachek_upakovat <= 0 ))
         {
             StopSerialization();
@@ -2496,7 +2498,7 @@ void MainWindow::SendRandomToVideoJet()
         //    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
         QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"%1\", \"SNVAL\": \"%2\", \"BATCHVAL\": \"%3\", \"DATEVAL\": \"%4\", \"TNVEDVAL\": \"%5\", \"GTINTEXT\": \"%6\", \"SNTEXT\": \"%7\", \"BATCHTEXT\": \"%8\", \"DATETEXT\": \"%9\"}}").arg(getSerializationGTIN() , randstr,getSerializationBatchName(),printerdate,getSerializationTNVED(),getSerializationGTIN() ,randstr,getSerializationBatchName(),humandate);
         SendCommandToVideoJet(a);
-
+        
         //                qDebug() << a;
     }
 }
@@ -2529,7 +2531,7 @@ void MainWindow::on_pushButton_2_clicked()
     QString batchvalue = QString::number(ui->batchvalue->value());
     QString conditions = sqlDB->sel("conditions", "drugs", where,"conditions").at(0);
     QString quantity = sqlDB->sel("quantity", "drugs", where,"quantity").at(0);
-
+    
     setSerializationDrugName(drugsname);
     setSerializationDose(dose);
     setSerializationGTIN(gtin);
@@ -2540,7 +2542,7 @@ void MainWindow::on_pushButton_2_clicked()
     setSerializationQuantity(quantity);
     SetSerializationCompanySender(CompaniesListFromDB.at(ui->senderID->currentIndex()));
     setSerializationCompanyOwner(CompaniesListFromDB.at(ui->ownerID->currentIndex()));
-
+    
     GUIMainWindowUpdate();
 }
 
@@ -2558,12 +2560,12 @@ eticetka::eticetka()
     m_Scene.clear();
     m_Scene.addItem( m_Barcode );
     m_Scene.update();
-
+    
     m_Barcode->setRotation(-90);
     m_Barcode->update();
     m_Barcode->setPos(550,600);
     m_Barcode->setTextVisible(false);
-
+    
     all_etiketka.clear();
     all_etiketka.addItem( m_Barcode);
     OrgText = new QGraphicsTextItem("ЗАО \"Березовский фармацевтический завод\"");
@@ -2571,74 +2573,74 @@ eticetka::eticetka()
     OrgText->setRotation(-90);
     OrgText->setFont(QFont("Ubuntu", 25, QFont::Bold ));
     all_etiketka.addItem(OrgText);
-
+    
     AddressItem = new QGraphicsTextItem("623704, Свердловская область, г. Березовский, ул. Кольцевая, 13а");
     AddressItem->setPos(100,1000);
     AddressItem->setRotation(-90);
     AddressItem->setFont(QFont("Ubuntu", 20 , QFont::Bold));
     all_etiketka.addItem(AddressItem);
-
+    
     PreparatItem = new QGraphicsTextItem("Лефлуномид");
     PreparatItem->setPos(140,800);
     PreparatItem->setRotation(-90);
     PreparatItem->setFont(QFont("Ubuntu", 60 , QFont::Bold));
     all_etiketka.addItem(PreparatItem);
-
+    
     Dose = new QGraphicsTextItem("таблетки 10 мг №30");
     Dose->setPos(230,700);
     Dose->setRotation(-90);
     Dose->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(Dose);
-
+    
     mainrect = new QGraphicsRectItem(0,0,850,1270);
     mainrect->setPos(10,10);
     mainrect->setPen(QPen(Qt::black,3));
     all_etiketka.addItem(mainrect);
-
-
+    
+    
     logorect = new QGraphicsRectItem(0,0,20*8,20*8);
     logorect->setPos(20,1110);
     logorect->setPen(QPen(Qt::black,3));
     all_etiketka.addItem(logorect);
-
-
+    
+    
     kolichestvouoakovok = new QGraphicsTextItem("Количество упаковок");
     kolichestvouoakovok->setPos(300,1275);
     kolichestvouoakovok->setRotation(-90);
     kolichestvouoakovok->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(kolichestvouoakovok);
-
-
+    
+    
     GTIN = new QGraphicsTextItem("GTIN: ");
     GTIN ->setPos(400 + vertikotstup,1275);
     GTIN ->setRotation(-90);
     GTIN ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(GTIN );
-
+    
     Seria = new QGraphicsTextItem("Серия: ");
     Seria ->setPos(400 + vertikotstup*2,1275);
     Seria ->setRotation(-90);
     Seria ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(Seria );
-
+    
     dataproizvodstva = new QGraphicsTextItem("Дата производства: ");
     dataproizvodstva ->setPos(400 + vertikotstup*3,1275);
     dataproizvodstva ->setRotation(-90);
     dataproizvodstva ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(dataproizvodstva );
-
+    
     srokgodnosti = new QGraphicsTextItem("Срок годности: ");
     srokgodnosti ->setPos(400 + vertikotstup*4,1275);
     srokgodnosti ->setRotation(-90);
     srokgodnosti ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(srokgodnosti);
-
+    
     usloviahranenia = new QGraphicsTextItem("Хранить и транспортировать \nпри температуре от 15 до 30 C°");
     usloviahranenia ->setPos(400 + vertikotstup*5,1275);
     usloviahranenia ->setRotation(-90);
     usloviahranenia ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     all_etiketka.addItem(usloviahranenia);
-
+    
     SSCCCode = new QGraphicsTextItem(ssccString);
     SSCCCode ->setPos(810,490);
     SSCCCode ->setRotation(-90);
@@ -2650,11 +2652,11 @@ eticetka::eticetka()
 eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext, QString PreparatText, int kolvoupakovoktext, QString gtinText, QString SeriaText, QString dataproizvodstvaText, QString SrokgodnostiText, QString usloviahraneniaText, QString regnomerText, QString SSCCCodetext)
 {
     m_Barcode = new Code128Item();
-
+    
     int vertikotstup = 50;
-
+    
     QString ssccString = SSCCCodetext;
-
+    
     // 150 x 100 ok
     m_Barcode->setWidth( 190*2.5 );
     m_Barcode->setHeight( 110*2.5 );
@@ -2662,107 +2664,107 @@ eticetka::eticetka(QString OrgTextstring, QString Dosetext, QString Addresstext,
     m_Scene.clear();
     m_Scene.addItem( m_Barcode );
     m_Scene.update();
-
+    
     m_Barcode->setRotation(-90);
     m_Barcode->update();
     m_Barcode->setPos(550,600);
     m_Barcode->setTextVisible(false);
-
+    
     all_etiketka.clear();
     all_etiketka.addItem( m_Barcode);
-
+    
     OrgText = new QGraphicsTextItem(OrgTextstring);
     OrgText->setPos(60,900);
     OrgText->setRotation(-90);
     OrgText->setFont(QFont("Ubuntu", 25, QFont::Bold ));
     OrgText->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(OrgText);
-
+    
     AddressItem = new QGraphicsTextItem(Addresstext);
     AddressItem->setPos(100,1000);
     AddressItem->setRotation(-90);
     AddressItem->setFont(QFont("Ubuntu", 20 , QFont::Bold));
     AddressItem->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(AddressItem);
-
-
+    
+    
     PreparatItem = new QGraphicsTextItem(PreparatText);
     PreparatItem->setPos(140,800);
     PreparatItem->setRotation(-90);
     PreparatItem->setFont(QFont("Ubuntu", 60 , QFont::Bold));
     PreparatItem->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(PreparatItem);
-
+    
     Dose = new QGraphicsTextItem(Dosetext);
     Dose->setPos(230,700);
     Dose->setRotation(-90);
     Dose->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     Dose->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(Dose);
-
+    
     mainrect = new QGraphicsRectItem(0,0,850,1270);
     mainrect->setPos(10,10);
     mainrect->setPen(QPen(Qt::black,3));
     all_etiketka.addItem(mainrect);
-
+    
     QPixmap pixmap("C:/Work/Application/BFZLogo.jpg");
-
+    
     logo = new QGraphicsPixmapItem(pixmap);
     logo ->setPos(15,1275);
     logo->setRotation(-90);
     logo->setScale(0.25);
     all_etiketka.addItem(logo);
-
+    
     kolichestvouoakovok = new QGraphicsTextItem("Количество упаковок: " + QString::number(kolvoupakovoktext));
     kolichestvouoakovok->setPos(300,1275);
     kolichestvouoakovok->setRotation(-90);
     kolichestvouoakovok->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     kolichestvouoakovok->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(kolichestvouoakovok);
-
+    
     GTIN = new QGraphicsTextItem("GTIN: " + gtinText);
     GTIN ->setPos(400 + vertikotstup,1275);
     GTIN ->setRotation(-90);
     GTIN ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     GTIN ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(GTIN );
-
+    
     Seria = new QGraphicsTextItem("Серия: " + SeriaText);
     Seria ->setPos(400 + vertikotstup*2,1275);
     Seria ->setRotation(-90);
     Seria ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     Seria ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(Seria );
-
+    
     dataproizvodstva = new QGraphicsTextItem("Дата производства: " + dataproizvodstvaText);
     dataproizvodstva ->setPos(400 + vertikotstup*3,1275);
     dataproizvodstva ->setRotation(-90);
     dataproizvodstva ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     dataproizvodstva ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(dataproizvodstva );
-
+    
     srokgodnosti = new QGraphicsTextItem("Срок годности: " + SrokgodnostiText);
     srokgodnosti ->setPos(400 + vertikotstup*4,1275);
     srokgodnosti ->setRotation(-90);
     srokgodnosti ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     srokgodnosti ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(srokgodnosti);
-
-
+    
+    
     usloviahranenia = new QGraphicsTextItem(usloviahraneniaText);
     usloviahranenia ->setPos(400 + vertikotstup*5,1275);
     usloviahranenia ->setRotation(-90);
     usloviahranenia ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     usloviahranenia ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(usloviahranenia);
-
+    
     SSCCCode = new QGraphicsTextItem(ssccString);
     SSCCCode ->setPos(810,570);
     SSCCCode ->setRotation(-90);
     SSCCCode ->setFont(QFont("Ubuntu", 25 , QFont::Bold));
     SSCCCode ->setDefaultTextColor(Qt::black);
     all_etiketka.addItem(SSCCCode);
-
+    
     all_etiketka.update();
 }
 
@@ -2807,7 +2809,7 @@ void MainWindow::StartSerialization()
     setBSerializationStarted(true);
     setBSerializationStopped(false);
     setBSerializationPaused(false);
-
+    
     addMessageToJournal("Старт сериализации",Qt::green,Qt::white);
     ui->MedicamentOptionsGroup->setEnabled(false);
     ui->StartSerializationButton->setEnabled(false);
@@ -2815,24 +2817,24 @@ void MainWindow::StartSerialization()
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(true);
     ui->groupBox_2->setEnabled(false);
-
+    
     //Проверяем сколько реально упаковок добавлено в базу данных
     QString reqstring = QString("batch like '%1';").arg(getSerializationBatchName());
     QStringList ssss = sqlDB->getsumm("COUNT(1)", "mark.process311noxml",reqstring,"COUNT(1)");
-
+    
     QString summa_pachek_v_partii = ssss.at(0);
     int ostalos_pachek_upakovat = getSerializationBatchValue().toInt() - summa_pachek_v_partii.toUInt();
-
+    
     if(ostalos_pachek_upakovat<=0)
     {
         QString me = QString("Партия %1 завершена").arg(getSerializationBatchName());
         addMessageToJournal(me,Qt::green,Qt::transparent);
         StopSerialization();
     }
-
+    
     QString a = QString("{\"command\":\"startprint\",\"username\":\"Admin\",\"password\":\"ioj@admin\", \"startpage\":1,\"endpage\":0, \"templatename\":\"DM10works\"}");
     SendCommandToVideoJet(a);
-
+    
     AddStatisticsToDB("start",getSerializationGTIN(), getSerializationDrugName(),getSerializationBatchName(),QDateTime::currentDateTime(), 0,"");
 }
 
@@ -2841,22 +2843,22 @@ void MainWindow::StopSerialization()
     setBSerializationStarted(false);
     setBSerializationStopped(true);
     setBSerializationPaused(false);
-
+    
     addMessageToJournal("Останов.сериализации",Qt::red,Qt::white);
-
+    
     ui->MedicamentOptionsGroup->setEnabled(true);
     ui->StartSerializationButton->setEnabled(true);
     ui->PauseSerializationButton->setEnabled(false);
     ui->ContinueSerializationButton->setEnabled(false);
     ui->StopSerializationButton->setEnabled(false);
     ui->groupBox_2->setEnabled(true);
-
+    
     QDateTime date311  = GetISODateTime();
     CreateXML311Doc(MedicamentsSerialization,getSerializationCompanySender(),getSerializationCompanyOwner(),getSerializationOrderType(),date311);
-
+    
     QDateTime date313  = GetISODateTime().addSecs(1);
     CreateXML313Doc(MedicamentsSerialization,date313.addSecs(10));
-
+    
     // если программная агрегация
     if(getAutoprogramagregation())
     {
@@ -2900,25 +2902,25 @@ void MainWindow::on_StatistFindButton_clicked()
     QString reqstring = QString("batch like '%1' and BProcess like '%2' and LPName like '%3' and date BETWEEN '%4' and '%5'  and GTIN like '%6';").arg(statbatch,statbisnesprocess,statmedicament,datefrom,dateto,statGtin);
     QStringList ssss = sqlDB->getsumm("SUM(count) AS Total", "mark.statistics",reqstring,"Total");
     QString summ = ssss.at(0);
-
+    
     QStringList startdates = sqlDB->sel("date", "statistics", QString("batch like '%1' and BProcess = 'start'").arg(statbatch),"date");
     QStringList stopdates = sqlDB->sel("date", "statistics",  QString("batch like '%1' and BProcess = 'stop'").arg(statbatch),"date");
     ui->FoundLabel->setText("Найдено: " + summ + " записей");
-
+    
     QDateTime StartDate = QDateTime::fromString(startdates.first(),Qt::ISODate);
     QDateTime StopDate =  QDateTime::fromString(stopdates.last(),Qt::ISODate);
-
+    
     ui->StartTimeStatisticsLabel->setText( QString("время начала ") + StartDate.toString("yyyy-MM-dd hh:mm:ss"));
     ui->StopTimeStatisticsLabel->setText(QString("время окончания ") +  StopDate.toString("yyyy-MM-dd hh:mm:ss"));
-
+    
     quint16 secondsDiff = StartDate.secsTo(StopDate);
-
+    
     float avg = summ.toFloat() / secondsDiff * 60;
-
+    
     ui->AverageEffeciencyStatisticsLabel->setText(QString("Средняя производительность:%1 уп/мин").arg(avg));
-
+    
     GetStatisticsFromDB();
-
+    
 }
 
 void MainWindow::on_SerializAutoUpakovkaCheckBox_toggled(bool checked)
@@ -2985,7 +2987,7 @@ void MainWindow::replyfinished(QNetworkReply *reply)
     QByteArray bytes = reply->readAll(); // bytes
     QString stringreply = QString::fromUtf8(bytes);
     //    qDebug() << "Server reply "<< stringreply;
-
+    
     if (reply->errorString() != "Unknown error"){
         //        qDebug() << "API REQUEST ERROR "<< reply->errorString();
     }
@@ -2994,9 +2996,9 @@ void MainWindow::replyfinished(QNetworkReply *reply)
 
 void MainWindow::DrugRecievedFromEmulator(QString BatchName,QString ExperyDate, QString GTIN, QString SerialNumber, QString Tnved)
 {
-
+    
     //     qDebug() << "DrugRecievedFromEmulator" ;
-
+    
     QString sgtin =  GTIN + SerialNumber;
     medicament * t = new medicament(getSerializationDrugName(),GTIN,SerialNumber,BatchName,ExperyDate,sgtin,Tnved);
     emit SendMedicamentSignal(t);
@@ -3020,7 +3022,7 @@ void MainWindow::on_sendISMarkButton_clicked()
 
 void MainWindow::on_sendFileApiButton_clicked()
 {
-
+    
     apiclient->Sendfile(apiclient->getToken(), ui->FileNameForSendAPI->toPlainText(), ui->DocTypecomboBox->currentText().toInt());
 }
 
@@ -3071,14 +3073,14 @@ void MainWindow::MakeStatisticsPDFReport()
 {
     QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Export PDF", QString(), "*.pdf");
     if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
-
+    
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setOutputFileName(fileName);
-
+    
     QTextDocument doc;
-
+    
     QString a = (QString("<h1 style=\"color: #5e9ca0; text-align: center;\">Отчет по статистике</h1>\
                          <h2 style=\"color: #2e6c80; text-align: center;\">за период:</h2>\
             <h2 style=\"color: #2e6c80; text-align: center;\">%1 - %2</h2>\
@@ -3093,11 +3095,9 @@ void MainWindow::MakeStatisticsPDFReport()
                 ui->StatistBPcomboBox->currentText(),ui->StatistMedicamentComboBox->currentText(),
                 ui->StatistBatchComboBox->currentText(), ui->StatistGTINCombobox->currentText(),
                 ui->StartTimeStatisticsLabel->text(),ui->StopTimeStatisticsLabel->text(), ui->AverageEffeciencyStatisticsLabel->text()));
-
+    
     a.append(QString("<p><span style=\"color: #ff0000;\"><strong>%1</strong></span></p>").arg(ui->FoundLabel->text()) );
-
     doc.setHtml(a);
-
     doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number
     doc.print(&printer);
 }
@@ -3175,7 +3175,7 @@ void MainWindow::on_withdrawal_Button_clicked()
 void MainWindow::deleteAllXMLWidgets()
 {
     QList<XMLViewerWidget *> XMLViewerWidgetlist = this->findChildren<XMLViewerWidget *>();
-
+    
     foreach(XMLViewerWidget *w, XMLViewerWidgetlist)
     {
         w->deleteLater();
@@ -3187,9 +3187,9 @@ void MainWindow::on_journalList_itemClicked(QListWidgetItem *item)
     // get back the data
     QVariant v = item->data(Qt::UserRole);
     QString filepath = v.value<QString>();
-
+    
     QFile file(filepath);
-
+    
     if ( !file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         return;
@@ -3200,6 +3200,7 @@ void MainWindow::on_journalList_itemClicked(QListWidgetItem *item)
         QString text =  file.readAll();
         XMLViewerWidget *Viewer = new XMLViewerWidget();
         Viewer->Settext(text);
+        Viewer->SetFilePath(filepath);
         Viewer->show();
     }
 }

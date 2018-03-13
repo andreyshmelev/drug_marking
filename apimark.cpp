@@ -132,7 +132,7 @@ QString APIMARK::GetCodeAuth()
 void APIMARK::GetOutcomeDocumentsList(QString token)
 {
     QNetworkRequest requestauthorization;
-    QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 1000}");
+    QByteArray data = ("{\"filter\": {},\"start_from\": 0,\"count\": 100}");
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/documents/outcome");
 
     requestauthorization.setUrl(serviceURL);

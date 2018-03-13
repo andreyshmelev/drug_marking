@@ -18,6 +18,7 @@ public:
 
 public slots:
     void Settext(QString text);
+    void SetFilePath(QString text);
 
 private slots:
 

@@ -238,6 +238,7 @@ private:
     manufacturer * SerializationCompanySender;
     manufacturer * SerializationCompanyOwner;
     medicament * ScannedMedicament;
+    pack * ScannedPack;
 
     int SerializationOrderType;
 
@@ -320,6 +321,7 @@ private:
     const QString TNVEDRegularexpression =  GSSymbol + "240\\w{4}" ;
     const QString ExpRegularexpression = GSSymbol +  "17\\w{6}" ;
     const QString BatchRegularexpression = GSSymbol + "10\\w{1,20}";
+    const QString SSCCRegularexpression = "000460\\d{14}";
     const QString NotFoundString = "Not found";
 
     const uint Gtinlenght = 14;
@@ -333,6 +335,7 @@ private:
     QString batchstring;
     QString expstring;
     QString tnvedstring;
+    QString SSCCString;
 
     // параметры сериализации
 
@@ -441,6 +444,7 @@ signals:
     void agregationstatusToggled();
     void ParcingEnded();
     void SendMedicamentSignal(medicament * );
+    void SendPackSignal(pack * );
     void SendCompaniesDBList(QList<manufacturer *> );
     void register_product_emission_QR_Scanned();
     void register_control_samples_QR_Scanned();

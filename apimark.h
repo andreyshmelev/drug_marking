@@ -23,8 +23,6 @@ public:
     QString getFileDownloadLink() const;
     void setFileDownloadLink(const QString &value);
 
-
-
 signals:
     void message(QString mes);
 
