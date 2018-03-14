@@ -265,7 +265,7 @@ void APIMARK::Sendfile(QString token, QString filename, int doctype)
     mainJsonObject["sign"] = "";
     mainJsonObject["request_id"] = generateGUIDString();
 
-    qDebug() << "doc_type" <<  mainJsonObject["doc_type"] ;
+    qDebug()  <<  mainJsonObject << "mainJsonObject" ;
 
     QJsonDocument Doc(mainJsonObject);
     QByteArray ba = Doc.toJson();
@@ -286,7 +286,7 @@ void APIMARK::Sendfile(QString token, QString filename, int doctype)
 void APIMARK::RegisterNonResidentUser(QString token)
 {
     QNetworkRequest requestauthorization;
-    QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",\"username\" : \"korvas\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
+    QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe46\",\"username\" : \"korvas\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_nonresident"); // отправка файла XML
 
     requestauthorization.setUrl(serviceURL);
@@ -303,7 +303,7 @@ void APIMARK::RegisterResidentUser(QString token)
 {
     QNetworkRequest requestauthorization;
 
-    QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6edbb97fe06\",  \"public_cert\" : \"\"   ,\"username\" : \"korvas2\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
+    QByteArray data = ("{\"sys_id\" : \"6be50ba4-c20c-4b90-90a4-c6ed3b97fe06\",  \"public_cert\" : \"MIIBjjCCAT2gAwIBAgIEWWJzHzAIBgYqhQMCAgMwMTELMAkGA1UEBhMCUlUxEjAQBgNVBAoMCUNyeXB0b1BybzEOMAwGA1UEAwwFQWxpYXMwHhcNMTcxMTEzMTczMjI4WhcNMTgxMTEzMTczMjI4WjAxMQswCQYDVQQGEwJSVTESMBAGA1UECgwJQ3J5cHRvUHJvMQ4wDAYDVQQDDAVBbGlhczBjMBwGBiqFAwICEzASBgcqhQMCAiQABgcqhQMCAh4BA0MABEAIWARzAiI81k4i4Gz8EC7Ic01653JX5PCUfvgCBTpLduYtbTwLOwmGFcZzw9bwsxQpALqhcdRHxtx1UEeNKJuMozswOTAOBgNVHQ8BAf8EBAMCA+gwEwYDVR0lBAwwCgYIKwYBBQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBBTAIBgYqhQMCAgMDQQBL9CrIk0EgnMVr1J5dKbfXVFrhJxGxztFkTdmGkGJ6gHywB5Y9KpP67pv7I2bP1m1ej9hu+C17GSJrWgMgq+UZ\"   ,\"username\" : \"korvas2\",\"password\" : \"password123\",\"first_name\" : \"Андрей\",\"last_name\" : \"Шмелев\"}");
     QUrl serviceURL("http://dev-api.markirovka.nalog.ru/api/v1/registration/user_resident"); // отправка файла XML
     requestauthorization.setUrl(serviceURL);
     QByteArray tokenbyte ;
@@ -330,7 +330,7 @@ void APIMARK::GetDownloadLinkDocumentByID(QString docID)
     requestauthorization.setRawHeader("Content-Type","application/json");
     requestauthorization.setRawHeader("Authorization",tokenbyte);
     requestauthorization.setRawHeader("Cache-Control","no-cache");
-    QNetworkReply *reply = manager->get(requestauthorization);
+    QNetworkReply *reply = manager->post(requestauthorization,data);
 }
 
 void APIMARK::GetRules()

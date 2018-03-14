@@ -1574,7 +1574,7 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     // добавили subject_id
     
     // добавляем operation_date
-    addXMLTextNode(reg_end_pack_elem,  operation_date.toString(Qt::ISODate) , "operation_date", document);
+    addXMLTextNode(reg_end_pack_elem,  operation_date.toOffsetFromUtc(QDateTime::currentDateTime().offsetFromUtc()).toString(Qt::ISODate), "operation_date", document);
     // добавили operation_date
     
     // добавляем order_type
@@ -1585,7 +1585,6 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     if (ordertype == 2)
     {
         // добавляем owner_id
-        // addXMLTextNode(reg_end_pack_elem, owner->get_owner_id(), "owner_id", document);
         addXMLTextNode(reg_end_pack_elem, owner->get_subject_id(),"owner_id", document);
         // добавили owner_id
     }
@@ -1595,7 +1594,16 @@ void MainWindow::CreateXML311Doc(QList<medicament *> MedList, manufacturer * sen
     // добавили series_number
     
     // добавляем expiration_date - срок годности препарата
-    addXMLTextNode(reg_end_pack_elem, MedList.at(0)->ExperyDate, "expiration_date", document);
+
+    QString date_string_on_db = MedList.at(0)->ExperyDate; // 221215
+
+    QDate ExDate = QDate::fromString(date_string_on_db,"yyMMdd");
+
+    //<expiration_date>30.03.2020</expiration_date>
+
+    addXMLTextNode(reg_end_pack_elem, ExDate.toString("dd.MM.yyyy"), "expiration_date", document);
+
+    qDebug() <<MedList.at(0)->ExperyDate << "MedList.at(0)->ExperyDate" ;
     // добавили expiration_date
     
     // добавляем gtin - срок годности препарата
