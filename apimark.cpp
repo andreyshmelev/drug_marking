@@ -208,7 +208,7 @@ void APIMARK::AskToken(QString code)
 {
     QNetworkRequest requestauthorization;
 
-    QString stringdata = QString("{\"code\": \"%1\",\"password\" : \"password\"}").arg(code);
+    QString stringdata = QString("{\"code\": \"%1\",\"password\" : \"7b1b1c\"}").arg(code);
     QByteArray data ;
 
     data.clear();
