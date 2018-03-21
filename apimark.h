@@ -32,6 +32,8 @@ private:
     QString code;
     QString token;
     QString FileDownloadLink;
+//    const QString servername = "http://dev-api.markirovka.nalog.ru/" ; // стенд
+    const QString servername = "http://api.sb.markirovka.nalog.ru:9090/"; //  песочница
 
 public slots:
     void replyfinished(QNetworkReply *reply);
