@@ -268,7 +268,6 @@ void APIMARK::Sendfile(QString token, QString filename, int doctype)
     mainJsonObject["doc_type"] = doctype;
     mainJsonObject["document"] = stringcontentinRFC2045;
 
-
     QFile signfile("C:/Work/sign.txt");
 
     signfile.open(QFile::ReadOnly | QFile::Text);
@@ -276,8 +275,6 @@ void APIMARK::Sendfile(QString token, QString filename, int doctype)
     QString filecontent2 = insign.readAll();
 
     signfile.close();
-
-
     mainJsonObject["sign"] = filecontent2;
     mainJsonObject["request_id"] = generateGUIDString();
 
@@ -384,8 +381,8 @@ void APIMARK::DownloadDocumentByLink(QString link, QString filename)
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-     if(reply)
+    if(reply)
     {
-      qDebug() << reply->readAll();
+        qDebug() << reply->readAll();
     }
 }

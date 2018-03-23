@@ -2511,7 +2511,7 @@ void MainWindow::SendRandomToVideoJet()
         QDate Date = QDate::fromString(getSerializationExpery(),"yyyy-MM-dd");
         QString printerdate = Date.toString("yyMMdd") ;
         QString humandate = Date.toString("dd-MM-yyyy") ;
-        QString randstr = generateSN(13);
+        QString randstr = generateSN(11);
         //    QString a = QString("SLA|%1|gtinvalue=%2|batchvalue=%3|expdatevalue=%4|exphumandatevalue=%5|TNVEDvalue=%6|randomvalue=%7|").arg(VideoJetFileName, getGuiGTIN(), getGuiBatchValue(), printerdate, humandate,getGuiTNVED() , randstr);
         QString a = QString("{\"command\":\"senddata\",\"data\":  {\"GTINVAL\": \"%1\", \"SNVAL\": \"%2\", \"BATCHVAL\": \"%3\", \"DATEVAL\": \"%4\", \"TNVEDVAL\": \"%5\", \"GTINTEXT\": \"%6\", \"SNTEXT\": \"%7\", \"BATCHTEXT\": \"%8\", \"DATETEXT\": \"%9\"}}").arg(getSerializationGTIN() , randstr,getSerializationBatchName(),printerdate,getSerializationTNVED(),getSerializationGTIN() ,randstr,getSerializationBatchName(),humandate);
         SendCommandToVideoJet(a);
